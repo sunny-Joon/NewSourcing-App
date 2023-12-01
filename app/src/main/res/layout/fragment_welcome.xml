@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/teal_700"
+    android:orientation="vertical"
+    android:id="@+id/WelcomeActivity"
+    tools:context=".Activities.WelcomeActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Welcome"
+        android:fontFamily="@font/visbycfregular"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:layout_marginTop="150dp"
+        android:textSize="@dimen/vbigheading"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Rahul"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:fontFamily="@font/visbycfbold"
+        android:layout_marginTop="25dp"
+        android:textSize="@dimen/vbigheading"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SWIPE TO START EARNING"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:layout_marginTop="100dp"
+        android:textSize="@dimen/heading"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:src="@drawable/left_arrow"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

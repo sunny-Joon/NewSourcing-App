@@ -1,0 +1,1746 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/red"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="5dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".35"
+                        android:background="@color/darkred"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:fontFamily="@font/visbycfregular"
+                            android:text="@string/branch"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/heading" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="3dp"
+                            android:background="@color/white">
+
+                            <EditText
+                                android:id="@+id/branchName"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:hint="@string/branch"
+                                android:inputType="textCapWords"
+                                android:textSize="15dp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="5dp">
+
+                    <!-- Contents of Layout 2 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".35"
+                        android:background="@color/darkred"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:fontFamily="@font/visbycfregular"
+                            android:text="@string/area"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/heading" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="3dp"
+                            android:background="@color/white">
+
+                            <EditText
+                                android:id="@+id/area"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:hint="@string/area"
+                                android:inputType="textCapWords"
+                                android:textSize="15dp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="5dp">
+
+                    <!-- Contents of Layout 3 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/darkred"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:fontFamily="@font/visbycfregular"
+                            android:text="@string/centre"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/heading" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="3dp"
+                            android:background="@color/white">
+
+                            <EditText
+                                android:id="@+id/centre"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:hint="@string/centre"
+                                android:inputType="textCapWords"
+                                android:textSize="15dp" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="5dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".35"
+                        android:background="@color/darkred"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:fontFamily="@font/visbycfregular"
+                            android:text="@string/group"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/heading" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="3dp"
+                            android:background="@color/white">
+
+                            <EditText
+                                android:id="@+id/group"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:hint="@string/group"
+                                android:inputType="textCapWords"
+                                android:textSize="15dp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/darkred"
+                        android:fontFamily="@font/visbycfregular"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="@string/residing_with"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/heading" />
+
+                    <Spinner
+                        android:id="@+id/residingWith"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:hint="@string/residing_with"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_weight=".35"
+                        android:background="@color/darkred"
+                        android:fontFamily="@font/visbycfregular"
+                        android:gravity="center_vertical"
+                        android:paddingStart="10dp"
+                        android:text="@string/interviewee_name"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/heading" />
+
+                    <EditText
+                        android:id="@+id/interviewee_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:hint="@string/interviewee_name"
+                        android:inputType="textCapWords"
+                        android:textSize="15dp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:background="@color/darkred"
+                        android:fontFamily="@font/visbycfregular"
+                        android:gravity="center_vertical"
+                        android:paddingStart="10dp"
+                        android:text="@string/interviewee_age"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/heading" />
+
+                    <EditText
+                        android:id="@+id/interviewee_age"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:hint="@string/interviewee_age"
+                        android:inputType="number"
+                        android:textSize="15dp" />
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/visbycfregular"
+                        android:gravity="center"
+                        android:background="@color/darkred"
+                        android:text="@string/intervieweeRelation"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/heading" />
+
+                    <Spinner
+                        android:id="@+id/intervieweeRelation"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:hint="@string/residing_with"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1.2"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/visbycfregular"
+                        android:gravity="center"                  android:paddingStart="10dp"
+                        android:text="@string/residence_type"
+                        android:background="@color/darkred"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/heading" />
+
+                    <Spinner
+                        android:id="@+id/residenceType"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:textSize="@dimen/heading"
+                        android:fontFamily="@font/visbycfregular"
+                        android:background="@color/darkred"
+                        android:layout_weight="1"
+                        android:text="@string/residental_stability"
+                        android:textColor="@color/white" />
+
+                    <Spinner
+                        android:id="@+id/residental_stability"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:hint="@string/residing_with"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".35"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:background="@color/darkred"
+                        android:fontFamily="@font/visbycfregular"
+                        android:gravity="center_vertical"
+                        android:paddingStart="10dp"
+                        android:textSize="@dimen/heading"
+                        android:text="@string/distance_ApplicantToDealer"
+                        android:textColor="@color/white" />
+
+                    <EditText
+                        android:id="@+id/distance_ApplicantToDealer"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:inputType="number"
+                        android:textSize="15dp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:background="@color/darkred"
+                        android:fontFamily="@font/visbycfregular"
+                        android:gravity="center_vertical"
+                        android:textSize="@dimen/heading"
+                        android:paddingStart="10dp"
+                        android:text="@string/time_ApplicantToDealer"
+                        android:textColor="@color/white" />
+
+                    <EditText
+                        android:id="@+id/time_ApplicantToDealer"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:inputType="number"
+                        android:textSize="15dp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:background="@color/darkred"
+                        android:fontFamily="@font/visbycfregular"
+                        android:gravity="center_vertical"
+                        android:paddingStart="10dp"
+                        android:text="@string/report.7"
+                        android:textColor="@color/white" />
+
+                    <EditText
+                        android:id="@+id/approxMonthlySales"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:inputType="number"
+                        android:textSize="15dp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/darkred"
+                        android:fontFamily="@font/visbycfregular"
+                        android:gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:paddingStart="10dp"
+                        android:text="@string/report.8"
+                        android:textColor="@color/white" />
+
+                    <EditText
+                        android:id="@+id/approxMonthlyIncome"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="number"
+                        android:layout_weight="1"
+                        android:textSize="15dp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/darkred"
+                        android:fontFamily="@font/visbycfregular"
+                        android:gravity="center_vertical"
+                        android:paddingStart="10dp"
+                        android:layout_weight="1"
+                        android:text="@string/businessExperience"
+                        android:textColor="@color/white" />
+
+                    <Spinner
+                        android:id="@+id/businessExperience"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:hint="@string/residing_with"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:background="@color/darkred"
+                        android:fontFamily="@font/visbycfregular"
+                        android:gravity="center_vertical"
+                        android:paddingStart="10dp"
+                        android:text="@string/businessExpenditure"
+                        android:textColor="@color/white" />
+
+                    <EditText
+                        android:id="@+id/businessExpenditure"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:inputType="number"
+                        android:textSize="15dp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:background="@color/darkred"
+                        android:fontFamily="@font/visbycfregular"
+                        android:gravity="center_vertical"
+                        android:paddingStart="10dp"
+                        android:text="@string/expectedIncome"
+                        android:textColor="@color/white" />
+
+                    <EditText
+                        android:id="@+id/expectedIncome"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:inputType="number"
+                        android:textSize="15dp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:background="@color/darkred"
+                        android:fontFamily="@font/visbycfregular"
+                        android:gravity="center_vertical"
+                        android:paddingStart="10dp"
+                        android:text="@string/houseExpenditure"
+                        android:textColor="@color/white" />
+
+                    <EditText
+                        android:id="@+id/houseExpenditure"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:inputType="number"
+                        android:textSize="15dp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:background="@color/darkred"
+                        android:fontFamily="@font/visbycfregular"
+                        android:gravity="center_vertical"
+                        android:paddingStart="10dp"
+                        android:text="@string/familyNetIncome"
+                        android:textColor="@color/white" />
+
+                    <EditText
+                        android:id="@+id/familyNetIncome"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:inputType="number"
+                        android:textSize="15dp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1.2"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/darkred"
+                        android:fontFamily="@font/visbycfregular"
+                        android:gravity="center_vertical"
+                        android:paddingStart="10dp"
+                        android:layout_weight="1"
+                        android:text="@string/relationWithApplicant"
+                        android:textColor="@color/white" />
+
+                    <Spinner
+                        android:id="@+id/relationWithApplicant"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="5dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp"
+                            android:background="@color/darkred"
+                            android:fontFamily="@font/visbycfregular"
+                            android:gravity="center_vertical"
+                            android:paddingStart="10dp"
+                            android:text="@string/reference1"
+                            android:textColor="@color/white" />
+
+                        <EditText
+                            android:id="@+id/reference1"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:hint="@string/reference1"
+                            android:inputType="textCapWords"
+                            android:textSize="15dp" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="5dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp"
+                            android:background="@color/darkred"
+                            android:fontFamily="@font/visbycfregular"
+                            android:gravity="center_vertical"
+                            android:paddingStart="10dp"
+                            android:text="@string/reference_PhoneNo"
+                            android:textColor="@color/white" />
+
+                        <EditText
+                            android:id="@+id/reference_PhoneNo1"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:inputType="number"
+                            android:textSize="15dp" />
+
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="5dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp"
+                            android:background="@color/darkred"
+                            android:fontFamily="@font/visbycfregular"
+                            android:gravity="center_vertical"
+                            android:paddingStart="10dp"
+                            android:text="@string/reference2"
+                            android:textColor="@color/white" />
+
+                        <EditText
+                            android:id="@+id/reference2"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:hint="@string/reference2"
+                            android:inputType="textCapWords"
+                            android:textSize="15dp" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="5dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp"
+                            android:background="@color/darkred"
+                            android:fontFamily="@font/visbycfregular"
+                            android:gravity="center_vertical"
+                            android:paddingStart="10dp"
+                            android:text="@string/reference_PhoneNo"
+                            android:textColor="@color/white" />
+
+                        <EditText
+                            android:id="@+id/reference_PhoneNo2"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:inputType="number"
+                            android:textSize="15dp" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/darkred"
+                        android:fontFamily="@font/visbycfregular"
+                        android:gravity="center_vertical"
+                        android:paddingStart="10dp"
+                        android:layout_weight="1"
+                        android:text="@string/neighbourhood_verification"
+                        android:textColor="@color/white" />
+
+                    <Spinner
+                        android:id="@+id/neighbourhood_verification"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:hint="@string/residing_with"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="5dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/darkred"
+                    android:gravity="center"
+                    android:text="@string/verification"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/visbycfbold"
+                    android:textSize="@dimen/bigheading" />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/darkred"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:gravity="center"
+                        android:text="@string/verificationLevel1"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="10dp"
+                        android:background="@color/white"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/point1"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <CheckBox
+                            android:id="@+id/buildType"
+                            style="@style/CustomCheckboxStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/point1.1" />
+
+                        <CheckBox
+                            android:id="@+id/approvedLocation"
+                            style="@style/CustomCheckboxStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/point1.2" />
+
+                        <CheckBox
+                            android:id="@+id/cpfCriteria"
+                            style="@style/CustomCheckboxStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/point1.3" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/darkred"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:gravity="center"
+                        android:text="@string/verificationLevel2"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:background="@color/white"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/point2"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <CheckBox
+                            android:id="@+id/cpfAddressVerification"
+                            style="@style/CustomCheckboxStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/point2.1" />
+
+                        <CheckBox
+                            android:id="@+id/IdVerification"
+                            style="@style/CustomCheckboxStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/point2.2" />
+
+                        <CheckBox
+                            android:id="@+id/addressVerification"
+                            style="@style/CustomCheckboxStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/point2.3" />
+
+                        <CheckBox
+                            android:id="@+id/ageVerification"
+                            style="@style/CustomCheckboxStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/point2.4" />
+
+                        <CheckBox
+                            android:id="@+id/cpfRecentAddressVerification"
+                            style="@style/CustomCheckboxStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/point2.5" />
+
+                        <CheckBox
+                            android:id="@+id/stampOnPhotocopy"
+                            style="@style/CustomCheckboxStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/point2.6" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/darkred"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:gravity="center"
+                        android:text="@string/verificationLevel3"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:background="@color/white"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/point3"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <CheckBox
+                            android:id="@+id/lastLoanVerification"
+                            style="@style/CustomCheckboxStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/point3.1" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/point3.2"
+                            android:textColor="@color/black" />
+
+                        <EditText
+                            android:id="@+id/loanUsagePercentage"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:inputType="number" />
+
+                        <CheckBox
+                            android:id="@+id/absentReason"
+                            style="@style/CustomCheckboxStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/point3.3" />
+
+                        <CheckBox
+                            android:id="@+id/repaymentFault"
+                            style="@style/CustomCheckboxStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/point3.4" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/darkred"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:background="@color/darkred"
+                        android:gravity="center"
+                        android:text="@string/verificationLevel4"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:background="@color/white"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/point4"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <CheckBox
+                            android:id="@+id/reasonVerification"
+                            style="@style/CustomCheckboxStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/point4.1" />
+
+                        <CheckBox
+                            android:id="@+id/isAppliedAmountAppropriate"
+                            style="@style/CustomCheckboxStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/point4.2" />
+
+                        <CheckBox
+                            android:id="@+id/familyAwareness"
+                            style="@style/CustomCheckboxStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/point4.3" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/point4.4"
+                            android:textColor="#E40808" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1.2"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/darkred"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:background="@color/darkred"
+                        android:gravity="center"
+                        android:text="@string/verificationLevel5"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:background="@color/white"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/point5"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <CheckBox
+                            android:id="@+id/loanRelatedToBusiness"
+                            style="@style/CustomCheckboxStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/point5.1" />
+
+                        <CheckBox
+                            android:id="@+id/IsBusinessAppropriate"
+                            style="@style/CustomCheckboxStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/point5.2" />
+
+                        <CheckBox
+                            android:id="@+id/repayEligibility"
+                            style="@style/CustomCheckboxStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/point5.3" />
+
+                        <CheckBox
+                            android:id="@+id/surplusVerification"
+                            style="@style/CustomCheckboxStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/point5.4" />
+
+                        <CheckBox
+                            android:id="@+id/incomeVerification"
+                            style="@style/CustomCheckboxStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/point5.5" />
+
+                        <CheckBox
+                            android:id="@+id/businessVerification"
+                            style="@style/CustomCheckboxStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/point5.6" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/darkred"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:background="@color/darkred"
+                        android:gravity="center"
+                        android:text="@string/verificationLevel6"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:background="@color/white"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/point6"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <CheckBox
+                            android:id="@+id/supportiveToGroup"
+                            style="@style/CustomCheckboxStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/point6.1" />
+
+                        <CheckBox
+                            android:id="@+id/comissionDemand"
+                            style="@style/CustomCheckboxStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/point6.2" />
+
+                        <CheckBox
+                            android:id="@+id/groupReadyToVilay"
+                            style="@style/CustomCheckboxStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/point6.3" />
+
+                        <CheckBox
+                            android:id="@+id/groupHasBloodRelation"
+                            style="@style/CustomCheckboxStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/point6.4" />
+
+                        <CheckBox
+                            android:id="@+id/understandsInsurance"
+                            style="@style/CustomCheckboxStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/point6.5" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1.2"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/darkred"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:background="@color/darkred"
+                        android:gravity="center"
+                        android:text="@string/verificationLevel7"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:background="@color/white"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/point7"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <CheckBox
+                            android:id="@+id/verifyExternalLoan"
+                            style="@style/CustomCheckboxStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/point7.1" />
+
+                        <CheckBox
+                            android:id="@+id/understandsFaultPolicy"
+                            style="@style/CustomCheckboxStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/point7.2" />
+
+                        <CheckBox
+                            android:id="@+id/IsLoanAmountAppropriate"
+                            style="@style/CustomCheckboxStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/point7.3" />
+
+                        <CheckBox
+                            android:id="@+id/toatlDebtUnderLimit"
+                            style="@style/CustomCheckboxStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/point7.4" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1.2"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="5dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:background="@color/darkred"
+                    android:gravity="center"
+                    android:text="@string/officeVerificationReport"
+                    android:textColor="@color/white"
+                    android:textSize="22dp"
+                    android:textStyle="bold" />
+
+            </androidx.cardview.widget.CardView>
+
+
+            <LinearLayout
+                android:id="@+id/layout33"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layout32">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1.2"
+                    app:cardCornerRadius="18dp"
+                    app:cardElevation="5dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@color/white"
+                        android:orientation="vertical">
+
+                        <CheckBox
+                            android:id="@+id/workingPlaceVerification"
+                            style="@style/CustomCheckboxStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/report.1" />
+
+                        <CheckBox
+                            android:id="@+id/IsWorkingPlaceValid"
+                            style="@style/CustomCheckboxStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/report.2" />
+
+                        <CheckBox
+                            android:id="@+id/workingPlacedescription"
+                            style="@style/CustomCheckboxStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/report.3" />
+
+                        <CheckBox
+                            android:id="@+id/workExperience"
+                            style="@style/CustomCheckboxStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/report.4" />
+
+                        <CheckBox
+                            android:id="@+id/seasonDependency"
+                            style="@style/CustomCheckboxStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/report.5" />
+
+                        <CheckBox
+                            android:id="@+id/stockVerification"
+                            style="@style/CustomCheckboxStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/report.6" />
+
+                        <CheckBox
+                            android:id="@+id/sufficientAmount"
+                            style="@style/CustomCheckboxStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/report.9" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1.2"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:background="@color/darkred"
+                        android:fontFamily="@font/visbycfregular"
+                        android:gravity="center_vertical"
+                        android:paddingStart="10dp"
+                        android:text="@string/Address"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Address"
+                        android:imeOptions="actionNext"
+                        android:inputType="textMultiLine"
+                        android:textSize="15dp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <LinearLayout
+                android:id="@+id/imageTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1.2"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="5dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/darkred"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:text="@string/imageTitle"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/heading"
+                        android:fontFamily="@font/visbycfbold"/>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@color/darkred"
+                android:layout_weight="1.2"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/darkred"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/click"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_weight=".35"
+                        android:backgroundTint="@color/white"
+                        android:onClick="onOpenCameraButtonClick"
+                        android:text="Click Image"
+                        android:textColor="@color/red"
+                        android:textStyle="bold"
+                        app:icon="@drawable/camera_image" />
+
+                    <ImageView
+                        android:id="@+id/view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/camera_image"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <Button
+                android:id="@+id/submit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:backgroundTint="@color/white"
+                android:text="submit Home Visit"
+                android:textColor="@color/darkred"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

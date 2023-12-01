@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/teal_700"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/applicantImage"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center"
+        android:background="@drawable/user_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="36dp"/>
+
+    <ScrollView
+        android:id="@+id/scrollView3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/applicantImage">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1.2"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/visbycfregular"
+                        android:gravity="center|start"
+                        android:text="Applicant Name"
+                        android:textColor="@color/darkred"
+                        android:textSize="@dimen/heading" />
+
+                    <EditText
+                        android:id="@+id/applicantName"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:enabled="false"
+                        android:hint="Applicant Name"
+                        android:inputType="textCapWords"
+                        android:textSize="15dp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1.2"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:gravity="center|start"
+                        android:text="Marital Status"
+                        android:textColor="@color/darkred" />
+
+                    <EditText
+                        android:id="@+id/maritalStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:hint="Marital Status"
+                        android:inputType="textCapWords"
+                        android:textSize="15dp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1.2"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:gravity="center|start"
+                        android:text="Loan Amount"
+                        android:textColor="@color/darkred" />
+
+                    <EditText
+                        android:id="@+id/loanAmount"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:hint="0000"
+                        android:inputType="textCapWords"
+                        android:textSize="15dp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1.2"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:gravity="center|start"
+                        android:text="Loan Purpose"
+                        android:textColor="@color/darkred" />
+
+                    <EditText
+                        android:id="@+id/purpose"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:hint="Loan Purpose"
+                        android:inputType="textCapWords"
+                        android:textSize="15dp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1.2"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:gravity="center|start"
+                        android:text="Loan Duration"
+                        android:textColor="@color/darkred" />
+
+                    <EditText
+                        android:id="@+id/duration"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:hint="Loan Duration"
+                        android:inputType="textCapWords"
+                        android:textSize="15dp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1.2"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:gravity="center|start"
+                        android:text="Applicant Status"
+                        android:textColor="@color/darkred" />
+
+                    <EditText
+                        android:id="@+id/applicantStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:hint="Applicant Status"
+                        android:inputType="textCapWords"
+                        android:textSize="15dp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1.2"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:text="Current Occupation"
+                        android:textColor="@color/darkred" />
+
+                    <EditText
+                        android:id="@+id/currentOccupation"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:hint="Residing With"
+                        android:inputType="textCapWords"
+                        android:textSize="15dp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1.2"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:gravity="center|start"
+                        android:text="Occupation Type"
+                        android:textColor="@color/darkred" />
+
+                    <EditText
+                        android:id="@+id/occupationType"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:hint="Occupation Type"
+                        android:inputType="textCapWords"
+                        android:textSize="15dp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1.2"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:gravity="center|start"
+                        android:text="Land Ownership"
+                        android:textColor="@color/darkred" />
+
+                    <EditText
+                        android:id="@+id/landOwnership"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:hint="Land Ownership"
+                        android:inputType="textCapWords"
+                        android:textSize="15dp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1.2"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:gravity="center|start"
+                        android:text="Residence Ownership"
+                        android:textColor="@color/darkred" />
+
+                    <EditText
+                        android:id="@+id/residenceOwnership"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:hint="Residence Ownership"
+                        android:inputType="textCapWords"
+                        android:textSize="15dp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <CheckBox
+                android:id="@+id/confirmationBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="Check this box,If above information is correct." />
+
+            <Button
+                android:id="@+id/fillForm"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:text="Fill Form"
+                android:textColor="@color/red"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:elevation="2dp"
+                android:backgroundTint="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="24dp"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

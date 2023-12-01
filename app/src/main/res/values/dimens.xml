@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="titleheading">22dp</dimen>
+    <dimen name="heading">16dp</dimen>
+    <dimen name="vbigheading">50dp</dimen>
+    <dimen name="bigheading">30dp</dimen>
+    <dimen name="subheading">14dp</dimen>
+    <dimen name="message">12dp</dimen>
+</resources>
