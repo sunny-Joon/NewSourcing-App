@@ -180,5 +180,45 @@ Contact Email <i>DELHI@PAISALO.IN</i>
     <string name="report.9"> यह सुनिचित करें कि आवेदित राशि ऋण के उदेश्य के अनुकूल है।</string>
 
     <string name="imageTitle">आवेदक के साथ घर की तस्वीर खींचें</string>
+
     <string name="aadhar_id">Aadhar Id *</string>
+    <string name="aadhar_name">Name</string>
+    <string name="aadhar_age">Age<font color='red'>*</font></string>
+    <string name="aadhar_dob">Date of Birth<font color='red'>*</font></string>
+    <string name="aadhar_father_spouse">Guardian<font color='red'>*</font></string>
+    <string name="aadhar_address">Address<font color='red'>*</font></string>
+    <string name="aadhar_address1">Address1<font color='red'>*</font></string>
+    <string name="aadhar_address2">Address2</string>
+    <string name="aadhar_address3">Address3</string>
+    <string name="aadhar_city">City<font color='red'>*</font></string>
+    <string name="aadhar_state">State<font color='red'>*</font></string>
+    <string name="aadhar_pin">Pin<font color='red'>*</font></string>
+    <string name="aadhar_gender">Gender<font color='red'>*</font></string>
+    <string name="relationshioWithBorrower">Relationship with Borrower<font color='red'>*</font></string>
+
+    <string name="borrower">Borrower</string>
+    <string name="loan_detail_download_doc">Download Document</string>
+    <string name="applicant_name">Applicant Name<font color='red'>*</font></string>
+    <string name="applicant_father_spouse">Father / Spouse<font color='red'>*</font></string>
+    <string name="applicant_address">Address<font color='red'>*</font></string>
+    <string name="applicant_mobile">Mobile<font color='red'>*</font></string>
+    <string name="applicant_monthly_income">Monthly Income<font color='red'>*</font></string>
+    <string name="applicant_future_income">Future Income</string>
+    <string name="applicant_caste">Caste</string>
+    <string name="applicant_religion">Religion</string>
+    <string name="applicant_marital_status">Marital Status<font color='red'>*</font></string>
+    <string name="applicant_dependents">No. of Depenent(s) (Adult)</string>
+    <string name="applicant_children">Children</string>
+    <string name="applicant_school_going_children">School Going Children</string>
+    <string name="applicant_child_monthly_spends">Monthly Spends on Children</string>
+    <string name="applicant_pan">Permanent Account No (PAN)<font color='red'>*</font></string>
+    <string name="applicant_pan_name">Name as on Permanent Account No (PAN)</string>
+    <string name="applicant_voter">Voter ID<font color='red'>*</font></string>
+    <string name="Guardian">Guardian<font color='red'>*</font></string>
+    <string name="applicant_driving_license">Driving License</string>
+    <string name="applicant_present_residence_owner">Present House Owner</string>
+    <string name="applicant_house_rent">House Rent (Thousand)</string>
+    <string name="applicant_residence_duration">Residing for (Years)</string>
+
+
 </resources>
