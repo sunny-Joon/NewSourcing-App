@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
@@ -24,6 +25,7 @@ public class LeaderBoardFragment extends Fragment {
     private RecyclerView recyclerView;
     private LeaderBoardRecyclerViewAdapter leaderBoardRecyclerViewAdapter;
     FragmentLeaderBoardBinding binding;
+    float progress = 0.7f;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,11 +59,38 @@ public class LeaderBoardFragment extends Fragment {
         leaderBoardRecyclerViewAdapter = new LeaderBoardRecyclerViewAdapter(requireContext(), leaderboardEntries);
         recyclerView.setAdapter(leaderBoardRecyclerViewAdapter);
 
-        ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) binding.divider.getLayoutParams();
+
+       /* ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) binding.divider.getLayoutParams();
 
         layoutParams.horizontalBias = 0.8f;
 
-        binding.divider.setLayoutParams(layoutParams);
+        binding.divider.setLayoutParams(layoutParams);*/
+
+        // Assuming you have references to both the divider and TextView
+        View divider = binding.divider;
+        TextView incentiveTextView = binding.IncentiveTextView;
+
+        ConstraintLayout.LayoutParams dividerLayoutParams = (ConstraintLayout.LayoutParams) divider.getLayoutParams();
+
+        if (dividerLayoutParams == null) {
+            dividerLayoutParams = new ConstraintLayout.LayoutParams(
+                    ConstraintLayout.LayoutParams.WRAP_CONTENT,
+                    ConstraintLayout.LayoutParams.WRAP_CONTENT
+            );
+        }
+
+        dividerLayoutParams.horizontalBias = progress;
+        divider.setLayoutParams(dividerLayoutParams);
+        ConstraintLayout.LayoutParams textViewLayoutParams = (ConstraintLayout.LayoutParams) incentiveTextView.getLayoutParams();
+        if (textViewLayoutParams == null) {
+            textViewLayoutParams = new ConstraintLayout.LayoutParams(
+                    ConstraintLayout.LayoutParams.WRAP_CONTENT,
+                    ConstraintLayout.LayoutParams.WRAP_CONTENT
+            );
+        }
+
+        textViewLayoutParams.horizontalBias = progress;
+        incentiveTextView.setLayoutParams(textViewLayoutParams);
 
         return root;
     }

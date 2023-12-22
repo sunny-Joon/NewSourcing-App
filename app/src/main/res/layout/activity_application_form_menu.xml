@@ -70,11 +70,13 @@
                         android:fontFamily="@font/visbycfbold"
                         android:textSize="@dimen/subheading"
                         android:layout_weight=".5"/>
-                    <ImageView
+
+                    <CheckBox
+                        android:id="@+id/aadhaarCheckBox"
+                        android:button="@drawable/custom_checkbox"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:src="@drawable/right_button"/>
+                        android:layout_height="match_parent"/>
 
                 </LinearLayout>
 
@@ -107,12 +109,13 @@
                         android:fontFamily="@font/visbycfbold"
                         android:textSize="@dimen/subheading"
                         android:layout_weight=".5"/>
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:src="@drawable/right_button"/>
 
+                    <CheckBox
+                        android:id="@+id/personaldetailCheckBox"
+                        android:button="@drawable/custom_checkbox"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"/>
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -144,12 +147,13 @@
                         android:fontFamily="@font/visbycfbold"
                         android:textSize="@dimen/subheading"
                         android:layout_weight=".5"/>
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:src="@drawable/right_button"/>
 
+                    <CheckBox
+                        android:id="@+id/financialInfoCheckBox"
+                        android:button="@drawable/custom_checkbox"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"/>
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -180,12 +184,13 @@
                         android:fontFamily="@font/visbycfbold"
                         android:textSize="@dimen/subheading"
                         android:layout_weight=".5"/>
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:src="@drawable/right_button"/>
 
+                    <CheckBox
+                        android:id="@+id/familyCheckBox"
+                        android:button="@drawable/custom_checkbox"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"/>
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -216,12 +221,13 @@
                         android:fontFamily="@font/visbycfbold"
                         android:textSize="@dimen/subheading"
                         android:layout_weight=".5"/>
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:src="@drawable/right_button"/>
 
+                    <CheckBox
+                        android:id="@+id/borrowingsCheckBox"
+                        android:button="@drawable/custom_checkbox"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"/>
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -251,12 +257,13 @@
                         android:fontFamily="@font/visbycfbold"
                         android:textSize="@dimen/subheading"
                         android:layout_weight=".5"/>
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:src="@drawable/right_button"/>
 
+                    <CheckBox
+                        android:id="@+id/gurrantorCheckBox"
+                        android:button="@drawable/custom_checkbox"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"/>
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -287,12 +294,13 @@
                         android:fontFamily="@font/visbycfbold"
                         android:textSize="@dimen/subheading"
                         android:layout_weight=".5"/>
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:src="@drawable/right_button"/>
 
+                    <CheckBox
+                        android:id="@+id/kycScanningCheckBox"
+                        android:button="@drawable/custom_checkbox"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"/>
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>

@@ -64,6 +64,15 @@ public class OnBoardFragment extends Fragment {
             }
         });
 
+        binding.collection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(requireActivity(), ManagerList.class);
+                intent.putExtra("keyName", "Collection");
+                startActivity(intent);
+            }
+        });
+
         return root;
     }
 }

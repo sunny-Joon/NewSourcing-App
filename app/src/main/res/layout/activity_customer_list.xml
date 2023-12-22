@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/teal_200"
-    android:orientation="vertical" >
+    android:background="@color/red"
+    android:orientation="vertical"
+    tools:context=".Activities.CustomerListActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Customer List"
         android:textColor="@color/white"
-        android:textSize="32dp"
-        android:text="AB RUKNA NAHI."
-        android:textStyle="bold"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="20dp"/>
+        android:textSize="@dimen/bigheading"
+        android:layout_gravity="center"/>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -36,8 +35,14 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/applicationFormRecyclerView"
+        android:id="@+id/customerListRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+    <ImageView
+        android:id="@+id/customerlistBackgroundImageview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+</LinearLayout>

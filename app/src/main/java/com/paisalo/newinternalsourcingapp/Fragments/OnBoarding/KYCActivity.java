@@ -10,11 +10,9 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
-
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
@@ -53,27 +51,16 @@ public class KYCActivity extends AppCompatActivity {
 
     private AppDatabase appDatabase;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kycactivity);
-
-//        Bitmap originalBitmap = decodeSampledBitmapFromResource(getResources(), R.drawable.abc123,800,600);
-//
-//        // Apply blur effect
-//        Bitmap blurredBitmap = BlurUtils.blurBitmap(this, originalBitmap, 2); // Adjust blur radius as needed
-
 
         progressBar = findViewById(R.id.simpleProgressBar);
         progressBar.setMax(maxProgress);
         imageView3 = findViewById(R.id.imageView3);
         calendericon = findViewById(R.id.calendericon);
         Gendericon = findViewById(R.id.Gendericon);
-
-
-
 
         submitButton = findViewById(R.id.button);
         editTextAadhar = findViewById(R.id.editTextAadhar);
@@ -105,8 +92,6 @@ public class KYCActivity extends AppCompatActivity {
 
         appDatabase = AppDatabase.getDatabase(this);
 
-
-
         // Populate the array with EditText objects
         editTexts = new EditText[]{
                 editTextAadhar, editTextName, editTextAge, editTextGender, editTextGuardian,
@@ -114,7 +99,6 @@ public class KYCActivity extends AppCompatActivity {
                 editTextCity, editTextPincode, editTextStateName, editTextMobile, editTextPAN, drivingLicense,
                 motherfirstname, mothermiddlename, motherlastname, fatherfirstname, fathermiddlename,
                 fatherlastname, maritalstatus, spousefirstname, spousemiddlename, spouselastname
-                // ... (add references to all other EditText fields here)
         };
 
         imageView3.setOnClickListener(new View.OnClickListener() {
@@ -162,6 +146,7 @@ public class KYCActivity extends AppCompatActivity {
             });
         }
 
+        submitButton = findViewById(R.id.button);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -235,54 +220,14 @@ public class KYCActivity extends AppCompatActivity {
         ageEditText.setText(String.valueOf(age));
     }
 
-   /* private void submitData() {
-        showToast("Data submitted successfully.");
-    }*/
-
-
-
-
-//    public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId, int reqWidth, int reqHeight) {
-//
-//        // First decode with inJustDecodeBounds=true to check dimensions
-//        final BitmapFactory.Options options = new BitmapFactory.Options();
-//        options.inJustDecodeBounds = true;
-//        BitmapFactory.decodeResource(res, resId, options);
-//
-//        // Calculate inSampleSize
-//        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
-//
-//        // Decode bitmap with inSampleSize set
-//        options.inJustDecodeBounds = false;
-//        return BitmapFactory.decodeResource(res, resId, options);
-//    }
-//
-//    public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
-//        // Raw height and width of image
-//        final int height = options.outHeight;
-//        final int width = options.outWidth;
-//        int inSampleSize = 1;
-//
-//        if (height > reqHeight || width > reqWidth) {
-//            final int halfHeight = height / 2;
-//            final int halfWidth = width / 2;
-//
-//            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
-//            // height and width larger than the requested height and width.
-//            while ((halfHeight / inSampleSize) >= reqHeight && (halfWidth / inSampleSize) >= reqWidth) {
-//                inSampleSize *= 2;
-//            }
-//        }
-//        return inSampleSize;
-//    }
-
-
     private void showPopupWithBlur() {
 
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.DECOR_CAPTION_SHADE_LIGHT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
 
     }
-
-
 
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
@@ -291,28 +236,6 @@ public class KYCActivity extends AppCompatActivity {
     private boolean isEmpty(EditText editText) {
         return editText.getText().toString().trim().isEmpty();
     }
-
-
-//    private void insertDataToDatabase() {
-//        // Create a KYCData object and set values from EditText fields
-//        KYCData kycData = new KYCData();
-//        kycData.Aadhar = editTextAadhar.getText().toString();
-//        kycData.Name = editTextName.getText().toString();
-//        // ... set other fields
-//
-//        // Insert the KYCData object into the Room Database
-//        new InsertDataTask().execute(kycData);
-//    }
-//
-//    // AsyncTask to perform database insertion in the background
-//    private static class InsertDataTask extends AsyncTask<KYCData, Void, Void> {
-//        @Override
-//        protected Void doInBackground(KYCData... kycData) {
-//            AppDatabase.getDatabase().kycDataDao()
-//            return null;
-//        }
-//    }
-
 
     public boolean validate() {
 
