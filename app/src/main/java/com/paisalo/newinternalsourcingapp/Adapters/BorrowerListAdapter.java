@@ -1,13 +1,21 @@
 package com.paisalo.newinternalsourcingapp.Adapters;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivityMenu;
+import com.paisalo.newinternalsourcingapp.Activities.BorrowerListActivity;
+import com.paisalo.newinternalsourcingapp.Activities.DownloadDocumentActivity;
+import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.KYCActivity;
 import com.paisalo.newinternalsourcingapp.R;
 
 public class BorrowerListAdapter extends RecyclerView.Adapter<BorrowerListAdapter.ViewHolder>{
@@ -50,14 +58,50 @@ public class BorrowerListAdapter extends RecyclerView.Adapter<BorrowerListAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView userNameTextView, fatherOrSpouseTextView, fiCodeTextView, mobileTextView, creatorTextView, addressTextView;
 
+        CardView borrowerCardView;
+
         public ViewHolder(View itemView) {
             super(itemView);
+
+            borrowerCardView = itemView.findViewById(R.id.borrowerCardView);
             userNameTextView = itemView.findViewById(R.id.userNameTextView);
             fatherOrSpouseTextView = itemView.findViewById(R.id.fatherOrSpouseTextView);
             fiCodeTextView = itemView.findViewById(R.id.fiCodeTextView);
             mobileTextView = itemView.findViewById(R.id.mobileTextView);
             creatorTextView = itemView.findViewById(R.id.creatorTextView);
             addressTextView = itemView.findViewById(R.id.addressTextView);
+
+            Intent intent = ((Activity) itemView.getContext()).getIntent();
+            String id = intent.getStringExtra("keyName");
+
+            borrowerCardView.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    openActivity(id);
+                }
+            });
+
+            /*borrowerCardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(itemView.getContext(), ApplicationFormActivityMenu.class);
+                    itemView.getContext().startActivity(intent);
+                }
+            });*/
+        }
+
+        private void openActivity(String id) {
+            if (id.equals("Esign")) {
+                Log.d("Kyc", "kkk" + id);
+                Intent intent = new Intent(itemView.getContext(), DownloadDocumentActivity.class);
+                itemView.getContext().startActivity(intent);
+            } else if (id.equals("Application")) {
+                Log.d("Application", "kkk" + id);
+                Intent intent = new Intent(itemView.getContext(), ApplicationFormActivityMenu.class);
+                intent.putExtra("keyName", "Application");
+                itemView.getContext().startActivity(intent);
+            }
         }
     }
 }

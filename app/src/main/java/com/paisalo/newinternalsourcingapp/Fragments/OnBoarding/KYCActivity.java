@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.Window;
 import android.widget.Button;
@@ -31,17 +30,13 @@ public class KYCActivity extends AppCompatActivity {
 
     private ProgressBar progressBar;
     private int maxProgress = 26;
-/*
-    private EditText[] editTexts;
-*/
 
     private Calendar calendar;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_kycactivirty);
+        setContentView(R.layout.activity_kycactivity);
 
         progressBar = findViewById(R.id.simpleProgressBar);
         progressBar.setMax(maxProgress);
@@ -90,21 +85,6 @@ public class KYCActivity extends AppCompatActivity {
                 showGenderMenu(v, editTextGender);
             }
         });
-
-      /*  for (final EditText editText : ) {
-            editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View view, boolean hasFocus) {
-                    if (!hasFocus) {
-                        if (isEmpty(editText)) {
-                            progressBar.incrementProgressBy(-1);
-                        } else {
-                            progressBar.incrementProgressBy(1);
-                        }
-                    }
-                }
-            });
-        }*/
 
         submitButton = findViewById(R.id.button);
         submitButton.setOnClickListener(new View.OnClickListener() {
@@ -179,24 +159,11 @@ public class KYCActivity extends AppCompatActivity {
         ageEditText.setText(String.valueOf(age));
     }
 
-   /* private void submitData() {
-        showToast("Data submitted successfully.");
-    }*/
-
-
     private void showPopupWithBlur() {
-        // Inflate the custom dialog layout
-  //      View popupView = LayoutInflater.from(this).inflate(R.layout.popup, null);
 
-        // Create the custom dialog
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.DECOR_CAPTION_SHADE_LIGHT);
-    //    dialog.setContentView(popupView);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-
-
-        // Show the popup
         dialog.show();
 
     }

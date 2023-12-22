@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
@@ -12,8 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.paisalo.newinternalsourcingapp.Activities.ManagerList;
-import com.paisalo.newinternalsourcingapp.Adapters.ViewPagerAdapter;
-import com.paisalo.newinternalsourcingapp.R;
 import com.paisalo.newinternalsourcingapp.databinding.FragmentOnBoardBinding;
 
 
@@ -37,8 +34,6 @@ public class OnBoardFragment extends Fragment {
                 startActivity(kycIntent);
             }
         });
-
-
 
         binding.esign.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +60,15 @@ public class OnBoardFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(requireActivity(), ManagerList.class);
                 intent.putExtra("keyName", "HVisit");
+                startActivity(intent);
+            }
+        });
+
+        binding.collection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(requireActivity(), ManagerList.class);
+                intent.putExtra("keyName", "Collection");
                 startActivity(intent);
             }
         });
