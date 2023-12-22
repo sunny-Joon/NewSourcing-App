@@ -6,6 +6,7 @@
     import com.google.android.material.bottomnavigation.BottomNavigationView;
 
     import androidx.appcompat.app.AppCompatActivity;
+    import androidx.fragment.app.Fragment;
     import androidx.fragment.app.FragmentTransaction;
     import androidx.navigation.NavController;
     import androidx.navigation.Navigation;
@@ -15,8 +16,11 @@
 
     import com.paisalo.newinternalsourcingapp.Adapters.ViewPagerAdapter;
     import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.OnBoardFragment;
+    import com.paisalo.newinternalsourcingapp.Fragments.Profile.ProfileFragment;
+    import com.paisalo.newinternalsourcingapp.Fragments.collection.CollectionFragment;
+    import com.paisalo.newinternalsourcingapp.Fragments.home.HomeFragment;
+    import com.paisalo.newinternalsourcingapp.Fragments.leaderboard.LeaderBoardFragment;
     import com.paisalo.newinternalsourcingapp.R;
-    import com.paisalo.newinternalsourcingapp.Utils.BlurUtils;
     import com.paisalo.newinternalsourcingapp.Utils.TiltTransformer;
     import com.paisalo.newinternalsourcingapp.databinding.ActivityMainBinding;
 
@@ -41,10 +45,7 @@
                 @Override
                 public void onPageSelected(int position) {
                     if (position == 1) {
-                        // Create and start the new Intent here
-    //                    Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
-    //                    startActivity(intent);
-    //                    overridePendingTransition(R.anim.fade_out, R.anim.fade_out);  // Use the same animation for both to create a fade-out effect
+
                         binding.mainActViewPager.setVisibility(View.GONE);
                     }
                 }
@@ -64,16 +65,41 @@
             NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
             NavigationUI.setupWithNavController(binding.navView, navController);
 
-            binding.onboard.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    binding.onboard.setImageResource(R.drawable.red_addbutton_ic);
-                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.nav_host_fragment_activity_main, new OnBoardFragment());
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
+            navView.setOnNavigationItemSelectedListener(item -> {
+                switch (item.getItemId()) {
+                    case R.id.navigation_home:
+                        binding.onboard.setImageResource(R.drawable.addbutton_ic);
+                        openFragment(new HomeFragment());
+                        break;
+                    case R.id.navigation_leaderboard:
+                        binding.onboard.setImageResource(R.drawable.addbutton_ic);
+                        openFragment(new LeaderBoardFragment());
+                        break;
+                    case R.id.navigation_collection:
+                        binding.onboard.setImageResource(R.drawable.addbutton_ic);
+                        openFragment(new CollectionFragment());
+                        break;
+                    case R.id.navigation_profile:
+                        binding.onboard.setImageResource(R.drawable.addbutton_ic);
+                        openFragment(new ProfileFragment());
+                        break;
                 }
+                return true;
             });
+
+            binding.onboard.setOnClickListener(view -> {
+                binding.onboard.setImageResource(R.drawable.red_addbutton_ic);
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.nav_host_fragment_activity_main, new OnBoardFragment());
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            });
+        }
+        private void openFragment(Fragment fragment) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.nav_host_fragment_activity_main, fragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
         }
     }
 

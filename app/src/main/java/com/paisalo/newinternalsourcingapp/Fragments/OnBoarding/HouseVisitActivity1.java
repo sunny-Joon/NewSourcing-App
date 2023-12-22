@@ -27,7 +27,6 @@ public class HouseVisitActivity1 extends AppCompatActivity {
         form.setEnabled(false);
         form.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.grey)));
 
-
         confirmationBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
