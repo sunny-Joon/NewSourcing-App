@@ -50,4 +50,16 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     //glide dependency for gif
     implementation 'com.github.bumptech.glide:glide:4.16.0'
+
+
+    implementation 'com.google.zxing:core:3.5.0'
+    implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
+
+
+    // Room Database dependencies
+    implementation "androidx.room:room-runtime:2.6.1"
+    annotationProcessor "androidx.room:room-compiler:2.6.1"
+
+    // Optionally, add this dependency for Room Database testing support
+    testImplementation "androidx.room:room-testing:2.6.1"
 }

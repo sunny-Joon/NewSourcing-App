@@ -1017,21 +1017,21 @@
 
                         <CheckBox
                             android:id="@+id/buildType"
-                            style="@style/CustomCheckboxStyle"
+                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/point1.1" />
 
                         <CheckBox
                             android:id="@+id/approvedLocation"
-                            style="@style/CustomCheckboxStyle"
+                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/point1.2" />
 
                         <CheckBox
                             android:id="@+id/cpfCriteria"
-                            style="@style/CustomCheckboxStyle"
+                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/point1.3" />
@@ -1081,42 +1081,42 @@
 
                         <CheckBox
                             android:id="@+id/cpfAddressVerification"
-                            style="@style/CustomCheckboxStyle"
+                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/point2.1" />
 
                         <CheckBox
                             android:id="@+id/IdVerification"
-                            style="@style/CustomCheckboxStyle"
+                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/point2.2" />
 
                         <CheckBox
                             android:id="@+id/addressVerification"
-                            style="@style/CustomCheckboxStyle"
+                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/point2.3" />
 
                         <CheckBox
                             android:id="@+id/ageVerification"
-                            style="@style/CustomCheckboxStyle"
+                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/point2.4" />
 
                         <CheckBox
                             android:id="@+id/cpfRecentAddressVerification"
-                            style="@style/CustomCheckboxStyle"
+                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/point2.5" />
 
                         <CheckBox
                             android:id="@+id/stampOnPhotocopy"
-                            style="@style/CustomCheckboxStyle"
+                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/point2.6" />
@@ -1166,7 +1166,7 @@
 
                         <CheckBox
                             android:id="@+id/lastLoanVerification"
-                            style="@style/CustomCheckboxStyle"
+                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/point3.1" />
@@ -1188,14 +1188,14 @@
 
                         <CheckBox
                             android:id="@+id/absentReason"
-                            style="@style/CustomCheckboxStyle"
+                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/point3.3" />
 
                         <CheckBox
                             android:id="@+id/repaymentFault"
-                            style="@style/CustomCheckboxStyle"
+                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/point3.4" />
@@ -1247,21 +1247,21 @@
 
                         <CheckBox
                             android:id="@+id/reasonVerification"
-                            style="@style/CustomCheckboxStyle"
+                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/point4.1" />
 
                         <CheckBox
                             android:id="@+id/isAppliedAmountAppropriate"
-                            style="@style/CustomCheckboxStyle"
+                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/point4.2" />
 
                         <CheckBox
                             android:id="@+id/familyAwareness"
-                            style="@style/CustomCheckboxStyle"
+                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/point4.3" />
@@ -1319,42 +1319,42 @@
 
                         <CheckBox
                             android:id="@+id/loanRelatedToBusiness"
-                            style="@style/CustomCheckboxStyle"
+                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/point5.1" />
 
                         <CheckBox
                             android:id="@+id/IsBusinessAppropriate"
-                            style="@style/CustomCheckboxStyle"
+                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/point5.2" />
 
                         <CheckBox
                             android:id="@+id/repayEligibility"
-                            style="@style/CustomCheckboxStyle"
+                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/point5.3" />
 
                         <CheckBox
                             android:id="@+id/surplusVerification"
-                            style="@style/CustomCheckboxStyle"
+                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/point5.4" />
 
                         <CheckBox
                             android:id="@+id/incomeVerification"
-                            style="@style/CustomCheckboxStyle"
+                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/point5.5" />
 
                         <CheckBox
                             android:id="@+id/businessVerification"
-                            style="@style/CustomCheckboxStyle"
+                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/point5.6" />
@@ -1406,35 +1406,35 @@
 
                         <CheckBox
                             android:id="@+id/supportiveToGroup"
-                            style="@style/CustomCheckboxStyle"
+                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/point6.1" />
 
                         <CheckBox
                             android:id="@+id/comissionDemand"
-                            style="@style/CustomCheckboxStyle"
+                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/point6.2" />
 
                         <CheckBox
                             android:id="@+id/groupReadyToVilay"
-                            style="@style/CustomCheckboxStyle"
+                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/point6.3" />
 
                         <CheckBox
                             android:id="@+id/groupHasBloodRelation"
-                            style="@style/CustomCheckboxStyle"
+                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/point6.4" />
 
                         <CheckBox
                             android:id="@+id/understandsInsurance"
-                            style="@style/CustomCheckboxStyle"
+                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/point6.5" />
@@ -1486,28 +1486,28 @@
 
                         <CheckBox
                             android:id="@+id/verifyExternalLoan"
-                            style="@style/CustomCheckboxStyle"
+                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/point7.1" />
 
                         <CheckBox
                             android:id="@+id/understandsFaultPolicy"
-                            style="@style/CustomCheckboxStyle"
+                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/point7.2" />
 
                         <CheckBox
                             android:id="@+id/IsLoanAmountAppropriate"
-                            style="@style/CustomCheckboxStyle"
+                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/point7.3" />
 
                         <CheckBox
                             android:id="@+id/toatlDebtUnderLimit"
-                            style="@style/CustomCheckboxStyle"
+                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/point7.4" />
@@ -1565,49 +1565,49 @@
 
                         <CheckBox
                             android:id="@+id/workingPlaceVerification"
-                            style="@style/CustomCheckboxStyle"
+                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/report.1" />
 
                         <CheckBox
                             android:id="@+id/IsWorkingPlaceValid"
-                            style="@style/CustomCheckboxStyle"
+                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/report.2" />
 
                         <CheckBox
                             android:id="@+id/workingPlacedescription"
-                            style="@style/CustomCheckboxStyle"
+                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/report.3" />
 
                         <CheckBox
                             android:id="@+id/workExperience"
-                            style="@style/CustomCheckboxStyle"
+                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/report.4" />
 
                         <CheckBox
                             android:id="@+id/seasonDependency"
-                            style="@style/CustomCheckboxStyle"
+                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/report.5" />
 
                         <CheckBox
                             android:id="@+id/stockVerification"
-                            style="@style/CustomCheckboxStyle"
+                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/report.6" />
 
                         <CheckBox
                             android:id="@+id/sufficientAmount"
-                            style="@style/CustomCheckboxStyle"
+                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/report.9" />

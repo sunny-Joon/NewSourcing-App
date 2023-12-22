@@ -9,8 +9,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
-import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.paisalo.newinternalsourcingapp.Fragments.ApplicationFormFragments.AadhaarFragment;
 import com.paisalo.newinternalsourcingapp.Fragments.ApplicationFormFragments.FamilyBorrowingsFragment;
@@ -24,7 +22,6 @@ import com.paisalo.newinternalsourcingapp.R;
 public class ApplicationFormActivity extends AppCompatActivity {
 
     private ViewPager2 viewPager;
-    private TabLayout tabLayout;
     private MaterialToolbar toolbar;
 
     @Override
@@ -33,61 +30,66 @@ public class ApplicationFormActivity extends AppCompatActivity {
         setContentView(R.layout.activity_application_form);
 
         viewPager = findViewById(R.id.viewPager);
-        tabLayout = findViewById(R.id.tabLayout);
         toolbar = findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
 
-        viewPager.setAdapter(new MyPagerAdapter(this));
+        String fragmentId = getIntent().getStringExtra("Id");
 
-        new TabLayoutMediator(tabLayout, viewPager, (tab, position) ->
-                tab.setText(MyPagerAdapter.TAB_TITLES[position])
-        ).attach();
-    }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+        Fragment initialFragment = getInitialFragment(fragmentId);
+
+        viewPager.setAdapter(new MyPagerAdapter(this, initialFragment));
     }
 
+    private Fragment getInitialFragment(String fragmentId) {
+        switch (fragmentId) {
+            case "aadhaar":
+                return new AadhaarFragment();
+            case "personalDetails":
+                return new PersonalDetailsFragment();
+            case "financialInfo":
+                return new FinancialInfoFragment();
+            case "familyIncome":
+                return new FamilyMembersIncomeFragment();
+            case "borrowings":
+                return new FamilyBorrowingsFragment();
+            case "guarantors":
+                return new GuarantorsFragment();
+            case "kycScanning":
+                return new KycScanningFragment();
+
+            default:
+                return new AadhaarFragment();
+        }
+    }
 
     private static class MyPagerAdapter extends FragmentStateAdapter {
 
-        private static final String[] TAB_TITLES = {
-                "Aadhaar", "Personal Details", "Financial Info", "Family Income", "Borrowings",
-                "Guarantors", "KYC Scanning"
-        };
+        private final Fragment initialFragment;
 
-        public MyPagerAdapter(FragmentActivity fragmentActivity) {
+        public MyPagerAdapter(FragmentActivity fragmentActivity, Fragment initialFragment) {
             super(fragmentActivity);
+            this.initialFragment = initialFragment;
         }
 
         @NonNull
         @Override
         public Fragment createFragment(int position) {
-            switch (position) {
-                case 0:
-                    return new AadhaarFragment();
-                case 1:
-                    return new PersonalDetailsFragment();
-                case 2:
-                    return new FinancialInfoFragment();
-                case 3:
-                    return new FamilyMembersIncomeFragment();
-                case 4:
-                    return new FamilyBorrowingsFragment();
-                case 5:
-                    return new GuarantorsFragment();
-                case 6:
-                    return new KycScanningFragment();
-                default:
-                    return new AadhaarFragment();
+            if (position == 0) {
+                return initialFragment;
             }
+            return new AadhaarFragment();
         }
 
         @Override
         public int getItemCount() {
-            return TAB_TITLES.length;
+            return 1;
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
     }
 }

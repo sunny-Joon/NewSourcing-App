@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,6 +17,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.paisalo.newinternalsourcingapp.Activities.BorrowerListActivity;
+import com.paisalo.newinternalsourcingapp.Activities.DownloadDocumentActivity;
 import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.HouseVisitActivity1;
 import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.KYCActivity;
 import com.paisalo.newinternalsourcingapp.Modelclasses.ManagerModel;
@@ -95,10 +99,12 @@ public class ManagerListAdapter extends RecyclerView.Adapter<ManagerListAdapter.
                 itemView.getContext().startActivity(intent);
             }
             else if (id.equals("Esign")) {
-                Log.d("Esign","kkk"+id);
+
+                showPopup();
+                /*Log.d("Esign","kkk"+id);
                 Intent intent = new Intent(itemView.getContext(), BorrowerListActivity.class);
                 intent.putExtra("keyName", "Esign");
-                itemView.getContext().startActivity(intent);
+                itemView.getContext().startActivity(intent);*/
             }else if (id.equals("HVisit")) {
                 Log.d("Hvisit","kkk"+id);
                 Intent intent = new Intent(itemView.getContext(), HouseVisitActivity1.class);
@@ -106,5 +112,36 @@ public class ManagerListAdapter extends RecyclerView.Adapter<ManagerListAdapter.
             }
 
         }
+        public void showPopup() {
+            View popupView = LayoutInflater.from(itemView.getContext()).inflate(R.layout.loanpopup, null);
+
+            PopupWindow popupWindow = new PopupWindow(
+                    popupView,
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+
+            popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
+
+            TextView application = popupView.findViewById(R.id.application);
+            application.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    popupWindow.dismiss();
+                }
+            });
+
+            TextView documentation = popupView.findViewById(R.id.documentation);
+            documentation.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(itemView.getContext(), DownloadDocumentActivity.class);
+                    itemView.getContext().startActivity(intent);
+                    popupWindow.dismiss();
+                }
+            });
+        }
+
     }
 }

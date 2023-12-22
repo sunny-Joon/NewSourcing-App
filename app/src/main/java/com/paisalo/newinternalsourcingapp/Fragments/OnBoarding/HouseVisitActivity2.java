@@ -3,20 +3,16 @@ package com.paisalo.newinternalsourcingapp.Fragments.OnBoarding;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -27,43 +23,22 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
-
-import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.R;
-
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
-
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HouseVisitActivity2 extends AppCompatActivity {
 
     public static final String CAMERA_PREF = "camera_pref";
     private static final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
     private static final String ALLOW_KEY = "ALLOWED";
-    private Uri uriPicture;
-    Uri imageUri;
 
-    private ProgressDialog progressDialog;
-
-    private Bitmap bitmap;
-    Retrofit retrofit;
     CheckBox buildType,approvedLocation,cpfCriteria,cpfAddressVerification,IdVerification,addressVerification,ageVerification,cpfRecentAddressVerification
             ,stampOnPhotocopy,lastLoanVerification,absentReason,repaymentFault,reasonVerification,isAppliedAmountAppropriate,familyAwareness,loanRelatedToBusiness,
             IsBusinessAppropriate,repayEligibility,surplusVerification,incomeVerification,businessVerification,comissionDemand,supportiveToGroup,groupReadyToVilay,groupHasBloodRelation,
@@ -91,12 +66,6 @@ public class HouseVisitActivity2 extends AppCompatActivity {
 
     static File photoFile = null;
 
-//    @Override
-//    protected void onCreate(@Nullable Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.secondactivity_home);
-//    }
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -120,7 +89,6 @@ public class HouseVisitActivity2 extends AppCompatActivity {
         alertD.show();
     }
 
-
     @Override
     public boolean onSupportNavigateUp() {
         AlertDialog.Builder alertD=new AlertDialog.Builder(HouseVisitActivity2.this);
@@ -131,9 +99,9 @@ public class HouseVisitActivity2 extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
                 finish();
-
             }
         });
+
         alertD.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -147,7 +115,6 @@ public class HouseVisitActivity2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_house_visit2);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent intent = getIntent();
         fiNo = intent.getStringExtra("FiCode");
         rentOfHouse = intent.getStringExtra("Rent_of_House");
@@ -184,7 +151,7 @@ public class HouseVisitActivity2 extends AppCompatActivity {
 
         loanUsagePercentage = findViewById(R.id.loanUsagePercentage);
 
-        /*CheckBox*/
+        CheckBox
         buildType = findViewById(R.id.buildType);
         approvedLocation = findViewById(R.id.approvedLocation);
         cpfCriteria = findViewById(R.id.cpfCriteria);

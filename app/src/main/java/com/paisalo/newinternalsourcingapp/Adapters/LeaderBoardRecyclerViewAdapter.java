@@ -1,13 +1,18 @@
 package com.paisalo.newinternalsourcingapp.Adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,16 +38,19 @@ public class LeaderBoardRecyclerViewAdapter extends RecyclerView.Adapter<LeaderB
         return new ViewHolder(view);
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         LeaderboardEntry entry = leaderboardEntries.get(position);
         holder.bind(entry);
 
-        // Check if the current item's sno is 9 and change the background color
         if (entry.getsno().equals("9")) {
-            holder.itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.green)); // Use your color resource here
+            int whiteColor = context.getResources().getColor(R.color.white);
+            int transparentWhite = Color.argb(150, Color.red(whiteColor), Color.green(whiteColor), Color.blue(whiteColor));
+
+            holder.linearlayout.setBackgroundColor(transparentWhite);
+
         } else {
-            // Reset the background color for other items
             holder.itemView.setBackgroundColor(Color.TRANSPARENT);
         }
     }
@@ -54,12 +62,14 @@ public class LeaderBoardRecyclerViewAdapter extends RecyclerView.Adapter<LeaderB
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+        LinearLayout linearlayout;
         private TextView snoTextView;
         private TextView nameTextView;
         private TextView scoreTextView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            linearlayout = itemView.findViewById(R.id.itemlayout);
             snoTextView = itemView.findViewById(R.id.Snumber);
             nameTextView = itemView.findViewById(R.id.name);
             scoreTextView = itemView.findViewById(R.id.points);

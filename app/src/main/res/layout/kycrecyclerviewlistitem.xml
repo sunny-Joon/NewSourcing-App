@@ -101,6 +101,8 @@
                         android:layout_height="match_parent"
                         android:layout_alignParentEnd="true"
                         android:src="@drawable/take_photograph" />
+
+
                 </LinearLayout>
             </LinearLayout>
 
