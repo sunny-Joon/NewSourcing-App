@@ -388,6 +388,7 @@
                 android:id="@+id/confirmationBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+
                 android:button="@drawable/customcheckbox_grey_green"
                 android:text="Check this box,If above information is correct."
                 android:textColor="@color/white" />

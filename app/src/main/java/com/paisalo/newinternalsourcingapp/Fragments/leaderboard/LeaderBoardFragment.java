@@ -59,6 +59,7 @@ public class LeaderBoardFragment extends Fragment {
         leaderBoardRecyclerViewAdapter = new LeaderBoardRecyclerViewAdapter(requireContext(), leaderboardEntries);
         recyclerView.setAdapter(leaderBoardRecyclerViewAdapter);
 
+
        /* ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) binding.divider.getLayoutParams();
 
         layoutParams.horizontalBias = 0.8f;

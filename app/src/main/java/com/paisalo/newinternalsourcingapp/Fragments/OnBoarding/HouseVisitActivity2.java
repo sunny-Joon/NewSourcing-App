@@ -13,11 +13,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -27,6 +29,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
+
 import com.paisalo.newinternalsourcingapp.R;
 import java.io.File;
 import java.io.IOException;
@@ -43,12 +50,9 @@ public class HouseVisitActivity2 extends AppCompatActivity {
     public static final String CAMERA_PREF = "camera_pref";
     private static final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
     private static final String ALLOW_KEY = "ALLOWED";
+
     Uri imageUri;
 
-    private ProgressDialog progressDialog;
-
-    private Bitmap bitmap;
-    Retrofit retrofit;
     CheckBox buildType,approvedLocation,cpfCriteria,cpfAddressVerification,IdVerification,addressVerification,ageVerification,cpfRecentAddressVerification
             ,stampOnPhotocopy,lastLoanVerification,absentReason,repaymentFault,reasonVerification,isAppliedAmountAppropriate,familyAwareness,loanRelatedToBusiness,
             IsBusinessAppropriate,repayEligibility,surplusVerification,incomeVerification,businessVerification,comissionDemand,supportiveToGroup,groupReadyToVilay,groupHasBloodRelation,
@@ -81,16 +85,6 @@ public class HouseVisitActivity2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_house_visit2);
 
-//        Intent intent = getIntent();
-//        fiNo = intent.getStringExtra("FiCode");
-//        rentOfHouse = intent.getStringExtra("Rent_of_House");
-//        groupCode = intent.getStringExtra("GroupCode");
-//        cityCode = intent.getStringExtra("CityCode");
-//        latitude = intent.getStringExtra("Latitude");
-//        longitude = intent.getStringExtra("Longitude");
-//        creator = intent.getStringExtra("Creator");
-//        empCode = "121";
-
         /*Edit Text*/
         branchName = findViewById(R.id.branchName);
         area = findViewById(R.id.area);
@@ -117,7 +111,7 @@ public class HouseVisitActivity2 extends AppCompatActivity {
 
         loanUsagePercentage = findViewById(R.id.loanUsagePercentage);
 
-        /*CheckBox*/
+        CheckBox
         buildType = findViewById(R.id.buildType);
         approvedLocation = findViewById(R.id.approvedLocation);
         cpfCriteria = findViewById(R.id.cpfCriteria);

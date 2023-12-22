@@ -17,6 +17,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.paisalo.newinternalsourcingapp.Activities.BorrowerListActivity;
+
 import com.paisalo.newinternalsourcingapp.Activities.CollectionActivity;
 import com.paisalo.newinternalsourcingapp.Activities.CustomerListActivity;
 import com.paisalo.newinternalsourcingapp.Activities.DownloadDocumentActivity;
@@ -132,6 +133,7 @@ public class ManagerListAdapter extends RecyclerView.Adapter<ManagerListAdapter.
             application.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     popupWindow.dismiss();
                 }
             });

@@ -543,7 +543,6 @@
 
         </androidx.cardview.widget.CardView>
 
-
         <Button
             android:id="@+id/aadhaarSubmitButton"
             android:layout_width="match_parent"

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
+
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.paisalo.newinternalsourcingapp.R;
 public class ApplicationFormActivityMenu extends AppCompatActivity {
 
     CardView aadhaar,personalDetails,borrowings,guarantors,kycScanning,financialInfo,familyIncome;
+
     CheckBox kycScanningCheckBox,gurrantorCheckBox,borrowingsCheckBox,familyCheckBox,financialInfoCheckBox,personaldetailCheckBox,aadhaarCheckBox;
 
     @Override
@@ -28,6 +30,7 @@ public class ApplicationFormActivityMenu extends AppCompatActivity {
         kycScanning = findViewById(R.id.kycScanning);
         financialInfo = findViewById(R.id.financialInfo);
         familyIncome = findViewById(R.id.familyIncome);
+
 
         aadhaarCheckBox = findViewById(R.id.aadhaarCheckBox);
         personaldetailCheckBox = findViewById(R.id.personaldetailCheckBox);
@@ -106,6 +109,7 @@ public class ApplicationFormActivityMenu extends AppCompatActivity {
         });
 
     }
+
     private void checkCheckboxBasedOnId(String id) {
         switch (id) {
             case "aadhaar":
