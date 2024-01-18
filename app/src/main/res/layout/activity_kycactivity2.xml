@@ -316,7 +316,7 @@
             android:layout_margin="2dp"
             android:elevation="2dp">
             <EditText
-                android:id="@+id/loanincome"
+                android:id="@+id/loanAmount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"/>

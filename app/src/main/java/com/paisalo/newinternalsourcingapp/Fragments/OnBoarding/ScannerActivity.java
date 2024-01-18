@@ -16,7 +16,6 @@ public class ScannerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kycactivity);
 
-        // Start barcode scanning
         new IntentIntegrator(this).initiateScan();
     }
 
@@ -28,11 +27,9 @@ public class ScannerActivity extends AppCompatActivity {
         if (result != null) {
             if (result.getContents() != null) {
                 String scannedData = result.getContents();
-                // Handle the scanned data as needed (e.g., display it, send it to a server, etc.)
-                // You can add your logic here
+
             } else {
-                // Handle case where user canceled the scan
-                // You can add your logic here
+
             }
         }
     }
