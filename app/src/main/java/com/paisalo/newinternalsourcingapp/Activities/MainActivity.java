@@ -16,7 +16,6 @@
     import com.paisalo.newinternalsourcingapp.Adapters.ViewPagerAdapter;
     import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.OnBoardFragment;
     import com.paisalo.newinternalsourcingapp.R;
-    import com.paisalo.newinternalsourcingapp.Utils.BlurUtils;
     import com.paisalo.newinternalsourcingapp.Utils.TiltTransformer;
     import com.paisalo.newinternalsourcingapp.databinding.ActivityMainBinding;
 

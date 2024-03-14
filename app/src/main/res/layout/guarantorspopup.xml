@@ -1,0 +1,734 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/popupborder"
+    android:elevation="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Guarantor"
+            android:textColor="@color/red"
+            android:layout_marginTop="8dp"
+            android:textSize="@dimen/titleheading"
+            android:fontFamily="@font/visbycfbold"
+            android:textAlignment="center"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="8dp"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="360dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Aadhar_id"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/heading" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_margin="2dp"
+                    app:cardElevation="2dp">
+
+                <EditText
+                    android:id="@+id/editTextAadhar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Aadhaar ID"
+                    android:inputType="number"
+                    android:maxLength="12"
+                    android:padding="10dp" />
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="center|bottom"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="12dp"
+                    app:srcCompat="@drawable/vector" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+        
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Name *"
+            android:textColor="@color/red"
+            android:textSize="@dimen/heading" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_margin="2dp"
+            app:cardElevation="2dp">
+            
+        <EditText
+            android:id="@+id/editTextName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Name" />
+
+        </androidx.cardview.widget.CardView>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2.5"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Age *"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/heading" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_margin="2dp"
+                    app:cardElevation="2dp">
+
+                    <EditText
+                        android:id="@+id/editTextAge"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="Age"/>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="vertical">
+                
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Date Of Birth *"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/heading" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_margin="2dp"
+                    app:cardElevation="2dp">
+
+                <EditText
+                    android:id="@+id/editTextDob"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="DOB"/>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="12dp"
+                android:layout_weight="3"
+                app:srcCompat="@drawable/calender" />
+            
+        </LinearLayout>
+        
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Gender *"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/red"
+            android:textSize="@dimen/heading"
+             />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="2dp"
+            android:layout_margin="2dp">
+
+            <Spinner
+                android:id="@+id/spinnerOptions1"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"/>
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"            
+            android:text="Guardian *"
+            android:textColor="@color/red"
+            android:textSize="@dimen/heading"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_margin="2dp"
+            app:cardElevation="2dp">
+        
+        <EditText
+            android:id="@+id/editTextGuardian"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Guardian"
+            android:padding="10dp" />
+
+        </androidx.cardview.widget.CardView>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Address1 *"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/red"
+            android:textSize="@dimen/heading"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_margin="2dp"
+            app:cardElevation="2dp">
+            
+        <EditText
+            android:id="@+id/editTextAddress1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"            
+            android:hint="Address1"
+            android:padding="10dp" />
+
+        </androidx.cardview.widget.CardView>
+        
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Address2 *"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/red"
+            android:textSize="@dimen/heading"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_margin="2dp"
+            app:cardElevation="2dp">
+        
+        <EditText
+            android:id="@+id/editTextAddress2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Address2"
+            android:padding="10dp" />
+            
+        </androidx.cardview.widget.CardView>
+        
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Address3 *"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/red"
+            android:textSize="@dimen/heading" />
+
+        <EditText
+            android:id="@+id/editTextAddress3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Address3"
+            android:padding="10dp" />
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="City *"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/heading" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_margin="2dp"
+                    app:cardElevation="2dp">
+                    
+                <EditText
+                    android:id="@+id/editTextCity"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="City"
+                    android:padding="10dp" />
+                    
+                </androidx.cardview.widget.CardView>
+                
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Pin Code *"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/heading" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_margin="2dp"
+                    app:cardElevation="2dp">
+                    
+                <EditText
+                    android:id="@+id/editTextPincode"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Pincode"
+                    android:inputType="number"
+                    android:maxLength="6"
+                    android:padding="10dp" />
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+            
+        </LinearLayout>
+        
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="State Name *"
+            android:textColor="@color/red"
+            android:textSize="@dimen/heading" />
+        
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            app:cardElevation="2dp"
+            android:layout_margin="2dp">
+
+            <Spinner
+                android:id="@+id/spinnerOptions2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mobile No *"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/red"
+            android:textSize="@dimen/heading"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_margin="2dp"
+            app:cardElevation="2dp">
+
+        <EditText
+            android:id="@+id/editTextMobile"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Mobile Number"
+            android:inputType="phone"
+            android:maxLength="10"
+            android:padding="10dp" />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Voter Id *"
+            android:textColor="@color/red"
+            android:textSize="@dimen/heading"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_margin="2dp"
+            app:cardElevation="2dp">
+
+        <EditText
+            android:id="@+id/editTextvoterid"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawableRight="@drawable/circlecheck"
+            android:hint="Voter Id"
+            android:maxLength="10"
+            android:padding="10dp" />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Permament Account PAN No *"
+            android:textColor="@color/red"
+            android:textSize="@dimen/heading"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_margin="2dp"
+            app:cardElevation="2dp">
+
+        <EditText
+            android:id="@+id/editTextPAN"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawableRight="@drawable/circlecheck"
+            android:hint="PAN Number"
+            android:maxLength="10"
+            android:padding="10dp" />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Driving license *"
+            android:textColor="@color/red"
+            android:textSize="@dimen/heading"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_margin="2dp"
+            app:cardElevation="2dp">
+
+        <EditText
+            android:id="@+id/drivingLicense"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawableRight="@drawable/circlecheck"
+            android:hint="DL Number"
+            android:maxLength="16"
+            android:padding="10dp" />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Mother First Name *"
+            android:textColor="@color/red"
+            android:textSize="@dimen/heading"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_margin="2dp"
+            app:cardElevation="2dp">
+
+        <EditText
+            android:id="@+id/motherfirstname"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint="Mother First Name"
+            android:padding="10dp" />
+
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mother Middle Name*"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/heading" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_margin="2dp"
+                    app:cardElevation="2dp">
+
+                <EditText
+                    android:id="@+id/mothermiddlename"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Middle Name"
+                    android:padding="10dp" />
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mother Last Name*"
+                android:textColor="@color/red"
+                android:textSize="@dimen/heading" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_margin="2dp"
+                app:cardElevation="2dp">
+
+            <EditText
+                android:id="@+id/motherlastname"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Last Name"
+                android:padding="10dp" />
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Father First Name *"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/red"
+            android:textSize="@dimen/heading"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_margin="2dp"
+            app:cardElevation="2dp">
+
+        <EditText
+            android:id="@+id/fatherfirstname"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Father First Name"
+            android:padding="10dp" />
+
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Father Middle Name*"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/heading" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_margin="2dp"
+                    app:cardElevation="2dp">
+
+                <EditText
+                    android:id="@+id/fathermiddlename"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Middle Name"
+                    android:padding="10dp" />
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Father Last Name*"
+                android:textColor="@color/red"
+                android:textSize="@dimen/heading" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_margin="2dp"
+                app:cardElevation="2dp">
+
+            <EditText
+                android:id="@+id/fatherlastname"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Last Name"
+                android:padding="10dp" />
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Marital Status *"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/red"
+            android:textSize="@dimen/heading"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_margin="2dp"
+            app:cardElevation="2dp">
+
+        <EditText
+            android:id="@+id/maritalstatus"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Marital Status"
+            android:padding="10dp" />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Relationship With Borrower *"
+            android:textColor="@color/red"
+            android:textSize="@dimen/heading"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_margin="2dp"
+            app:cardElevation="2dp">
+
+        <Spinner
+            android:id="@+id/spinnerOptions"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="16dp">
+
+            <Button
+                android:id="@+id/button1"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="2dp"
+                android:backgroundTint="@color/red"
+                android:text="UPDATE"
+                android:textSize="10dp" />
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="2dp"
+                android:backgroundTint="@color/red"
+                android:text="DELETE"
+                android:textSize="10dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>
+
+
+
+
+

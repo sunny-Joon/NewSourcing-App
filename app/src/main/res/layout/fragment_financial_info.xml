@@ -3,12 +3,413 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/red"
     tools:context=".Fragments.ApplicationFormFragments.FinancialInfoFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_marginBottom="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Bank Account Type"
+                android:textSize="@dimen/heading"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/visbycfregular"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginVertical="8dp">
+
+                <Spinner
+                    android:id="@+id/bankAccountType"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Bank Account Number"
+                android:textSize="@dimen/heading"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/visbycfregular"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_weight="1"
+                    android:layout_marginVertical="8dp">
+
+                    <EditText
+                        android:id="@+id/bankAccountNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="number"/>
+
+                </androidx.cardview.widget.CardView>
+
+                <ImageButton
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginHorizontal="12dp"
+                    android:backgroundTint="@color/white"
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:src="@drawable/circlecheck"/>
+
+
+            </LinearLayout>
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Account Opening Date"
+                android:textSize="@dimen/heading"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/visbycfregular"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginVertical="8dp">
+
+                <Spinner
+                    android:id="@+id/accountOpeningDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Bank IFSC Code"
+                android:textSize="@dimen/heading"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/visbycfregular"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginVertical="8dp">
+
+                <EditText
+                    android:id="@+id/bankIFSCCode"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="25dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Income Details"
+                    android:layout_margin="2dp"
+                    android:textAlignment="center"
+                    android:background="@color/darkred"
+                    android:textSize="@dimen/titleheading"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/visbycfbold"/>
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Rental Income"
+                android:textSize="@dimen/heading"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/visbycfregular"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginVertical="8dp">
+
+                <EditText
+                    android:id="@+id/rentalIncome"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="25dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Expense Details"
+                    android:layout_margin="2dp"
+                    android:textAlignment="center"
+                    android:background="@color/darkred"
+                    android:textSize="@dimen/titleheading"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/visbycfbold"/>
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Expense In Rent"
+                android:textSize="@dimen/heading"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/visbycfregular"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginVertical="8dp">
+
+                <EditText
+                    android:id="@+id/expenseInRent"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Expense For Food"
+                android:textSize="@dimen/heading"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/visbycfregular"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginVertical="8dp">
+
+                <EditText
+                    android:id="@+id/expenseForFood"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Expense For Education"
+                android:textSize="@dimen/heading"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/visbycfregular"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginVertical="8dp">
+
+                <EditText
+                    android:id="@+id/expenseForEducation"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Expense For Health"
+                android:textSize="@dimen/heading"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/visbycfregular"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginVertical="8dp">
+
+                <EditText
+                    android:id="@+id/expenseForHealth"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Expense For Travelling"
+                android:textSize="@dimen/heading"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/visbycfregular"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginVertical="8dp">
+
+                <EditText
+                    android:id="@+id/expenseForTravelling"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Expense For Entertainment"
+                android:textSize="@dimen/heading"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/visbycfregular"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginVertical="8dp">
+
+                <EditText
+                    android:id="@+id/expenseForEntertainment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Any Other Expense"
+                android:textSize="@dimen/heading"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/visbycfregular"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginVertical="8dp">
+
+                <EditText
+                    android:id="@+id/anyOtherExpense"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="25dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="House Details"
+                    android:layout_margin="2dp"
+                    android:textAlignment="center"
+                    android:background="@color/darkred"
+                    android:textSize="@dimen/titleheading"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/visbycfbold"/>
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="House Type"
+                android:textSize="@dimen/heading"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/visbycfregular"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginVertical="8dp">
+
+                <Spinner
+                    android:id="@+id/houseType"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Roof Type"
+                android:textSize="@dimen/heading"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/visbycfregular"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginVertical="8dp">
+
+                <Spinner
+                    android:id="@+id/roofType"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Personal Toilet"
+                android:textSize="@dimen/heading"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/visbycfregular"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginVertical="8dp">
+
+                <Spinner
+                    android:id="@+id/personalToilet"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:text="submit"
+                android:layout_margin="16dp"
+                android:textSize="@dimen/heading"
+                android:fontFamily="@font/visbycfbold"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/red" />
+        </LinearLayout>
+
+    </ScrollView>
 
 </FrameLayout>
