@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -47,9 +48,20 @@ public class LeaderBoardFragment extends Fragment {
         leaderboardEntries.add(new LeaderboardEntry("8", "Grace", "1400"));
         leaderboardEntries.add(new LeaderboardEntry("9", "Hank", "1200"));
         leaderboardEntries.add(new LeaderboardEntry("10", "Ivy", "1000"));
+        leaderboardEntries.add(new LeaderboardEntry("11", "Eve", "1800"));
+        leaderboardEntries.add(new LeaderboardEntry("12", "Frank", "1600"));
+        leaderboardEntries.add(new LeaderboardEntry("13", "Grace", "1400"));
+        leaderboardEntries.add(new LeaderboardEntry("14", "Hank", "1200"));
+        leaderboardEntries.add(new LeaderboardEntry("15", "Ivy", "1000"));
 
         leaderBoardRecyclerViewAdapter = new LeaderBoardRecyclerViewAdapter(requireContext(), leaderboardEntries);
         recyclerView.setAdapter(leaderBoardRecyclerViewAdapter);
+
+        ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) binding.divider.getLayoutParams();
+
+        layoutParams.horizontalBias = 0.8f;
+
+        binding.divider.setLayoutParams(layoutParams);
 
         return root;
     }

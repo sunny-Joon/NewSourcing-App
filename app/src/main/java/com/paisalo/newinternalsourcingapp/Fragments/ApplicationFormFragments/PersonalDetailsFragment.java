@@ -15,12 +15,6 @@ public class PersonalDetailsFragment extends Fragment {
     public PersonalDetailsFragment() {
     }
 
-
-    public static PersonalDetailsFragment newInstance(String param1, String param2) {
-        PersonalDetailsFragment fragment = new PersonalDetailsFragment();
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
