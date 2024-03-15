@@ -1,4 +1,4 @@
-package com.paisalo.newinternalsourcingapp.Modelclasses;
+package com.paisalo.newinternalsourcingapp.ModelclassesRoom;
 
 public class ManagerModel {
 

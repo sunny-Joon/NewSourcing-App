@@ -8,7 +8,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import com.paisalo.newinternalsourcingapp.Adapters.ManagerListAdapter;
-import com.paisalo.newinternalsourcingapp.Modelclasses.ManagerModel;
+import com.paisalo.newinternalsourcingapp.ModelclassesRoom.ManagerModel;
 import com.paisalo.newinternalsourcingapp.R;
 
 import java.util.ArrayList;

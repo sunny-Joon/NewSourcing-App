@@ -1,5 +1,6 @@
 package com.paisalo.newinternalsourcingapp.Fragments.OnBoarding;
 
+import androidx.appcompat.app.AppCompatActivity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ImageView;

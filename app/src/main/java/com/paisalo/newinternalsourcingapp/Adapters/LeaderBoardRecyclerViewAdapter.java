@@ -12,7 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.paisalo.newinternalsourcingapp.Modelclasses.LeaderboardEntry;
+import com.paisalo.newinternalsourcingapp.ModelclassesRoom.LeaderboardEntry;
 import com.paisalo.newinternalsourcingapp.R;
 
 import java.util.List;

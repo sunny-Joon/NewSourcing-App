@@ -2,6 +2,7 @@ package com.paisalo.newinternalsourcingapp.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.paisalo.newinternalsourcingapp.Adapters.CustomAdapter;
 import com.paisalo.newinternalsourcingapp.R;
 
 public class DownloadDocumentActivity extends AppCompatActivity {
+
 
     ListView lvLoanDetails;
     String[] loanDetailsArray = {"Loan 1", "Loan 2"};
@@ -24,6 +26,7 @@ public class DownloadDocumentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_download_document);
+
 
         btnLoanDetailsDownloadDoc = findViewById(R.id.btnLoanDetailsDownloadDoc);
         lvLoanDetails = findViewById(R.id.lvLoanDetails);

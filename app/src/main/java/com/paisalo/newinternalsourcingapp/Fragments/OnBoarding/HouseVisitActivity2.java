@@ -1,6 +1,9 @@
 package com.paisalo.newinternalsourcingapp.Fragments.OnBoarding;
 
 
+import androidx.appcompat.app.AppCompatActivity;
+import android.app.ProgressDialog;
+import android.view.View;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -10,6 +13,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -24,18 +28,22 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import com.paisalo.newinternalsourcingapp.R;
-
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import retrofit2.Retrofit;
+import android.net.Uri;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
+
 
 public class HouseVisitActivity2 extends AppCompatActivity {
 
@@ -275,7 +283,8 @@ public class HouseVisitActivity2 extends AppCompatActivity {
 //
 //                            Log.d("Sunny", "onResponse: "+ response.body());
 //                            progressDialog.dismiss();
-//                            showToasts("Data Saved");
+//                            showToasts("DataModel Saved");
+
 //                        }
 //                        @Override
 //                        public void onFailure(Call<JsonObject> call, Throwable t) {

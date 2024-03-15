@@ -1,4 +1,5 @@
-<!-- res/layout/custom_dialog.xml -->
+<?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="300dp"
     android:layout_height="220dp"
@@ -48,8 +49,8 @@
             android:gravity="center_vertical|center_horizontal"
             android:textColor="@color/red"
             android:textSize="16dp"/>
-
     </androidx.cardview.widget.CardView>
 
 
 </LinearLayout>
+

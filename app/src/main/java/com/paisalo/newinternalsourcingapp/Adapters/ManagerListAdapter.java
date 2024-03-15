@@ -8,6 +8,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -15,12 +16,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.paisalo.newinternalsourcingapp.Activities.BorrowerListActivity;
+import com.paisalo.newinternalsourcingapp.Activities.CustomerListActivity;
 import com.paisalo.newinternalsourcingapp.Activities.DownloadDocumentActivity;
 import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.HouseVisitActivity1;
 import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.KYCActivity;
-import com.paisalo.newinternalsourcingapp.Modelclasses.ManagerModel;
+import com.paisalo.newinternalsourcingapp.ModelclassesRoom.ManagerModel;
 import com.paisalo.newinternalsourcingapp.R;
 
 import java.util.List;
@@ -101,13 +102,14 @@ public class ManagerListAdapter extends RecyclerView.Adapter<ManagerListAdapter.
             else if (id.equals("Esign")) {
 
                 showPopup();
-                /*Log.d("Esign","kkk"+id);
-                Intent intent = new Intent(itemView.getContext(), BorrowerListActivity.class);
-                intent.putExtra("keyName", "Esign");
-                itemView.getContext().startActivity(intent);*/
+
             }else if (id.equals("HVisit")) {
                 Log.d("Hvisit","kkk"+id);
                 Intent intent = new Intent(itemView.getContext(), HouseVisitActivity1.class);
+                itemView.getContext().startActivity(intent);
+            }else if (id.equals("Collection")) {
+                Log.d("Collection","kkk"+id);
+                Intent intent = new Intent(itemView.getContext(), CustomerListActivity.class);
                 itemView.getContext().startActivity(intent);
             }
 
@@ -132,6 +134,7 @@ public class ManagerListAdapter extends RecyclerView.Adapter<ManagerListAdapter.
                 }
             });
 
+
            CardView documentation = popupView.findViewById(R.id.loanDocumentation);
             documentation.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -142,6 +145,5 @@ public class ManagerListAdapter extends RecyclerView.Adapter<ManagerListAdapter.
                 }
             });
         }
-
     }
 }

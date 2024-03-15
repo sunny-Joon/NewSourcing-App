@@ -4,14 +4,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CheckBox;
 
 import com.paisalo.newinternalsourcingapp.R;
 
 public class ApplicationFormActivityMenu extends AppCompatActivity {
 
     CardView aadhaar,personalDetails,borrowings,guarantors,kycScanning,financialInfo,familyIncome;
+
+    CheckBox kycScanningCheckBox,gurrantorCheckBox,borrowingsCheckBox,familyCheckBox,financialInfoCheckBox,personaldetailCheckBox,aadhaarCheckBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +30,19 @@ public class ApplicationFormActivityMenu extends AppCompatActivity {
         kycScanning = findViewById(R.id.kycScanning);
         financialInfo = findViewById(R.id.financialInfo);
         familyIncome = findViewById(R.id.familyIncome);
+
+        aadhaarCheckBox = findViewById(R.id.aadhaarCheckBox);
+        personaldetailCheckBox = findViewById(R.id.personaldetailCheckBox);
+        financialInfoCheckBox = findViewById(R.id.financialInfoCheckBox);
+        familyCheckBox = findViewById(R.id.familyCheckBox);
+        borrowingsCheckBox = findViewById(R.id.borrowingsCheckBox);
+        gurrantorCheckBox = findViewById(R.id.gurrantorCheckBox);
+        kycScanningCheckBox = findViewById(R.id.kycScanningCheckBox);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+    //    String currentId = sharedPreferences.getString("CurrentId", "");
+
+//        checkCheckboxBasedOnId(currentId);
 
         aadhaar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,5 +107,31 @@ public class ApplicationFormActivityMenu extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void checkCheckboxBasedOnId(String id) {
+        switch (id) {
+            case "aadhaar":
+                aadhaarCheckBox.setChecked(true);
+                break;
+            case "personalDetails":
+                personaldetailCheckBox.setChecked(true);
+                break;
+            case "borrowings":
+                borrowingsCheckBox.setChecked(true);
+                break;
+            case "guarantors":
+                gurrantorCheckBox.setChecked(true);
+                break;
+            case "kycScanning":
+                kycScanningCheckBox.setChecked(true);
+                break;
+            case "financialInfo":
+                financialInfoCheckBox.setChecked(true);
+                break;
+            case "familyIncome":
+                familyCheckBox.setChecked(true);
+                break;
+        }
     }
 }
