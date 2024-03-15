@@ -283,7 +283,7 @@ public class HouseVisitActivity2 extends AppCompatActivity {
 //
 //                            Log.d("Sunny", "onResponse: "+ response.body());
 //                            progressDialog.dismiss();
-//                            showToasts("Data Saved");
+//                            showToasts("DataModel Saved");
 //                        }
 //                        @Override
 //                        public void onFailure(Call<JsonObject> call, Throwable t) {

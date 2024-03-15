@@ -4,7 +4,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "KYC_Database")
-public class EntityClass {
+public class KycDataClass {
 
     @PrimaryKey(autoGenerate = true)
     public long id;
@@ -56,10 +56,10 @@ public class EntityClass {
     public String loanDuration;
     public String selectedBank;
 
-    public EntityClass() {
+    public KycDataClass() {
     }
 
-    public EntityClass(long id, String fiCode, String aadhaarId, String name, String age, String dob, String gender, String guardian, String relationshipWithBorrower, String address1, String address2, String address3, String city, String pin, String state, String mobile, String voterId, String pan, String drivingLicense, String motherFirstName, String motherMiddleName, String motherLastName, String fatherFirstName, String fatherMiddleName, String fatherLastName, String maritalStatus, String spouseFirstName, String spouseMiddleName, String spouseLastName, String monthlyIncome, String expense, String futureIncome, String agricultureIncome, String pensionIncome, String interestIncome, String otherIncome, String earningMemberType, String earningMemberIncome, String loanAmount, String businessDetails, String loanPurpose, String occupation, String loanDuration, String selectedBank) {
+    public KycDataClass(long id, String fiCode, String aadhaarId, String name, String age, String dob, String gender, String guardian, String relationshipWithBorrower, String address1, String address2, String address3, String city, String pin, String state, String mobile, String voterId, String pan, String drivingLicense, String motherFirstName, String motherMiddleName, String motherLastName, String fatherFirstName, String fatherMiddleName, String fatherLastName, String maritalStatus, String spouseFirstName, String spouseMiddleName, String spouseLastName, String monthlyIncome, String expense, String futureIncome, String agricultureIncome, String pensionIncome, String interestIncome, String otherIncome, String earningMemberType, String earningMemberIncome, String loanAmount, String businessDetails, String loanPurpose, String occupation, String loanDuration, String selectedBank) {
         this.id = id;
         FiCode = fiCode;
         this.aadhaarId = aadhaarId;

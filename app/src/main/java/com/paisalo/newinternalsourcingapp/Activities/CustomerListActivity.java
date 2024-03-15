@@ -1,7 +1,5 @@
 package com.paisalo.newinternalsourcingapp.Activities;
 
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -9,21 +7,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
 
 import com.paisalo.newinternalsourcingapp.Adapters.CustomerListAdapter;
 import com.paisalo.newinternalsourcingapp.Adapters.EMI_RecyclerviewAdapter;
-import com.paisalo.newinternalsourcingapp.Modelclasses.CustomerModel;
-import com.paisalo.newinternalsourcingapp.Modelclasses.EmiModel;
+import com.paisalo.newinternalsourcingapp.ModelclassesRoom.CustomerModel;
+import com.paisalo.newinternalsourcingapp.ModelclassesRoom.EmiModel;
 import com.paisalo.newinternalsourcingapp.R;
 import com.paisalo.newinternalsourcingapp.Utils.GlobalClass;
 

@@ -3,22 +3,16 @@ package com.paisalo.newinternalsourcingapp.Adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.paisalo.newinternalsourcingapp.Activities.DownloadDocumentActivity;
-import com.paisalo.newinternalsourcingapp.Modelclasses.CustomerModel;
+import com.paisalo.newinternalsourcingapp.ModelclassesRoom.CustomerModel;
 import com.paisalo.newinternalsourcingapp.R;
 
 import java.util.List;

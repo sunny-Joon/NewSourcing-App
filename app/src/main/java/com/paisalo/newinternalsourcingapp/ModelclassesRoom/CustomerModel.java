@@ -1,6 +1,4 @@
-package com.paisalo.newinternalsourcingapp.Modelclasses;
-
-import android.widget.TextView;
+package com.paisalo.newinternalsourcingapp.ModelclassesRoom;
 
 public class CustomerModel {
     private String customerName;

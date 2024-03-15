@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.paisalo.newinternalsourcingapp.Modelclasses.KYCScanningModel;
+import com.paisalo.newinternalsourcingapp.ModelclassesRoom.KYCScanningModel;
 import com.paisalo.newinternalsourcingapp.R;
 
 import java.util.List;

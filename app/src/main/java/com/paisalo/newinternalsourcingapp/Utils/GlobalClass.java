@@ -53,28 +53,32 @@ public class GlobalClass {
     }
 
     private static Bitmap blurBitmap(Context context, Bitmap bitmap, float radius) {
-        // Create renderscript
-        RenderScript rs = RenderScript.create(context);
 
-        // Create an allocation from the bitmap and an allocation for the blurred output
-        Allocation input = Allocation.createFromBitmap(rs, bitmap);
-        Allocation output = Allocation.createTyped(rs, input.getType());
+            // Create renderscript
+            RenderScript rs = RenderScript.create(context);
 
-        // Create a blur script and set the input
-        ScriptIntrinsicBlur blurScript = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs));
-        blurScript.setInput(input);
+            // Create an allocation from the bitmap and an allocation for the blurred output
+            Allocation input = Allocation.createFromBitmap(rs, bitmap);
+            Allocation output = Allocation.createTyped(rs, input.getType());
 
-        // Set the blur radius and apply the blur
-        blurScript.setRadius(radius);
-        blurScript.forEach(output);
+            // Create a blur script and set the input
+            ScriptIntrinsicBlur blurScript = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs));
+            blurScript.setInput(input);
 
-        // Copy the blurred output into a new bitmap
-        Bitmap blurredBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), bitmap.getConfig());
-        output.copyTo(blurredBitmap);
+            // Set the blur radius and apply the blur
+            blurScript.setRadius(radius);
+            blurScript.forEach(output);
 
-        // Release resources
-        rs.destroy();
+            // Create a new bitmap for the blurred output
+            Bitmap blurredBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), bitmap.getConfig());
 
-        return blurredBitmap;
+            // Copy the blurred output into the new bitmap
+            output.copyTo(blurredBitmap);
+
+            // Release resources
+            rs.destroy();
+
+            return blurredBitmap;
+
     }
 }

@@ -87,7 +87,8 @@
                         android:id="@+id/et_login_username"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
-                        android:text="sunny"
+                        android:text="GRST000223"
+                        android:inputType="textAutoComplete|textAutoCorrect|textCapCharacters"
                         android:backgroundTint="@color/white"
                         android:drawablePadding="10dp"
                         android:imeOptions="actionNext"
@@ -155,7 +156,7 @@
                         android:backgroundTint="@color/white"
                         android:drawablePadding="10dp"
                         android:imeOptions="actionGo"
-                        android:text="sunny"
+                        android:text="12345"
                         android:inputType="numberPassword"
                         android:paddingStart="15dp"
                         android:textSize="18dp" />

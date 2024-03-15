@@ -15,7 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.paisalo.newinternalsourcingapp.Adapters.KycRecyclerViewAdapter;
-import com.paisalo.newinternalsourcingapp.Modelclasses.KYCScanningModel;
+import com.paisalo.newinternalsourcingapp.ModelclassesRoom.KYCScanningModel;
 import com.paisalo.newinternalsourcingapp.R;
 import java.util.ArrayList;
 import java.util.List;

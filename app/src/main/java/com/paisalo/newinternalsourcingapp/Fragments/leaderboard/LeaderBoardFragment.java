@@ -12,13 +12,17 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.paisalo.newinternalsourcingapp.Adapters.LeaderBoardRecyclerViewAdapter;
-import com.paisalo.newinternalsourcingapp.Modelclasses.LeaderboardEntry;
+import com.paisalo.newinternalsourcingapp.ModelclassesRoom.LeaderboardEntry;
 import com.paisalo.newinternalsourcingapp.R;
 import com.paisalo.newinternalsourcingapp.databinding.FragmentLeaderBoardBinding;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import pl.droidsonroids.gif.GifImageView;
 
 public class LeaderBoardFragment extends Fragment {
 
@@ -33,6 +37,13 @@ public class LeaderBoardFragment extends Fragment {
         LeaderBoardViewModel leaderBoardViewModel = new ViewModelProvider(this).get(LeaderBoardViewModel.class);
         binding = FragmentLeaderBoardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        GifImageView gif = root.findViewById(R.id.gif);
+
+        Glide.with(this)
+                .load(R.drawable.confeeti) // Replace 'your_gif_resource' with your GIF resource ID
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(gif);
 
         // Initialize RecyclerView
         recyclerView = root.findViewById(R.id.leaderboardRecyclerView);

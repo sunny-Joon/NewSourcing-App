@@ -8,7 +8,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -18,15 +17,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.paisalo.newinternalsourcingapp.Activities.BorrowerListActivity;
 
-import com.paisalo.newinternalsourcingapp.Activities.CollectionActivity;
 import com.paisalo.newinternalsourcingapp.Activities.CustomerListActivity;
 import com.paisalo.newinternalsourcingapp.Activities.DownloadDocumentActivity;
 import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.HouseVisitActivity1;
 import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.KYCActivity;
-import com.paisalo.newinternalsourcingapp.Fragments.collection.CollectionFragment;
-import com.paisalo.newinternalsourcingapp.Modelclasses.ManagerModel;
+import com.paisalo.newinternalsourcingapp.ModelclassesRoom.ManagerModel;
 import com.paisalo.newinternalsourcingapp.R;
-import com.paisalo.newinternalsourcingapp.Utils.GlobalClass;
 
 import java.util.List;
 

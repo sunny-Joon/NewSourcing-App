@@ -9,14 +9,10 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.paisalo.newinternalsourcingapp.Modelclasses.LeaderboardEntry;
+import com.paisalo.newinternalsourcingapp.ModelclassesRoom.LeaderboardEntry;
 import com.paisalo.newinternalsourcingapp.R;
 
 import java.util.List;

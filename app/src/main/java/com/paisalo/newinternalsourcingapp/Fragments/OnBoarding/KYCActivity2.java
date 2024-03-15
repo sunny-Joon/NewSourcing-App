@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.paisalo.newinternalsourcingapp.R;
 import com.paisalo.newinternalsourcingapp.RoomDatabase.DaoClass;
 import com.paisalo.newinternalsourcingapp.RoomDatabase.DatabaseClass;
-import com.paisalo.newinternalsourcingapp.RoomDatabase.EntityClass;
+import com.paisalo.newinternalsourcingapp.RoomDatabase.KycDataClass;
 
 public class KYCActivity2 extends AppCompatActivity {
 
@@ -115,7 +115,7 @@ public class KYCActivity2 extends AppCompatActivity {
 
             DatabaseClass database = DatabaseClass.getInstance(KYCActivity2.this);
             DaoClass dao = database.dao();
-            EntityClass entity = new EntityClass();
+            KycDataClass entity = new KycDataClass();
 
             entity.setAadhaarId(aadhaarId.trim());
             entity.setName(name.trim());
@@ -161,7 +161,7 @@ public class KYCActivity2 extends AppCompatActivity {
             entity.setSelectedBank(selectedBank.trim());
             entity.FiCode = "0012";
 
-            dao.insert(entity);
+            dao.insertKycData(entity);
 
             return null;
         }
