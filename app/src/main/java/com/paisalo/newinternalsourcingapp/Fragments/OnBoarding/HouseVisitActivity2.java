@@ -2,7 +2,6 @@ package com.paisalo.newinternalsourcingapp.Fragments.OnBoarding;
 
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.view.View;
 import android.Manifest;
@@ -44,6 +43,7 @@ import android.net.Uri;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
+
 
 public class HouseVisitActivity2 extends AppCompatActivity {
 
@@ -284,6 +284,7 @@ public class HouseVisitActivity2 extends AppCompatActivity {
 //                            Log.d("Sunny", "onResponse: "+ response.body());
 //                            progressDialog.dismiss();
 //                            showToasts("DataModel Saved");
+
 //                        }
 //                        @Override
 //                        public void onFailure(Call<JsonObject> call, Throwable t) {

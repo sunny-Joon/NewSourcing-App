@@ -7,15 +7,15 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>
-    <string name="mother_first_name">Mother First Name<font color='red'>*</font></string>
-    <string name="father_first_name">Father First Name<font color='red'>*</font></string>
-    <string name="spouse_first_name">Spouse First Name<font color='red'>*</font></string>
-    <string name="expense_monthly">Expense(monthly)<font color='red'>*</font></string>
+    <string name="mother_first_name">Mother First Name</string>
+    <string name="father_first_name">Father First Name</string>
+    <string name="spouse_first_name">Spouse First Name</string>
+    <string name="expense_monthly">Expense(monthly)</string>
     <string name="future_income">Future Income(Annual)</string>
     <string name="agriculture_income">Agriculture Income(Annual)</string>
-    <string name="earning_member_type">Earning Member Type<font color='red'>*</font></string>
-    <string name="select_bank">Select Bank<font color='red'>*</font></string>
-    <string name="loan_duration_month">Loan Duration(month)<font color='red'>*</font></string>
+    <string name="earning_member_type">Earning Member Type</string>
+    <string name="select_bank">Select Bank</string>
+    <string name="loan_duration_month">Loan Duration(month)</string>
     <string name="term_and_conditions"><b><u>TERMS &amp; CONDITIONS FOR ONLINE PAYMENTS TO BE MADE TO PAISALO DIGITAL LTD</u></b> \n
           Name of NBFC:. <b>PAISALO DIGITAL LTD</b>\n\tCSC POCKET 52 CR PARK NEAR POLICE STATION \n\tNEW DELHI -110019\n\tWWW.PAISALO.IN
         \n\n<b>Online Charges Payments</b>:
@@ -183,42 +183,568 @@ Contact Email <i>DELHI@PAISALO.IN</i>
 
     <string name="aadhar_id">Aadhar Id *</string>
     <string name="aadhar_name">Name</string>
-    <string name="aadhar_age">Age<font color='red'>*</font></string>
-    <string name="aadhar_dob">Date of Birth<font color='red'>*</font></string>
-    <string name="aadhar_father_spouse">Guardian<font color='red'>*</font></string>
-    <string name="aadhar_address">Address<font color='red'>*</font></string>
-    <string name="aadhar_address1">Address1<font color='red'>*</font></string>
+    <string name="aadhar_age">Age</string>
+    <string name="aadhar_dob">Date of Birth</string>
+    <string name="aadhar_father_spouse">Guardian</string>
+    <string name="aadhar_address">Address</string>
+    <string name="aadhar_address1">Address1</string>
     <string name="aadhar_address2">Address2</string>
     <string name="aadhar_address3">Address3</string>
-    <string name="aadhar_city">City<font color='red'>*</font></string>
-    <string name="aadhar_state">State<font color='red'>*</font></string>
-    <string name="aadhar_pin">Pin<font color='red'>*</font></string>
-    <string name="aadhar_gender">Gender<font color='red'>*</font></string>
-    <string name="relationshioWithBorrower">Relationship with Borrower<font color='red'>*</font></string>
+    <string name="aadhar_city">City</string>
+    <string name="aadhar_state">State</string>
+    <string name="aadhar_pin">Pin</string>
+    <string name="aadhar_gender">Gender</string>
+    <string name="relationshioWithBorrower">Relationship with Borrower</string>
 
     <string name="borrower">Borrower</string>
     <string name="loan_detail_download_doc">Download Document</string>
-    <string name="applicant_name">Applicant Name<font color='red'>*</font></string>
-    <string name="applicant_father_spouse">Father / Spouse<font color='red'>*</font></string>
-    <string name="applicant_address">Address<font color='red'>*</font></string>
-    <string name="applicant_mobile">Mobile<font color='red'>*</font></string>
-    <string name="applicant_monthly_income">Monthly Income<font color='red'>*</font></string>
-    <string name="applicant_future_income">Future Income</string>
+    <string name="applicant_name">Applicant Name</string>
+    <string name="applicant_father_spouse">Father / Spouse</string>
+    <string name="applicant_address">Address</string>
+    <string name="applicant_mobile">Mobile</string>
+    <string name="applicant_monthly_income">Monthly Income</string>
     <string name="applicant_caste">Caste</string>
     <string name="applicant_religion">Religion</string>
-    <string name="applicant_marital_status">Marital Status<font color='red'>*</font></string>
+    <string name="applicant_marital_status">Marital Status</string>
     <string name="applicant_dependents">No. of Depenent(s) (Adult)</string>
     <string name="applicant_children">Children</string>
     <string name="applicant_school_going_children">School Going Children</string>
     <string name="applicant_child_monthly_spends">Monthly Spends on Children</string>
-    <string name="applicant_pan">Permanent Account No (PAN)<font color='red'>*</font></string>
+    <string name="applicant_pan">Permanent Account No (PAN)</string>
     <string name="applicant_pan_name">Name as on Permanent Account No (PAN)</string>
-    <string name="applicant_voter">Voter ID<font color='red'>*</font></string>
-    <string name="Guardian">Guardian<font color='red'>*</font></string>
+    <string name="applicant_voter">Voter ID</string>
+    <string name="Guardian">Guardian</string>
     <string name="applicant_driving_license">Driving License</string>
     <string name="applicant_present_residence_owner">Present House Owner</string>
     <string name="applicant_house_rent">House Rent (Thousand)</string>
     <string name="applicant_residence_duration">Residing for (Years)</string>
+
+
+    <!--    <array name="emiReasons">-->
+    <!--        <item>"Medical Issue"</item>-->
+    <!--        <item>"Door Closed"</item>-->
+    <!--        <item>"Family Expense"</item>-->
+    <!--        <item>"Pay Tomorrow"</item>-->
+    <!--        <item>"Call not Received"</item>-->
+    <!--        <item>"Don't have money"</item>-->
+    <!--        <item>"Others"</item>-->
+    <!--    </array>-->
+
+    <!--    <string-array name="choice_array">-->
+    <!--        <item>Choose from Gallery</item>-->
+    <!--        <item>Take a Photo</item>-->
+    <!--    </string-array>-->
+
+    <!--    <array name="banktypedata">-->
+    <!--        <item>SBI</item>-->
+    <!--        <item>BOB</item>-->
+    <!--        <item>UCO</item>-->
+    <!--    </array>-->
+
+    <!--    <array name="issuetypedata">-->
+    <!--        <item>New User Mapping</item>-->
+    <!--        <item>Login Issue</item>-->
+    <!--        <item>Update or mapping with Branch</item>-->
+    <!--    </array>-->
+
+    <!--    <array name="loanduration">-->
+    <!--        <item>"&#45;&#45;Select&#45;&#45;"</item>-->
+    <!--        <item>"12"</item>-->
+    <!--        <item>"18"</item>-->
+    <!--        <item>"24"</item>-->
+    <!--        <item>"30"</item>-->
+    <!--        <item>"36"</item>-->
+    <!--        <item>"42"</item>-->
+    <!--        <item>"48"</item>-->
+    <!--    </array>-->
+
+
+    <!-- Login Page -->
+    <string name="version" translatable="false">Ver 1.1</string>
+    <string name="login_page">Login Page</string>
+    <string name="enter_user_id">Enter Use Id</string>
+    <string name="usernameInst">User Name must be atleast 10 character</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="passwordInst">Password must be at least 5 character</string>
+    <string name="login">Login</string>
+    <string name="share_device_id">Share Device ID</string>
+    <string name="terms_and_conditions">Term &amp; Conditions</string>
+
+    <!-- Home Page -->
+    <string name="home_page">Home Page</string>
+    <string name="monthly">monthly</string>
+    <string name="disbursement_target">Disbursement target</string>
+    <string name="tap_to_calculate_incentive">TAP TO \n CALCULATE INCENTIVE</string>
+    <string name="people_earn_more_incentive">10 people will earn more incentive than you</string>
+    <string name="earn_more_incentive">Earn more incentive</string>
+    <string name="ab_Rukna_Nahi">AB RUKNA NAHI</string>
+    <string name="home">Home</string>
+    <string name="leaderboard">LeaderBoard</string>
+    <string name="incentive">Incentive</string>
+    <string name="profile">Profile</string>
+
+    <!-- OnBoarding -->
+    <string name="onboarding">OnBoarding</string>
+    <string name="kyc">KYC</string>
+    <string name="application_form">Application form</string>
+    <string name="collection">Collection</string>
+    <string name="esign">E-Sign</string>
+    <string name="housevisit">House Visit</string>
+    <string name="select_manager">Select Manager</string>
+    <string name="search_by_group_code">search by group Code</string>
+    <string name="place_group_code">place/group code</string>
+    <string name="search">Search...</string>
+
+    <!-- Schemes -->
+    <string name="umeed">UMEED</string>
+    <string name="first_time_borrower">1st time borrower</string>
+    <string name="pragati">PRAGATI</string>
+    <string name="second_time_borrower">2st time borrower</string>
+    <string name="vikas">VIKAS</string>
+    <string name="third_time_borrower">3st time borrower</string>
+    <string name="udaan">UDAAN</string>
+    <string name="apply_scheme">Apply SCHEME</string>
+
+    <!-- Financial Info -->
+    <string name="monthly_income">Monthly Income</string>
+    <string name="monthly_expense">Expense(monthly)</string>
+
+
+    <string name="pension_income">Pension Income(Annual)</string>
+    <string name="interest_income">Interest income(Annual)</string>
+    <string name="other_income">Other income(Annual)</string>
+
+    <string name="earning_member_income">Earning Member Income</string>
+    <string name="loanamount">Loan Amount</string>
+    <string name="business_detail">Business Detail</string>
+    <string name="occupation">Occupation</string>
+    <string name="loanduration">Loan Duration(month)</string>
+
+    <string name="save_data">SAVE DATA</string>
+    <string name="e_sign_loan_application">E-Sign Loan Application</string>
+
+    <!-- Co-Borrower Info -->
+    <string name="father_spouse">Father/Spouse</string>
+    <string name="fi_code">Fi code</string>
+    <string name="mobile">Mobile</string>
+    <string name="creator">Creater</string>
+    <string name="address">Address</string>
+
+    <!-- Loan Application -->
+    <string name="esigning">Esigning</string>
+    <string name="borrower_name">Borrower Name</string>
+    <string name="guardian">Guardian</string>
+    <string name="aadharid">Aadhar Id</string>
+    <string name="proceed">PROCEED</string>
+    <string name="ok">OK</string>
+
+    <!-- Aadhar Data -->
+    <string name="aadhar_data">AADHAR DATA</string>
+    <string name="personal_details">PERSONAL DETAILS</string>
+    <string name="email_id">Email ID</string>
+    <string name="caste">Caste</string>
+    <string name="religion">Religion</string>
+    <string name="place_of_birth">Place of Birth</string>
+    <string name="present_house_owner">Present house Owner</string>
+    <string name="house_rent">House Rent (Thousand)</string>
+    <string name="residing_years">Residing For (years)</string>
+    <string name="family_members">No. of Family members</string>
+    <string name="adult_documents">No. Of Document(s) (Adult)</string>
+
+    <!-- Financial Info 2 -->
+    <string name="financial_info">FINANCIAL INFO</string>
+    <string name="bank_account_type">Bank Account Type</string>
+    <string name="bank_account_number">Bank Account Number</string>
+    <string name="account_opening_date">Account opening date</string>
+    <string name="bank_ifsc">Bank IFSC</string>
+    <string name="rental_income">Rental Income</string>
+    <string name="rent_expense">Expense in Rent</string>
+    <string name="food_expense">Expense Of Food</string>
+    <string name="education_expense">Expense for Education</string>
+    <string name="health_expense">Expense for Health</string>
+    <string name="travel_expense">Expense for Travelling</string>
+    <string name="entertainment_expense">Expense for Entertainment</string>
+    <string name="other_expense">Any Other Expense</string>
+    <string name="house_type">House Type</string>
+    <string name="roof_type">Roof Type</string>
+    <string name="personal_toilet">Personal toilet</string>
+
+    <!-- Family Members Income -->
+    <string name="family_members_income">FAMILY MEMBERS INCOME</string>
+    <string name="member_name">Family Member Name</string>
+    <string name="relationship">Relationship</string>
+    <string name="health">Health</string>
+    <string name="education">Education</string>
+    <string name="school_type">School Type</string>
+    <string name="business">Business</string>
+    <string name="business_type">Business Type</string>
+    <string name="income">Income</string>
+    <string name="income_type">Income Type</string>
+    <string name="add_update">ADD/UPDATE</string>
+    <string name="delete">DELETE</string>
+
+    <!-- Family Borrowings -->
+    <string name="family_borrowings">FAMILY BORROWINGS</string>
+    <string name="lender_name">Lender Name</string>
+    <string name="lender_type">Lender Type</string>
+    <string name="mfi_loan">IS MFI/Loan used by</string>
+    <string name="loan_reason">Reason for Loan</string>
+    <string name="emi_amount">EMI Amount</string>
+    <string name="balance_amount">Balance Amount</string>
+
+    <!-- Guarantors -->
+    <string name="guarantors">GUARANTORS</string>
+
+    <!-- KYC Scanning -->
+    <string name="kyc_scanning">KYC SCANNING</string>
+    <string name="borrower_aadhar_front">Borrower Adhar Front</string>
+    <string name="borrower_aadhar_back">Borrower Adhar Back</string>
+    <string name="pan_card_borrower">Pan Card Borrower</string>
+    <string name="borrower_bank_passbook">Borrower Bank Passbook</string>
+    <string name="co_borrower_aadhar_front">Co-Borrower Adhar Front</string>
+    <string name="co_borrower_aadhar_back">Co-Borrower Adhar Back</string>
+
+    <!-- Loan Documentation -->
+    <string name="case_location">Case Location</string>
+    <string name="fm_name">FM Name</string>
+    <string name="sanctioned_amount">Sanctioned Amount</string>
+    <string name="loan_period">Period Of Loan</string>
+    <string name="interest_rate">Interest Rate</string>
+    <string name="document_download">Document Download</string>
+    <string name="esign_as">eSign As</string>
+
+    <!-- Home Visit -->
+    <string name="home_visit">HOME VISIT</string>
+    <string name="applicantname">Applicant Name</string>
+    <string name="loanpurpose">Loan Purpose</string>
+    <string name="applicantstatus">Applicant Status</string>
+    <string name="current_occupation">Current Occupation</string>
+    <string name="residence_ownership">Residence Ownership</string>
+    <string name="fill_form">FILL FORM</string>
+    <string name="click_image">CLICK IMAGE</string>
+    <string name="submit_home_visit">SUBMIT HOME VISIT</string>
+
+    <!-- Collection -->
+    <string name="branch_code_creator">Branch code/Creater</string>
+    <string name="emi_paying">EMI Paying</string>
+    <string name="fixedamount">Fixed Amount</string>
+    <string name="lump_sumamount">Lump Sum Amount</string>
+    <string name="vehicle_receipt">Vehicle Receipt</string>
+    <string name="utr_no">UTR No</string>
+    <string name="receipt_no">Receipt No</string>
+    <string name="enter_emi_amount">Enter EMI AMOUNT</string>
+    <string name="enter_processing">Enter Processing</string>
+    <string name="enter_other_charges">Enter Other Charges</string>
+    <string name="lump_sum_max">Lump Sum Amount(max)</string>
+    <string name="sundry">Sundry : </string>
+    <string name="selected">Selected : </string>
+    <string name="total">Total : </string>
+    <string name="Collect">COLLECT</string>
+    <string name="paid_by_fm">Field M.</string>
+    <string name="Cancel">CANCEL</string>
+    <string name="emi_not_paying">EMI Not Paying</string>
+    <string name="reason_for_not_paying">Reason for not Paying EMI</string>
+    <string name="promising_date">Promising Date</string>
+    <string name="submit">SUBMIT</string>
+
+    <string name="latLong">LatLong!</string>
+    <string name="in">IN</string>
+    <string name="out">OUT</string>
+    <string name="locality">Locality</string>
+    <string name="state">State</string>
+    <string name="country">Country</string>
+    <string name="pincode">Pincode</string>
+    <string name="district">District</string>
+    <string name="my_Address">MY Address</string>
+    <string name="sub_district">Sub-District</string>
+    <string name="village">Village</string>
+
+    <string name="add">Add</string>
+    <string name="update">Update</string>
+    <string name="guarantor_title">Guarantor</string>
+    <string name="guarantor_title_select">Select Guarantor</string>
+    <string name="e_signing">E-Signing</string>
+    <string name="e_sign_take">Take Signature</string>
+    <string name="Search_by_FI_Code">Search by FI Code</string>
+    <string name="loan_applications">Loan Applications</string>
+    <string name="loan_application_submit">Submit Loan App</string>
+    <string name="loan_application_submit_kyc">Submit KYC</string>
+    <string name="loan_submitted_apps">Submitted Files</string>
+    <string name="old_borrower_re_ekyc">Old Borrower Re-eKyc</string>
+    <string name="landOwnership">Land Ownership</string>
+    <string name="checkboxHouseVisit">Check this box,If above information is correct.</string>
+
+    <!--Activity Loan Details-->
+    <string name="loan_detail_case_location">Case Location</string>
+    <string name="FM_Name">FM Name :</string>
+    <string name="periodOfLoan">Period Of Loan :</string>
+    <string name="interest_Rate">Interest Rate :</string>
+    <string name="download_Document">Download Document</string>
+
+    <!--activityMorpho recharge-->
+    <string name="branch_Code"> Branch Code:</string>
+    <string name="enter_Device_Serial_Number">Enter Device Serial Number</string>
+    <string name="recharge">Recharge</string>
+
+    <!--Choose Scheme dialog-->
+    <string name="select_a_Scheme">Select a Scheme</string>
+
+    <!--Dialog Searchable Spinner-->
+    <string name="selectCreator">Select Creator</string>
+
+    <!--esignpopup-->
+    <string name="selectprocess">SELECT PROCESS</string>
+    <string name="loan_application">LOAN APPLICATION</string>
+    <string name="loan_documentation">LOAN DOCUMENTATION</string>
+
+    <!--esignpopup-->
+    <string name="receipts">Receipts : </string>
+
+    <!--layoutloanappextra-->
+    <string name="applicant_future_income">applicant future income : </string>
+
+    <string name="applicant_family_occupation">applicant familyoccupation : </string>
+
+    <!--fragment borrowerfinance-->
+    <string name="income_Details">Income Details : </string>
+    <string name="expense_Details">Expense Details : </string>
+
+    <!--fragment borrower finance-->
+    <string name="expenses_in_Rent">Expenses in Rent</string>
+    <string name="expenses_for_Food">Expenses for Food</string>
+    <string name="expenses_for_Education">Expenses for Education</string>
+    <string name="expenses_for_Health">Expenses for Health</string>
+    <string name="expenses_for_Travelling">Expenses for Travelling </string>
+    <string name="expenses_for_Entertainment">Expenses for Entertainment </string>
+    <string name="any_Other_Expenses">Any Other Expenses </string>
+    <string name="house_Detail">House Detail </string>
+    <string name="living_with_spouse">Living with spouse </string>
+
+    <!--fragment borrower personal-->
+    <string name="special_Ability">Special Ability</string>
+    <string name="special_Social_Category">Special Social Category</string>
+    <string name="educational_Code">Educational Code</string>
+    <string name="pan_applied">PAN Applied</string>
+    <string name="is_borrower_blind">Is borrower blind?</string>
+    <string name="years_in_Business">Years in Business</string>
+
+    <!--fragment borrower personal additional-->
+    <string name="land_Hold">Land Hold (Acers)</string>
+    <string name="annual_Income">Annual Income</string>
+    <string name="visually_Impaired">Visually Impaired</string>
+    <string name="form60_Transaction_Date">Form60 Transaction Date</string>
+    <string name="form60_Submission_Date">Form60 Submission Date</string>
+    <string name="mother_Title">Mother Title</string>
+    <string name="mother_Maiden_Name">Mother Maiden Name</string>
+    <string name="spouse_Title">Spouse Title</string>
+
+    <string name="applicant_Title">Applicant Title</string>
+    <string name="occupation_Type">Occupation Type</string>
+    <string name="reservation_Category">Reservation Category</string>
+    <string name="father_Title">Father Title</string>
+
+    <!--fragment Leaderboard-->
+    <string name="current_progress">CURRENT PROGRESS</string>
+    <string name="bharat_leaderboard"><b>BHARAT</b> \nLEADER BOARD</string>
+
+    <!--profile-->
+    <string name="designation">Designation</string>
+
+    <!--Incentive popup-->
+    <string name="calculating_comission">CALCULATING COMISSION</string>
+    <string name="more_disbursement">MORE DISBURSEMENT\nMORE INCENTIVE</string>
+
+    <!--item processing fee-->
+    <string name="data">Data</string>
+
+    <string name="consent_1"><b>I hereby authorize NSDL e-Gov on behalf of Paisalo Digital Limited to-</b>\n
+        1. Use my Aadhaar details for Loan Document eSignature and authenticate my identity through the Aadhaar
+        Authentication system (Aadhaar based e-KYC services of UIDAI) in accordance with the provisions of the Aadhar
+        (Targeted Delivery of Financial and other Subsidies, Benefits and Services) Act, 2016 and the allied rules and
+        regulations notified thereunder and for no other purpose.\n
+        2. Authenticate my Aadhaar through OTP or Biometric for authenticating my identity through the Aadhaar
+        Authentication system for obtaining my e-KYC through Aadhaar based e-KYC services of UIDAI and use my Photo and
+        Demographic details (Name, Gender, Date of Birth and Address) for Loan Document eSignature.\n
+        3. I understand that Security and confidentiality of personal identity data provided, for the purpose of Aadhaar
+        based authentication is ensured by NSDL e-Gov and the data will be stored by NSDL e-Gov till such time as
+        mentioned in guidelines from UIDAI from time to time.
+        4. I have understood that the system of downloading the copy of loan document for my record from the link
+        provided by the company through email or SMS post e-signing of the loan document. I shall download the copy of
+        loan documents as per my convenience at later stage.
+    </string>
+    <string name="consent_2">I hereby authorize NSDL e-Gov on behalf of Paisalo Digital Limited to-
+        <br />
+        <ol>
+            <li>Use my Aadhaar details for <b>Loan Document eSignature</b> and authenticate my identity through the
+                Aadhaar Authentication system (Aadhaar based e-KYC services of UIDAI) in accordance with the provisions
+                of the Aadhar (Targeted Delivery of Financial and other Subsidies, Benefits and Services) Act, 2016 and
+                the allied rules and regulations notified thereunder and for no other purpose.
+            </li>
+            <li>Authenticate my Aadhaar through OTP or Biometric for authenticating my identity through the Aadhaar
+                Authentication system for obtaining my e-KYC through Aadhaar based e-KYC services of UIDAI and use my
+                Photo and Demographic details (Name, Gender, Date of Birth and Address) for <b>Loan Document
+                    eSignature</b>.
+            </li>
+            <li>I understand that Security and confidentiality of personal identity data provided, for the purpose of
+                Aadhaar based authentication is ensured by NSDL e-Gov and the data will be stored by NSDL e-Gov till
+                such time as mentioned in guidelines from UIDAI from time to time.
+            </li>
+            <li>I have understood that the system of downloading the copy of loan document for my record from the link
+                provided by the company through email or SMS post e-signing of the loan document. I shall download the
+                copy of loan documents as per my convenience at later stage.
+            </li>
+        </ol>
+    </string>
+
+    <!--layout Dashboard-->
+    <string name="home_welcome">Welcome to Sourcing App</string>
+    <string name="home_menu_desc">Tap top-left menu icon to access Menu</string>
+
+    <!--layout dialog new family member-->
+    <string name="family_Member_Name">Family Member Name</string>
+
+    <!--layout dialog new loan detail-->
+    <string name="loan_used_by">Loan used by</string>
+    <string name="reason_For_Loan">Reason For Loan</string>
+    <string name="is_MFI">Is MFI</string>
+
+    <!--layout dialog pre closure-->
+    <string name="case_code">Case Code</string>
+    <string name="pre_closure_amount">Pre-Closure Amount</string>
+
+    <!--layout item installment-->
+    <string name="dueDate">DueDate</string>
+    <string name="amount">Amount</string>
+
+    <!--layoutitem loan app kyc upload-->
+    <string name="upload_kyc_and_document">Upload KYC &amp; Document</string>
+    <string name="document_remarks">Remarks</string>
+
+    <string name="manager_name">Manager Name</string>
+    <string name="manager_code">Manager Code</string>
+    <string name="manager_area_name">Area</string>
+    <string name="manager_area_code">Area Code</string>
+
+
+    <!--    raghvendra-->
+
+    <!--progress_bar_dialog-->
+    <string name="please_wait">Please Wait.. : </string>
+
+    <!--personal_data_new-->
+    <string name="land_hold">Land Hold (Acers) : </string>
+    <string name="special_ability">Special Ability : </string>
+    <string name="special_social_category">Special Social Category : </string>
+    <string name="educational_code">Educational Code : </string>
+    <string name="annual_income">Annual Income : </string>
+    <string name="is_borrower_handicap">Is borrower Handicap? : </string>
+    <string name="form60_transaction_date">Form60 Transaction Date : </string>
+    <string name="form60_submission_date">Form60 Submission Date : </string>
+    <string name="Mother_title">Mother Title : </string>
+    <string name="mother_maiden_name">Mother Maiden Name : </string>
+    <string name="spouse_title">Spouse Title : </string>
+    <string name="other_than_agriculture_income">Other Than Agriculture Income : </string>
+    <string name="years_in_business">Years in Business : </string>
+
+
+    <!--operation_item_card-->
+    <string name="check_mandatory_process_of_identifying_and_verifying.">Check mandatory process of identifying and verifying. : </string>
+
+    <!--new_expence_modified-->
+    <string name="any_other_expenses">Any Other Expenses : </string>
+    <string name="house_details">House Details : </string>
+
+
+    <!--mappingpopup_layout.xml-->
+    <string name="device_id">Device ID : </string>
+    <string name="user_id">User Id : </string>
+    <string name="imei_no.1">IMEI NO. 1 : </string>
+    <string name="imei_no.2">IMEI NO. 2 : </string>
+
+
+    <!--layout_select_with_refresh.xml-->
+    <string name="manager_select_title">Select Manager</string>
+
+
+    <!--layout_processingfee.xml-->
+    <string name="processing_fee_emi">Processing Fee Emi</string>
+
+    <!--layout_login.xml-->
+    <string name="login_username">User Name</string>
+    <string name="login_password">Password</string>
+    <string name="login_sign_in">Sign In</string>
+
+
+    <!--layout_loan_app_personal.xml-->
+
+
+    <string name="applicant_family_members">No. of Family Members</string>
+
+    <!--layout_loan_app_guarantor.xml-->
+
+
+    <!--layout_loan_app_finance.xml-->
+    <string name="disbursement_scheme">Disbursement Scheme</string>
+    <string name="applicant_bank_account_type">Bank Account Type</string>
+    <string name="applicant_bank_account_number">Bank Account Number</string>
+    <string name="accountholded">Account Opening Date</string>
+    <string name="applicant_bank_ifsc">Bank IFSC</string>
+    <string name="applicant_bank_account_date">Bank Account Opening Date</string>
+
+    <!--layout_loan_app_extra_income_service.xml-->
+    <string name="applicant_family_occupation_employer_type">Employer Type</string>
+    <string name="applicant_family_occupation_service_employer">Employer Name</string>
+
+    <!--layout_loan_app_extra_income_other.xml-->
+    <string name="applicant_family_occupation_other">Other (specify)</string>
+
+    <!--layout_loan_app_extra_income_business.xml-->
+    <string name="applicant_family_business_owner_shop">Shop Owner Type</string>
+    <string name="applicant_family_occupation_business_type">Business Type</string>
+
+    <!--layout_loan_app_extra_income_agriculture.xml-->
+    <string name="applicant_family_occupation_agriculture_land_ownership">Land Ownership</string>
+    <string name="applicant_family_occupation_agriculture_land_type">Land Type</string>
+
+
+    <!--layout_loan_app_aadhar_new.xml-->
+
+    <string name="business_details">Business Detail</string>
+    <string name="address_different_from_aadhar">Is current address different from Aadhar</string>
+
+    <!--layout_item_two_line.xml-->
+    <string name="rupees">rupees</string>
+    <string name="acres">Acres</string>
+
+
+    <string name="Receipts">Receipts</string>
+    <string name="title_activity_collection_details">Collection Details for the date</string>
+    <string name="document_name">Document Name</string>
+    <string name="request_type">Request Type</string>
+    <string name="capture_photo_kyc">Capture Photo</string>
+    <string name="upload_photo_kyc">Upload Photo</string>
+
+    <string name="language">Language / भाषा</string>
+    <string name="english">English</string>
+    <string name="hindi">Hindi</string>
+    <string name="bengali">Bengoli</string>
+    <string name="reload_data">Reload Data</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="collection_details">Collection Details</string>
+    <string name="action_update_options">Update Options</string>
+    <string name="action_send_db_backup">Send DB Backup</string>
+    <string name="action_restore_backup">Restore DB</string>
+    <string name="loan_financing">Loan Financing</string>
+    <string name="loan_detail_doc_download_failed">Document downloaded failed. Please try again</string>
+    <string name="loan_detail_doc_download_success">Document downloaded successfully</string>
+    <string name="loan_detail">Loan Detail</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="pre_close_case">Case Pre-Closure</string>
+
+
+    <string name="name">NAME</string>
 
 
 </resources>

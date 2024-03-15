@@ -3,12 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools">
 
 
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
+
 
 
     <application
@@ -21,6 +23,7 @@
         android:theme="@style/Theme.NewInternalSourcingApp"
         tools:targetApi="31">
         <activity
+
 
             android:name=".Fragments.OnBoarding.PreviewActivity"
             android:exported="false">
@@ -64,6 +67,34 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
+            android:name=".Esigndocument2"
+            android:exported="false" />
+
+        <activity
+            android:name=".Activities.ActivityEsignWithDownloadPL"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.DownloadDocumentActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".Activities.ApplicationFormActivityMenu"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".Activities.ApplicationFormActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".Activities.BorrowerListActivity"
             android:exported="false">
@@ -72,27 +103,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".Activities.ManagerList"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".Fragments.OnBoarding.HouseVisitActivity2"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".Fragments.OnBoarding.HouseVisitActivity1"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
+
             android:name=".Fragments.OnBoarding.KYCActivity2"
             android:exported="false">
             <meta-data
@@ -110,6 +121,8 @@
 
         <activity
             android:name=".Fragments.OnBoarding.KYCActivity"
+            android:name=".Activities.ManagerList"
+
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

@@ -191,7 +191,6 @@
                         android:layout_height="match_parent"
                         android:src="@drawable/calender"
                         android:layout_gravity="right"
-
                         android:paddingHorizontal="5dp"
                         />
 
@@ -518,6 +517,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
             android:text="Mother First Name *"
             android:layout_marginTop="8dp"
             android:textColor="@color/white"
@@ -534,6 +534,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textCapWords"/>
+
         </androidx.cardview.widget.CardView>
 
         <LinearLayout

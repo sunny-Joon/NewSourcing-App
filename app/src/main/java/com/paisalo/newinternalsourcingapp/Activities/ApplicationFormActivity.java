@@ -50,6 +50,7 @@ public class ApplicationFormActivity extends AppCompatActivity {
         editor.putString("CurrentId", fragmentId);
         editor.apply();
 
+
     }
 
     private Fragment getInitialFragment(String fragmentId) {

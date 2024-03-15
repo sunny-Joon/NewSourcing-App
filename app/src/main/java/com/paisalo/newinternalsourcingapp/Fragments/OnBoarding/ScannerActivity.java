@@ -15,7 +15,6 @@ public class ScannerActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kycactivity);
-
         new IntentIntegrator(this).initiateScan();
     }
 

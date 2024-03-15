@@ -80,5 +80,6 @@ public class GlobalClass {
 
             return blurredBitmap;
 
+
     }
 }

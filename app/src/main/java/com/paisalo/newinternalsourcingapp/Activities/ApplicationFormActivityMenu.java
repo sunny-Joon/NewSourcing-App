@@ -31,7 +31,6 @@ public class ApplicationFormActivityMenu extends AppCompatActivity {
         financialInfo = findViewById(R.id.financialInfo);
         familyIncome = findViewById(R.id.familyIncome);
 
-
         aadhaarCheckBox = findViewById(R.id.aadhaarCheckBox);
         personaldetailCheckBox = findViewById(R.id.personaldetailCheckBox);
         financialInfoCheckBox = findViewById(R.id.financialInfoCheckBox);

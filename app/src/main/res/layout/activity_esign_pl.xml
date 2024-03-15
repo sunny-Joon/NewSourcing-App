@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/borrower_uid_linearlayout"
+    android:layout_width="wrap_content"
+    android:background="@color/red"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <WebView
+        android:id="@+id/pdfview"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_margin="6dp"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/fragDetailESign"/>
+
+    <LinearLayout
+        android:id="@+id/fragDetailESign"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/red"
+        android:padding="8dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tvESingTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/e_signing"
+            android:textColor="@color/white"
+            android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+        <RelativeLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <GridLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:columnCount="2">
+                <TextView
+                    android:id="@+id/tvESignNameLbl"
+                    android:textColor="@color/white"
+                    android:text="@string/name"/>
+
+                <TextView
+                    android:id="@+id/tvESignName"
+                    android:textColor="@color/white"/>
+                <TextView
+                    android:id="@+id/tvESignGuardianLbl"
+                    android:textColor="@color/white"
+                    android:text="@string/guardian"/>
+
+                <TextView
+                    android:id="@+id/tvESignGuardian"
+                    android:textColor="@color/white"/>
+                <TextView
+                    android:id="@+id/tvESignMobileLbl"
+                    android:textColor="@color/white"
+                    android:text="@string/mobile"/>
+
+                <TextView
+                    android:id="@+id/tvESignMobile"
+                    android:textColor="@color/white"/>
+            </GridLayout>
+
+
+            <Button
+                android:id="@+id/btnESignProcessEsign"
+                android:layout_width="wrap_content"
+                android:backgroundTint="@color/white"
+                android:layout_height="wrap_content"
+                android:textColor="@color/red"
+                android:layout_alignParentEnd="true"
+                android:text="@string/esign" />
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>

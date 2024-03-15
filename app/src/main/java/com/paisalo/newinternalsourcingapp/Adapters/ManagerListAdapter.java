@@ -8,15 +8,15 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.paisalo.newinternalsourcingapp.Activities.BorrowerListActivity;
-
 import com.paisalo.newinternalsourcingapp.Activities.CustomerListActivity;
 import com.paisalo.newinternalsourcingapp.Activities.DownloadDocumentActivity;
 import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.HouseVisitActivity1;
@@ -117,24 +117,25 @@ public class ManagerListAdapter extends RecyclerView.Adapter<ManagerListAdapter.
         public void showPopup() {
             View popupView = LayoutInflater.from(itemView.getContext()).inflate(R.layout.loanpopup, null);
 
+            int width = 600;
+            int height = 600;
+
             PopupWindow popupWindow = new PopupWindow(
-                    popupView,
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
+                    popupView, width, height
             );
 
             popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
 
-            TextView application = popupView.findViewById(R.id.application);
+            CardView application = popupView.findViewById(R.id.loanApplication);
             application.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     popupWindow.dismiss();
                 }
             });
 
-            TextView documentation = popupView.findViewById(R.id.documentation);
+
+           CardView documentation = popupView.findViewById(R.id.loanDocumentation);
             documentation.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

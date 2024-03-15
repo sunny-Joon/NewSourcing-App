@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.paisalo.newinternalsourcingapp.ModelclassesRoom.EmiModel;
+
 import com.paisalo.newinternalsourcingapp.R;
 
 import java.util.List;
@@ -30,6 +31,7 @@ public class EMI_RecyclerviewAdapter extends RecyclerView.Adapter<EMI_Recyclervi
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.emi_recyclerview_item, parent, false);
         return new EMI_RecyclerviewAdapter.ViewHolder(view);
+
     }
 
     @Override

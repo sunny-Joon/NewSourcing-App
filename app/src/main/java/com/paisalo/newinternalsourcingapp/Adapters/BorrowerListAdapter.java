@@ -16,6 +16,7 @@ import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivityMenu
 import com.paisalo.newinternalsourcingapp.Activities.BorrowerListActivity;
 import com.paisalo.newinternalsourcingapp.Activities.DownloadDocumentActivity;
 import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.KYCActivity;
+
 import com.paisalo.newinternalsourcingapp.R;
 
 public class BorrowerListAdapter extends RecyclerView.Adapter<BorrowerListAdapter.ViewHolder>{
