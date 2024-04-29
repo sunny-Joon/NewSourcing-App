@@ -14,8 +14,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
-
 import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivityMenu;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
@@ -28,9 +26,6 @@ import com.paisalo.newinternalsourcingapp.Retrofit.ApiInterface;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivityMenu;
-import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFDataModel;
-import com.paisalo.newinternalsourcingapp.R;
 
 public class FinancialInfoFragment extends Fragment {
 
@@ -71,7 +66,7 @@ public class FinancialInfoFragment extends Fragment {
         personalToiletSpinner = view.findViewById(R.id.personalToilet);
         submit = view.findViewById(R.id.submitfinancialInfo);
 
-        bankAccountNumber.setText(allDataAFDataModel.getBankAcNo());
+       /* bankAccountNumber.setText(allDataAFDataModel.getBankAcNo());
         bankIFSCCode.setText(allDataAFDataModel.getBankAcNo());
         rentalIncome.setText(allDataAFDataModel.getBankAcNo());
         expenseInRent.setText(allDataAFDataModel.getBankAcNo());
@@ -90,7 +85,7 @@ public class FinancialInfoFragment extends Fragment {
         expenseForHealth.setText(allDataAFDataModel.getFiFamExpenses().getHealth());
         expenseForTravelling.setText(allDataAFDataModel.getFiFamExpenses().getTravelling());
         expenseForEntertainment.setText(allDataAFDataModel.getFiFamExpenses().getEntertainment());
-        anyOtherExpense.setText(allDataAFDataModel.getFiFamExpenses().getOthers());
+        anyOtherExpense.setText(allDataAFDataModel.getFiFamExpenses().getOthers());*/
 
 
         submit.setOnClickListener(new View.OnClickListener() {

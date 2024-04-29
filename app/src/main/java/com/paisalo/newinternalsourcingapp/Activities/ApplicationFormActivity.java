@@ -32,6 +32,14 @@ public class ApplicationFormActivity extends AppCompatActivity {
 
     static AllDataAFDataModel allDataAFDataModel;
 
+    public ApplicationFormActivity(AllDataAFDataModel allDataAFDataModel) {
+        this.allDataAFDataModel = allDataAFDataModel;
+    }
+public  ApplicationFormActivity(){
+
+}
+    public ApplicationFormActivity(ViewPager2 viewPager) {}
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

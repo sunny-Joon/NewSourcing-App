@@ -4,9 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -27,42 +25,20 @@ import com.paisalo.newinternalsourcingapp.Retrofit.ApiInterface;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
+import android.widget.EditText;
+import android.widget.Spinner;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.FiGuarantor;
+import java.util.List;
 public class GuarantorsFragment extends Fragment {
 
     Button update;
     FloatingActionButton gurrantorFormButton;
-
     AllDataAFDataModel allDataAFDataModel;
-    public GuarantorsFragment(AllDataAFDataModel allDataAFDataModel) {
-        this.allDataAFDataModel = allDataAFDataModel;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
-import android.widget.Spinner;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivityMenu;
-import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFDataModel;
-import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.FiGuarantor;
-import com.paisalo.newinternalsourcingapp.R;
-
-import java.util.List;
-
-public class GuarantorsFragment extends Fragment {
-
-    Button update,delete;
-    EditText etTextAadhar,etTextName,etTextAge,etTextDob,etTextGuardian,etTextAddress1,etTextAddress2,
-            etTextAddress3,etTextCity,etTextPincode,etTextMobile,etTextvoterid,etTextPAN,etdrivingLicense,
-           etmotherfirstname,etmotherlastname,etmothermiddlename,etfatherfirstname,etfathermiddlename,
-            etfatherlastname,etmaritalstatus;
-    FloatingActionButton gurrantorFormButton;
+    EditText etTextAadhar,etTextName,etTextAge,etTextDob,etTextGuardian,etTextAddress1,etTextAddress2, etTextAddress3,etTextCity,etTextPincode,etTextMobile,etTextvoterid,etTextPAN,etdrivingLicense;
     Spinner spin_gender,spin_state,spin_relationwithborr;
 
-    AllDataAFDataModel allDataAFDataModel;
     public GuarantorsFragment(AllDataAFDataModel allDataAFDataModel) {
-    }
-
+        this.allDataAFDataModel = allDataAFDataModel;}
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,13 +67,6 @@ public class GuarantorsFragment extends Fragment {
         etTextvoterid = view.findViewById(R.id.editTextvoterid);
         etTextPAN = view.findViewById(R.id.editTextPAN);
         etdrivingLicense = view.findViewById(R.id.drivingLicense);
-        etmotherfirstname = view.findViewById(R.id.motherfirstname);
-        etmothermiddlename = view.findViewById(R.id.mothermiddlename);
-        etmotherlastname = view.findViewById(R.id.motherlastname);
-        etfatherfirstname = view.findViewById(R.id.fatherfirstname);
-        etfathermiddlename = view.findViewById(R.id.fathermiddlename);
-        etfatherlastname = view.findViewById(R.id.fatherlastname);
-        etmaritalstatus = view.findViewById(R.id.maritalstatus);
 
         spin_gender = view.findViewById(R.id.spinnerOptions1);
         spin_state = view.findViewById(R.id.spinnerOptions2);
@@ -118,15 +87,6 @@ public class GuarantorsFragment extends Fragment {
             etTextvoterid.setText(list.get(0).getVoterID());
             etTextPAN.setText(list.get(0).getPanNo());
             etdrivingLicense.setText(list.get(0).getDrivingLic());
-           // etmotherfirstname.setText(list.get(0).);
-           // etmothermiddlename.setText(list.get(0).);
-            // etmotherlastname.setText(list.get(0).);
-//            etfatherfirstname.setText(list.get(0).getF);
-//            etfathermiddlename.setText(list.get(0).getF);
-//            etfatherlastname.setText(list.get(0).getF);
-            //etmaritalstatus.setText(list.get(0).g);
-
-           // etTextAddress3.setText(list.get(0).getPerAdd3());
 
         }
         gurrantorFormButton.setOnClickListener(new View.OnClickListener() {
@@ -187,9 +147,7 @@ public class GuarantorsFragment extends Fragment {
 
         return view;
     }
-    {
 
-    }
     private JsonObject gurrantorJson() {
         JsonObject jsonGurrantor = new JsonObject();
         jsonGurrantor.addProperty("fiCode", allDataAFDataModel.getCode().toString());
@@ -204,26 +162,5 @@ public class GuarantorsFragment extends Fragment {
 
         return jsonGurrantor;
     }
-
-                delete = popupView.findViewById(R.id.button2);
-
-                update.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        SharedPreferences sharedPreferences = getContext().getSharedPreferences("checkBoxes", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putBoolean("guarantorCheckBox", true);
-                        editor.apply();
-
-                        Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
-                        startActivity(intent);
-                        getActivity().finish();
-                    }
-                });
-            }
-        });
-
-        return view;    }
-
     }
 
