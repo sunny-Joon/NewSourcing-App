@@ -28,6 +28,9 @@ import com.paisalo.newinternalsourcingapp.Retrofit.ApiInterface;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivityMenu;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFDataModel;
+import com.paisalo.newinternalsourcingapp.R;
 
 public class FinancialInfoFragment extends Fragment {
 
@@ -78,6 +81,16 @@ public class FinancialInfoFragment extends Fragment {
         expenseForTravelling.setText(allDataAFDataModel.getBankAcNo());
         expenseForEntertainment.setText(allDataAFDataModel.getBankAcNo());
         anyOtherExpense.setText(allDataAFDataModel.getBankAcNo());
+        bankAccountNumber.setText(allDataAFDataModel.getBankAcNo().toString());
+       // bankIFSCCode.setText(allDataAFDataModel.getFiExtra().);
+        rentalIncome.setText(allDataAFDataModel.getFiExtra().getRentalIncome().toString());
+        expenseInRent.setText(allDataAFDataModel.getRentOfHouse());
+        expenseForFood.setText(allDataAFDataModel.getFiFamExpenses().getFooding());
+        expenseForEducation.setText(allDataAFDataModel.getFiFamExpenses().getEducation());
+        expenseForHealth.setText(allDataAFDataModel.getFiFamExpenses().getHealth());
+        expenseForTravelling.setText(allDataAFDataModel.getFiFamExpenses().getTravelling());
+        expenseForEntertainment.setText(allDataAFDataModel.getFiFamExpenses().getEntertainment());
+        anyOtherExpense.setText(allDataAFDataModel.getFiFamExpenses().getOthers());
 
 
         submit.setOnClickListener(new View.OnClickListener() {
@@ -115,6 +128,14 @@ public class FinancialInfoFragment extends Fragment {
 
                     }
                 });
+                SharedPreferences sharedPreferences = getContext().getSharedPreferences("checkBoxes", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("financialInfoCheckBox", true);
+                editor.apply();
+
+                Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
+                startActivity(intent);
+                getActivity().finish();
             }
         });
 

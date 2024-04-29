@@ -4,18 +4,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-
 import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivityMenu;
 import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.KYCActivity;
@@ -27,10 +27,8 @@ import com.paisalo.newinternalsourcingapp.Retrofit.ApiClient;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiInterface;
 import com.paisalo.newinternalsourcingapp.RoomDatabase.DatabaseClass;
 import com.paisalo.newinternalsourcingapp.RoomDatabase.RangeCategoryDataClass;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -54,6 +52,17 @@ public class PersonalDetailsFragment extends Fragment {
     List<Boolean> isBorrowerBlindList = new ArrayList<>();
     List<Integer> yearsInBusinessList = new ArrayList<>();
 
+
+import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivityMenu;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFDataModel;
+import com.paisalo.newinternalsourcingapp.R;
+
+public class PersonalDetailsFragment extends Fragment {
+
+    Spinner casteSpinner,religionSpinner,houseOwnerSpinner,residingforSpinner,noOfFamilyMembersSpinner,landHoldSpinner,specialAbilitySpinner,specialSocialCategorySpinner,educationalCodeSpinner,isBorrowerBlindSpinner,yearsInBusinessSpinner;
+    EditText emailId,placeOfBirth;
+    Button submit;
+    AllDataAFDataModel allDataAFDataModel;
     public PersonalDetailsFragment(AllDataAFDataModel allDataAFDataModel) {
         this.allDataAFDataModel=allDataAFDataModel;
     }
@@ -61,6 +70,7 @@ public class PersonalDetailsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -68,8 +78,6 @@ public class PersonalDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_personal_details, container, false);
         DatabaseClass databaseClass = DatabaseClass.getInstance(getContext());
-
-
 
         emailId = view.findViewById(R.id.emailId);
         caste = view.findViewById(R.id.caste);
@@ -157,6 +165,43 @@ public class PersonalDetailsFragment extends Fragment {
                         Log.d("TAG", "onResponseAdhaarUpdate: " + "failure");
                     }
                 });
+
+
+        emailId = view.findViewById(R.id.emailId);
+        placeOfBirth = view.findViewById(R.id.placeOfBirth);
+
+        casteSpinner = view.findViewById(R.id.caste);
+        religionSpinner = view.findViewById(R.id.religion);
+        houseOwnerSpinner = view.findViewById(R.id.presentHouseOwner);
+        residingforSpinner = view.findViewById(R.id.residingfor);
+        noOfFamilyMembersSpinner = view.findViewById(R.id.noOfFamilyMembers);
+        landHoldSpinner = view.findViewById(R.id.landHold);
+        specialAbilitySpinner = view.findViewById(R.id.specialAbility);
+        specialSocialCategorySpinner = view.findViewById(R.id.specialSocialCategory);
+        educationalCodeSpinner = view.findViewById(R.id.educationalCode);
+        isBorrowerBlindSpinner = view.findViewById(R.id.isBorrowerBlind);
+        yearsInBusinessSpinner = view.findViewById(R.id.yearsInBusiness);
+
+        submit = view.findViewById(R.id.submitpersonalInfo);
+
+        //set data
+        emailId.setText(allDataAFDataModel.getFiExtra().getEmaiLID());
+        placeOfBirth.setText(allDataAFDataModel.getFiExtra().getPlacEOFBIRTH());
+
+
+
+
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences sharedPreferences = getContext().getSharedPreferences("checkBoxes", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("personaldetailCheckBox", true);
+                editor.apply();
+
+                Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
+                startActivity(intent);
+                getActivity().finish();
             }
         });
 

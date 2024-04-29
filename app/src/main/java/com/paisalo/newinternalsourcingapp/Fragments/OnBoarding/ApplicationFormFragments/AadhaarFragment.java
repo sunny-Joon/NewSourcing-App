@@ -5,9 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,6 +31,22 @@ import com.paisalo.newinternalsourcingapp.Retrofit.ApiInterface;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivity;
+import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivityMenu;
+import com.paisalo.newinternalsourcingapp.Adapters.RangeCategoryAdapter;
+import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.KYCActivity;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFDataModel;
+import com.paisalo.newinternalsourcingapp.R;
+import com.paisalo.newinternalsourcingapp.RoomDatabase.DatabaseClass;
+import com.paisalo.newinternalsourcingapp.RoomDatabase.RangeCategoryDataClass;
+import com.paisalo.newinternalsourcingapp.Utils.CustomProgressDialog;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AadhaarFragment extends Fragment {
 
@@ -41,6 +58,15 @@ public class AadhaarFragment extends Fragment {
     EditText address1ET,address2ET,address3ET,stateET,cityET,pinCodeET;
     String address1,address2,address3,state,city;
     int pinCode;
+
+    CustomProgressDialog customProgressDialog;
+
+    CardView currentAddress;
+    CheckBox addressCheckBox;
+    AllDataAFDataModel allDataAFDataModel;
+    Spinner spin_aadhaarState;
+    TextView aadhaarName,aadhaarid,aadhaarAge,aadhaarGendre,aadhaarDOB,aadhaarGuardian,aadhaarmobile,aadhaarPAN,aadhaarDrivingLicense,  aadhaarAddress,aadhaarPincode,aadhaarCity,loanAmount;
+
     public AadhaarFragment(AllDataAFDataModel allDataAFDataModel) {
         this.allDataAFDataModel=allDataAFDataModel;
     }
@@ -50,6 +76,10 @@ public class AadhaarFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_aadhaar, container, false);
+
+
+        DatabaseClass databaseClass = DatabaseClass.getInstance(getActivity());
+        customProgressDialog = new CustomProgressDialog(getActivity());
 
         aadhaarName = view.findViewById(R.id.aadhaarName);
         aadhaarid = view.findViewById(R.id.aadhaarid);
@@ -78,6 +108,13 @@ public class AadhaarFragment extends Fragment {
         pinCodeET = view.findViewById(R.id.pinCode);
 
         submit = view.findViewById(R.id.aadhaarSubmitButton);
+        spin_aadhaarState = view.findViewById(R.id.acspAadharState);
+        loanAmount = view.findViewById(R.id.loanAmount);
+
+        submit = view.findViewById(R.id.aadhaarSubmitButton);
+        currentAddress = view.findViewById(R.id.currentAddress);
+        addressCheckBox = view.findViewById(R.id.addressCheckBox);
+        currentAddress.setVisibility(View.GONE);
 
         addressCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             currentAddress.setVisibility(isChecked ? View.VISIBLE : View.GONE);
@@ -96,8 +133,6 @@ public class AadhaarFragment extends Fragment {
         aadhaarCity.setText(allDataAFDataModel.getpCity());
         aadhaarState.setText(allDataAFDataModel.getpState());
         loanAmount.setText(allDataAFDataModel.getLoanAmt().toString());
-
-
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,6 +176,31 @@ public class AadhaarFragment extends Fragment {
 
                     }
                 });
+              
+        DatabaseClass.databaseWriteExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                List<RangeCategoryDataClass> stateDataList = new ArrayList<>();
+                RangeCategoryDataClass rangeCategoryDataClass = new RangeCategoryDataClass("--Select--","--Select--","--Select--","--Select--","--Select--",0,"99");
+                stateDataList.add(rangeCategoryDataClass);
+                stateDataList.addAll(databaseClass.dao().getAllRCDataListby_catKey("state"));
+                RangeCategoryAdapter rangeCategoryAdapter = new RangeCategoryAdapter(getActivity(),stateDataList );
+                spin_aadhaarState.setAdapter(rangeCategoryAdapter);
+
+            }
+        });
+
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sharedPreferences = getContext().getSharedPreferences("checkBoxes", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("aadhaarCheckBox", true);
+                editor.apply();
+
+                Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
+                startActivity(intent);
+                getActivity().finish();
             }
         });
 
@@ -160,5 +220,4 @@ public class AadhaarFragment extends Fragment {
         jsonAddress.addProperty("o_Pin", pinCode);
         return jsonAddress;
     }
-
 }

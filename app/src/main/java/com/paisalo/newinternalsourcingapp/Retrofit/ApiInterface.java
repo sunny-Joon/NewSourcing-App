@@ -25,9 +25,7 @@ import com.paisalo.newinternalsourcingapp.ModelsRetrofit.TargetSetModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.TopAdImageModels.ImageDataModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.StateDistDataModels.VillageListModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.UpdateFiModels.KycUpdateModel;
-
 import org.json.JSONObject;
-
 import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -112,7 +110,6 @@ public interface ApiInterface {
 
     @GET("POSFI/getFiToEdit")
     Call<AllDataAFModel> getAllAFData(@Header("Authorization") String token, @Header("dbname") String dbname,@Query("FiCode") String FiCode, @Query("Creator") String Creator);
-
     @POST("POSFI/UpdateFIAddress")
     Call<KycUpdateModel> updateAddress(@Header("Authorization") String token, @Header("dbname") String dbname,@Body JsonObject object);
     @POST("POSFI/UpdateFIPersonalDetails")
@@ -125,5 +122,6 @@ public interface ApiInterface {
     Call<KycUpdateModel> updateFinance(@Header("Authorization") String token, @Header("dbname") String dbname,@Body JsonObject object);
     @POST("POSFI/UpdateFIGaurantors")
     Call<KycUpdateModel> updateGaurantors(@Header("Authorization") String token, @Header("dbname") String dbname,@Body JsonObject object);
+
 
 }

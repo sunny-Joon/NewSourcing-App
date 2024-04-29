@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -29,6 +30,15 @@ import com.paisalo.newinternalsourcingapp.Retrofit.ApiInterface;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.Spinner;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivityMenu;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFDataModel;
+import com.paisalo.newinternalsourcingapp.R;
 
 
 public class FamilyBorrowingsFragment extends Fragment {
@@ -39,6 +49,15 @@ public class FamilyBorrowingsFragment extends Fragment {
     AllDataAFDataModel allDataAFDataModel;
     public FamilyBorrowingsFragment(AllDataAFDataModel allDataAFDataModel) {
         this.allDataAFDataModel=allDataAFDataModel;
+    Button  addBtn,dltButton,canButton;
+    EditText LenderName,etLoanamount,etEmiamount,etbalanceamount;
+
+    Spinner lenderTypespin,spinnerLoanUsed,spinnerReasonforloan,spinnerisMFI;
+    FloatingActionButton addBorrower;
+
+    AllDataAFDataModel allDataAFDataModel;
+    public FamilyBorrowingsFragment(AllDataAFDataModel allDataAFDataModel) {
+        this.allDataAFDataModel = allDataAFDataModel;
     }
 
     @Override
@@ -54,6 +73,11 @@ public class FamilyBorrowingsFragment extends Fragment {
         FMIncomeButton = view.findViewById(R.id.FMIncome);
 
         FMIncomeButton.setOnClickListener(new View.OnClickListener() {
+        addBorrower = view.findViewById(R.id.addBorrower);
+        dltButton = view.findViewById(R.id.button2);
+        canButton = view.findViewById(R.id.button3);
+
+        addBorrower.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -102,6 +126,35 @@ public class FamilyBorrowingsFragment extends Fragment {
                                 Log.d("TAG", "onResponseAdhaarUpdate: " + "failure");
                             }
                         });
+                LenderName = popupView.findViewById(R.id.LenderName);
+                addBtn = popupView.findViewById(R.id.addBorrowings);
+                etLoanamount = popupView.findViewById(R.id.editLoanamount);
+                etEmiamount = popupView.findViewById(R.id.editTextEmiamount);
+                etbalanceamount = popupView.findViewById(R.id.balanceamount);
+
+
+                lenderTypespin = popupView.findViewById(R.id.lenderType);
+                spinnerLoanUsed = popupView.findViewById(R.id.spinnerOptions2);
+                spinnerReasonforloan = popupView.findViewById(R.id.spinnerOptions2);
+                spinnerisMFI = popupView.findViewById(R.id.isMFI);
+
+                canButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popupWindow.dismiss();
+                    }
+                });
+                addBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        SharedPreferences sharedPreferences = getContext().getSharedPreferences("checkBoxes", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putBoolean("borrowingsCheckBox", true);
+                        editor.apply();
+
+                        Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
+                        startActivity(intent);
+                        getActivity().finish();
                     }
                 });
             }
