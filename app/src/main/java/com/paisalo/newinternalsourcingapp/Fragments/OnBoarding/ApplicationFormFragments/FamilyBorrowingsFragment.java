@@ -43,19 +43,14 @@ import com.paisalo.newinternalsourcingapp.R;
 
 public class FamilyBorrowingsFragment extends Fragment {
 
-    Button  addBtn;
-    FloatingActionButton FMIncomeButton;
-
     AllDataAFDataModel allDataAFDataModel;
-    public FamilyBorrowingsFragment(AllDataAFDataModel allDataAFDataModel) {
-        this.allDataAFDataModel=allDataAFDataModel;
-    Button  addBtn,dltButton,canButton;
+
+    Button  addBorrowings,dltButton,canButton;
     EditText LenderName,etLoanamount,etEmiamount,etbalanceamount;
 
     Spinner lenderTypespin,spinnerLoanUsed,spinnerReasonforloan,spinnerisMFI;
     FloatingActionButton addBorrower;
 
-    AllDataAFDataModel allDataAFDataModel;
     public FamilyBorrowingsFragment(AllDataAFDataModel allDataAFDataModel) {
         this.allDataAFDataModel = allDataAFDataModel;
     }
@@ -70,12 +65,11 @@ public class FamilyBorrowingsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_family_borrowings,container,false);
 
-        FMIncomeButton = view.findViewById(R.id.FMIncome);
+        addBorrower = view.findViewById(R.id.FMIncome);
 
-        FMIncomeButton.setOnClickListener(new View.OnClickListener() {
-        addBorrower = view.findViewById(R.id.addBorrower);
-        dltButton = view.findViewById(R.id.button2);
-        canButton = view.findViewById(R.id.button3);
+        addBorrowings = view.findViewById(R.id.addBorrowings);
+        dltButton = view.findViewById(R.id.deleteBorrowings);
+        canButton = view.findViewById(R.id.cancelBorrowings);
 
         addBorrower.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,20 +86,29 @@ public class FamilyBorrowingsFragment extends Fragment {
 
                 popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
 
-                addBtn = popupView.findViewById(R.id.addBorrowings);
-                addBtn.setOnClickListener(new View.OnClickListener() {
+                addBorrowings = popupView.findViewById(R.id.addBorrowings);
+                LenderName = popupView.findViewById(R.id.LenderName);
+                etLoanamount = popupView.findViewById(R.id.editLoanamount);
+                etEmiamount = popupView.findViewById(R.id.editTextEmiamount);
+                etbalanceamount = popupView.findViewById(R.id.balanceamount);
+
+                lenderTypespin = popupView.findViewById(R.id.lenderType);
+                spinnerLoanUsed = popupView.findViewById(R.id.spinnerOptions2);
+                spinnerReasonforloan = popupView.findViewById(R.id.spinnerOptions2);
+                spinnerisMFI = popupView.findViewById(R.id.isMFI);
+                addBorrowings.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
                         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-                        Call<KycUpdateModel> call= apiInterface.updateFamLoans(GlobalClass.Token,GlobalClass.dbname, borrowingsJson());
-                        Log.d("TAG", "onResponseAdhaarUpdate: " + GlobalClass.Token+" "+GlobalClass.dbname+" "+ borrowingsJson());
+                        Call<KycUpdateModel> call = apiInterface.updateFamLoans(GlobalClass.Token, GlobalClass.dbname, borrowingsJson());
+                        Log.d("TAG", "onResponseAdhaarUpdate: " + GlobalClass.Token + " " + GlobalClass.dbname + " " + borrowingsJson());
 
                         call.enqueue(new Callback<KycUpdateModel>() {
                             @Override
                             public void onResponse(Call<KycUpdateModel> call, Response<KycUpdateModel> response) {
                                 Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
-                                if(response.isSuccessful()){
+                                if (response.isSuccessful()) {
                                     Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
                                     Log.d("TAG", "onResponseAdhaarUpdatemsg: " + response.body().getMessage().toString());
                                     SharedPreferences sharedPreferences = getContext().getSharedPreferences("checkBoxes", Context.MODE_PRIVATE);
@@ -116,7 +119,7 @@ public class FamilyBorrowingsFragment extends Fragment {
                                     Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
                                     startActivity(intent);
                                     getActivity().finish();
-                                }else{
+                                } else {
                                     Log.d("TAG", "onResponseAdhaarUpdate: " + response.code());
                                 }
                             }
@@ -126,37 +129,14 @@ public class FamilyBorrowingsFragment extends Fragment {
                                 Log.d("TAG", "onResponseAdhaarUpdate: " + "failure");
                             }
                         });
-                LenderName = popupView.findViewById(R.id.LenderName);
-                addBtn = popupView.findViewById(R.id.addBorrowings);
-                etLoanamount = popupView.findViewById(R.id.editLoanamount);
-                etEmiamount = popupView.findViewById(R.id.editTextEmiamount);
-                etbalanceamount = popupView.findViewById(R.id.balanceamount);
-
-
-                lenderTypespin = popupView.findViewById(R.id.lenderType);
-                spinnerLoanUsed = popupView.findViewById(R.id.spinnerOptions2);
-                spinnerReasonforloan = popupView.findViewById(R.id.spinnerOptions2);
-                spinnerisMFI = popupView.findViewById(R.id.isMFI);
-
-                canButton.setOnClickListener(new View.OnClickListener() {
+                    }
+                    });
+                /*canButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         popupWindow.dismiss();
                     }
-                });
-                addBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        SharedPreferences sharedPreferences = getContext().getSharedPreferences("checkBoxes", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putBoolean("borrowingsCheckBox", true);
-                        editor.apply();
-
-                        Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
-                        startActivity(intent);
-                        getActivity().finish();
-                    }
-                });
+                });*/
             }
         });
 

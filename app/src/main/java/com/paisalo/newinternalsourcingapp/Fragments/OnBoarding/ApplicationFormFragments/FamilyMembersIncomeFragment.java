@@ -43,8 +43,6 @@ import java.util.List;
 
 public class FamilyMembersIncomeFragment extends Fragment {
 
-    Button  addBtn;
-    FloatingActionButton addButton;
     Button  addBtn,delBtn,canBtn;
     EditText faimlMemberName,etage,etBusiness,etTextincome;
     Spinner relationship_spin,gender_spin,Health_spin,Education_spin,schoolType_spin,businessType_spin,incomeType_spin;
@@ -61,15 +59,12 @@ public class FamilyMembersIncomeFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_family_members_income,container,false);
 
-        addButton = view.findViewById(R.id.addButton);
-
-        addButton.setOnClickListener(new View.OnClickListener() {
         List<FiFamMem> list = allDataAFDataModel.getFiFamMems();
 
+        FMIncomeButton = view.findViewById(R.id.addButton);
         faimlMemberName = view.findViewById(R.id.faimlMemberName);
         etage = view.findViewById(R.id.age);
         etBusiness = view.findViewById(R.id.Business);
@@ -84,16 +79,14 @@ public class FamilyMembersIncomeFragment extends Fragment {
         businessType_spin = view.findViewById(R.id.businessType);
         incomeType_spin = view.findViewById(R.id.incomeType);
 
-        FMIncomeButton = view.findViewById(R.id.FMIncome);
-
-        if(!list.isEmpty()){
+       /* if(!list.isEmpty()){
             faimlMemberName.setText(list.get(0).getMemName());
             etBusiness.setText(list.get(0).getBusiness());
             etTextincome.setText(list.get(0).getIncome());
 
         }
         etage.setText(allDataAFDataModel.getAge());
-
+*/
 
         FMIncomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,14 +109,14 @@ public class FamilyMembersIncomeFragment extends Fragment {
                     public void onClick(View view) {
 
                         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-                        Call<KycUpdateModel> call= apiInterface.updateFamMemIncome(GlobalClass.Token,GlobalClass.dbname, FamIncomeJson());
-                        Log.d("TAG", "onResponseAdhaarUpdate: " + GlobalClass.Token+" "+GlobalClass.dbname+" "+ FamIncomeJson());
+                        Call<KycUpdateModel> call = apiInterface.updateFamMemIncome(GlobalClass.Token, GlobalClass.dbname, FamIncomeJson());
+                        Log.d("TAG", "onResponseAdhaarUpdate: " + GlobalClass.Token + " " + GlobalClass.dbname + " " + FamIncomeJson());
 
                         call.enqueue(new Callback<KycUpdateModel>() {
                             @Override
                             public void onResponse(Call<KycUpdateModel> call, Response<KycUpdateModel> response) {
                                 Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
-                                if(response.isSuccessful()){
+                                if (response.isSuccessful()) {
                                     Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
                                     Log.d("TAG", "onResponseAdhaarUpdatemsg: " + response.body().getMessage().toString());
                                     SharedPreferences sharedPreferences = getContext().getSharedPreferences("checkBoxes", Context.MODE_PRIVATE);
@@ -134,7 +127,7 @@ public class FamilyMembersIncomeFragment extends Fragment {
                                     Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
                                     startActivity(intent);
                                     getActivity().finish();
-                                }else{
+                                } else {
                                     Log.d("TAG", "onResponseAdhaarUpdate: " + response.code());
 
                                 }
@@ -147,34 +140,35 @@ public class FamilyMembersIncomeFragment extends Fragment {
                             }
                         });
 
-                addBtn = popupView.findViewById(R.id.addupdateButton);
-                delBtn = popupView.findViewById(R.id.deleteButton);
-                canBtn = popupView.findViewById(R.id.cancelButton);
+                        addBtn = popupView.findViewById(R.id.addupdateButton);
+                        delBtn = popupView.findViewById(R.id.deleteButton);
+                        canBtn = popupView.findViewById(R.id.cancelButton);
 
-                canBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        popupWindow.dismiss();
+                        canBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                popupWindow.dismiss();
+                            }
+                        });
+
+                        addBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                SharedPreferences sharedPreferences = getContext().getSharedPreferences("checkBoxes", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putBoolean("familyIncomeCheckBox", true);
+                                editor.apply();
+
+                                Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
+                                startActivity(intent);
+                                getActivity().finish();
+                            }
+                        });
+
                     }
                 });
-
-                addBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        SharedPreferences sharedPreferences = getContext().getSharedPreferences("checkBoxes", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putBoolean("familyIncomeCheckBox", true);
-                        editor.apply();
-
-                        Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
-                        startActivity(intent);
-                        getActivity().finish();
-                    }
-                });
-
             }
         });
-
         return view;
     }
 
