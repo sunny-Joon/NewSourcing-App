@@ -4,15 +4,51 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.IncentiveAnimatedActivity">
+    android:background="@color/red"
+    android:orientation="vertical"
+    tools:context=".Fragments.home.IncentiveAnimatedActivity">
 
-    <ImageView
+
+    <pl.droidsonroids.gif.GifImageView
         android:id="@+id/imageViewGIF"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="400dp"
+        android:layout_marginHorizontal="0dp"
+        android:layout_marginTop="96dp"
+        android:elevation="4dp"
         android:scaleType="fitXY"
+        android:src="@drawable/trophy"
+        app:layout_constraintBottom_toTopOf="@+id/carAnimation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:loopCount="1" />
+
+    <TextView
+        android:id="@+id/incentivetrophy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        android:gravity="center"
+        android:text="50000"
+        android:textColor="@color/white"
+        android:textSize="24dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewGIF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageViewGIF"
+        app:layout_constraintVertical_bias="0.25" />
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/carAnimation"
+        android:layout_width="0dp"
+        android:layout_height="130dp"
+        android:elevation="4dp"
+        android:layout_marginBottom="150dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/caranimation"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:loopCount="1" />
 </androidx.constraintlayout.widget.ConstraintLayout>

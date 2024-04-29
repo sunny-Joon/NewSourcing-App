@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Fragments.ApplicationFormFragments.AadhaarFragment">
+    tools:context=".Fragments.OnBoarding.ApplicationFormFragments.AadhaarFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -86,7 +86,7 @@
                     android:layout_height="35dp"
                     android:textColor="@color/white"
                     android:layout_weight="1"
-                    android:text="Aadhaar Id"
+                    android:text="AGE"
                     android:textSize="@dimen/heading"
                     android:gravity="center_vertical"
                     android:fontFamily="@font/visbycfregular"/>
@@ -111,7 +111,7 @@
                     android:layout_height="35dp"
                     android:textColor="@color/white"
                     android:layout_weight="1"
-                    android:text="Aadhaar Id"
+                    android:text="Gendre"
                     android:textSize="@dimen/heading"
                     android:gravity="center_vertical"
                     android:fontFamily="@font/visbycfregular"/>
@@ -136,7 +136,7 @@
                     android:layout_height="35dp"
                     android:textColor="@color/white"
                     android:layout_weight="1"
-                    android:text="Aadhaar Id"
+                    android:text="D.O.B"
                     android:textSize="@dimen/heading"
                     android:gravity="center_vertical"
                     android:fontFamily="@font/visbycfregular"/>
@@ -161,7 +161,7 @@
                     android:layout_height="35dp"
                     android:textColor="@color/white"
                     android:layout_weight="1"
-                    android:text="Aadhaar Id"
+                    android:text="Guardian Name"
                     android:textSize="@dimen/heading"
                     android:gravity="center_vertical"
                     android:fontFamily="@font/visbycfregular"/>
@@ -186,7 +186,7 @@
                     android:layout_height="35dp"
                     android:textColor="@color/white"
                     android:layout_weight="1"
-                    android:text="Aadhaar Id"
+                    android:text="Mobile"
                     android:textSize="@dimen/heading"
                     android:gravity="center_vertical"
                     android:fontFamily="@font/visbycfregular"/>
@@ -229,7 +229,7 @@
                     android:layout_height="35dp"
                     android:textColor="@color/white"
                     android:layout_weight="1"
-                    android:text="Aadhaar Id"
+                    android:text="PAN no."
                     android:textSize="@dimen/heading"
                     android:gravity="center_vertical"
                     android:fontFamily="@font/visbycfregular"/>
@@ -254,7 +254,7 @@
                     android:layout_height="35dp"
                     android:textColor="@color/white"
                     android:layout_weight="1"
-                    android:text="Aadhaar Id"
+                    android:text="Driving License"
                     android:textSize="@dimen/heading"
                     android:gravity="center_vertical"
                     android:fontFamily="@font/visbycfregular"/>
@@ -279,7 +279,7 @@
                     android:layout_height="35dp"
                     android:textColor="@color/white"
                     android:layout_weight="1"
-                    android:text="Aadhaar Id"
+                    android:text="Address"
                     android:textSize="@dimen/heading"
                     android:gravity="center_vertical"
                     android:fontFamily="@font/visbycfregular"/>
@@ -304,7 +304,7 @@
                     android:layout_height="35dp"
                     android:textColor="@color/white"
                     android:layout_weight="1"
-                    android:text="Aadhaar Id"
+                    android:text="PinCode"
                     android:textSize="@dimen/heading"
                     android:gravity="center_vertical"
                     android:fontFamily="@font/visbycfregular"/>
@@ -329,7 +329,7 @@
                     android:layout_height="35dp"
                     android:textColor="@color/white"
                     android:layout_weight="1"
-                    android:text="Aadhaar Id"
+                    android:text="City"
                     android:textSize="@dimen/heading"
                     android:gravity="center_vertical"
                     android:fontFamily="@font/visbycfregular"/>
@@ -354,7 +354,7 @@
                     android:layout_height="35dp"
                     android:textColor="@color/white"
                     android:layout_weight="1"
-                    android:text="Aadhaar Id"
+                    android:text="State"
                     android:textSize="@dimen/heading"
                     android:gravity="center_vertical"
                     android:fontFamily="@font/visbycfregular"/>
@@ -401,8 +401,7 @@
                     android:text="LOAN AMOUNT"
                     android:textStyle="bold"
                     android:layout_weight="1"
-                    android:gravity="center"
-                 />
+                    android:gravity="center"/>
 
                 <TextView
                     android:id="@+id/loanAmount"
@@ -410,7 +409,7 @@
                     android:layout_height="match_parent"
                     android:textSize="@dimen/titleheading"
                     android:textColor="@color/red"
-                    android:text="98765432"
+                    android:text="00000"
                     android:layout_weight="1"
                     android:textStyle="bold"
                     android:gravity="center"/>

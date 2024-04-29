@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {KycDataClass.class, loginDataClass.class,RangeCategoryDataClass.class}, version = 1, exportSchema = false)
+@Database(entities = {loginDataClass.class,RangeCategoryDataClass.class,ManagerListDataClass.class}, version = 1, exportSchema = false)
 public abstract class DatabaseClass extends RoomDatabase {
 
     public abstract DaoClass dao();
