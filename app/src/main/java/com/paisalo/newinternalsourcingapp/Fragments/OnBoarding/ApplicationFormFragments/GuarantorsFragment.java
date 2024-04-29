@@ -7,11 +7,35 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.JsonObject;
+import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivityMenu;
+import com.paisalo.newinternalsourcingapp.GlobalClass;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFDataModel;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.UpdateFiModels.KycUpdateModel;
+import com.paisalo.newinternalsourcingapp.R;
+import com.paisalo.newinternalsourcingapp.Retrofit.ApiClient;
+import com.paisalo.newinternalsourcingapp.Retrofit.ApiInterface;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class GuarantorsFragment extends Fragment {
+
+    Button update;
+    FloatingActionButton gurrantorFormButton;
+
+    AllDataAFDataModel allDataAFDataModel;
+    public GuarantorsFragment(AllDataAFDataModel allDataAFDataModel) {
+        this.allDataAFDataModel = allDataAFDataModel;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -49,6 +73,7 @@ public class GuarantorsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_guarantors,container,false);
 
+        gurrantorFormButton = view.findViewById(R.id.guarantorFormButton);
         List<FiGuarantor> list = allDataAFDataModel.getFiGuarantors();
         gurrantorFormButton = view.findViewById(R.id.guarantorFormButton);
 
@@ -120,6 +145,66 @@ public class GuarantorsFragment extends Fragment {
                 popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
 
                 update = popupView.findViewById(R.id.updateGuarantor);
+                update.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+                        Call<KycUpdateModel> call= apiInterface.updateFamLoans(GlobalClass.Token,GlobalClass.dbname, gurrantorJson());
+                        Log.d("TAG", "onResponseAdhaarUpdate: " + GlobalClass.Token+" "+GlobalClass.dbname+" "+ gurrantorJson());
+
+                        call.enqueue(new Callback<KycUpdateModel>() {
+                            @Override
+                            public void onResponse(Call<KycUpdateModel> call, Response<KycUpdateModel> response) {
+                                Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
+                                if(response.isSuccessful()){
+                                    Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
+                                    Log.d("TAG", "onResponseAdhaarUpdatemsg: " + response.body().getMessage().toString());
+                                    SharedPreferences sharedPreferences = getContext().getSharedPreferences("checkBoxes", Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.putBoolean("guarantorCheckBox", true);
+                                    editor.apply();
+
+                                    Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
+                                    startActivity(intent);
+                                    getActivity().finish();
+                                }else{
+                                    Log.d("TAG", "onResponseAdhaarUpdate: " + response.code());
+
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<KycUpdateModel> call, Throwable t) {
+                                Log.d("TAG", "onResponseAdhaarUpdate: " + "failure");
+
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
+        return view;
+    }
+    {
+
+    }
+    private JsonObject gurrantorJson() {
+        JsonObject jsonGurrantor = new JsonObject();
+        jsonGurrantor.addProperty("fiCode", allDataAFDataModel.getCode().toString());
+        jsonGurrantor.addProperty("creator", allDataAFDataModel.getCreator().toString());
+        jsonGurrantor.addProperty("tag", allDataAFDataModel.getTag().toString());
+        jsonGurrantor.addProperty("tag", allDataAFDataModel.getTag().toString());
+        jsonGurrantor.addProperty("tag", allDataAFDataModel.getTag().toString());
+        jsonGurrantor.addProperty("tag", allDataAFDataModel.getTag().toString());
+        jsonGurrantor.addProperty("tag", allDataAFDataModel.getTag().toString());
+        jsonGurrantor.addProperty("tag", allDataAFDataModel.getTag().toString());
+
+
+        return jsonGurrantor;
+    }
+
                 delete = popupView.findViewById(R.id.button2);
 
                 update.setOnClickListener(new View.OnClickListener() {
@@ -139,5 +224,6 @@ public class GuarantorsFragment extends Fragment {
         });
 
         return view;    }
+
     }
 

@@ -24,9 +24,8 @@ import com.paisalo.newinternalsourcingapp.ModelsRetrofit.TargetIndexModels.Targe
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.TargetSetModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.TopAdImageModels.ImageDataModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.StateDistDataModels.VillageListModel;
-
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.UpdateFiModels.KycUpdateModel;
 import org.json.JSONObject;
-
 import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -111,5 +110,18 @@ public interface ApiInterface {
 
     @GET("POSFI/getFiToEdit")
     Call<AllDataAFModel> getAllAFData(@Header("Authorization") String token, @Header("dbname") String dbname,@Query("FiCode") String FiCode, @Query("Creator") String Creator);
+    @POST("POSFI/UpdateFIAddress")
+    Call<KycUpdateModel> updateAddress(@Header("Authorization") String token, @Header("dbname") String dbname,@Body JsonObject object);
+    @POST("POSFI/UpdateFIPersonalDetails")
+    Call<KycUpdateModel> updatePersonalInfo(@Header("Authorization") String token, @Header("dbname") String dbname,@Body JsonObject object);
+    @POST("POSFI/UpdateFIFamLoans")
+    Call<KycUpdateModel> updateFamLoans(@Header("Authorization") String token, @Header("dbname") String dbname,@Body JsonObject object);
+    @POST("POSFI/UpdateFIFamMemIncome")
+    Call<KycUpdateModel> updateFamMemIncome(@Header("Authorization") String token, @Header("dbname") String dbname,@Body JsonObject object);
+    @POST("POSFI/UpdateFIFinance")
+    Call<KycUpdateModel> updateFinance(@Header("Authorization") String token, @Header("dbname") String dbname,@Body JsonObject object);
+    @POST("POSFI/UpdateFIGaurantors")
+    Call<KycUpdateModel> updateGaurantors(@Header("Authorization") String token, @Header("dbname") String dbname,@Body JsonObject object);
+
 
 }
