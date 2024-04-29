@@ -259,7 +259,7 @@
                         android:layout_weight=".5"/>
 
                     <CheckBox
-                        android:id="@+id/gurrantorCheckBox"
+                        android:id="@+id/guarantorCheckBox"
                         android:button="@drawable/custom_checkbox"
                         android:layout_width="match_parent"
                         android:layout_weight="1"

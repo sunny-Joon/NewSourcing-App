@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginBottom="60dp"
     android:background="@color/red">
 
     <pl.droidsonroids.gif.GifImageView
@@ -14,6 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:scaleType="fitXY"
+        app:loopCount="1"
         android:src="@drawable/confeeti" />
 
     <androidx.cardview.widget.CardView
@@ -23,7 +25,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="150dp"
         android:layout_marginEnd="30dp"
-        android:layout_marginBottom="230dp"
+        android:layout_marginBottom="170dp"
         app:cardElevation="15dp"
         android:backgroundTint="@color/red"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -49,6 +51,46 @@
 
     </LinearLayout>
 
+    <ProgressBar
+        android:id="@+id/progresBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:elevation="20dp"
+        android:visibility="gone"
+        android:indeterminateDrawable="@drawable/circular_progress_bar"
+        app:layout_constraintBottom_toBottomOf="@+id/cardView2"
+        app:layout_constraintEnd_toEndOf="@+id/cardView2"
+        app:layout_constraintStart_toStartOf="@+id/cardView2"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:layout_constraintVertical_bias="0.3" />
+
+    <TextView
+        android:id="@+id/preparingMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="20dp"
+        android:gravity="center"
+        android:visibility="gone"
+        android:text="Preparing \n Leader Board \n \n(LeaderBoard comes on 6th of Month)"
+        android:textSize="18dp"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/cardView2"
+        app:layout_constraintEnd_toEndOf="@+id/cardView2"
+        app:layout_constraintStart_toStartOf="@+id/cardView2"
+        app:layout_constraintTop_toBottomOf="@+id/progresBar" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="20dp"
+        android:text="@string/bharat_leaderboard"
+        android:textColor="@color/white"
+        android:textSize="18dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@+id/imageView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/gif" />
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="wrap_content"
@@ -60,82 +102,109 @@
         app:layout_constraintStart_toStartOf="@+id/cardView2"
         app:layout_constraintTop_toTopOf="@+id/cardView2" />
 
-    <TextView
-        android:id="@+id/currentIncentive"
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/progressCardView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:fontFamily="@font/visbycfregular"
-        android:gravity="center_horizontal"
-        android:text="CURRENT INCENTIVE"
-        android:textColor="@color/white"
-        android:textSize="@dimen/subheading"
+        android:layout_height="150dp"
+        android:backgroundTint="@color/red"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView2"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintBottom_toBottomOf="parent">
 
-    <TextView
-        android:id="@+id/progressStart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/visbycfbold"
-        android:text="0"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="32dp"
-        android:textColor="@color/white"
-        android:textSize="@dimen/heading"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/currentIncentive"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/progressEnd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/visbycfbold"
-        android:text="100"
-        android:layout_marginEnd="32dp"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/white"
-        android:textSize="@dimen/heading"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/currentIncentive"/>
+            <TextView
+                android:id="@+id/currentIncentive"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:gravity="center_horizontal"
+                android:text="@string/current_progress"
+                android:textColor="@color/white"
+                android:textSize="14dp"
+                tools:ignore="MissingConstraints" />
 
-    <ProgressBar
-        android:id="@+id/progressBar1"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="8dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:progressDrawable="@drawable/custom_progressbar"
-        app:layout_constraintTop_toBottomOf="@+id/currentIncentive"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+            <TextView
+                android:id="@+id/progressStart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:layout_marginStart="32dp"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/progressBar1"/>
 
-    <View
-        android:id="@+id/divider"
-        android:layout_width="6dp"
-        android:layout_height="20dp"
-        android:background="@drawable/custom_progressbar"
-        app:layout_constraintBottom_toBottomOf="@+id/progressBar1"
-        app:layout_constraintEnd_toEndOf="@+id/progressBar1"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/progressBar1"
-        app:layout_constraintTop_toTopOf="@+id/progressBar1" />
+            <TextView
+                android:id="@+id/progressEnd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10L"
+                android:layout_marginEnd="32dp"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/progressBar1"/>
+
+            <ProgressBar
+                android:id="@+id/progressBar1"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:progressDrawable="@drawable/custom_progressbar"
+                app:layout_constraintTop_toBottomOf="@+id/currentIncentive"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="3dp"
+                android:layout_height="16dp"
+                android:background="@drawable/custom_progressbar"
+                app:layout_constraintBottom_toBottomOf="@+id/progressBar1"
+                app:layout_constraintEnd_toEndOf="@+id/progressBar1"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/progressBar1"
+                app:layout_constraintTop_toTopOf="@+id/progressBar1" />
+
+            <TextView
+                android:id="@+id/IncentiveTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5,00,000"
+                android:textSize="14dp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintTop_toBottomOf="@id/divider"
+                app:layout_constraintStart_toStartOf="@+id/progressBar1"
+                app:layout_constraintEnd_toEndOf="@+id/progressBar1" />
+
+            <TextView
+                android:id="@+id/completition"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="50% COMPLETED"
+                android:textColor="@color/white"
+                android:textSize="14dp"
+                app:layout_constraintEnd_toEndOf="@+id/progressBar1"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/progressBar1"
+                app:layout_constraintTop_toBottomOf="@id/progressBar1" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <TextView
-        android:id="@+id/IncentiveTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="50"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintTop_toBottomOf="@id/divider"
-        app:layout_constraintStart_toStartOf="@+id/progressBar1"
-        app:layout_constraintEnd_toEndOf="@+id/progressBar1" />
+    </androidx.cardview.widget.CardView>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

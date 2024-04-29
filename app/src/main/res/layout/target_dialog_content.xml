@@ -1,0 +1,72 @@
+<!-- dialog_content.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="45sp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/paisa_logo" />
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="@string/monthly"
+            android:textColor="@color/darkgrey"
+            android:textSize="24dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="@string/disbursement_target"
+            android:textColor="@color/darkgrey"
+            android:textSize="24dp" />
+
+
+        <LinearLayout
+            android:layout_width="129dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/red_border"
+            android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/target"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autoSizeTextType="uniform"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="₹ 00,00,000"
+                    android:textColor="@color/red"
+                    android:textSize="20dp" />
+
+        </LinearLayout>
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/slider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:labelBehavior="withinBounds"
+            android:value="2500000"
+            android:valueFrom="2500000"
+            android:valueTo="10000000"
+            app:trackHeight="10dp"
+            app:trackColor="@color/red"
+            app:thumbRadius="15dp"
+            app:thumbColor="@color/red"/>
+
+</LinearLayout>

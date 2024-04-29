@@ -33,7 +33,7 @@ public class WelcomeActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 if (position ==1) {
                     // Create and start the new Intent here
-//                    Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
+//                    Intent intent = new Intent(WelcomeActivity.this, HomePageActivity.class);
 //                    startActivity(intent);
 //                    overridePendingTransition(R.anim.fade_out, R.anim.fade_out);  // Use the same animation for both to create a fade-out effect
                     binding.welcomViewPager.setVisibility(View.GONE);

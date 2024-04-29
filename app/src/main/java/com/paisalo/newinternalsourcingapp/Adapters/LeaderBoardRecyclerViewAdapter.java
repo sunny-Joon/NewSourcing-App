@@ -1,18 +1,21 @@
 package com.paisalo.newinternalsourcingapp.Adapters;
 
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.paisalo.newinternalsourcingapp.ModelclassesRoom.LeaderboardEntry;
+
+import com.paisalo.newinternalsourcingapp.Fragments.leaderboard.LeaderboardEntry;
 import com.paisalo.newinternalsourcingapp.R;
 
 import java.util.List;
@@ -21,10 +24,12 @@ public class LeaderBoardRecyclerViewAdapter extends RecyclerView.Adapter<LeaderB
 
     private Context context;
     private List<LeaderboardEntry> leaderboardEntries;
+    private String Index;
 
-    public LeaderBoardRecyclerViewAdapter(Context context, List<LeaderboardEntry> leaderboardEntries) {
+    public LeaderBoardRecyclerViewAdapter(Context context, List<LeaderboardEntry> leaderboardEntries, String Index) {
         this.context = context;
         this.leaderboardEntries = leaderboardEntries;
+        this.Index =Index;
     }
 
     @NonNull
@@ -40,7 +45,16 @@ public class LeaderBoardRecyclerViewAdapter extends RecyclerView.Adapter<LeaderB
         LeaderboardEntry entry = leaderboardEntries.get(position);
         holder.bind(entry);
 
-        if (entry.getsno().equals("9")) {
+        if(position ==0){
+            holder.coin.setImageResource(R.drawable.first_gold_ic);
+        }else{
+            holder.coin.setImageResource(0);
+
+        }
+
+        Log.d("TAG_I", "onBindViewHolder1: "+Index);
+
+        if (entry.getsno().equals(Index)) {
             int whiteColor = context.getResources().getColor(R.color.white);
             int transparentWhite = Color.argb(150, Color.red(whiteColor), Color.green(whiteColor), Color.blue(whiteColor));
 
@@ -62,6 +76,7 @@ public class LeaderBoardRecyclerViewAdapter extends RecyclerView.Adapter<LeaderB
         private TextView snoTextView;
         private TextView nameTextView;
         private TextView scoreTextView;
+        private ImageView coin;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -69,6 +84,7 @@ public class LeaderBoardRecyclerViewAdapter extends RecyclerView.Adapter<LeaderB
             snoTextView = itemView.findViewById(R.id.Snumber);
             nameTextView = itemView.findViewById(R.id.name);
             scoreTextView = itemView.findViewById(R.id.points);
+            coin = itemView.findViewById(R.id.rankImageView);
         }
 
         public void bind(LeaderboardEntry entry) {
@@ -78,3 +94,4 @@ public class LeaderBoardRecyclerViewAdapter extends RecyclerView.Adapter<LeaderB
         }
     }
 }
+

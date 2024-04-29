@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/red"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".Activities.ActivityEarnMoreIncentive">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="34dp"
+        app:cardElevation="@dimen/margin_6dp"
+        android:layout_marginVertical="@dimen/margin_12dp"
+        app:cardCornerRadius="24dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginVertical="84dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/achieved"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Target Achieved \n Well Done"
+                android:textSize="40dp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/incentive"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Earn Rs 25,000"
+                android:gravity="center_horizontal"
+                android:textColor="@color/black"
+                android:textSize="24dp"/>
+            <TextView
+                android:id="@+id/more_Commission"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="more Incentive"
+                android:gravity="center_horizontal"
+                android:textColor="@color/black"
+                android:textSize="24dp"/>
+            <TextView
+                android:id="@+id/On_disbursing"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="On Disbursing"
+                android:layout_marginTop="@dimen/margin_12dp"
+                android:gravity="center_horizontal"
+                android:textColor="@color/black"
+                android:textSize="24dp"/>
+            <TextView
+                android:id="@+id/remainingDisbursment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="30,00,000"
+                android:gravity="center_horizontal"
+                android:textColor="@color/black"
+                android:textSize="24dp"/>
+
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

@@ -41,4 +41,10 @@
         <item>@string/sister</item>
     </string-array>
 
+    <array name="issuetypedata">
+        <item>New User Mapping</item>
+        <item>Login Issue</item>
+        <item>Update or mapping with Branch</item>
+    </array>
+
     </resources>
