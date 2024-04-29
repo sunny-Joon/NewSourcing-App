@@ -11,8 +11,6 @@ import java.util.List;
 
 @Dao
 public interface DaoClass {
-    @Insert
-    void insertKycData(KycDataClass entity);
 
     @Insert
     void insertLoginData(loginDataClass entity1);
@@ -20,30 +18,32 @@ public interface DaoClass {
     @Insert
     void  insertRCData(List<RangeCategoryDataClass> entity2);
 
-    @Update
-    void updateKycData(KycDataClass entity);
+    @Insert
+    void  insertManagerListData(List<ManagerListDataClass> entit3);
 
     @Update
     void updateLoginData(loginDataClass entity1);
     @Update
     void  updateRCData(RangeCategoryDataClass entity2);
+    @Update
+    void  updateManagerListData(ManagerListDataClass entity3);
 
-    @Delete
-    void delete(KycDataClass entity);
-
-    @Delete
-    void delete(loginDataClass entity1);
-    @Delete
-    void  deleteRCData(RangeCategoryDataClass entity2);
-
-    // Define asynchronous queries using LiveData or Flow
-    @Query("SELECT * FROM KYC_Database")
-    LiveData<List<KycDataClass>> getAllEntities();
+   @Query("DELETE FROM ManagerListDataBase")
+    void deleteAllManagerList();
+    @Query("DELETE FROM RangeCategory_Database")
+    void deleteAllRCList();
 
     @Query("SELECT * FROM loginDataBase")
-    LiveData<List<loginDataClass>> loginDataList();
+    List<loginDataClass> getAllloginDataList();
 
     @Query("SELECT *  FROM RANGECATEGORY_DATABASE")
-    LiveData<List<RangeCategoryDataClass>> RCDataList();
+    List<RangeCategoryDataClass> getAllRCDataList();
+
+    @Query("SELECT * FROM RANGECATEGORY_DATABASE WHERE cat_key = :catKey")
+    List<RangeCategoryDataClass> getAllRCDataListby_catKey(String catKey);
+
+
+    @Query("SELECT *  FROM ManagerListDataBase")
+    List<ManagerListDataClass> getAllManagerDataList();
 
 }

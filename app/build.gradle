@@ -22,7 +22,24 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField("String", 'BASE_URL', '"https://predeptest.paisalo.in:8084/PDL.SourcingApp.Api/api/"')
         }
+        beta {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField("String", 'BASE_URL', '"https://predeptest.paisalo.in:8084/PDL.SourcingApp.Api/api/"')
+        }
+
+    }
+
+
+    productFlavors{
+        SBIColending {
+            buildConfigField("String", 'dbname', '"yfMerfC6mRvfr0AOoHmOJ8Et9Q9MPwNEKzFdLsfEs1A="')
+            dimension = 'sourcing'
+
+        }
+        flavorDimensions 'sourcing'
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -34,11 +51,6 @@ android {
 }
 
 dependencies {
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.20'
-
-
 
     //API Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
@@ -51,6 +63,11 @@ dependencies {
     implementation "androidx.room:room-runtime:2.4.0"
     annotationProcessor "androidx.room:room-compiler:2.4.0"
 
+    //For Location GPS
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
+
+    //For Permissions like location and camera
+    implementation 'com.karumi:dexter:6.2.2'
 
 
     implementation 'androidx.appcompat:appcompat:1.6.1'
@@ -76,4 +93,15 @@ dependencies {
 
     // Optionally, add this dependency for Room Database testing support
     testImplementation "androidx.room:room-testing:2.6.1"
+
+
+//    //DocumentStore
+//    implementation "com.github.raizlabs.dbflow:dbflow-core:3.1.1"
+//    implementation "com.github.raizlabs.dbflow:dbflow:3.1.1"
+//    annotationProcessor "com.github.raizlabs.dbflow:dbflow-processor:3.1.1"
+//    implementation "com.github.raizlabs.dbflow:dbflow-sqlcipher:3.1.1"
+
+
+    implementation 'com.loopj.android:android-async-http:1.4.9'
+
 }

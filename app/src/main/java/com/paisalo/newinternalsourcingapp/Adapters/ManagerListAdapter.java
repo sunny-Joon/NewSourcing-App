@@ -23,14 +23,15 @@ import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.HouseVisitActivit
 import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.KYCActivity;
 import com.paisalo.newinternalsourcingapp.ModelclassesRoom.ManagerModel;
 import com.paisalo.newinternalsourcingapp.R;
+import com.paisalo.newinternalsourcingapp.RoomDatabase.ManagerListDataClass;
 
 import java.util.List;
 
 public class ManagerListAdapter extends RecyclerView.Adapter<ManagerListAdapter.MyViewHolder> {
-    private List<ManagerModel> dataList;
+    private List<ManagerListDataClass> dataList;
     private Context context;
 
-    public ManagerListAdapter(Context context, List<ManagerModel> dataList) {
+    public ManagerListAdapter(Context context, List<ManagerListDataClass> dataList) {
         this.context = context;
         this.dataList = dataList;
     }
@@ -45,11 +46,11 @@ public class ManagerListAdapter extends RecyclerView.Adapter<ManagerListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        ManagerModel data = dataList.get(position);
+        ManagerListDataClass data = dataList.get(position);
 
-        holder.nameTextView.setText(data.getName());
-        holder.placeGroupCodeTextView.setText(data.getPlaceGroupCode());
-        holder.branchCreatorTextView.setText(data.getBranchCreator());
+        holder.nameTextView.setText(data.getFoName());
+        holder.placeGroupCodeTextView.setText(data.getAreaName()+"/"+data.getAreaCd());
+        holder.branchCreatorTextView.setText(data.getFoCode()+"/"+data.getCreator());
 
         if (position % 2 == 1) {
             holder.managerCardView.setBackgroundResource(R.drawable.managerlist_gradientgrey);
