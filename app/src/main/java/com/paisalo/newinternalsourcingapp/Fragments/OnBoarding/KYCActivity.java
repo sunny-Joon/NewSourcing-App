@@ -155,7 +155,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
     SubDistChooseListner listSubDistructInteraction;
     CityChooseListner cityChooseListner;
     List<String> GenderList = new ArrayList<>();
-    List<String> StateList = new ArrayList<>();
     List<String> RelationWithBorrowerList = new ArrayList<>();
     List<String> MaritalStatusList = new ArrayList<>();
 
@@ -236,7 +235,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
 
         GenderList.add("--Select--");
-        StateList.add("--Select--");
         RelationWithBorrowerList.add("--Select--");
         MaritalStatusList.add("--Select--");
 
@@ -312,11 +310,11 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                     ArrayAdapter<String> adapter1 = new ArrayAdapter<>(KYCActivity.this, android.R.layout.simple_spinner_item, GenderList);
                     acspGender.setAdapter(adapter1);
                 }
+
                 List<RangeCategoryDataClass> stateDataList = new ArrayList<>();
                 RangeCategoryDataClass rangeCategoryDataClass = new RangeCategoryDataClass("--Select--","--Select--","--Select--","--Select--","--Select--",0,"99");
                 stateDataList.add(rangeCategoryDataClass);
                 stateDataList.addAll(databaseClass.dao().getAllRCDataListby_catKey("state"));
-
                 RangeCategoryAdapter rangeCategoryAdapter = new RangeCategoryAdapter(KYCActivity.this,stateDataList );
                 acspAadharState.setAdapter(rangeCategoryAdapter);
 

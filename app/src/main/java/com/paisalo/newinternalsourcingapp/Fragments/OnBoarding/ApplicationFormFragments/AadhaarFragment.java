@@ -63,7 +63,6 @@ public class AadhaarFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_aadhaar, container, false);
 
-
         DatabaseClass databaseClass = DatabaseClass.getInstance(getActivity());
         customProgressDialog = new CustomProgressDialog(getActivity());
 
@@ -105,7 +104,20 @@ public class AadhaarFragment extends Fragment {
             currentAddress.setVisibility(isChecked ? View.VISIBLE : View.GONE);
         });
 
-        aadhaarName.setText(allDataAFDataModel.getFname() + " " + allDataAFDataModel.getLname());
+        DatabaseClass.databaseWriteExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                List<RangeCategoryDataClass> stateDataList = new ArrayList<>();
+                RangeCategoryDataClass rangeCategoryDataClass = new RangeCategoryDataClass("--Select--","--Select--","--Select--","--Select--","--Select--",0,"99");
+                stateDataList.add(rangeCategoryDataClass);
+                stateDataList.addAll(databaseClass.dao().getAllRCDataListby_catKey("state"));
+                RangeCategoryAdapter rangeCategoryAdapter = new RangeCategoryAdapter(getActivity(),stateDataList );
+                spin_aadhaarState.setAdapter(rangeCategoryAdapter);
+
+            }
+        });
+
+       /* aadhaarName.setText(allDataAFDataModel.getFname() + " " + allDataAFDataModel.getLname());
         aadhaarid.setText(allDataAFDataModel.getAadharID());
         aadhaarAge.setText(allDataAFDataModel.getAge().toString());
         aadhaarGendre.setText(allDataAFDataModel.getGender());
@@ -117,7 +129,9 @@ public class AadhaarFragment extends Fragment {
         aadhaarPincode.setText(allDataAFDataModel.getoPin().toString());
         aadhaarCity.setText(allDataAFDataModel.getpCity());
         aadhaarState.setText(allDataAFDataModel.getpState());
-        loanAmount.setText(allDataAFDataModel.getLoanAmt().toString());
+        loanAmount.setText(allDataAFDataModel.getLoanAmt().toString());*/
+
+
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,19 +172,6 @@ public class AadhaarFragment extends Fragment {
                     @Override
                     public void onFailure(Call<KycUpdateModel> call, Throwable t) {
                         Log.d("TAG", "onResponseAdhaarUpdate: " + "failure");
-
-                    }
-                });
-
-                DatabaseClass.databaseWriteExecutor.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        List<RangeCategoryDataClass> stateDataList = new ArrayList<>();
-                        RangeCategoryDataClass rangeCategoryDataClass = new RangeCategoryDataClass("--Select--", "--Select--", "--Select--", "--Select--", "--Select--", 0, "99");
-                        stateDataList.add(rangeCategoryDataClass);
-                        stateDataList.addAll(databaseClass.dao().getAllRCDataListby_catKey("state"));
-                        RangeCategoryAdapter rangeCategoryAdapter = new RangeCategoryAdapter(getActivity(), stateDataList);
-                        spin_aadhaarState.setAdapter(rangeCategoryAdapter);
 
                     }
                 });
