@@ -10,12 +10,15 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivityMenu;
+import com.paisalo.newinternalsourcingapp.Adapters.RangeCategoryAdapter;
+import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.KYCActivity;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFDataModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.UpdateFiModels.KycUpdateModel;
@@ -28,9 +31,16 @@ import retrofit2.Response;
 import android.widget.EditText;
 import android.widget.Spinner;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.FiGuarantor;
+import com.paisalo.newinternalsourcingapp.RoomDatabase.DatabaseClass;
+import com.paisalo.newinternalsourcingapp.RoomDatabase.RangeCategoryDataClass;
+
+import java.util.ArrayList;
 import java.util.List;
 public class GuarantorsFragment extends Fragment {
 
+    List<String> gender_List = new ArrayList<>();
+    List<String> state_List = new ArrayList<>();
+    List<String> relationwithborr_List = new ArrayList<>();
     Button update;
     FloatingActionButton gurrantorFormButton;
     AllDataAFDataModel allDataAFDataModel;
@@ -53,42 +63,8 @@ public class GuarantorsFragment extends Fragment {
         List<FiGuarantor> list = allDataAFDataModel.getFiGuarantors();
         gurrantorFormButton = view.findViewById(R.id.guarantorFormButton);
 
-        etTextAadhar = view.findViewById(R.id.editTextAadhar);
-        etTextName = view.findViewById(R.id.editTextName);
-        etTextAge = view.findViewById(R.id.editTextAge);
-        etTextDob = view.findViewById(R.id.editTextDob);
-        etTextGuardian = view.findViewById(R.id.editTextGuardian);
-        etTextAddress1 = view.findViewById(R.id.editTextAddress1);
-        etTextAddress2 = view.findViewById(R.id.editTextAddress2);
-        etTextAddress3 = view.findViewById(R.id.editTextAddress3);
-        etTextCity = view.findViewById(R.id.editTextCity);
-        etTextPincode = view.findViewById(R.id.editTextPincode);
-        etTextMobile = view.findViewById(R.id.editTextMobile);
-        etTextvoterid = view.findViewById(R.id.editTextvoterid);
-        etTextPAN = view.findViewById(R.id.editTextPAN);
-        etdrivingLicense = view.findViewById(R.id.drivingLicense);
+        DatabaseClass databaseClass = DatabaseClass.getInstance(getContext());
 
-        spin_gender = view.findViewById(R.id.spinnerOptions1);
-        spin_state = view.findViewById(R.id.spinnerOptions2);
-        spin_relationwithborr = view.findViewById(R.id.spinnerOptions);
-
-        if(!list.isEmpty()) {
-            etTextAadhar.setText(list.get(0).getAadharID());
-            etTextName.setText(list.get(0).getName());
-            etTextAge.setText(list.get(0).getAge());
-            etTextDob.setText(list.get(0).getDob());
-            etTextGuardian.setText(list.get(0).getGurName());
-            etTextAddress1.setText(list.get(0).getPerAdd1());
-            etTextAddress2.setText(list.get(0).getPerAdd2());
-            etTextAddress3.setText(list.get(0).getPerAdd3());
-            etTextCity.setText(list.get(0).getPerCity());
-            etTextPincode.setText(list.get(0).getpPin());
-            etTextMobile.setText(list.get(0).getPerMob1());
-            etTextvoterid.setText(list.get(0).getVoterID());
-            etTextPAN.setText(list.get(0).getPanNo());
-            etdrivingLicense.setText(list.get(0).getDrivingLic());
-
-        }
         gurrantorFormButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,6 +79,79 @@ public class GuarantorsFragment extends Fragment {
                 final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
 
                 popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
+
+                etTextAadhar = popupView.findViewById(R.id.editTextAadhar);
+                etTextName = popupView.findViewById(R.id.editTextName);
+                etTextAge = popupView.findViewById(R.id.editTextAge);
+                etTextDob = popupView.findViewById(R.id.editTextDob);
+                etTextGuardian = popupView.findViewById(R.id.editTextGuardian);
+                etTextAddress1 = popupView.findViewById(R.id.editTextAddress1);
+                etTextAddress2 = popupView.findViewById(R.id.editTextAddress2);
+                etTextAddress3 = popupView.findViewById(R.id.editTextAddress3);
+                etTextCity = popupView.findViewById(R.id.editTextCity);
+                etTextPincode = popupView.findViewById(R.id.editTextPincode);
+                etTextMobile = popupView.findViewById(R.id.editTextMobile);
+                etTextvoterid = popupView.findViewById(R.id.editTextvoterid);
+                etTextPAN = popupView.findViewById(R.id.editTextPAN);
+                etdrivingLicense = popupView.findViewById(R.id.drivingLicense);
+
+                spin_gender = popupView.findViewById(R.id.spinnerOptions1);
+                spin_state = popupView.findViewById(R.id.spinnerOptions2);
+                spin_relationwithborr = popupView.findViewById(R.id.spinnerOptions);
+
+                String selectOption = "--Select--";
+                gender_List.add(selectOption);
+                state_List.add(selectOption);
+                relationwithborr_List.add(selectOption);
+
+
+                if(!list.isEmpty()) {
+                    etTextAadhar.setText(list.get(0).getAadharID());
+                    etTextName.setText(list.get(0).getName());
+                    etTextAge.setText(list.get(0).getAge());
+                    etTextDob.setText(list.get(0).getDob());
+                    etTextGuardian.setText(list.get(0).getGurName());
+                    etTextAddress1.setText(list.get(0).getPerAdd1());
+                    etTextAddress2.setText(list.get(0).getPerAdd2());
+                    etTextAddress3.setText(list.get(0).getPerAdd3());
+                    etTextCity.setText(list.get(0).getPerCity());
+                    etTextPincode.setText(list.get(0).getpPin());
+                    etTextMobile.setText(list.get(0).getPerMob1());
+                    etTextvoterid.setText(list.get(0).getVoterID());
+                    etTextPAN.setText(list.get(0).getPanNo());
+                    etdrivingLicense.setText(list.get(0).getDrivingLic());
+
+                }
+
+                DatabaseClass.databaseWriteExecutor.execute(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        List<RangeCategoryDataClass> gender_DataList = databaseClass.dao().getAllRCDataListby_catKey("gender");
+                        for (RangeCategoryDataClass data : gender_DataList) {
+                            String descriptionEn = data.getDescriptionEn();
+                            gender_List.add(descriptionEn);
+                            ArrayAdapter<String> adapter1 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, gender_List);
+                            spin_gender.setAdapter(adapter1);
+                        }
+
+                        List<RangeCategoryDataClass> stateDataList = new ArrayList<>();
+                        RangeCategoryDataClass rangeCategoryDataClass = new RangeCategoryDataClass("--Select--","--Select--","--Select--","--Select--","--Select--",0,"99");
+                        stateDataList.add(rangeCategoryDataClass);
+                        stateDataList.addAll(databaseClass.dao().getAllRCDataListby_catKey("state"));
+                        RangeCategoryAdapter rangeCategoryAdapter = new RangeCategoryAdapter(getActivity(),stateDataList );
+                        spin_state.setAdapter(rangeCategoryAdapter);
+
+
+                        List<RangeCategoryDataClass> relationwithborr_DataList = databaseClass.dao().getAllRCDataListby_catKey("relationship");
+                        for (RangeCategoryDataClass data : relationwithborr_DataList) {
+                            String descriptionEn = data.getDescriptionEn();
+                            relationwithborr_List.add(descriptionEn);
+                            ArrayAdapter<String> adapter3 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, relationwithborr_List);
+                            spin_relationwithborr.setAdapter(adapter3);
+                        }
+                    }
+                });
 
                 update = popupView.findViewById(R.id.updateGuarantor);
                 update.setOnClickListener(new View.OnClickListener() {

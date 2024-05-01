@@ -14,6 +14,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -23,6 +24,7 @@ import android.widget.Spinner;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivityMenu;
+import com.paisalo.newinternalsourcingapp.Adapters.RangeCategoryAdapter;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFDataModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.UpdateFiModels.KycUpdateModel;
@@ -37,7 +39,10 @@ import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivityMenu
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFDataModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.FiFamMem;
 import com.paisalo.newinternalsourcingapp.R;
+import com.paisalo.newinternalsourcingapp.RoomDatabase.DatabaseClass;
+import com.paisalo.newinternalsourcingapp.RoomDatabase.RangeCategoryDataClass;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -45,8 +50,20 @@ public class FamilyMembersIncomeFragment extends Fragment {
 
     Button  addBtn,delBtn,canBtn;
     EditText faimlMemberName,etage,etBusiness,etTextincome;
+    List<String> relationship_List = new ArrayList<>();
+    List<String> gender_List = new ArrayList<>();
+    List<String> Health_List = new ArrayList<>();
+    List<String> Education_List = new ArrayList<>();
+    List<String> schoolType_List = new ArrayList<>();
+    List<String> businessType_List = new ArrayList<>();
+    List<String> incomeType_List = new ArrayList<>();
+
+
+
+
     Spinner relationship_spin,gender_spin,Health_spin,Education_spin,schoolType_spin,businessType_spin,incomeType_spin;
     FloatingActionButton FMIncomeButton;
+
     AllDataAFDataModel allDataAFDataModel;
 
     public FamilyMembersIncomeFragment(AllDataAFDataModel allDataAFDataModel) {
@@ -62,22 +79,12 @@ public class FamilyMembersIncomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_family_members_income,container,false);
 
-        List<FiFamMem> list = allDataAFDataModel.getFiFamMems();
+        DatabaseClass databaseClass = DatabaseClass.getInstance(getContext());
+
+//        List<FiFamMem> list = allDataAFDataModel.getFiFamMems();
 
         FMIncomeButton = view.findViewById(R.id.addButton);
-        faimlMemberName = view.findViewById(R.id.faimlMemberName);
-        etage = view.findViewById(R.id.age);
-        etBusiness = view.findViewById(R.id.Business);
-        etTextincome = view.findViewById(R.id.editTextincome);
 
-
-        relationship_spin = view.findViewById(R.id.relationship);
-        gender_spin = view.findViewById(R.id.gender);
-        Health_spin = view.findViewById(R.id.Health);
-        Education_spin = view.findViewById(R.id.Education);
-        schoolType_spin = view.findViewById(R.id.schoolType);
-        businessType_spin = view.findViewById(R.id.businessType);
-        incomeType_spin = view.findViewById(R.id.incomeType);
 
        /* if(!list.isEmpty()){
             faimlMemberName.setText(list.get(0).getMemName());
@@ -87,6 +94,8 @@ public class FamilyMembersIncomeFragment extends Fragment {
         }
         etage.setText(allDataAFDataModel.getAge());
 */
+
+
 
         FMIncomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,7 +112,98 @@ public class FamilyMembersIncomeFragment extends Fragment {
 
                 popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
 
+
+                faimlMemberName = popupView.findViewById(R.id.faimlMemberName);
+                etage = popupView.findViewById(R.id.age);
+                etBusiness = popupView.findViewById(R.id.Business);
+                etTextincome = popupView.findViewById(R.id.editTextincome);
+
+
+                relationship_spin = popupView.findViewById(R.id.relationship);
+                gender_spin = popupView.findViewById(R.id.gender);
+                Health_spin = popupView.findViewById(R.id.Health);
+                Education_spin = popupView.findViewById(R.id.Education);
+                schoolType_spin = popupView.findViewById(R.id.schoolType);
+                businessType_spin = popupView.findViewById(R.id.businessType);
+                incomeType_spin = popupView.findViewById(R.id.incomeType);
+
                 addBtn = popupView.findViewById(R.id.addupdateButton);
+
+                String selectOption = "--Select--";
+                relationship_List.add(selectOption);
+                gender_List.add(selectOption);
+                Health_List.add(selectOption);
+                Education_List.add(selectOption);
+                schoolType_List.add(selectOption);
+                businessType_List.add(selectOption);
+                incomeType_List.add(selectOption);
+
+
+                DatabaseClass.databaseWriteExecutor.execute(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        List<RangeCategoryDataClass>  relationship_DataList = databaseClass.dao().getAllRCDataListby_catKey("relationship");
+                        for (RangeCategoryDataClass data : relationship_DataList) {
+                            String descriptionEn = data.getDescriptionEn();
+                            relationship_List.add(descriptionEn);
+                            ArrayAdapter<String> adapter1 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, relationship_List);
+                            relationship_spin.setAdapter(adapter1);
+                        }
+
+                        List<RangeCategoryDataClass>  gender_DataList = databaseClass.dao().getAllRCDataListby_catKey("gender");
+                        for (RangeCategoryDataClass data : gender_DataList) {
+                            String descriptionEn = data.getDescriptionEn();
+                            gender_List.add(descriptionEn);
+                            ArrayAdapter<String> adapter2 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, gender_List);
+                            gender_spin.setAdapter(adapter2);
+                        }
+
+                        List<RangeCategoryDataClass>  Health_DataList = databaseClass.dao().getAllRCDataListby_catKey("health");
+                        for (RangeCategoryDataClass data : Health_DataList) {
+                            String descriptionEn = data.getDescriptionEn();
+                            Health_List.add(descriptionEn);
+                            ArrayAdapter<String> adapter3 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, Health_List);
+                            Health_spin.setAdapter(adapter3);
+                        }
+
+                        List<RangeCategoryDataClass>  Education_DataList = databaseClass.dao().getAllRCDataListby_catKey("health");
+                        for (RangeCategoryDataClass data : Education_DataList) {
+                            String descriptionEn = data.getDescriptionEn();
+                            Education_List.add(descriptionEn);
+                            ArrayAdapter<String> adapter3 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, Education_List);
+                            Education_spin.setAdapter(adapter3);
+                        }
+
+                        List<RangeCategoryDataClass> schoolType_DataList  = databaseClass.dao().getAllRCDataListby_catKey("health");
+                        for (RangeCategoryDataClass data : schoolType_DataList) {
+                            String descriptionEn = data.getDescriptionEn();
+                            schoolType_List.add(descriptionEn);
+                            ArrayAdapter<String> adapter3 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, schoolType_List);
+                            schoolType_spin.setAdapter(adapter3);
+                        }
+
+                        List<RangeCategoryDataClass> businessType_DataList  = databaseClass.dao().getAllRCDataListby_catKey("health");
+                        for (RangeCategoryDataClass data : businessType_DataList) {
+                            String descriptionEn = data.getDescriptionEn();
+                            businessType_List.add(descriptionEn);
+                            ArrayAdapter<String> adapter3 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, businessType_List);
+                            businessType_spin.setAdapter(adapter3);
+                        }
+
+                        List<RangeCategoryDataClass> incomeType_DataList  = databaseClass.dao().getAllRCDataListby_catKey("health");
+                        for (RangeCategoryDataClass data : incomeType_DataList) {
+                            String descriptionEn = data.getDescriptionEn();
+                            incomeType_List.add(descriptionEn);
+                            ArrayAdapter<String> adapter3 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, incomeType_List);
+                            incomeType_spin.setAdapter(adapter3);
+                        }
+
+
+
+
+                    }
+                });
                 addBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -169,6 +269,8 @@ public class FamilyMembersIncomeFragment extends Fragment {
                 });
             }
         });
+
+
         return view;
     }
 

@@ -20,6 +20,7 @@ import android.widget.PopupWindow;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivityMenu;
+import com.paisalo.newinternalsourcingapp.Adapters.RangeCategoryAdapter;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFDataModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.UpdateFiModels.KycUpdateModel;
@@ -39,6 +40,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivityMenu;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFDataModel;
 import com.paisalo.newinternalsourcingapp.R;
+import com.paisalo.newinternalsourcingapp.RoomDatabase.DatabaseClass;
+import com.paisalo.newinternalsourcingapp.RoomDatabase.RangeCategoryDataClass;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class FamilyBorrowingsFragment extends Fragment {
@@ -46,6 +52,8 @@ public class FamilyBorrowingsFragment extends Fragment {
     AllDataAFDataModel allDataAFDataModel;
 
     Button  addBorrowings,dltButton,canButton;
+    DatabaseClass databaseClass;
+    private ApplicationFormActivityMenu activity;
     EditText LenderName,etLoanamount,etEmiamount,etbalanceamount;
 
     Spinner lenderTypespin,spinnerLoanUsed,spinnerReasonforloan,spinnerisMFI;
@@ -58,11 +66,23 @@ public class FamilyBorrowingsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+//            activity = (ApplicationFormActivityMenu) getActivity();
+//            ArrayList<RangeCategoryDataClass> lenderTypelist = new ArrayList<>();
+//        lenderTypelist.add(new RangeCategoryDataClass("--Select--", "--Select--","--Select--","--Select--","--Select--",0,"--Select--"));
+//        lenderTypelist.add(new RangeCategoryDataClass("Organised Sector", "Lender Type"," ",""," ",0,""));
+//        lenderTypelist.add(new RangeCategoryDataClass("Unorganised Sector", "Lender Type","","","",0,""));
+
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
+
         View view = inflater.inflate(R.layout.fragment_family_borrowings,container,false);
 
         addBorrower = view.findViewById(R.id.FMIncome);
@@ -139,6 +159,22 @@ public class FamilyBorrowingsFragment extends Fragment {
                 });*/
             }
         });
+
+
+//        DatabaseClass.databaseWriteExecutor.execute(new Runnable() {
+//            @Override
+//            public void run() {
+//                List<RangeCategoryDataClass> lenderTypeList = new ArrayList<>();
+//                RangeCategoryDataClass rangeCategoryDataClass = new RangeCategoryDataClass("--Select--", "--Select--", "--Select--", "--Select--", "--Select--", 0, "99");
+//                lenderTypeList.add(rangeCategoryDataClass);
+//                lenderTypeList.addAll(databaseClass.dao().getAllRCDataListby_catKey("state"));
+//                RangeCategoryAdapter rangeCategoryAdapter = new RangeCategoryAdapter(getActivity(), lenderTypeList);
+//                lenderTypespin.setAdapter(rangeCategoryAdapter);
+//
+//            }
+//        });
+
+
 
         return view;    }
 
