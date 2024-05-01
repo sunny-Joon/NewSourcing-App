@@ -512,7 +512,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         RequestBody image_befWorkBody = RequestBody.create(MediaType.parse("image/*"),croppedImage);
         MultipartBody.Part imagePart= MultipartBody.Part.createFormData("file",croppedImage.getName(),image_befWorkBody);
 
-
         MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
         RequestBody surveyBody = RequestBody.create(MediaType.parse("*/*"), croppedImage);
         builder.addFormDataPart("file", croppedImage.getName(), surveyBody);
