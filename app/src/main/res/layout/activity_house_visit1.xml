@@ -57,11 +57,12 @@
                         android:textColor="@color/darkred"
                         android:textSize="@dimen/heading" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/applicantName"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_weight="1"
+                        android:gravity="center"
                         android:enabled="false"
                         android:hint="Applicant Name"
                         android:inputType="textCapWords"
@@ -92,11 +93,12 @@
                         android:text="Marital Status"
                         android:textColor="@color/darkred" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/maritalStatus"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_weight="1"
+                        android:gravity="center"
                         android:hint="Marital Status"
                         android:inputType="textCapWords"
                         android:textSize="15dp" />
@@ -127,11 +129,12 @@
                         android:text="Loan Amount"
                         android:textColor="@color/darkred" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/loanAmount"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:gravity="center"
                         android:hint="0000"
                         android:inputType="textCapWords"
                         android:textSize="15dp" />
@@ -162,11 +165,12 @@
                         android:text="Loan Purpose"
                         android:textColor="@color/darkred" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/purpose"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_weight="1"
+                        android:gravity="center"
                         android:hint="Loan Purpose"
                         android:inputType="textCapWords"
                         android:textSize="15dp" />
@@ -197,11 +201,12 @@
                         android:text="Loan Duration"
                         android:textColor="@color/darkred" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/duration"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_weight="1"
+                        android:gravity="center"
                         android:hint="Loan Duration"
                         android:inputType="textCapWords"
                         android:textSize="15dp" />
@@ -232,11 +237,12 @@
                         android:text="Applicant Status"
                         android:textColor="@color/darkred" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/applicantStatus"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_weight="1"
+                        android:gravity="center"
                         android:hint="Applicant Status"
                         android:inputType="textCapWords"
                         android:textSize="15dp" />
@@ -266,11 +272,12 @@
                         android:text="Current Occupation"
                         android:textColor="@color/darkred" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/currentOccupation"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_weight="1"
+                        android:gravity="center"
                         android:hint="Residing With"
                         android:inputType="textCapWords"
                         android:textSize="15dp" />
@@ -301,11 +308,12 @@
                         android:text="Occupation Type"
                         android:textColor="@color/darkred" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/occupationType"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_weight="1"
+                        android:gravity="center"
                         android:hint="Occupation Type"
                         android:inputType="textCapWords"
                         android:textSize="15dp" />
@@ -336,11 +344,12 @@
                         android:text="Land Ownership"
                         android:textColor="@color/darkred" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/landOwnership"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_weight="1"
+                        android:gravity="center"
                         android:hint="Land Ownership"
                         android:inputType="textCapWords"
                         android:textSize="15dp" />
@@ -371,11 +380,12 @@
                         android:text="Residence Ownership"
                         android:textColor="@color/darkred" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/residenceOwnership"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_weight="1"
+                        android:gravity="center"
                         android:hint="Residence Ownership"
                         android:inputType="textCapWords"
                         android:textSize="15dp" />

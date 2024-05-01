@@ -87,8 +87,23 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
         <activity
             android:name=".Fragments.OnBoarding.KYCActivity2"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".Fragments.OnBoarding.HouseVisitActivity1"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".Fragments.OnBoarding.HouseVisitActivity2"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
