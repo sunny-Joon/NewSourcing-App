@@ -3,6 +3,8 @@ package com.paisalo.newinternalsourcingapp.Retrofit;
 import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.CreatorListModels.CreatorListModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFModel;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.HouseVisitModels.HVBorrowerModel;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.HouseVisitModels.HouseVisitSaveModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.IdVerificationModels.PANerificationModels.PanVerificationModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.IdVerificationModels.DLVerificationModels.DLVerificationModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.IdVerificationModels.VoterIdVerificationModels.VoterIdVerificationModel;
@@ -27,6 +29,7 @@ import com.paisalo.newinternalsourcingapp.ModelsRetrofit.StateDistDataModels.Vil
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.UpdateFiModels.KycUpdateModel;
 import org.json.JSONObject;
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -122,6 +125,12 @@ public interface ApiInterface {
     Call<KycUpdateModel> updateFinance(@Header("Authorization") String token, @Header("dbname") String dbname,@Body JsonObject object);
     @POST("POSFI/UpdateFIGaurantors")
     Call<KycUpdateModel> updateGaurantors(@Header("Authorization") String token, @Header("dbname") String dbname,@Body JsonObject object);
+
+    @POST("Miscellaneous/CreateHomeVisit")
+    Call<HouseVisitSaveModel> SaveHouseVisit(@Header("Authorization") String token, @Header("dbname") String dbname, @Body RequestBody file);
+
+    @GET("Miscellaneous/GetHomeVisitBorrowerData")
+    Call<HVBorrowerModel> HouseVisitBorrowerData(@Header("Authorization") String token, @Header("dbname") String dbname,@Query("ficode") String fi, @Query("creator") String cr);
 
 
 }

@@ -3,6 +3,7 @@ package com.paisalo.newinternalsourcingapp.Fragments.OnBoarding;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
+import android.util.Log;
 import android.view.View;
 import android.Manifest;
 import android.app.Activity;
@@ -33,11 +34,26 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
+import com.google.gson.JsonObject;
+import com.paisalo.newinternalsourcingapp.BuildConfig;
+import com.paisalo.newinternalsourcingapp.GlobalClass;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.HouseVisitModels.HouseVisitSaveModel;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.RangeCategoryModels.RangeCategoryModel;
 import com.paisalo.newinternalsourcingapp.R;
+import com.paisalo.newinternalsourcingapp.Retrofit.ApiClient;
+import com.paisalo.newinternalsourcingapp.Retrofit.ApiInterface;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import android.net.Uri;
 import androidx.core.app.ActivityCompat;
@@ -67,7 +83,7 @@ public class HouseVisitActivity2 extends AppCompatActivity {
     Spinner relationWithApplicant,residingWith,residence_type,residental_stability,businessExperience,neighbourhood_verification,intervieweeRelation;
 
     Button submit,click;
-
+    private ProgressDialog progressDialog;
     ImageView view;
     String buildType_value="Y",approvedLocation_value="Y",cpfCriteria_value="Y",cpfAddressVerification_value="Y",IdVerification_value="Y",addressVerification_value="Y",ageVerification_value="Y",cpfRecentAddressVerification_value="Y"
             ,stampOnPhotocopy_value="Y",lastLoanVerification_value="Y",absentReason_value="Y",repaymentFault_value="Y",reasonVerification_value="Y",isAppliedAmountAppropriate_value="Y",familyAwareness_value="Y",loanRelatedToBusiness_value="Y",
@@ -84,6 +100,16 @@ public class HouseVisitActivity2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_house_visit2);
+
+        Intent intent = getIntent();
+        fiNo = intent.getStringExtra("FiCode");
+        rentOfHouse = intent.getStringExtra("Rent_of_House");
+        groupCode = intent.getStringExtra("GroupCode");
+        cityCode = intent.getStringExtra("CityCode");
+        latitude = intent.getStringExtra("Latitude");
+        longitude = intent.getStringExtra("Longitude");
+        creator = intent.getStringExtra("Creator");
+        empCode = GlobalClass.Id;
 
         /*Edit Text*/
         branchName = findViewById(R.id.branchName);
@@ -164,139 +190,126 @@ public class HouseVisitActivity2 extends AppCompatActivity {
         click = findViewById(R.id.click);
         view = findViewById(R.id.view);
 
-//        submit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                validateFields();
-//                if(validateFields()){
-//
-//                    progressDialog = new ProgressDialog(HouseVisitActivity2.this);
-//                    progressDialog.setMessage("Saving...");
-//                    progressDialog.setCancelable(false);
-//                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-//                    progressDialog.show();
-//
-//                    HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-//                    logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-//                    OkHttpClient.Builder httpClient = new OkHttpClient.Builder(
-//                    );
-//
-//                    httpClient.connectTimeout(1, TimeUnit.MINUTES);
-//                    httpClient.readTimeout(1,TimeUnit.MINUTES);
-//                    httpClient.addInterceptor(logging);
-//                    retrofit = new Retrofit.Builder()
-//                            .baseUrl("https://erpservice.paisalo.in:980/PDL.Mobile.API/api/")
-//                            .addConverterFactory(GsonConverterFactory.create())
-//                            .client(httpClient.build())
-//                            .build();
-//                    JSONPlaceholder jsonPlaceholder = retrofit.create(JSONPlaceholder.class);
-//                    String bearerToken = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjE1MzkiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiZG90bmV0ZGV2MkBwYWlzYWxvLmluIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZW1haWxhZGRyZXNzIjoiZG90bmV0ZGV2MkBwYWlzYWxvLmluIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiIxNTM5IiwiUm9sZSI6WyJBRE1JTiIsIkFETUlOIl0sIkJyYW5jaENvZGUiOiIiLCJDcmVhdG9yIjoiIiwiVU5hbWUiOiJSQUpBTiBLVU1BUiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvZXhwaXJhdGlvbiI6IlNlcCBUdWUgMTkgMjAyMyAwNTo0MjoyMyBBTSIsIm5iZiI6MTY5NTAxNTc0MywiZXhwIjoxNjk1MDgyMzQzLCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo3MTg4IiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NzE4OCJ9.7t8onXReBFXnjRXcWfdm58jk64RmaqeqOySyw_WrudA";
-//
-//                    MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-//                    RequestBody surveyBody = RequestBody.create(MediaType.parse("*/*"), photoFile);
-//                    builder.addFormDataPart("Image", photoFile.getName(),surveyBody);
-//                    builder.addFormDataPart("HouseType", buildType_value);
-//                    builder.addFormDataPart("IsvalidLocation", approvedLocation_value);
-//                    builder.addFormDataPart("CPFlifeStyle", cpfCriteria_value);
-//                    builder.addFormDataPart("CpfPOAddressVerify", cpfAddressVerification_value);
-//                    builder.addFormDataPart("PhotoIdVerification", IdVerification_value);
-//                    builder.addFormDataPart("CurrentAddressprof", addressVerification_value);
-//                    builder.addFormDataPart("HasbandWifeAgeverificaton", ageVerification_value);
-//                    builder.addFormDataPart("ParmanentAddressPincode", cpfRecentAddressVerification_value);
-//                    builder.addFormDataPart("StampOnPhotocopy", stampOnPhotocopy_value);
-//                    builder.addFormDataPart("LastLoanVerification", lastLoanVerification_value);
-//                    builder.addFormDataPart("AbsentReasonInCentermeeting", absentReason_value);
-//                    builder.addFormDataPart("RepaymentFault", repaymentFault_value);
-//                    builder.addFormDataPart("LoanreasonVerification", reasonVerification_value);
-//                    builder.addFormDataPart("IsAppliedAmountAppropriate", isAppliedAmountAppropriate_value);
-//                    builder.addFormDataPart("FamilyAwarenessaboutloan", familyAwareness_value);
-//                    builder.addFormDataPart("Businessaffectedourrelation", loanRelatedToBusiness_value);
-//                    builder.addFormDataPart("IsloanAppropriateforBusiness", IsBusinessAppropriate_value);
-//                    builder.addFormDataPart("Repayeligiblity", repayEligibility_value);
-//                    builder.addFormDataPart("Cashflowoffamily", surplusVerification_value);
-//                    builder.addFormDataPart("IncomeMatchedwithprofile", incomeVerification_value);
-//                    builder.addFormDataPart("BusinessVerification", businessVerification_value);
-//                    builder.addFormDataPart("ComissionDemand", comissionDemand_value);
-//                    builder.addFormDataPart("BorrowersupportedGroup", supportiveToGroup_value);
-//                    builder.addFormDataPart("GroupReadyToVilay", groupReadyToVilay_value);
-//                    builder.addFormDataPart("GroupHasBloodRelation", groupHasBloodRelation_value);
-//                    builder.addFormDataPart("UnderstandInsaurancePolicy", understandsInsurance_value);
-//                    builder.addFormDataPart("VerifyExternalLoan", verifyExternalLoan_value);
-//                    builder.addFormDataPart("UnderstandsFaultPolicy", understandsFaultPolicy_value);
-//                    builder.addFormDataPart("OverlimitLoan_borrowfromgroup", IsLoanAmountAppropriate_value);
-//                    builder.addFormDataPart("ToatlDebtUnderLimit", toatlDebtUnderLimit_value);
-//                    builder.addFormDataPart("WorkingPlaceVerification", workingPlaceVerification_value);
-//                    builder.addFormDataPart("IsWorkingPlaceValid", IsWorkingPlaceValid_value);
-//                    builder.addFormDataPart("WorkingPlacedescription", workingPlacedescription_value);
-//                    builder.addFormDataPart("WorkExperience", workExperience_value);
-//                    builder.addFormDataPart("SeasonDependency", seasonDependency_value);
-//                    builder.addFormDataPart("StockVerification", stockVerification_value);
-//                    builder.addFormDataPart("Loansufficientwithdebt", sufficientAmount_value);
-//                    builder.addFormDataPart("BranchName", branchName.getText().toString());
-//                    builder.addFormDataPart("Center", centre.getText().toString());
-//                    builder.addFormDataPart("AreaName", area.getText().toString());
-//                    builder.addFormDataPart("GroupName", group.getText().toString());
-//                    builder.addFormDataPart("LoanUsagePercentage", loanUsagePercentage.getText().toString());
-//                    builder.addFormDataPart("AgeofInterviewed", interviewee_age.getText().toString());
-//                    builder.addFormDataPart("NameofInterviewed", interviewee_name.getText().toString());
-//                    builder.addFormDataPart("Distancetobranch", distance_ApplicantToDealer.getText().toString());
-//                    builder.addFormDataPart("Timetoreachbranch", time_ApplicantToDealer.getText().toString());
-//                    builder.addFormDataPart("MonthlySales", approxMonthlySales.getText().toString());
-//                    builder.addFormDataPart("Netmonthlyincome_afterproposedloan", expectedIncome.getText().toString());
-//                    builder.addFormDataPart("Totalmonthlyhouseholdexpenses", houseExpenditure.getText().toString());
-//                    builder.addFormDataPart("Totalmonthlyexpensesofoccupation", businessExpenditure.getText().toString());
-//                    builder.addFormDataPart("Netmonthlyincomeotherfamilymembers", familyNetIncome.getText().toString());
-//                    builder.addFormDataPart("MonthlyIncome", approxMonthlyIncome.getText().toString());
-//                    builder.addFormDataPart("Relationearningmember", SrelationWithApplicant);
-//                    builder.addFormDataPart("Namereferenceperson1", reference1.getText().toString());
-//                    builder.addFormDataPart("Mobilereferenceperson1", reference_PhoneNo1.getText().toString());
-//                    builder.addFormDataPart("Namereferenceperson2", reference2.getText().toString());
-//                    builder.addFormDataPart("Mobilereferenceperson2", reference_PhoneNo2.getText().toString());
-//                    builder.addFormDataPart("Residing_with", SresidingWith);
-//                    builder.addFormDataPart("Residence_Type", Sresidence_type);
-//                    builder.addFormDataPart("Residential_Stability", residental_stability.getSelectedItem().toString());
-//                    builder.addFormDataPart("TotalExperienceOccupation", businessExperience.getSelectedItem().toString());
-//                    builder.addFormDataPart("Feedbacknearbyresident", Sneighbourhood_verification);
-//                    builder.addFormDataPart("RelationofInterviewer", SintervieweeRelation);
-//                    builder.addFormDataPart("Applicant_Status", "N");
-//                    builder.addFormDataPart("FamilymemberfromPaisalo", "0");
-//                    builder.addFormDataPart("HouseMonthlyRent", rentOfHouse);
-//                    builder.addFormDataPart("Latitude", latitude);
-//                    builder.addFormDataPart("Longitude", longitude);
-//                    builder.addFormDataPart("FICode", fiNo);
-//                    builder.addFormDataPart("Creator", creator);
-//                    builder.addFormDataPart("AreaCode", cityCode);
-//                    builder.addFormDataPart("GroupCode", groupCode);
-//                    builder.addFormDataPart("Address", address.getText().toString());
-//                    builder.addFormDataPart("EmpCode", empCode);
-//
-//
-//
-//                    RequestBody requestBody = builder.build();
-//
-//                    Call<JsonObject> call=jsonPlaceholder.saveHouseVerificationDetails(requestBody);
-//
-//                    call.enqueue(new Callback<JsonObject>() {
-//                        @Override
-//                        public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-//
-//                            Log.d("Sunny", "onResponse: "+ response.body());
-//                            progressDialog.dismiss();
-//                            showToasts("DataModel Saved");
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-//                        }
-//                        @Override
-//                        public void onFailure(Call<JsonObject> call, Throwable t) {
-//                            Log.d("TAG", "onFailure: "+t.getMessage());
-//                            progressDialog.dismiss();
-//                            showToasts("Unsuccessful");
-//                        }
-//                    });
-//
-//                }
-//            }
-//        });
+                validateFields();
+                if(validateFields()){
+
+                    progressDialog = new ProgressDialog(HouseVisitActivity2.this);
+                    progressDialog.setMessage("Saving...");
+                    progressDialog.setCancelable(false);
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    progressDialog.show();
+
+                    MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+                    RequestBody surveyBody = RequestBody.create(MediaType.parse("*/*"), photoFile);
+                    builder.addFormDataPart("Image", photoFile.getName(), surveyBody);
+                    builder.addFormDataPart("HouseType", buildType_value == null ? "" : buildType_value);
+                    builder.addFormDataPart("IsvalidLocation", approvedLocation_value == null ? "" : approvedLocation_value);
+                    builder.addFormDataPart("CPFlifeStyle", cpfCriteria_value == null ? "" : cpfCriteria_value);
+                    builder.addFormDataPart("CpfPOAddressVerify", cpfAddressVerification_value == null ? "" : cpfAddressVerification_value);
+                    builder.addFormDataPart("PhotoIdVerification", IdVerification_value == null ? "" : IdVerification_value);
+                    builder.addFormDataPart("CurrentAddressprof", addressVerification_value == null ? "" : addressVerification_value);
+                    builder.addFormDataPart("HasbandWifeAgeverificaton", ageVerification_value == null ? "" : ageVerification_value);
+                    builder.addFormDataPart("ParmanentAddressPincode", cpfRecentAddressVerification_value == null ? "" : cpfRecentAddressVerification_value);
+                    builder.addFormDataPart("StampOnPhotocopy", stampOnPhotocopy_value == null ? "" : stampOnPhotocopy_value);
+                    builder.addFormDataPart("LastLoanVerification", lastLoanVerification_value == null ? "" : lastLoanVerification_value);
+                    builder.addFormDataPart("AbsentReasonInCentermeeting", absentReason_value == null ? "" : absentReason_value);
+                    builder.addFormDataPart("RepaymentFault", repaymentFault_value == null ? "" : repaymentFault_value);
+                    builder.addFormDataPart("LoanreasonVerification", reasonVerification_value == null ? "" : reasonVerification_value);
+                    builder.addFormDataPart("IsAppliedAmountAppropriate", isAppliedAmountAppropriate_value == null ? "" : isAppliedAmountAppropriate_value);
+                    builder.addFormDataPart("FamilyAwarenessaboutloan", familyAwareness_value == null ? "" : familyAwareness_value);
+                    builder.addFormDataPart("Businessaffectedourrelation", loanRelatedToBusiness_value == null ? "" : loanRelatedToBusiness_value);
+                    builder.addFormDataPart("IsloanAppropriateforBusiness", IsBusinessAppropriate_value == null ? "" : IsBusinessAppropriate_value);
+                    builder.addFormDataPart("Repayeligiblity", repayEligibility_value == null ? "" : repayEligibility_value);
+                    builder.addFormDataPart("Cashflowoffamily", surplusVerification_value == null ? "" : surplusVerification_value);
+                    builder.addFormDataPart("IncomeMatchedwithprofile", incomeVerification_value == null ? "" : incomeVerification_value);
+                    builder.addFormDataPart("BusinessVerification", businessVerification_value == null ? "" : businessVerification_value);
+                    builder.addFormDataPart("ComissionDemand", comissionDemand_value == null ? "" : comissionDemand_value);
+                    builder.addFormDataPart("BorrowersupportedGroup", supportiveToGroup_value == null ? "" : supportiveToGroup_value);
+                    builder.addFormDataPart("GroupReadyToVilay", groupReadyToVilay_value == null ? "" : groupReadyToVilay_value);
+                    builder.addFormDataPart("GroupHasBloodRelation", groupHasBloodRelation_value == null ? "" : groupHasBloodRelation_value);
+                    builder.addFormDataPart("UnderstandInsaurancePolicy", understandsInsurance_value == null ? "" : understandsInsurance_value);
+                    builder.addFormDataPart("VerifyExternalLoan", verifyExternalLoan_value == null ? "" : verifyExternalLoan_value);
+                    builder.addFormDataPart("UnderstandsFaultPolicy", understandsFaultPolicy_value == null ? "" : understandsFaultPolicy_value);
+                    builder.addFormDataPart("OverlimitLoan_borrowfromgroup", IsLoanAmountAppropriate_value == null ? "" : IsLoanAmountAppropriate_value);
+                    builder.addFormDataPart("ToatlDebtUnderLimit", toatlDebtUnderLimit_value == null ? "" : toatlDebtUnderLimit_value);
+                    builder.addFormDataPart("WorkingPlaceVerification", workingPlaceVerification_value == null ? "" : workingPlaceVerification_value);
+                    builder.addFormDataPart("IsWorkingPlaceValid", IsWorkingPlaceValid_value == null ? "" : IsWorkingPlaceValid_value);
+                    builder.addFormDataPart("WorkingPlacedescription", workingPlacedescription_value == null ? "" : workingPlacedescription_value);
+                    builder.addFormDataPart("WorkExperience", workExperience_value == null ? "" : workExperience_value);
+                    builder.addFormDataPart("SeasonDependency", seasonDependency_value == null ? "" : seasonDependency_value);
+                    builder.addFormDataPart("StockVerification", stockVerification_value == null ? "" : stockVerification_value);
+                    builder.addFormDataPart("Loansufficientwithdebt", sufficientAmount_value == null ? "" : sufficientAmount_value);
+                    builder.addFormDataPart("BranchName", branchName.getText().toString());
+                    builder.addFormDataPart("Center", centre.getText().toString());
+                    builder.addFormDataPart("AreaName", area.getText().toString());
+                    builder.addFormDataPart("GroupName", group.getText().toString());
+                    builder.addFormDataPart("LoanUsagePercentage", loanUsagePercentage.getText().toString());
+                    builder.addFormDataPart("AgeofInterviewed", interviewee_age.getText().toString());
+                    builder.addFormDataPart("NameofInterviewed", interviewee_name.getText().toString());
+                    builder.addFormDataPart("Distancetobranch", distance_ApplicantToDealer.getText().toString());
+                    builder.addFormDataPart("Timetoreachbranch", time_ApplicantToDealer.getText().toString());
+                    builder.addFormDataPart("MonthlySales", approxMonthlySales.getText().toString());
+                    builder.addFormDataPart("Netmonthlyincome_afterproposedloan", expectedIncome.getText().toString());
+                    builder.addFormDataPart("Totalmonthlyhouseholdexpenses", houseExpenditure.getText().toString());
+                    builder.addFormDataPart("Totalmonthlyexpensesofoccupation", businessExpenditure.getText().toString());
+                    builder.addFormDataPart("Netmonthlyincomeotherfamilymembers", familyNetIncome.getText().toString());
+                    builder.addFormDataPart("MonthlyIncome", approxMonthlyIncome.getText().toString());
+                    builder.addFormDataPart("Relationearningmember", SrelationWithApplicant);
+                    builder.addFormDataPart("Namereferenceperson1", reference1.getText().toString());
+                    builder.addFormDataPart("Mobilereferenceperson1", reference_PhoneNo1.getText().toString());
+                    builder.addFormDataPart("Namereferenceperson2", reference2.getText().toString());
+                    builder.addFormDataPart("Mobilereferenceperson2", reference_PhoneNo2.getText().toString());
+                    builder.addFormDataPart("Residing_with", SresidingWith);
+                    builder.addFormDataPart("Residence_Type", Sresidence_type);
+                    builder.addFormDataPart("Residential_Stability", residental_stability.getSelectedItem().toString());
+                    builder.addFormDataPart("TotalExperienceOccupation", businessExperience.getSelectedItem().toString());
+                    builder.addFormDataPart("Feedbacknearbyresident", Sneighbourhood_verification);
+                    builder.addFormDataPart("RelationofInterviewer", SintervieweeRelation);
+                    builder.addFormDataPart("Applicant_Status", "N");
+                    builder.addFormDataPart("FamilymemberfromPaisalo", "0");
+                    builder.addFormDataPart("HouseMonthlyRent", rentOfHouse);
+                    builder.addFormDataPart("Latitude", latitude);
+                    builder.addFormDataPart("Longitude", longitude);
+                    builder.addFormDataPart("FICode", fiNo);
+                    builder.addFormDataPart("Creator", creator);
+                    builder.addFormDataPart("AreaCode", cityCode);
+                    builder.addFormDataPart("GroupCode", groupCode);
+                    builder.addFormDataPart("Address", address.getText().toString());
+                    builder.addFormDataPart("EmpCode", empCode);
+
+
+                    RequestBody requestBody = builder.build();
+                    ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+                    Call<HouseVisitSaveModel> call=apiInterface.SaveHouseVisit(GlobalClass.Token, BuildConfig.dbname,requestBody);
+                    call.enqueue(new Callback<HouseVisitSaveModel>() {
+                        @Override
+                        public void onResponse(Call<HouseVisitSaveModel> call, Response<HouseVisitSaveModel> response) {
+                            Log.d("TAG", "housevisit: "+ response.body());
+                            if(response.isSuccessful()){
+                                Log.d("TAG", "housevisit: "+ response.body());
+                                assert response.body() != null;
+                                Log.d("TAG", "housevisit: "+ response.body().getMessage().toString());
+
+                                progressDialog.dismiss();
+                            }else {
+                                Log.d("TAG", "housevisit: "+ response.code());
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<HouseVisitSaveModel> call, Throwable t) {
+                            Log.d("TAG", "housevisit: "+ "failure");
+                        }
+                    });
+
+
+                }
+            }
+        });
 
         click.setOnClickListener(new View.OnClickListener() {
             @Override
