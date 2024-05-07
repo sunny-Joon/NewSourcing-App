@@ -6,15 +6,30 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.paisalo.newinternalsourcingapp.Adapters.BorrowerListAdapter;
+import com.paisalo.newinternalsourcingapp.BuildConfig;
+import com.paisalo.newinternalsourcingapp.GlobalClass;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.BorrowerListModels.BorrowerListDataModel;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.BorrowerListModels.BorrowerListModel;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.ManagerListModels.ManagerListModel;
 import com.paisalo.newinternalsourcingapp.R;
+import com.paisalo.newinternalsourcingapp.Retrofit.ApiClient;
+import com.paisalo.newinternalsourcingapp.Retrofit.ApiInterface;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BorrowerListActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private BorrowerListAdapter borrowerListAdapter;
+    List<BorrowerListDataModel> borrowerListDataModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,12 +38,44 @@ public class BorrowerListActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String id = intent.getStringExtra("keyName");
+        String foCode = intent.getStringExtra("foCode");
+        String creator = intent.getStringExtra("creator");
+        String areaCode = intent.getStringExtra("areaCode");
         Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
 
         recyclerView = findViewById(R.id.esignRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        borrowerListAdapter = new BorrowerListAdapter(this, id, "Rahul", "Rakul", "021", "7777777777", "AGRA","Shimla");
-        recyclerView.setAdapter(borrowerListAdapter);
+
+
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<BorrowerListModel> call = apiInterface.PendingApplicationForms(GlobalClass.Token, BuildConfig.dbname,GlobalClass.Imei,foCode,areaCode,creator);
+        call.enqueue(new Callback<BorrowerListModel>() {
+            @Override
+            public void onResponse(Call<BorrowerListModel> call, Response<BorrowerListModel> response) {
+              //  Log.d("TAG", "onResponseFoList: "+ response.body());
+                if(response.isSuccessful()){
+                    Log.d("TAG", "onResponseFoList: "+ response.body());
+                    BorrowerListModel borrowerListModel = response.body();
+                    borrowerListDataModel = borrowerListModel.getData();
+                    Log.d("TAG", "onResponseFoList: " + borrowerListDataModel.get(0).getAadharid());
+                    if(borrowerListDataModel.size()>0) {
+                        Log.d("TAG", "onResponseFoList1: "+ response.body());
+                        borrowerListAdapter = new BorrowerListAdapter(BorrowerListActivity.this, borrowerListDataModel);
+                        recyclerView.setAdapter(borrowerListAdapter);
+                    }
+                }else{
+                    Log.d("TAG", "onResponseFoList: "+ response.code());
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BorrowerListModel> call, Throwable t) {
+                Log.d("TAG", "onResponseFoList: "+ t.getMessage());
+
+
+            }
+        });
     }
 }

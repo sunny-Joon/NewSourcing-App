@@ -6,10 +6,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.paisalo.newinternalsourcingapp.Adapters.ManagerListAdapter;
+import com.paisalo.newinternalsourcingapp.GlobalClass;
 import com.paisalo.newinternalsourcingapp.ModelclassesRoom.ManagerModel;
 import com.paisalo.newinternalsourcingapp.R;
+import com.paisalo.newinternalsourcingapp.RoomDatabase.DaoClass;
+import com.paisalo.newinternalsourcingapp.RoomDatabase.DatabaseClass;
+import com.paisalo.newinternalsourcingapp.RoomDatabase.ManagerListDataClass;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +23,9 @@ public class ManagerList extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private ManagerListAdapter adapter;
+    DatabaseClass database;
+    DaoClass daoClass;
+    List<ManagerListDataClass> listDataClasses;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,20 +36,19 @@ public class ManagerList extends AppCompatActivity {
         recyclerView = findViewById(R.id.managerListRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        List<ManagerModel> dataList = getDataList();
+        database = DatabaseClass.getInstance(ManagerList.this);
+        daoClass = database.dao();
 
-        adapter = new ManagerListAdapter(this,dataList);
+        DatabaseClass.databaseWriteExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                listDataClasses = daoClass.getAllManagerDataList();
+                Log.d("TAG", "onCreate: " + listDataClasses.size());
+                adapter = new ManagerListAdapter(ManagerList.this, listDataClasses);
+                recyclerView.setAdapter(adapter);
+            }
+        });
 
-        recyclerView.setAdapter(adapter);
     }
-
-    private List<ManagerModel> getDataList() {
-        List<ManagerModel> dataList = new ArrayList<>();
-        dataList.add(new ManagerModel("Baldev", "Place1/GroupCode1", "Place2/Group"));
-        dataList.add(new ManagerModel("Baldev", "Place1/GroupCode1", "Place2/Group"));
-        dataList.add(new ManagerModel("Baldev", "Place1/GroupCode1", "Place2/Group"));
-
-        return dataList;
-    }
-    }
+}
 

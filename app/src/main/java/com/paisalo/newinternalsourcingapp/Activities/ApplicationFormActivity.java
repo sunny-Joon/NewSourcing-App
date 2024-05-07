@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.View;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,19 +12,33 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.appbar.MaterialToolbar;
-import com.paisalo.newinternalsourcingapp.Fragments.ApplicationFormFragments.AadhaarFragment;
-import com.paisalo.newinternalsourcingapp.Fragments.ApplicationFormFragments.FamilyBorrowingsFragment;
-import com.paisalo.newinternalsourcingapp.Fragments.ApplicationFormFragments.FamilyMembersIncomeFragment;
-import com.paisalo.newinternalsourcingapp.Fragments.ApplicationFormFragments.FinancialInfoFragment;
-import com.paisalo.newinternalsourcingapp.Fragments.ApplicationFormFragments.GuarantorsFragment;
-import com.paisalo.newinternalsourcingapp.Fragments.ApplicationFormFragments.KycScanningFragment;
-import com.paisalo.newinternalsourcingapp.Fragments.ApplicationFormFragments.PersonalDetailsFragment;
+import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.ApplicationFormFragments.AadhaarFragment;
+import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.ApplicationFormFragments.FamilyBorrowingsFragment;
+import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.ApplicationFormFragments.FamilyMembersIncomeFragment;
+import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.ApplicationFormFragments.FinancialInfoFragment;
+import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.ApplicationFormFragments.GuarantorsFragment;
+import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.ApplicationFormFragments.KycScanningFragment;
+import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.ApplicationFormFragments.PersonalDetailsFragment;
+import com.paisalo.newinternalsourcingapp.Modelclasses.FiJsonObject;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFDataModel;
 import com.paisalo.newinternalsourcingapp.R;
+
+import java.io.Serializable;
 
 public class ApplicationFormActivity extends AppCompatActivity {
 
     private ViewPager2 viewPager;
     private MaterialToolbar toolbar;
+
+    static AllDataAFDataModel allDataAFDataModel;
+
+    public ApplicationFormActivity(AllDataAFDataModel allDataAFDataModel) {
+        this.allDataAFDataModel = allDataAFDataModel;
+    }
+public  ApplicationFormActivity(){
+
+}
+    public ApplicationFormActivity(ViewPager2 viewPager) {}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +48,18 @@ public class ApplicationFormActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.viewPager);
         toolbar = findViewById(R.id.toolbar);
 
+
+        Intent intent = getIntent();
+
+        Serializable afDataObject = intent.getSerializableExtra("allDataAFDataModel");
+
+        if (afDataObject != null && afDataObject instanceof AllDataAFDataModel) {
+            allDataAFDataModel = (AllDataAFDataModel) afDataObject;
+        }
+
         setSupportActionBar(toolbar);
 
-        String fragmentId = getIntent().getStringExtra("Id");
+        String fragmentId = intent.getStringExtra("Id");
 
         Fragment initialFragment = getInitialFragment(fragmentId);
 
@@ -56,22 +77,21 @@ public class ApplicationFormActivity extends AppCompatActivity {
     private Fragment getInitialFragment(String fragmentId) {
         switch (fragmentId) {
             case "aadhaar":
-                return new AadhaarFragment();
+                return new AadhaarFragment(allDataAFDataModel);
             case "personalDetails":
-                return new PersonalDetailsFragment();
+                return new PersonalDetailsFragment(allDataAFDataModel);
             case "financialInfo":
-                return new FinancialInfoFragment();
+                return new FinancialInfoFragment(allDataAFDataModel);
             case "familyIncome":
-                return new FamilyMembersIncomeFragment();
+                return new FamilyMembersIncomeFragment(allDataAFDataModel);
             case "borrowings":
-                return new FamilyBorrowingsFragment();
+                return new FamilyBorrowingsFragment(allDataAFDataModel);
             case "guarantors":
-                return new GuarantorsFragment();
+                return new GuarantorsFragment(allDataAFDataModel);
             case "kycScanning":
-                return new KycScanningFragment();
-
+                return new KycScanningFragment(allDataAFDataModel);
             default:
-                return new AadhaarFragment();
+                return new AadhaarFragment(allDataAFDataModel);
         }
     }
 
@@ -90,7 +110,7 @@ public class ApplicationFormActivity extends AppCompatActivity {
             if (position == 0) {
                 return initialFragment;
             }
-            return new AadhaarFragment();
+            return new AadhaarFragment(allDataAFDataModel);
         }
 
         @Override

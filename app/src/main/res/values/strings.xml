@@ -275,7 +275,7 @@ Contact Email <i>DELHI@PAISALO.IN</i>
     <string name="monthly">monthly</string>
     <string name="disbursement_target">Disbursement target</string>
     <string name="tap_to_calculate_incentive">TAP TO \n CALCULATE INCENTIVE</string>
-    <string name="people_earn_more_incentive">10 people will earn more incentive than you</string>
+    <string name="people_earn_more_incentive">Calculating...</string>
     <string name="earn_more_incentive">Earn more incentive</string>
     <string name="ab_Rukna_Nahi">AB RUKNA NAHI</string>
     <string name="home">Home</string>

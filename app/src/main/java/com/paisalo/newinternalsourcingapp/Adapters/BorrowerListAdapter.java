@@ -13,57 +13,65 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivityMenu;
-import com.paisalo.newinternalsourcingapp.Activities.BorrowerListActivity;
 import com.paisalo.newinternalsourcingapp.Activities.DownloadDocumentActivity;
-import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.KYCActivity;
-
+import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.HouseVisitActivity1;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.BorrowerListModels.BorrowerListDataModel;
 import com.paisalo.newinternalsourcingapp.R;
 
-public class BorrowerListAdapter extends RecyclerView.Adapter<BorrowerListAdapter.ViewHolder>{
+import java.util.List;
+
+public class BorrowerListAdapter extends RecyclerView.Adapter<BorrowerListAdapter.ViewHolder> {
 
     private Context context;
-    private String userName, fatherOrSpouse, fiCode, mobile, creator, address;
+    private List<BorrowerListDataModel> borrowerListDataModel;
 
-    public BorrowerListAdapter(Context context, String userName, String fatherOrSpouse, String fiCode, String mobile, String creator, String address, String shimla) {
+    public BorrowerListAdapter(Context context, List<BorrowerListDataModel> borrowerListDataModel) {
         this.context = context;
-        this.userName = userName;
-        this.fatherOrSpouse = fatherOrSpouse;
-        this.fiCode = fiCode;
-        this.mobile = mobile;
-        this.creator = creator;
-        this.address = address;
+        this.borrowerListDataModel = borrowerListDataModel;
     }
 
     @Override
-    public BorrowerListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.application_form_list_item, parent, false);
-        return new BorrowerListAdapter.ViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(BorrowerListAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        BorrowerListDataModel dataModel = borrowerListDataModel.get(position);
 
-        holder.userNameTextView.setText(userName);
-        holder.fatherOrSpouseTextView.setText(fatherOrSpouse);
-        holder.fiCodeTextView.setText(fiCode);
-        holder.mobileTextView.setText(mobile);
-        holder.creatorTextView.setText(creator);
-        holder.addressTextView.setText(address);
+        if (dataModel.getMname() == null && dataModel.getLname() == null) {
+            holder.userNameTextView.setText(dataModel.getFname());
+        } else if (dataModel.getMname() == null) {
+            holder.userNameTextView.setText(dataModel.getFname() + " " + dataModel.getLname());
+        } else {
+            holder.userNameTextView.setText(dataModel.getFname() + " " + dataModel.getMname() + " " + dataModel.getLname());
+        }
+
+        if (dataModel.getfMname() == null && dataModel.getfLname() == null) {
+            holder.fatherOrSpouseTextView.setText(dataModel.getfFname());
+        } else if (dataModel.getfMname() == null) {
+            holder.fatherOrSpouseTextView.setText(dataModel.getfFname() + " " + dataModel.getfLname());
+        } else {
+            holder.fatherOrSpouseTextView.setText(dataModel.getfFname() + " " + dataModel.getfMname() + " " + dataModel.getfLname());
+        }
+        holder.fiCodeTextView.setText(dataModel.getCode());
+        holder.mobileTextView.setText(dataModel.getpPh3());
+        holder.creatorTextView.setText(dataModel.getCreator());
+        holder.addressTextView.setText(dataModel.getAddr());
     }
 
     @Override
     public int getItemCount() {
-        return 3;
+        return borrowerListDataModel.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView userNameTextView, fatherOrSpouseTextView, fiCodeTextView, mobileTextView, creatorTextView, addressTextView;
-
         CardView borrowerCardView;
 
         public ViewHolder(View itemView) {
             super(itemView);
-
             borrowerCardView = itemView.findViewById(R.id.borrowerCardView);
             userNameTextView = itemView.findViewById(R.id.userNameTextView);
             fatherOrSpouseTextView = itemView.findViewById(R.id.fatherOrSpouseTextView);
@@ -72,36 +80,44 @@ public class BorrowerListAdapter extends RecyclerView.Adapter<BorrowerListAdapte
             creatorTextView = itemView.findViewById(R.id.creatorTextView);
             addressTextView = itemView.findViewById(R.id.addressTextView);
 
-            Intent intent = ((Activity) itemView.getContext()).getIntent();
-            String id = intent.getStringExtra("keyName");
-
             borrowerCardView.setOnClickListener(new View.OnClickListener() {
-
                 @Override
                 public void onClick(View v) {
-                    openActivity(id);
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        BorrowerListDataModel dataModel = borrowerListDataModel.get(position);
+                        Intent intent = ((Activity) itemView.getContext()).getIntent();
+                        String id = intent.getStringExtra("keyName");                        String fiCode = dataModel.getCode(); // Assuming getCode() returns fiCode
+                        String creator = dataModel.getCreator(); // Assuming getCreator() returns creator
+                        if (id != null) {
+                            openActivity(id, fiCode, creator);
+                        }
+                    }
                 }
             });
-
-            /*borrowerCardView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(itemView.getContext(), ApplicationFormActivityMenu.class);
-                    itemView.getContext().startActivity(intent);
-                }
-            });*/
         }
 
-        private void openActivity(String id) {
-            if (id.equals("Esign")) {
-                Log.d("Kyc", "kkk" + id);
-                Intent intent = new Intent(itemView.getContext(), DownloadDocumentActivity.class);
-                itemView.getContext().startActivity(intent);
-            } else if (id.equals("Application")) {
-                Log.d("Application", "kkk" + id);
-                Intent intent = new Intent(itemView.getContext(), ApplicationFormActivityMenu.class);
-                intent.putExtra("keyName", "Application");
-                itemView.getContext().startActivity(intent);
+        public void openActivity(String id, String fiCode, String creator) {
+            Intent intent = null;
+            switch (id) {
+                case "Esign":
+                    intent = new Intent(context, DownloadDocumentActivity.class);
+                    break;
+                case "Application":
+                    intent = new Intent(context, ApplicationFormActivityMenu.class);
+                    break;
+                case "HV":
+                    intent = new Intent(context, HouseVisitActivity1.class);
+                    intent.putExtra("fiCode", fiCode); // Pass fiCode to the intent
+                    intent.putExtra("creator", creator); // Pass creator to the intent
+                    break;
+                // Add more cases as needed
+            }
+
+            if (intent != null) {
+                context.startActivity(intent);
+            } else {
+                Log.e("ViewHolder", "Invalid id received: " + id);
             }
         }
     }

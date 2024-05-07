@@ -10,7 +10,7 @@ public class OnBoardViewModel extends ViewModel {
 
     public OnBoardViewModel() {
         this.mutableLiveData=new MutableLiveData<>();
-        mutableLiveData.setValue("THis is onboarding Frag");
+        mutableLiveData.setValue("THis is onboarding Flag");
 
     }
 

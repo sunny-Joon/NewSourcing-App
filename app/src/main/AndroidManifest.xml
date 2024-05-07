@@ -2,15 +2,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-
-
     <uses-feature android:name="android.hardware.camera" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        tools:ignore="ScopedStorage" />
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
+    <!--longitude lattitude-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
 
     <application
@@ -23,8 +27,15 @@
         android:theme="@style/Theme.NewInternalSourcingApp"
         tools:targetApi="31">
         <activity
-
-
+            android:name=".Fragments.home.IncentiveAnimatedActivity"
+            android:exported="false" />
+    <!--    <activity
+            android:name=".EarnMoreIncentiveActivity"
+            android:exported="false" />-->
+        <activity
+            android:name=".Activities.ActivityEarnMoreIncentive"
+            android:exported="false" />
+        <activity
             android:name=".Fragments.OnBoarding.PreviewActivity"
             android:exported="false">
             <meta-data
@@ -46,7 +57,6 @@
                 android:value="" />
         </activity>
         <activity
-
             android:name=".Activities.DownloadDocumentActivity"
             android:exported="false">
             <meta-data
@@ -67,34 +77,9 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
-            android:name=".Esigndocument2"
-            android:exported="false" />
-
         <activity
             android:name=".Activities.ActivityEsignWithDownloadPL"
             android:exported="false" />
-        <activity
-            android:name=".Activities.DownloadDocumentActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".Activities.ApplicationFormActivityMenu"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".Activities.ApplicationFormActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
         <activity
             android:name=".Activities.BorrowerListActivity"
             android:exported="false">
@@ -102,15 +87,28 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity
 
+        <activity
             android:name=".Fragments.OnBoarding.KYCActivity2"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
+        <activity
+            android:name=".Fragments.OnBoarding.HouseVisitActivity1"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".Fragments.OnBoarding.HouseVisitActivity2"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".Fragments.OnBoarding.ScannerActivity"
             android:exported="false">
@@ -118,19 +116,21 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
         <activity
             android:name=".Fragments.OnBoarding.KYCActivity"
-            android:name=".Activities.ManagerList"
-
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".Activities.IncentiveAnimatedActivity"
-            android:exported="false" />
+            android:name=".Activities.ManagerList"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
         <activity
             android:name=".Activities.WelcomeActivity"
             android:exported="false" />
@@ -144,7 +144,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activities.MainActivity"
+            android:name=".Activities.HomePageActivity"
             android:exported="false"
             android:label="@string/app_name" />
 
@@ -157,7 +157,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-
     </application>
 
 </manifest>

@@ -22,15 +22,17 @@ import com.paisalo.newinternalsourcingapp.Activities.DownloadDocumentActivity;
 import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.HouseVisitActivity1;
 import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.KYCActivity;
 import com.paisalo.newinternalsourcingapp.ModelclassesRoom.ManagerModel;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.BorrowerListModels.BorrowerListDataModel;
 import com.paisalo.newinternalsourcingapp.R;
+import com.paisalo.newinternalsourcingapp.RoomDatabase.ManagerListDataClass;
 
 import java.util.List;
 
 public class ManagerListAdapter extends RecyclerView.Adapter<ManagerListAdapter.MyViewHolder> {
-    private List<ManagerModel> dataList;
+    private List<ManagerListDataClass> dataList;
     private Context context;
 
-    public ManagerListAdapter(Context context, List<ManagerModel> dataList) {
+    public ManagerListAdapter(Context context, List<ManagerListDataClass> dataList) {
         this.context = context;
         this.dataList = dataList;
     }
@@ -45,11 +47,11 @@ public class ManagerListAdapter extends RecyclerView.Adapter<ManagerListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        ManagerModel data = dataList.get(position);
+        ManagerListDataClass data = dataList.get(position);
 
-        holder.nameTextView.setText(data.getName());
-        holder.placeGroupCodeTextView.setText(data.getPlaceGroupCode());
-        holder.branchCreatorTextView.setText(data.getBranchCreator());
+        holder.nameTextView.setText(data.getFoName());
+        holder.placeGroupCodeTextView.setText(data.getAreaName()+"/"+data.getAreaCd());
+        holder.branchCreatorTextView.setText(data.getFoCode()+"/"+data.getCreator());
 
         if (position % 2 == 1) {
             holder.managerCardView.setBackgroundResource(R.drawable.managerlist_gradientgrey);
@@ -83,12 +85,21 @@ public class ManagerListAdapter extends RecyclerView.Adapter<ManagerListAdapter.
 
                 @Override
                 public void onClick(View v) {
-                    openActivity(id);
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        ManagerListDataClass dataModel = dataList.get(position);
+                        Intent intent = ((Activity) itemView.getContext()).getIntent();
+                        String id = intent.getStringExtra("keyName");
+                        String foCode = dataModel.getFoCode();
+                        String creator = dataModel.getCreator();
+                        String areaCode = dataModel.getAreaCd();
+                        openActivity(id,foCode,creator,areaCode);
+                    }
                 }
             });
         }
 
-        private void openActivity(String id) {
+        private void openActivity(String id,String foCode,String creator,String areaCode) {
             if (id.equals("KYC")) {
                 Log.d("Kyc","kkk"+id);
                 Intent intent = new Intent(itemView.getContext(), KYCActivity.class);
@@ -97,6 +108,9 @@ public class ManagerListAdapter extends RecyclerView.Adapter<ManagerListAdapter.
                 Log.d("Application", "kkk" + id);
                 Intent intent = new Intent(itemView.getContext(), BorrowerListActivity.class);
                 intent.putExtra("keyName", "Application");
+                intent.putExtra("foCode", foCode);
+                intent.putExtra("creator", creator);
+                intent.putExtra("areaCode", areaCode);
                 itemView.getContext().startActivity(intent);
             }
             else if (id.equals("Esign")) {
@@ -105,7 +119,11 @@ public class ManagerListAdapter extends RecyclerView.Adapter<ManagerListAdapter.
 
             }else if (id.equals("HVisit")) {
                 Log.d("Hvisit","kkk"+id);
-                Intent intent = new Intent(itemView.getContext(), HouseVisitActivity1.class);
+                Intent intent = new Intent(itemView.getContext(), BorrowerListActivity.class);
+                intent.putExtra("keyName", "HV");
+                intent.putExtra("foCode", foCode);
+                intent.putExtra("creator", creator);
+                intent.putExtra("areaCode", areaCode);
                 itemView.getContext().startActivity(intent);
             }else if (id.equals("Collection")) {
                 Log.d("Collection","kkk"+id);
