@@ -251,6 +251,7 @@ public class GuarantorsFragment extends Fragment {
         return view;
     }
 
+
     private JsonObject gurrantorJson() {
         JsonObject jsonGurrantor = new JsonObject();
         jsonGurrantor.addProperty("code", allDataAFDataModel.getCode().toString());
@@ -274,74 +275,6 @@ public class GuarantorsFragment extends Fragment {
         jsonGurrantor.addProperty("drivingLic", etdrivingLicense.getText().toString());
         jsonGurrantor.addProperty("relationwithborr", spin_relationwithborr.getSelectedItem().toString());
 
-
-
-//        jsonGurrantor.addProperty("grNo", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("initials", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("gurInitials", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("firmName", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("offAdd1", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("offAdd2", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("offAdd3", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("offCity", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("offPh1", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("offPh2", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("offPh3", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("offFax", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("offMob1", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("offMob2", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("resAdd1", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("resAdd2", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("resAdd3", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("resCity", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("resPh1", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("resPh2", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("resPh3", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("perFax", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("perMob2", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("occupation", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("occupTypeDesig", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("gender", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("p_Pin", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("p_StateID", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("voterID", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("drivingLic", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("drivingLic", allDataAFDataModel.getTag().toString());
-//
-//
-//        jsonGurrantor.addProperty("location", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("panNo", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("bankAcNo", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("bankBranch", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("otherCase", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("remarks", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("recoveryAuth", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("recoveryExec", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("type", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("fDflag", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("relation", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("incomeTax", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("minor", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("userID", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("auth_UserID", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("auth_Date", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("creation_Date", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("mod_Type", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("last_Mod_UserID", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("last_Mod_Date", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("groupCode", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("cityCode", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("religion", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("landHolding", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("exServiceMan", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("t_Pin", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("o_Pin", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("identityType", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("identity_No", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("eSignSucceed", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("kycuuid", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("concent", allDataAFDataModel.getTag().toString());
-//        jsonGurrantor.addProperty("eSignUUID", allDataAFDataModel.getTag().toString());
         return jsonGurrantor;
     }
 }

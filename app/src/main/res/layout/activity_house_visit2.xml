@@ -56,6 +56,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:hint="@string/branch"
+                                
+
                                 android:inputType="textCapWords"
                                 android:textSize="15dp" />
 
@@ -101,6 +103,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:hint="@string/area"
+                                
+
                                 android:inputType="textCapWords"
                                 android:textSize="15dp" />
 
@@ -151,6 +155,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:hint="@string/centre"
+                                
+
                                 android:inputType="textCapWords"
                                 android:textSize="15dp" />
                         </LinearLayout>
@@ -194,6 +200,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:hint="@string/group"
+                                
+
                                 android:inputType="textCapWords"
                                 android:textSize="15dp" />
 
@@ -271,6 +279,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_weight="1"
+                        
+
                         android:hint="@string/interviewee_name"
                         android:inputType="textCapWords"
                         android:textSize="15dp" />
@@ -485,6 +495,8 @@
                         android:id="@+id/time_ApplicantToDealer"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
+                        
+
                         android:inputType="number"
                         android:textSize="15dp" />
 
@@ -518,6 +530,8 @@
                     <EditText
                         android:id="@+id/approxMonthlySales"
                         android:layout_width="match_parent"
+                        
+
                         android:layout_height="40dp"
                         android:inputType="number"
                         android:textSize="15dp" />
@@ -555,6 +569,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:inputType="number"
+                        
+
                         android:layout_weight="1"
                         android:textSize="15dp" />
 
@@ -625,6 +641,7 @@
                         android:id="@+id/businessExpenditure"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
+                        
                         android:inputType="number"
                         android:textSize="15dp" />
 
@@ -659,6 +676,8 @@
                         android:id="@+id/expectedIncome"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
+                        
+
                         android:inputType="number"
                         android:textSize="15dp" />
 
@@ -694,6 +713,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:inputType="number"
+                        
+
                         android:textSize="15dp" />
 
                 </LinearLayout>
@@ -727,6 +748,8 @@
                         android:id="@+id/familyNetIncome"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
+                        
+
                         android:inputType="number"
                         android:textSize="15dp" />
 
@@ -1184,6 +1207,8 @@
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="15dp"
+                            
+
                             android:inputType="number" />
 
                         <CheckBox

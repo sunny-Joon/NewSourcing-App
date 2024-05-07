@@ -22,6 +22,7 @@ import com.paisalo.newinternalsourcingapp.Activities.DownloadDocumentActivity;
 import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.HouseVisitActivity1;
 import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.KYCActivity;
 import com.paisalo.newinternalsourcingapp.ModelclassesRoom.ManagerModel;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.BorrowerListModels.BorrowerListDataModel;
 import com.paisalo.newinternalsourcingapp.R;
 import com.paisalo.newinternalsourcingapp.RoomDatabase.ManagerListDataClass;
 
@@ -84,12 +85,21 @@ public class ManagerListAdapter extends RecyclerView.Adapter<ManagerListAdapter.
 
                 @Override
                 public void onClick(View v) {
-                    openActivity(id);
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        ManagerListDataClass dataModel = dataList.get(position);
+                        Intent intent = ((Activity) itemView.getContext()).getIntent();
+                        String id = intent.getStringExtra("keyName");
+                        String foCode = dataModel.getFoCode();
+                        String creator = dataModel.getCreator();
+                        String areaCode = dataModel.getAreaCd();
+                        openActivity(id,foCode,creator,areaCode);
+                    }
                 }
             });
         }
 
-        private void openActivity(String id) {
+        private void openActivity(String id,String foCode,String creator,String areaCode) {
             if (id.equals("KYC")) {
                 Log.d("Kyc","kkk"+id);
                 Intent intent = new Intent(itemView.getContext(), KYCActivity.class);
@@ -98,6 +108,9 @@ public class ManagerListAdapter extends RecyclerView.Adapter<ManagerListAdapter.
                 Log.d("Application", "kkk" + id);
                 Intent intent = new Intent(itemView.getContext(), BorrowerListActivity.class);
                 intent.putExtra("keyName", "Application");
+                intent.putExtra("foCode", foCode);
+                intent.putExtra("creator", creator);
+                intent.putExtra("areaCode", areaCode);
                 itemView.getContext().startActivity(intent);
             }
             else if (id.equals("Esign")) {
@@ -106,7 +119,11 @@ public class ManagerListAdapter extends RecyclerView.Adapter<ManagerListAdapter.
 
             }else if (id.equals("HVisit")) {
                 Log.d("Hvisit","kkk"+id);
-                Intent intent = new Intent(itemView.getContext(), HouseVisitActivity1.class);
+                Intent intent = new Intent(itemView.getContext(), BorrowerListActivity.class);
+                intent.putExtra("keyName", "HV");
+                intent.putExtra("foCode", foCode);
+                intent.putExtra("creator", creator);
+                intent.putExtra("areaCode", areaCode);
                 itemView.getContext().startActivity(intent);
             }else if (id.equals("Collection")) {
                 Log.d("Collection","kkk"+id);
