@@ -1,6 +1,8 @@
 package com.paisalo.newinternalsourcingapp.Fragments.OnBoarding;
 
 
+import static com.paisalo.newinternalsourcingapp.GlobalClass.SubmitAlert;
+
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.util.Log;
@@ -37,11 +39,14 @@ import androidx.core.content.FileProvider;
 import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.BuildConfig;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.HouseVisitModels.HVGetDataModel;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.HouseVisitModels.HVGetModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.HouseVisitModels.HouseVisitSaveModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.RangeCategoryModels.RangeCategoryModel;
 import com.paisalo.newinternalsourcingapp.R;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiClient;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiInterface;
+import com.paisalo.newinternalsourcingapp.RoomDatabase.DatabaseClass;
 
 import java.io.File;
 import java.io.IOException;
@@ -66,7 +71,7 @@ public class HouseVisitActivity2 extends AppCompatActivity {
     public static final String CAMERA_PREF = "camera_pref";
     private static final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
     private static final String ALLOW_KEY = "ALLOWED";
-
+    HVGetDataModel hvGetDataModel;
     Uri imageUri;
 
     CheckBox buildType,approvedLocation,cpfCriteria,cpfAddressVerification,IdVerification,addressVerification,ageVerification,cpfRecentAddressVerification
@@ -190,6 +195,58 @@ public class HouseVisitActivity2 extends AppCompatActivity {
         click = findViewById(R.id.click);
         view = findViewById(R.id.view);
 
+        DatabaseClass.databaseWriteExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+                Call<HVGetModel> call = apiInterface.GetHouseVisitData(GlobalClass.Token,GlobalClass.dbname,fiNo,creator);
+                call.enqueue(new Callback<HVGetModel>() {
+                    @Override
+                    public void onResponse(Call<HVGetModel> call, Response<HVGetModel> response) {
+                        Log.d("TAG", "onResponseHV: " + response.body());
+
+                        if(response.isSuccessful()){
+                            Log.d("TAG", "onResponseHV: " + response.body());
+                            HVGetModel hvGetModel = response.body();
+                            hvGetDataModel = hvGetModel.getData();
+
+                            branchName.setText(hvGetDataModel.getBranchName());
+                            Log.d("TAG", "onResponseHV55: "+ branchName.getText().toString());
+                            area.setText(hvGetDataModel.getAreaName());
+                            centre.setText(hvGetDataModel.getCenter());
+                            group.setText(hvGetDataModel.getGroupName());
+                            loanUsagePercentage.setText(hvGetDataModel.getLoanUsagePercentage());
+                            interviewee_name.setText(hvGetDataModel.getNameofInterviewed());
+                            interviewee_age.setText(hvGetDataModel.getAgeofInterviewed());
+                            distance_ApplicantToDealer.setText(hvGetDataModel.getDistancetobranch());
+                            time_ApplicantToDealer.setText(hvGetDataModel.getTimetoreachbranch());
+                            approxMonthlySales.setText(hvGetDataModel.getMonthlySales().toString());
+                            approxMonthlyIncome.setText(hvGetDataModel.getMonthlyIncome().toString());
+                            businessExpenditure.setText(hvGetDataModel.getTotalmonthlyexpensesofoccupation().toString());
+                            expectedIncome.setText(hvGetDataModel.getIncomeMatchedwithprofile());
+                            houseExpenditure.setText(hvGetDataModel.getTotalmonthlyhouseholdexpenses().toString());
+                            familyNetIncome.setText(hvGetDataModel.getNetmonthlyincomeotherfamilymembers().toString());
+                            reference1.setText(hvGetDataModel.getNamereferenceperson1());
+                            reference_PhoneNo1.setText(hvGetDataModel.getMobilereferenceperson1());
+                            reference2.setText(hvGetDataModel.getNamereferenceperson2());
+                            reference_PhoneNo2.setText(hvGetDataModel.getMobilereferenceperson2());
+                            address.setText(hvGetDataModel.getAddress());
+                        }
+                        else{
+                            Log.d("TAG", "onResponseHV: " + response.code());
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<HVGetModel> call, Throwable t) {
+                        Log.d("TAG", "onResponseHV: " + "failure");
+
+                    }
+                });
+            }
+        });
+
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -288,21 +345,22 @@ public class HouseVisitActivity2 extends AppCompatActivity {
                     call.enqueue(new Callback<HouseVisitSaveModel>() {
                         @Override
                         public void onResponse(Call<HouseVisitSaveModel> call, Response<HouseVisitSaveModel> response) {
-                            Log.d("TAG", "housevisit: "+ response.body());
                             if(response.isSuccessful()){
-                                Log.d("TAG", "housevisit: "+ response.body());
                                 assert response.body() != null;
-                                Log.d("TAG", "housevisit: "+ response.body().getMessage().toString());
-
-                                progressDialog.dismiss();
+                                if(response.body().getMessage().contains("Record Insert Successfully")) {
+                                    progressDialog.dismiss();
+                                    SubmitAlert(HouseVisitActivity2.this, "Successful", "House Visit Form Submit Successfully");
+                                    finish();
+                                }
                             }else {
-                                Log.d("TAG", "housevisit: "+ response.code());
+                                SubmitAlert(HouseVisitActivity2.this, "Error", "House Visit Form Not Submit");
                             }
                         }
 
                         @Override
                         public void onFailure(Call<HouseVisitSaveModel> call, Throwable t) {
-                            Log.d("TAG", "housevisit: "+ "failure");
+                            SubmitAlert(HouseVisitActivity2.this, "Network Error", "Check Your Internet Connection");
+
                         }
                     });
 
