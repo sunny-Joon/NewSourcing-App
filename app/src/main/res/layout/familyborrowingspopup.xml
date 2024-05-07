@@ -41,6 +41,8 @@
                 <Spinner
                     android:id="@+id/lenderType"
                     android:layout_width="match_parent"
+
+                    android:entries="@array/lenderType"
                     android:layout_height="45dp"/>
 
             </androidx.cardview.widget.CardView>
@@ -194,6 +196,8 @@
                     android:id="@+id/isMFI"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
+                    android:entries="@array/ismfi"
+
                     android:layout_marginTop="5dp"
                     android:padding="10dp" />
             </androidx.cardview.widget.CardView>

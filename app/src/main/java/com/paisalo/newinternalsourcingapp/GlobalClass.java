@@ -3,10 +3,9 @@ package com.paisalo.newinternalsourcingapp;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Application;
+import android.content.DialogInterface;
 import android.content.Context;
 import android.content.DialogInterface;
-
-import java.util.regex.Pattern;
 
 public class GlobalClass extends Application {
 
@@ -78,14 +77,18 @@ public class GlobalClass extends Application {
             return false;
         }
 
-        // Regex pattern for PAN validation
-        String regex = "[A-Z]{5}[0-9]{4}[A-Z]{1}";
-        // Compile the regex pattern
-        Pattern pattern = Pattern.compile(regex);
-        // Match the input string against the pattern
-        return pattern.matcher(pan).matches();
+    public static void SubmitAlert(final Activity activity, String title, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Finish the activity
+                activity.finish();
+            }
+        });
+        builder.setCancelable(false);
+        builder.show();
     }
-
-
-
 }

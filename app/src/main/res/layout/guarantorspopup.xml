@@ -485,12 +485,14 @@
             android:layout_height="wrap_content"
             android:text="Marital Status *"
             android:layout_marginTop="8dp"
+            android:visibility="gone"
             android:textColor="@color/red"
             android:textSize="@dimen/heading"/>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="45dp"
+            android:visibility="gone"
             android:layout_margin="2dp"
             app:cardElevation="2dp">
 

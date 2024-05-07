@@ -41,9 +41,8 @@ public class AadhaarFragment extends Fragment {
     CheckBox addressCheckBox;
     AllDataAFDataModel allDataAFDataModel;
     TextView aadhaarName,aadhaarid,aadhaarAge,aadhaarGendre,aadhaarDOB,aadhaarGuardian,aadhaarmobile,aadhaarPAN,aadhaarDrivingLicense,  aadhaarAddress,aadhaarPincode,aadhaarCity,aadhaarState,loanAmount;
-    EditText address1ET,address2ET,address3ET,stateET,cityET,pinCodeET;
+    EditText address1ET,address2ET,address3ET,cityET,pinCodeET;
     String address1,address2,address3,state,city;
-    int pinCode;
 
     CustomProgressDialog customProgressDialog;
 
@@ -140,9 +139,9 @@ public class AadhaarFragment extends Fragment {
                 address1 = address1ET.getText().toString();
                 address2 = address2ET.getText().toString();
                 address3 = address3ET.getText().toString();
-                state = stateET.getText().toString();
+                state = spin_aadhaarState.getSelectedItem().toString();
                 city = cityET.getText().toString();
-                pinCode = Integer.parseInt(pinCodeET.getText().toString());
+
 
                 ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
                 Call<KycUpdateModel> call = apiInterface.updateAddress(GlobalClass.Token, GlobalClass.dbname, addressJson());
@@ -192,7 +191,7 @@ public class AadhaarFragment extends Fragment {
         jsonAddress.addProperty("o_Add3", address3);
         jsonAddress.addProperty("o_State", state);
         jsonAddress.addProperty("o_City", city);
-        jsonAddress.addProperty("o_Pin", pinCode);
+        jsonAddress.addProperty("o_Pin", pinCodeET.getText().toString());
         return jsonAddress;
     }
 }

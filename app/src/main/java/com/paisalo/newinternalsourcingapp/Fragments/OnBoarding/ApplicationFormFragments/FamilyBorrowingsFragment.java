@@ -1,5 +1,7 @@
 package com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.ApplicationFormFragments;
 
+import static com.paisalo.newinternalsourcingapp.GlobalClass.SubmitAlert;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,6 +15,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -23,6 +27,7 @@ import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivityMenu
 import com.paisalo.newinternalsourcingapp.Adapters.RangeCategoryAdapter;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFDataModel;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.RangeCategoryModels.RangeCategoryDataModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.UpdateFiModels.KycUpdateModel;
 import com.paisalo.newinternalsourcingapp.R;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiClient;
@@ -40,6 +45,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivityMenu;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFDataModel;
 import com.paisalo.newinternalsourcingapp.R;
+import com.paisalo.newinternalsourcingapp.RoomDatabase.DaoClass;
 import com.paisalo.newinternalsourcingapp.RoomDatabase.DatabaseClass;
 import com.paisalo.newinternalsourcingapp.RoomDatabase.RangeCategoryDataClass;
 
@@ -49,12 +55,15 @@ import java.util.List;
 
 public class FamilyBorrowingsFragment extends Fragment {
 
+    List<String> ReasonforloanList = new ArrayList<>();
+    List<String> LoanUsedList = new ArrayList<>();
     AllDataAFDataModel allDataAFDataModel;
 
     Button  addBorrowings,dltButton,canButton;
-    DatabaseClass databaseClass;
     private ApplicationFormActivityMenu activity;
-    EditText LenderName,etLoanamount,etEmiamount,etbalanceamount;
+    EditText etLenderName,etLoanamount,etEmiamount,etbalanceamount;
+
+    String lenderName,fiCode,creator,tag,lenderType,loanUsed,loanAmount,emiAmount,balanceAmount,ismfi;
 
     Spinner lenderTypespin,spinnerLoanUsed,spinnerReasonforloan,spinnerisMFI;
     FloatingActionButton addBorrower;
@@ -63,33 +72,20 @@ public class FamilyBorrowingsFragment extends Fragment {
         this.allDataAFDataModel = allDataAFDataModel;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-//            activity = (ApplicationFormActivityMenu) getActivity();
-//            ArrayList<RangeCategoryDataClass> lenderTypelist = new ArrayList<>();
-//        lenderTypelist.add(new RangeCategoryDataClass("--Select--", "--Select--","--Select--","--Select--","--Select--",0,"--Select--"));
-//        lenderTypelist.add(new RangeCategoryDataClass("Organised Sector", "Lender Type"," ",""," ",0,""));
-//        lenderTypelist.add(new RangeCategoryDataClass("Unorganised Sector", "Lender Type","","","",0,""));
-
-    }
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
 
+        DatabaseClass databaseClass = DatabaseClass.getInstance(getContext());
 
-        View view = inflater.inflate(R.layout.fragment_family_borrowings,container,false);
 
-        addBorrower = view.findViewById(R.id.FMIncome);
+            View view = inflater.inflate(R.layout.fragment_family_borrowings,container,false);
 
-        addBorrowings = view.findViewById(R.id.addBorrowings);
-        dltButton = view.findViewById(R.id.deleteBorrowings);
-        canButton = view.findViewById(R.id.cancelBorrowings);
+            addBorrower = view.findViewById(R.id.FMIncome);
+
+
 
         addBorrower.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,19 +102,62 @@ public class FamilyBorrowingsFragment extends Fragment {
 
                 popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
 
+                fiCode= allDataAFDataModel.getCode().toString();
+                creator= allDataAFDataModel.getCreator().toString();
+                tag=allDataAFDataModel.getTag().toString();
+
+
+                dltButton = popupView.findViewById(R.id.deleteBorrowings);
+                canButton = popupView.findViewById(R.id.cancelBorrowings);
                 addBorrowings = popupView.findViewById(R.id.addBorrowings);
-                LenderName = popupView.findViewById(R.id.LenderName);
+                etLenderName = popupView.findViewById(R.id.LenderName);
                 etLoanamount = popupView.findViewById(R.id.editLoanamount);
                 etEmiamount = popupView.findViewById(R.id.editTextEmiamount);
                 etbalanceamount = popupView.findViewById(R.id.balanceamount);
 
                 lenderTypespin = popupView.findViewById(R.id.lenderType);
                 spinnerLoanUsed = popupView.findViewById(R.id.spinnerOptions2);
-                spinnerReasonforloan = popupView.findViewById(R.id.spinnerOptions2);
+                spinnerReasonforloan = popupView.findViewById(R.id.spinnerOptions3);
                 spinnerisMFI = popupView.findViewById(R.id.isMFI);
+
+                String selectOption = "--Select--";
+                ReasonforloanList.add(selectOption);
+                LoanUsedList.add(selectOption);
+                DatabaseClass.databaseWriteExecutor.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        List<RangeCategoryDataClass> LoanUsed_DataList = databaseClass.dao().getAllRCDataListby_catKey("loan_purpose");
+                        for (RangeCategoryDataClass data : LoanUsed_DataList) {
+                            String descriptionEn = data.getDescriptionEn();
+                            LoanUsedList.add(descriptionEn);
+                            ArrayAdapter<String> adapter1 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, LoanUsedList);
+                            spinnerReasonforloan.setAdapter(adapter1);
+                        }
+
+                        List<RangeCategoryDataClass> Reasonforloan_DataList = databaseClass.dao().getAllRCDataListby_catKey("relationship");
+                        for (RangeCategoryDataClass data : Reasonforloan_DataList) {
+                            String descriptionEn = data.getDescriptionEn();
+                            ReasonforloanList.add(descriptionEn);
+                            ArrayAdapter<String> adapter1 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, ReasonforloanList);
+                            spinnerLoanUsed.setAdapter(adapter1);
+                        }
+                    }
+                });
+
                 addBorrowings.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
+
+                        lenderName= etLenderName.getText().toString();
+                        loanAmount=etLoanamount.getText().toString();
+                        emiAmount= etEmiamount.getText().toString();
+                        balanceAmount=etbalanceamount.getText().toString();
+                        lenderType = lenderTypespin.getSelectedItem().toString();
+                        ismfi = spinnerisMFI.getSelectedItem().toString();
+
+                        loanUsed=spinnerLoanUsed.getSelectedItem().toString();
+                        Log.d("TAG", "onCreateView: "+loanUsed);
 
                         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
                         Call<KycUpdateModel> call = apiInterface.updateFamLoans(GlobalClass.Token, GlobalClass.dbname, borrowingsJson());
@@ -129,8 +168,10 @@ public class FamilyBorrowingsFragment extends Fragment {
                             public void onResponse(Call<KycUpdateModel> call, Response<KycUpdateModel> response) {
                                 Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
                                 if (response.isSuccessful()) {
-                                    Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
-                                    Log.d("TAG", "onResponseAdhaarUpdatemsg: " + response.body().getMessage().toString());
+                                    Log.d("TAG", "onResponseAadhaarUpdate: " + response.body());
+                                    Log.d("TAG", "onResponseAadhaarUpdatemsg: " + response.body().getMessage().toString());
+
+                                    SubmitAlert(getActivity(), "Submit", "Form Submit Successfully ");
                                     SharedPreferences sharedPreferences = getContext().getSharedPreferences("checkBoxes", Context.MODE_PRIVATE);
                                     SharedPreferences.Editor editor = sharedPreferences.edit();
                                     editor.putBoolean("borrowingsCheckBox", true);
@@ -140,39 +181,30 @@ public class FamilyBorrowingsFragment extends Fragment {
                                     startActivity(intent);
                                     getActivity().finish();
                                 } else {
-                                    Log.d("TAG", "onResponseAdhaarUpdate: " + response.code());
+                                    SubmitAlert(getActivity(), "Error", "Unsuccessful");
+
+                                    Log.d("TAG", "onResponseAadhaarUpdate: " + response.code());
                                 }
                             }
 
                             @Override
                             public void onFailure(Call<KycUpdateModel> call, Throwable t) {
                                 Log.d("TAG", "onResponseAdhaarUpdate: " + "failure");
+                                SubmitAlert(getActivity(), "Network Error", "Check Your Internet Connection");
+
                             }
                         });
                     }
                     });
-                /*canButton.setOnClickListener(new View.OnClickListener() {
+
+                canButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         popupWindow.dismiss();
                     }
-                });*/
+                });
             }
         });
-
-
-//        DatabaseClass.databaseWriteExecutor.execute(new Runnable() {
-//            @Override
-//            public void run() {
-//                List<RangeCategoryDataClass> lenderTypeList = new ArrayList<>();
-//                RangeCategoryDataClass rangeCategoryDataClass = new RangeCategoryDataClass("--Select--", "--Select--", "--Select--", "--Select--", "--Select--", 0, "99");
-//                lenderTypeList.add(rangeCategoryDataClass);
-//                lenderTypeList.addAll(databaseClass.dao().getAllRCDataListby_catKey("state"));
-//                RangeCategoryAdapter rangeCategoryAdapter = new RangeCategoryAdapter(getActivity(), lenderTypeList);
-//                lenderTypespin.setAdapter(rangeCategoryAdapter);
-//
-//            }
-//        });
 
 
 
@@ -180,18 +212,18 @@ public class FamilyBorrowingsFragment extends Fragment {
 
     private JsonObject borrowingsJson() {
         JsonObject jsonBorrowings = new JsonObject();
-        jsonBorrowings.addProperty("fiCode", allDataAFDataModel.getCode().toString());
-        jsonBorrowings.addProperty("creator", allDataAFDataModel.getCreator().toString());
-        jsonBorrowings.addProperty("tag", allDataAFDataModel.getTag().toString());
-        jsonBorrowings.addProperty("lenderName", "sunny");
-        jsonBorrowings.addProperty("lenderType", "self");
-        jsonBorrowings.addProperty("loanUsed", "business");
-        jsonBorrowings.addProperty("reasonForLoan", "business");
-        jsonBorrowings.addProperty("loanAmount", 25000);
-        jsonBorrowings.addProperty("emiAmount", 2500);
-        jsonBorrowings.addProperty("balanceAmount", 12500);
-        jsonBorrowings.addProperty("isMFI", "y");
-        jsonBorrowings.addProperty("autoID", 12);
+        jsonBorrowings.addProperty("fiCode", fiCode);
+        jsonBorrowings.addProperty("creator", creator);
+        jsonBorrowings.addProperty("tag", tag);
+        jsonBorrowings.addProperty("lenderName", lenderName);
+        jsonBorrowings.addProperty("lenderType", "");
+        jsonBorrowings.addProperty("loanUsed", "");
+        jsonBorrowings.addProperty("reasonForLoan", "");
+        jsonBorrowings.addProperty("loanAmount", loanAmount);
+        jsonBorrowings.addProperty("emiAmount", emiAmount);
+        jsonBorrowings.addProperty("balanceAmount", balanceAmount);
+        jsonBorrowings.addProperty("isMFI", "");
+        jsonBorrowings.addProperty("autoID", 0);
 
         return jsonBorrowings;
     }

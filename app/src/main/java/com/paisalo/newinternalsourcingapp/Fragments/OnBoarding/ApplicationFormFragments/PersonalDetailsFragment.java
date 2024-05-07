@@ -38,14 +38,16 @@ public class PersonalDetailsFragment extends Fragment {
     List<String> CasteList = new ArrayList<>();
     List<String> religionList = new ArrayList<>();
     List<String> presentHouseOwnerList = new ArrayList<>();
-    List<String> residingForList = new ArrayList<>();
+    /*List<String> residingForList = new ArrayList<>();
     List<Integer> noOfFamilyMembersList = new ArrayList<>();
     List<Double> landHoldList = new ArrayList<>();
     List<String> specialAbilityList = new ArrayList<>();
-    List<String> specialSocialCategoryList = new ArrayList<>();
+    List<String> specialSocialCategoryList = new ArrayList<>();*/
     List<String> educationalCodeList = new ArrayList<>();
-    List<Boolean> isBorrowerBlindList = new ArrayList<>();
-    List<Integer> yearsInBusinessList = new ArrayList<>();
+
+
+    String fiCode,creator,tag,EmailId,caste,religion,PlaceOfBirth,presentHouseOwner,residingFor,numOfFamMember,
+            landHold,specialAbility,specialSocialCategory,educationalCode,isBorrowerBlind,yearsInBusiness;
 
     public PersonalDetailsFragment(AllDataAFDataModel allDataAFDataModel) {
         this.allDataAFDataModel=allDataAFDataModel;
@@ -62,6 +64,8 @@ public class PersonalDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_personal_details, container, false);
         DatabaseClass databaseClass = DatabaseClass.getInstance(getContext());
+
+
 
         emailId = view.findViewById(R.id.emailId);
         placeOfBirth = view.findViewById(R.id.placeOfBirth);
@@ -83,6 +87,9 @@ public class PersonalDetailsFragment extends Fragment {
         religionList.add(selectOption);
         presentHouseOwnerList.add(selectOption);
         educationalCodeList.add(selectOption);
+
+        emailId.setText(allDataAFDataModel.getFiExtra().getEmaiLID());
+        placeOfBirth.setText(allDataAFDataModel.getFiExtra().getPlacEOFBIRTH());
         DatabaseClass.databaseWriteExecutor.execute(new Runnable() {
             @Override
             public void run() {
@@ -108,7 +115,7 @@ public class PersonalDetailsFragment extends Fragment {
                     ArrayAdapter<String> adapter3 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, presentHouseOwnerList);
                     houseOwnerSpinner.setAdapter(adapter3);
                 }
-                List<RangeCategoryDataClass> educationDataList = databaseClass.dao().getAllRCDataListby_catKey("caste");
+                List<RangeCategoryDataClass> educationDataList = databaseClass.dao().getAllRCDataListby_catKey("education");
                 for (RangeCategoryDataClass data : educationDataList) {
                     String descriptionEn = data.getDescriptionEn();
                     educationalCodeList.add(descriptionEn);
@@ -120,6 +127,25 @@ public class PersonalDetailsFragment extends Fragment {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                fiCode = allDataAFDataModel.getCode().toString();
+                creator = allDataAFDataModel.getCreator().toString();
+                tag = allDataAFDataModel.getTag().toString();
+
+                EmailId = emailId.getText().toString();
+                PlaceOfBirth = placeOfBirth.getText().toString();
+                caste = casteSpinner.getSelectedItem().toString();
+                religion = religionSpinner.getSelectedItem().toString();
+                presentHouseOwner = houseOwnerSpinner.getSelectedItem().toString();
+                residingFor = residingforSpinner.getSelectedItem().toString();
+                numOfFamMember = noOfFamilyMembersSpinner.getSelectedItem().toString();
+                landHold = landHoldSpinner.getSelectedItem().toString();
+                specialAbility = specialAbilitySpinner.getSelectedItem().toString();
+                specialSocialCategory = specialSocialCategorySpinner.getSelectedItem().toString();
+                educationalCode = educationalCodeSpinner.getSelectedItem().toString();
+                isBorrowerBlind = isBorrowerBlindSpinner.getSelectedItem().toString();
+                yearsInBusiness = yearsInBusinessSpinner.getSelectedItem().toString();
+
 
                 ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
                 Call<KycUpdateModel> call = apiInterface.updatePersonalInfo(GlobalClass.Token, GlobalClass.dbname, perwsonalInfoJson());
@@ -150,9 +176,6 @@ public class PersonalDetailsFragment extends Fragment {
                         Log.d("TAG", "onResponseAdhaarUpdate: " + "failure");
                     }
                 });
-
-                emailId.setText(allDataAFDataModel.getFiExtra().getEmaiLID());
-                placeOfBirth.setText(allDataAFDataModel.getFiExtra().getPlacEOFBIRTH());
             }
         });
         return view;
@@ -161,23 +184,23 @@ public class PersonalDetailsFragment extends Fragment {
 
     private JsonObject perwsonalInfoJson() {
         JsonObject jsonPersonalInfo = new JsonObject();
-        jsonPersonalInfo.addProperty("fiCode", allDataAFDataModel.getCode().toString());
-        jsonPersonalInfo.addProperty("creator", allDataAFDataModel.getCreator().toString());
-        jsonPersonalInfo.addProperty("tag", allDataAFDataModel.getTag().toString());
-        jsonPersonalInfo.addProperty("emailId","address1" );
-        jsonPersonalInfo.addProperty("caste", "address2");
-        jsonPersonalInfo.addProperty("religion", "address3");
-        jsonPersonalInfo.addProperty("placeOfBirth", "state");
-        jsonPersonalInfo.addProperty("presentHouseOwner", "city");
-        jsonPersonalInfo.addProperty("residingFor", 5);
-        jsonPersonalInfo.addProperty("numOfFamMember", 4);
-        jsonPersonalInfo.addProperty("landHold", "50");
-        jsonPersonalInfo.addProperty("specialAbility", "pinCode");
-        jsonPersonalInfo.addProperty("specialSocialCategory", "pinCode");
-        jsonPersonalInfo.addProperty("educationalCode", "pinCode");
+        jsonPersonalInfo.addProperty("fiCode", fiCode);
+        jsonPersonalInfo.addProperty("creator", creator);
+        jsonPersonalInfo.addProperty("tag", tag);
+        jsonPersonalInfo.addProperty("emailId",EmailId );
+        jsonPersonalInfo.addProperty("caste", caste);
+        jsonPersonalInfo.addProperty("religion", religion);
+        jsonPersonalInfo.addProperty("placeOfBirth", PlaceOfBirth);
+        jsonPersonalInfo.addProperty("presentHouseOwner", presentHouseOwner);
+        jsonPersonalInfo.addProperty("residingFor", residingFor);
+        jsonPersonalInfo.addProperty("numOfFamMember", numOfFamMember);
+        jsonPersonalInfo.addProperty("landHold", landHold);
+        jsonPersonalInfo.addProperty("specialAbility", specialAbility);
+        jsonPersonalInfo.addProperty("specialSocialCategory", specialSocialCategory);
+        jsonPersonalInfo.addProperty("educationalCode", educationalCode);
         jsonPersonalInfo.addProperty("panApplied", "pinCode");
-        jsonPersonalInfo.addProperty("isBorrowerBlind", "pinCode");
-        jsonPersonalInfo.addProperty("yearsInBusiness", 5);
+        jsonPersonalInfo.addProperty("isBorrowerBlind", isBorrowerBlind);
+        jsonPersonalInfo.addProperty("yearsInBusiness", yearsInBusiness);
         return jsonPersonalInfo;
     }
 }
