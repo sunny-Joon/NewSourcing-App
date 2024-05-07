@@ -34,6 +34,9 @@ public class HouseVisitActivity1 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_house_visit1);
 
+        fiCode = getIntent().getStringExtra("fiCode");
+        creator = getIntent().getStringExtra("creator");
+
         applicantNameTV = findViewById(R.id.applicantName);
         maritalStatusTV = findViewById(R.id.maritalStatus);
         loanAmountTV = findViewById(R.id.loanAmount);
@@ -51,7 +54,7 @@ public class HouseVisitActivity1 extends AppCompatActivity {
         form.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.grey)));
 
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<HVBorrowerModel> call = apiInterface.HouseVisitBorrowerData(GlobalClass.Token,GlobalClass.dbname,"250005",GlobalClass.Creator);
+        Call<HVBorrowerModel> call = apiInterface.HouseVisitBorrowerData(GlobalClass.Token,GlobalClass.dbname,fiCode,creator);
         call.enqueue(new Callback<HVBorrowerModel>() {
             @Override
             public void onResponse(Call<HVBorrowerModel> call, Response<HVBorrowerModel> response) {

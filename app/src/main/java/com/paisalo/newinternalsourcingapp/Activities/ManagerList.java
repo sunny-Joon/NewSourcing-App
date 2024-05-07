@@ -25,7 +25,7 @@ public class ManagerList extends AppCompatActivity {
     private ManagerListAdapter adapter;
     DatabaseClass database;
     DaoClass daoClass;
-    List<ManagerListDataClass> managerListDataClasses;
+    List<ManagerListDataClass> listDataClasses;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,21 +38,16 @@ public class ManagerList extends AppCompatActivity {
 
         database = DatabaseClass.getInstance(ManagerList.this);
         daoClass = database.dao();
-        Log.d("TAG", "onCreate: "+GlobalClass.Id);
+
         DatabaseClass.databaseWriteExecutor.execute(new Runnable() {
             @Override
             public void run() {
-
-                List<ManagerListDataClass> listDataClasses = daoClass.getAllManagerDataList();
+                listDataClasses = daoClass.getAllManagerDataList();
                 Log.d("TAG", "onCreate: " + listDataClasses.size());
                 adapter = new ManagerListAdapter(ManagerList.this, listDataClasses);
-
                 recyclerView.setAdapter(adapter);
             }
         });
-        //   List<ManagerListDataClass> managerListDataClasses =daoClass.getAllManagerDataList();
-        //   List<ManagerModel> dataList = getDataList();
-
 
     }
 }
