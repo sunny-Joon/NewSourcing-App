@@ -58,6 +58,8 @@ public class FamilyMembersIncomeFragment extends Fragment {
     List<String> businessType_List = new ArrayList<>();
     List<String> incomeType_List = new ArrayList<>();
 
+    String fiCode,creator,tag,famMemName,relationship,age,gender,health,education,schoolType,business,businessType,income,incomeType;
+
 
 
 
@@ -84,7 +86,9 @@ public class FamilyMembersIncomeFragment extends Fragment {
 //        List<FiFamMem> list = allDataAFDataModel.getFiFamMems();
 
         FMIncomeButton = view.findViewById(R.id.addButton);
-
+        fiCode =  allDataAFDataModel.getCode().toString();
+        creator =  allDataAFDataModel.getCreator().toString();
+        tag =  allDataAFDataModel.getTag().toString();
 
        /* if(!list.isEmpty()){
             faimlMemberName.setText(list.get(0).getMemName());
@@ -103,6 +107,9 @@ public class FamilyMembersIncomeFragment extends Fragment {
 
                 LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View popupView = inflater.inflate(R.layout.familymemberincomepopup, null);
+
+
+
 
                 int width = LinearLayout.LayoutParams.WRAP_CONTENT;
                 int height = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -208,6 +215,20 @@ public class FamilyMembersIncomeFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
 
+                        famMemName = faimlMemberName.getText().toString();
+                        relationship = relationship_spin.getSelectedItem().toString();
+                        age = etage.getText().toString();
+                        gender = gender_spin.getSelectedItem().toString();
+                        health = Health_spin.getSelectedItem().toString();
+                        education = Education_spin.getSelectedItem().toString();
+                        schoolType = schoolType_spin.getSelectedItem().toString();
+                        business = etBusiness.getText().toString();
+                        businessType = businessType_spin.getSelectedItem().toString();
+                        income = etTextincome.getText().toString();
+                        incomeType = incomeType_spin.getSelectedItem().toString();
+
+
+
                         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
                         Call<KycUpdateModel> call = apiInterface.updateFamMemIncome(GlobalClass.Token, GlobalClass.dbname, FamIncomeJson());
                         Log.d("TAG", "onResponseAdhaarUpdate: " + GlobalClass.Token + " " + GlobalClass.dbname + " " + FamIncomeJson());
@@ -276,20 +297,20 @@ public class FamilyMembersIncomeFragment extends Fragment {
 
     private JsonObject FamIncomeJson() {
         JsonObject jsonfamIncome = new JsonObject();
-        jsonfamIncome.addProperty("fiCode", allDataAFDataModel.getCode().toString());
-        jsonfamIncome.addProperty("creator", allDataAFDataModel.getCreator().toString());
-        jsonfamIncome.addProperty("tag", allDataAFDataModel.getTag().toString());
-        jsonfamIncome.addProperty("famMemName","address1" );
-        jsonfamIncome.addProperty("relationship", "address2");
-        jsonfamIncome.addProperty("age", 41);
-        jsonfamIncome.addProperty("gender", "state");
-        jsonfamIncome.addProperty("health", "city");
-        jsonfamIncome.addProperty("education", "5");
-        jsonfamIncome.addProperty("schoolType", "4");
-        jsonfamIncome.addProperty("business", "pinCode");
-        jsonfamIncome.addProperty("businessType", "pinCode");
-        jsonfamIncome.addProperty("income", 25000);
-        jsonfamIncome.addProperty("incomeType", "pinCode");
+        jsonfamIncome.addProperty("fiCode",fiCode);
+        jsonfamIncome.addProperty("creator", creator);
+        jsonfamIncome.addProperty("tag",tag);
+        jsonfamIncome.addProperty("famMemName",famMemName );
+        jsonfamIncome.addProperty("relationship", relationship);
+        jsonfamIncome.addProperty("age", age);
+        jsonfamIncome.addProperty("gender", gender);
+        jsonfamIncome.addProperty("health", health);
+        jsonfamIncome.addProperty("education", education);
+        jsonfamIncome.addProperty("schoolType", schoolType);
+        jsonfamIncome.addProperty("business", business);
+        jsonfamIncome.addProperty("businessType", businessType);
+        jsonfamIncome.addProperty("income", income);
+        jsonfamIncome.addProperty("incomeType", incomeType);
         jsonfamIncome.addProperty("autoID", 0);
         return jsonfamIncome;
     }

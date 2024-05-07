@@ -139,6 +139,8 @@
                 <Spinner
                     android:id="@+id/residingfor"
                     android:layout_width="match_parent"
+                    android:entries="@array/residingforyears"
+
                     android:layout_height="match_parent"/>
 
             </androidx.cardview.widget.CardView>
@@ -160,6 +162,7 @@
                 <Spinner
                     android:id="@+id/noOfFamilyMembers"
                     android:layout_width="match_parent"
+                    android:entries="@array/numOfFamMember"
                     android:layout_height="match_parent"/>
 
             </androidx.cardview.widget.CardView>
@@ -181,6 +184,7 @@
                 <Spinner
                     android:id="@+id/landHold"
                     android:layout_width="match_parent"
+                    android:entries="@array/landHold"
                     android:layout_height="match_parent"/>
 
             </androidx.cardview.widget.CardView>
@@ -202,6 +206,7 @@
                 <Spinner
                     android:id="@+id/specialAbility"
                     android:layout_width="match_parent"
+                    android:entries="@array/specialAbility"
                     android:layout_height="match_parent"/>
 
             </androidx.cardview.widget.CardView>
@@ -223,6 +228,7 @@
                 <Spinner
                     android:id="@+id/specialSocialCategory"
                     android:layout_width="match_parent"
+                    android:entries="@array/specialSocialCategory"
                     android:layout_height="match_parent"/>
 
             </androidx.cardview.widget.CardView>
@@ -274,6 +280,7 @@
                 <Spinner
                     android:id="@+id/isBorrowerBlind"
                     android:layout_width="match_parent"
+                    android:entries="@array/isBorrowerBlind"
                     android:layout_height="match_parent"/>
 
             </androidx.cardview.widget.CardView>
@@ -295,6 +302,8 @@
                 <Spinner
                     android:id="@+id/yearsInBusiness"
                     android:layout_width="match_parent"
+                    android:entries="@array/yearsInBusiness"
+
                     android:layout_height="match_parent"/>
 
             </androidx.cardview.widget.CardView>

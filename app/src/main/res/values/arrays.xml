@@ -47,4 +47,91 @@
         <item>Update or mapping with Branch</item>
     </array>
 
-    </resources>
+    <array name="lenderType">
+        <item>--SELECT--</item>
+        <item>Organised Sector</item>
+        <item>Unorganised Sector</item>
+    </array>
+
+    <array name="ismfi">
+        <item>--SELECT--</item>
+        <item>Yes</item>
+        <item>No</item>
+    </array>
+
+    <string-array name="residingforyears">
+        <item>--SELECT--</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+    </string-array>
+
+    <string-array name="numOfFamMember">
+        <item>--SELECT--</item>
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+    </string-array>
+
+    <string-array name="yearsInBusiness">
+        <item>--SELECT--</item>
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+    </string-array>
+
+    <string-array name="landHold">
+        <item>--SELECT--</item>
+        <item>0 Acres</item>
+        <item>1 Acres</item>
+        <item>2 Acres</item>
+        <item>3 Acres</item>
+        <item>4 Acres</item>
+        <item>5 Acres</item>
+        <item>6 Acres</item>
+        <item>7 Acres</item>
+
+    </string-array>
+
+    <array name="specialAbility">
+        <item>--SELECT--</item>
+        <item>YES</item>
+    <item>No</item>
+    </array>
+
+ <array name="specialSocialCategory">
+     <item>--SELECT--</item>
+     <item>YES</item>
+    <item>NO</item>
+    </array>
+
+    <array name="isBorrowerBlind">
+        <item>--SELECT--</item>
+        <item>YES</item>
+    <item>NO</item>
+    </array>
+
+
+
+
+</resources>

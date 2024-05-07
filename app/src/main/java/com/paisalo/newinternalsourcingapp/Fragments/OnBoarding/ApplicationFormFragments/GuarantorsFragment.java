@@ -1,5 +1,6 @@
 package com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.ApplicationFormFragments;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -29,12 +31,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.FiGuarantor;
 import com.paisalo.newinternalsourcingapp.RoomDatabase.DatabaseClass;
 import com.paisalo.newinternalsourcingapp.RoomDatabase.RangeCategoryDataClass;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 public class GuarantorsFragment extends Fragment {
 
@@ -42,13 +46,20 @@ public class GuarantorsFragment extends Fragment {
     List<String> state_List = new ArrayList<>();
     List<String> relationwithborr_List = new ArrayList<>();
     Button update;
+    ImageView calendericon;
+
+    private ProgressBar progressBar;
     FloatingActionButton gurrantorFormButton;
     AllDataAFDataModel allDataAFDataModel;
-    EditText etTextAadhar,etTextName,etTextAge,etTextDob,etTextGuardian,etTextAddress1,etTextAddress2, etTextAddress3,etTextCity,etTextPincode,etTextMobile,etTextvoterid,etTextPAN,etdrivingLicense;
-    Spinner spin_gender,spin_state,spin_relationwithborr;
+
+    private Calendar calendar;
+    EditText etTextAadhar, etTextName, etTextAge, etTextDob, etTextGuardian, etTextAddress1, etTextAddress2, etTextAddress3, etTextCity, etTextPincode, etTextMobile, etTextvoterid, etTextPAN, etdrivingLicense;
+    Spinner spin_gender, spin_state, spin_relationwithborr;
 
     public GuarantorsFragment(AllDataAFDataModel allDataAFDataModel) {
-        this.allDataAFDataModel = allDataAFDataModel;}
+        this.allDataAFDataModel = allDataAFDataModel;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +68,7 @@ public class GuarantorsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_guarantors,container,false);
+        View view = inflater.inflate(R.layout.fragment_guarantors, container, false);
 
         gurrantorFormButton = view.findViewById(R.id.guarantorFormButton);
         List<FiGuarantor> list = allDataAFDataModel.getFiGuarantors();
@@ -80,6 +91,7 @@ public class GuarantorsFragment extends Fragment {
 
                 popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
 
+                calendericon = popupView.findViewById(R.id.imageView4);
                 etTextAadhar = popupView.findViewById(R.id.editTextAadhar);
                 etTextName = popupView.findViewById(R.id.editTextName);
                 etTextAge = popupView.findViewById(R.id.editTextAge);
@@ -105,7 +117,7 @@ public class GuarantorsFragment extends Fragment {
                 relationwithborr_List.add(selectOption);
 
 
-                if(!list.isEmpty()) {
+                if (!list.isEmpty()) {
                     etTextAadhar.setText(list.get(0).getAadharID());
                     etTextName.setText(list.get(0).getName());
                     etTextAge.setText(list.get(0).getAge());
@@ -136,10 +148,10 @@ public class GuarantorsFragment extends Fragment {
                         }
 
                         List<RangeCategoryDataClass> stateDataList = new ArrayList<>();
-                        RangeCategoryDataClass rangeCategoryDataClass = new RangeCategoryDataClass("--Select--","--Select--","--Select--","--Select--","--Select--",0,"99");
+                        RangeCategoryDataClass rangeCategoryDataClass = new RangeCategoryDataClass("--Select--", "--Select--", "--Select--", "--Select--", "--Select--", 0, "99");
                         stateDataList.add(rangeCategoryDataClass);
                         stateDataList.addAll(databaseClass.dao().getAllRCDataListby_catKey("state"));
-                        RangeCategoryAdapter rangeCategoryAdapter = new RangeCategoryAdapter(getActivity(),stateDataList );
+                        RangeCategoryAdapter rangeCategoryAdapter = new RangeCategoryAdapter(getActivity(), stateDataList);
                         spin_state.setAdapter(rangeCategoryAdapter);
 
 
@@ -153,20 +165,62 @@ public class GuarantorsFragment extends Fragment {
                     }
                 });
 
+                calendericon.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showDatePickerDialog();
+                    }
+
+                    private void showDatePickerDialog() {
+                        Calendar calendar = Calendar.getInstance();
+                        int year = calendar.get(Calendar.YEAR);
+                        int month = calendar.get(Calendar.MONTH);
+                        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+                        DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(android.widget.DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
+                                String selectedDate = String.format("%04d-%02d-%02d", selectedYear, selectedMonth + 1, selectedDay);
+                                etTextDob.setText(selectedDate);
+                                calculateAge(selectedYear, selectedMonth, selectedDay);
+                             //   progressBar.incrementProgressBy(1);
+                            }
+                        }, year, month, day);
+
+                        datePickerDialog.show();
+                    }
+
+                    private void calculateAge(int selectedYear, int selectedMonth, int selectedDay) {
+                        Calendar dobCalendar = Calendar.getInstance();
+                        dobCalendar.set(selectedYear, selectedMonth, selectedDay);
+
+                        Calendar currentCalendar = Calendar.getInstance();
+
+                        int age = currentCalendar.get(Calendar.YEAR) - dobCalendar.get(Calendar.YEAR);
+
+                        if (currentCalendar.get(Calendar.DAY_OF_YEAR) < dobCalendar.get(Calendar.DAY_OF_YEAR)) {
+                            age--;
+                        }
+
+                        etTextAge.setText(String.valueOf(age));
+                    }
+                });
+
+
                 update = popupView.findViewById(R.id.updateGuarantor);
                 update.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
                         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-                        Call<KycUpdateModel> call= apiInterface.updateFamLoans(GlobalClass.Token,GlobalClass.dbname, gurrantorJson());
-                        Log.d("TAG", "onResponseAdhaarUpdate: " + GlobalClass.Token+" "+GlobalClass.dbname+" "+ gurrantorJson());
+                        Call<KycUpdateModel> call = apiInterface.updateFamLoans(GlobalClass.Token, GlobalClass.dbname, gurrantorJson());
+                        Log.d("TAG", "onResponseAdhaarUpdate: " + GlobalClass.Token + " " + GlobalClass.dbname + " " + gurrantorJson());
 
                         call.enqueue(new Callback<KycUpdateModel>() {
                             @Override
                             public void onResponse(Call<KycUpdateModel> call, Response<KycUpdateModel> response) {
                                 Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
-                                if(response.isSuccessful()){
+                                if (response.isSuccessful()) {
                                     Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
                                     Log.d("TAG", "onResponseAdhaarUpdatemsg: " + response.body().getMessage().toString());
                                     SharedPreferences sharedPreferences = getContext().getSharedPreferences("checkBoxes", Context.MODE_PRIVATE);
@@ -177,7 +231,7 @@ public class GuarantorsFragment extends Fragment {
                                     Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
                                     startActivity(intent);
                                     getActivity().finish();
-                                }else{
+                                } else {
                                     Log.d("TAG", "onResponseAdhaarUpdate: " + response.code());
 
                                 }
@@ -199,17 +253,95 @@ public class GuarantorsFragment extends Fragment {
 
     private JsonObject gurrantorJson() {
         JsonObject jsonGurrantor = new JsonObject();
-        jsonGurrantor.addProperty("fiCode", allDataAFDataModel.getCode().toString());
+        jsonGurrantor.addProperty("code", allDataAFDataModel.getCode().toString());
         jsonGurrantor.addProperty("creator", allDataAFDataModel.getCreator().toString());
-        jsonGurrantor.addProperty("tag", allDataAFDataModel.getTag().toString());
-        jsonGurrantor.addProperty("tag", allDataAFDataModel.getTag().toString());
-        jsonGurrantor.addProperty("tag", allDataAFDataModel.getTag().toString());
-        jsonGurrantor.addProperty("tag", allDataAFDataModel.getTag().toString());
-        jsonGurrantor.addProperty("tag", allDataAFDataModel.getTag().toString());
-        jsonGurrantor.addProperty("tag", allDataAFDataModel.getTag().toString());
+        jsonGurrantor.addProperty("fi_Code", allDataAFDataModel.getTag().toString());
+        jsonGurrantor.addProperty("aadharID", etTextAadhar.getText().toString());
+        jsonGurrantor.addProperty("name", etTextName.getText().toString());
+        jsonGurrantor.addProperty("age", etTextAge.getText().toString());
+        jsonGurrantor.addProperty("dob", etTextDob.getText().toString());
+       jsonGurrantor.addProperty("gender", spin_gender.getSelectedItem().toString());
+        jsonGurrantor.addProperty("gurName", etTextGuardian.getText().toString());
+        jsonGurrantor.addProperty("perAdd1", etTextAddress1.getText().toString());
+        jsonGurrantor.addProperty("perAdd2", etTextAddress2.getText().toString());
+        jsonGurrantor.addProperty("perAdd3", etTextAddress3.getText().toString());
+        jsonGurrantor.addProperty("perCity", etTextCity.getText().toString());
+        jsonGurrantor.addProperty("p_Pin", etTextPincode.getText().toString());
+        jsonGurrantor.addProperty("p_StateID", spin_state.getSelectedItem().toString());
+        jsonGurrantor.addProperty("perMob1", etTextMobile.getText().toString());
+        jsonGurrantor.addProperty("voterID", etTextvoterid.getText().toString());
+        jsonGurrantor.addProperty("pano", etTextPAN.getText().toString());
+        jsonGurrantor.addProperty("drivingLic", etdrivingLicense.getText().toString());
+        jsonGurrantor.addProperty("relationwithborr", spin_relationwithborr.getSelectedItem().toString());
 
 
+
+//        jsonGurrantor.addProperty("grNo", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("initials", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("gurInitials", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("firmName", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("offAdd1", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("offAdd2", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("offAdd3", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("offCity", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("offPh1", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("offPh2", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("offPh3", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("offFax", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("offMob1", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("offMob2", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("resAdd1", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("resAdd2", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("resAdd3", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("resCity", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("resPh1", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("resPh2", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("resPh3", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("perFax", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("perMob2", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("occupation", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("occupTypeDesig", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("gender", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("p_Pin", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("p_StateID", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("voterID", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("drivingLic", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("drivingLic", allDataAFDataModel.getTag().toString());
+//
+//
+//        jsonGurrantor.addProperty("location", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("panNo", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("bankAcNo", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("bankBranch", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("otherCase", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("remarks", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("recoveryAuth", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("recoveryExec", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("type", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("fDflag", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("relation", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("incomeTax", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("minor", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("userID", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("auth_UserID", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("auth_Date", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("creation_Date", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("mod_Type", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("last_Mod_UserID", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("last_Mod_Date", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("groupCode", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("cityCode", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("religion", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("landHolding", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("exServiceMan", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("t_Pin", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("o_Pin", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("identityType", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("identity_No", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("eSignSucceed", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("kycuuid", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("concent", allDataAFDataModel.getTag().toString());
+//        jsonGurrantor.addProperty("eSignUUID", allDataAFDataModel.getTag().toString());
         return jsonGurrantor;
     }
-    }
-
+}

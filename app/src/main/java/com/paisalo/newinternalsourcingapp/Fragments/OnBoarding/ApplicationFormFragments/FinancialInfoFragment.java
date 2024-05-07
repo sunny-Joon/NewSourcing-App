@@ -49,7 +49,9 @@ public class FinancialInfoFragment extends Fragment {
     List<String> accountType_List = new ArrayList<>();
     ImageView calender_icon;
 
-
+    String fiCode,creator,tag,bankAccountType,bankAccNumber,accOpeningDate,ifscCode,rentalincome,expenseinRent
+             ,expenseforFood,expenseforEducation,expenseforHealth,expenseforTravelling,expenseforEntertainment
+            ,otherexpense,houseType,roofType,personalToilet;
 
     AllDataAFDataModel allDataAFDataModel;
     public FinancialInfoFragment(AllDataAFDataModel allDataAFDataModel) {
@@ -68,8 +70,13 @@ public class FinancialInfoFragment extends Fragment {
 
         DatabaseClass databaseClass = DatabaseClass.getInstance(getContext());
 
+        fiCode =  allDataAFDataModel.getCode().toString();
+        creator =  allDataAFDataModel.getCreator().toString();
+        tag =  allDataAFDataModel.getTag().toString();
+
 
         bankAccountNumber = view.findViewById(R.id.bankAccountNumber);
+        etaccount_date = view.findViewById(R.id.account_date);
         bankIFSCCode = view.findViewById(R.id.bankIFSCCode);
         rentalIncome = view.findViewById(R.id.rentalIncome);
         expenseInRent = view.findViewById(R.id.expenseInRent);
@@ -79,7 +86,6 @@ public class FinancialInfoFragment extends Fragment {
         expenseForTravelling = view.findViewById(R.id.expenseForTravelling);
         expenseForEntertainment = view.findViewById(R.id.expenseForEntertainment);
         anyOtherExpense = view.findViewById(R.id.anyOtherExpense);
-        etaccount_date = view.findViewById(R.id.account_date);
 
         calender_icon = view.findViewById(R.id.ac_date_calender);
 
@@ -192,6 +198,23 @@ public class FinancialInfoFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
+                bankAccountType= accountTypeSpinner.getSelectedItem().toString();
+                bankAccNumber = bankAccountNumber.getText().toString();
+                accOpeningDate = etaccount_date.getText().toString();
+                ifscCode = bankIFSCCode.getText().toString();
+                rentalincome = rentalIncome.getText().toString();
+                expenseinRent = expenseInRent.getText().toString();
+                expenseforFood = expenseForFood.getText().toString();
+                expenseforEducation = expenseForEducation.getText().toString();
+                expenseforHealth = expenseForHealth.getText().toString();
+                expenseforTravelling = expenseForTravelling.getText().toString();
+                expenseforEntertainment = expenseForEntertainment.getText().toString();
+                otherexpense = anyOtherExpense.getText().toString();
+                houseType= houseTypeSpinner.getSelectedItem().toString();
+                roofType= roofTypeSpinner.getSelectedItem().toString();
+                personalToilet= personalToiletSpinner.getSelectedItem().toString();
+
+
                 ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
                 Call<KycUpdateModel> call= apiInterface.updateFinance(GlobalClass.Token,GlobalClass.dbname, financeJson());
                 Log.d("TAG", "onResponseAdhaarUpdate: " + GlobalClass.Token+" "+GlobalClass.dbname+" "+ financeJson());
@@ -202,7 +225,7 @@ public class FinancialInfoFragment extends Fragment {
                         Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
                         if(response.isSuccessful()){
                             Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
-                            Log.d("TAG", "onResponseAdhaarUpdatemsg: " + response.body().getMessage().toString());
+                          //  Log.d("TAG", "onResponseAdhaarUpdatemsg: " + response.body().getMessage().toString());
                             SharedPreferences sharedPreferences = getContext().getSharedPreferences("checkBoxes", Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             editor.putBoolean("financialInfoCheckBox", true);
@@ -239,24 +262,24 @@ public class FinancialInfoFragment extends Fragment {
 
     private JsonObject financeJson() {
         JsonObject jsonFinance = new JsonObject();
-        jsonFinance.addProperty("fiCode", allDataAFDataModel.getCode().toString());
-        jsonFinance.addProperty("creator", allDataAFDataModel.getCreator().toString());
-        jsonFinance.addProperty("tag", allDataAFDataModel.getTag().toString());
-        jsonFinance.addProperty("bankAccountType","as" );
-        jsonFinance.addProperty("bankAccNumber", "address2");
-        jsonFinance.addProperty("accOpeningDate", "2024-04-22");
-        jsonFinance.addProperty("ifscCode", "state");
-        jsonFinance.addProperty("rentalIncome", 5000);
-        jsonFinance.addProperty("expenseInRent", 5000);
-        jsonFinance.addProperty("expenseForFood", 4000);
-        jsonFinance.addProperty("expenseForEducation", 5000);
-        jsonFinance.addProperty("expenseForHealth", 5000);
-        jsonFinance.addProperty("expenseForTravelling", 5000);
-        jsonFinance.addProperty("expenseForEntertainment", 5000);
-        jsonFinance.addProperty("otherExpense", 5000);
-        jsonFinance.addProperty("houseType", "pucca");
-        jsonFinance.addProperty("roofType", "pucca");
-        jsonFinance.addProperty("personalToilet", "Y");
+        jsonFinance.addProperty("fiCode",fiCode);
+        jsonFinance.addProperty("creator", creator);
+        jsonFinance.addProperty("tag", tag);
+        jsonFinance.addProperty("bankAccountType",bankAccountType );
+        jsonFinance.addProperty("bankAccNumber", bankAccNumber);
+        jsonFinance.addProperty("accOpeningDate", accOpeningDate);
+        jsonFinance.addProperty("ifscCode", ifscCode);
+        jsonFinance.addProperty("rentalIncome", rentalincome);
+        jsonFinance.addProperty("expenseInRent", expenseinRent);
+        jsonFinance.addProperty("expenseForFood", expenseforFood);
+        jsonFinance.addProperty("expenseForEducation", expenseforEducation);
+        jsonFinance.addProperty("expenseForHealth", expenseforHealth);
+        jsonFinance.addProperty("expenseForTravelling", expenseforTravelling);
+        jsonFinance.addProperty("expenseForEntertainment", expenseforEntertainment);
+        jsonFinance.addProperty("otherExpense", otherexpense);
+        jsonFinance.addProperty("houseType", houseType);
+        jsonFinance.addProperty("roofType", roofType);
+        jsonFinance.addProperty("personalToilet", personalToilet);
         jsonFinance.addProperty("livingWSpouse", "Y");
         return jsonFinance;
     }
