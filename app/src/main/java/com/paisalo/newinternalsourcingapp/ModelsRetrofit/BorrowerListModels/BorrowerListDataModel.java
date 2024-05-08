@@ -77,7 +77,6 @@ public class BorrowerListDataModel {
     @SerializedName("sel")
     @Expose
     private Object sel;
-
     public String getCode() {
         return code;
     }
