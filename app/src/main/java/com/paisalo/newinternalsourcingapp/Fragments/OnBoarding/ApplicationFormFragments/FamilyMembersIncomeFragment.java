@@ -1,5 +1,7 @@
 package com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.ApplicationFormFragments;
 
+import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidName;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,6 +22,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.JsonObject;
@@ -215,76 +218,136 @@ public class FamilyMembersIncomeFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
 
-                        famMemName = faimlMemberName.getText().toString();
-                        relationship = relationship_spin.getSelectedItem().toString();
-                        age = etage.getText().toString();
-                        gender = gender_spin.getSelectedItem().toString();
-                        health = Health_spin.getSelectedItem().toString();
-                        education = Education_spin.getSelectedItem().toString();
-                        schoolType = schoolType_spin.getSelectedItem().toString();
-                        business = etBusiness.getText().toString();
-                        businessType = businessType_spin.getSelectedItem().toString();
-                        income = etTextincome.getText().toString();
-                        incomeType = incomeType_spin.getSelectedItem().toString();
+                        boolean allConditionsSatisfied= true;
+                        if (!isValidName(faimlMemberName.getText().toString().isEmpty() ? " " : faimlMemberName.getText().toString())) {
+                            faimlMemberName.setError("Invalid faimlMemberName");
+                            allConditionsSatisfied = false;
+                        } else {
+                            famMemName = faimlMemberName.getText().toString();
+                        }
+
+                        if (relationship_spin.getSelectedItem().toString().contains("-Select-")) {
+                            ((TextView) relationship_spin.getSelectedView()).setError("Please select a relationship");
+                            allConditionsSatisfied = false;
+                        } else {
+                            relationship = relationship_spin.getSelectedItem().toString();                        }
+
+                        if (etage.getText().toString().isEmpty()) {
+                            etage.setError("Invalid Age");
+                            allConditionsSatisfied = false;
+                        } else {
+                            age = etage.getText().toString();                        }
+
+                        if (gender_spin.getSelectedItem().toString().contains("-Select-")) {
+                            ((TextView) gender_spin.getSelectedView()).setError("Please select a Gender");
+                            allConditionsSatisfied = false;
+                        }else{
+                            gender = gender_spin.getSelectedItem().toString();                        }
+
+                        if (Health_spin.getSelectedItem().toString().contains("-Select-")) {
+                            ((TextView) Health_spin.getSelectedView()).setError("Please select a Health");
+                            allConditionsSatisfied = false;
+                        }else{
+                            health = Health_spin.getSelectedItem().toString();                        }
+
+                        if (Education_spin.getSelectedItem().toString().contains("-Select-")) {
+                            ((TextView) Education_spin.getSelectedView()).setError("Please select a Education");
+                            allConditionsSatisfied = false;
+                        }else{
+                            education = Education_spin.getSelectedItem().toString();                        }
+
+                        if (schoolType_spin.getSelectedItem().toString().contains("-Select-")) {
+                            ((TextView) schoolType_spin.getSelectedView()).setError("Please select a schoolType");
+                            allConditionsSatisfied = false;
+                        }else{
+                            schoolType = schoolType_spin.getSelectedItem().toString();                        }
+
+                        if (!isValidName(etBusiness.getText().toString().isEmpty() ? " " : etBusiness.getText().toString())) {
+                            etBusiness.setError("Invalid Business");
+                            allConditionsSatisfied = false;
+                        } else {
+                            business = etBusiness.getText().toString();                        }
+
+                        if (businessType_spin.getSelectedItem().toString().contains("-Select-")) {
+                            ((TextView) businessType_spin.getSelectedView()).setError("Please select a Gender");
+                            allConditionsSatisfied = false;
+                        }else{
+                            businessType = businessType_spin.getSelectedItem().toString();                        }
+
+                        if (etTextincome.getText().toString().isEmpty()) {
+                            etTextincome.setError("Invalid income");
+                            allConditionsSatisfied = false;
+                        } else {
+                            income = etTextincome.getText().toString();
+                        }
 
 
+                        if (incomeType_spin.getSelectedItem().toString().contains("-Select-")) {
+                            ((TextView) incomeType_spin.getSelectedView()).setError("Please select a Gender");
+                            allConditionsSatisfied = false;
+                        }else{
+                            incomeType = incomeType_spin.getSelectedItem().toString();                        }
 
-                        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-                        Call<KycUpdateModel> call = apiInterface.updateFamMemIncome(GlobalClass.Token, GlobalClass.dbname, FamIncomeJson());
-                        Log.d("TAG", "onResponseAdhaarUpdate: " + GlobalClass.Token + " " + GlobalClass.dbname + " " + FamIncomeJson());
+                      if (allConditionsSatisfied) {
 
-                        call.enqueue(new Callback<KycUpdateModel>() {
-                            @Override
-                            public void onResponse(Call<KycUpdateModel> call, Response<KycUpdateModel> response) {
-                                Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
-                                if (response.isSuccessful()) {
-                                    Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
-                                    Log.d("TAG", "onResponseAdhaarUpdatemsg: " + response.body().getMessage().toString());
-                                    SharedPreferences sharedPreferences = getContext().getSharedPreferences("checkBoxes", Context.MODE_PRIVATE);
-                                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                                    editor.putBoolean("familyIncomeCheckBox", true);
-                                    editor.apply();
 
-                                    Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
-                                    startActivity(intent);
-                                    getActivity().finish();
-                                } else {
-                                    Log.d("TAG", "onResponseAdhaarUpdate: " + response.code());
+                          ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+                          Call<KycUpdateModel> call = apiInterface.updateFamMemIncome(GlobalClass.Token, GlobalClass.dbname, FamIncomeJson());
+                          Log.d("TAG", "onResponseAdhaarUpdate: " + GlobalClass.Token + " " + GlobalClass.dbname + " " + FamIncomeJson());
 
-                                }
-                            }
+                          call.enqueue(new Callback<KycUpdateModel>() {
+                              @Override
+                              public void onResponse(Call<KycUpdateModel> call, Response<KycUpdateModel> response) {
+                                  Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
+                                  if (response.isSuccessful()) {
+                                      Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
+                                      Log.d("TAG", "onResponseAdhaarUpdatemsg: " + response.body().getMessage().toString());
+                                      SharedPreferences sharedPreferences = getContext().getSharedPreferences("checkBoxes", Context.MODE_PRIVATE);
+                                      SharedPreferences.Editor editor = sharedPreferences.edit();
+                                      editor.putBoolean("familyIncomeCheckBox", true);
+                                      editor.apply();
 
-                            @Override
-                            public void onFailure(Call<KycUpdateModel> call, Throwable t) {
-                                Log.d("TAG", "onResponseAdhaarUpdate: " + "failure");
+                                      Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
+                                      startActivity(intent);
+                                      getActivity().finish();
+                                  } else {
+                                      Log.d("TAG", "onResponseAdhaarUpdate: " + response.code());
 
-                            }
-                        });
+                                  }
+                              }
 
-                        addBtn = popupView.findViewById(R.id.addupdateButton);
-                        delBtn = popupView.findViewById(R.id.deleteButton);
-                        canBtn = popupView.findViewById(R.id.cancelButton);
+                              @Override
+                              public void onFailure(Call<KycUpdateModel> call, Throwable t) {
+                                  Log.d("TAG", "onResponseAdhaarUpdate: " + "failure");
 
-                        canBtn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                popupWindow.dismiss();
-                            }
-                        });
+                              }
+                          });
 
-                        addBtn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                SharedPreferences sharedPreferences = getContext().getSharedPreferences("checkBoxes", Context.MODE_PRIVATE);
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.putBoolean("familyIncomeCheckBox", true);
-                                editor.apply();
+                          addBtn = popupView.findViewById(R.id.addupdateButton);
+                          delBtn = popupView.findViewById(R.id.deleteButton);
+                          canBtn = popupView.findViewById(R.id.cancelButton);
 
-                                Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
-                                startActivity(intent);
-                                getActivity().finish();
-                            }
-                        });
+                          canBtn.setOnClickListener(new View.OnClickListener() {
+                              @Override
+                              public void onClick(View v) {
+                                  popupWindow.dismiss();
+                              }
+                          });
+
+                          addBtn.setOnClickListener(new View.OnClickListener() {
+                              @Override
+                              public void onClick(View view) {
+                                  SharedPreferences sharedPreferences = getContext().getSharedPreferences("checkBoxes", Context.MODE_PRIVATE);
+                                  SharedPreferences.Editor editor = sharedPreferences.edit();
+                                  editor.putBoolean("familyIncomeCheckBox", true);
+                                  editor.apply();
+
+                                  Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
+                                  startActivity(intent);
+                                  getActivity().finish();
+                              }
+                          });
+                      }
 
                     }
                 });

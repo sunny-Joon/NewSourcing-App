@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -188,79 +189,172 @@ public class KYCActivity2 extends AppCompatActivity {
         savedata.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loanamount = Integer.parseInt(loanAmount.getText().toString());
-                loanDuration = Integer.parseInt(loanduration.getSelectedItem().toString());
-                businessDetails = businessdetail.getSelectedItem().toString();
-                selectedBank = selectbank.getSelectedItem().toString();
-                loanPurpose = loanpurpose.getSelectedItem().toString();
-                expense = Integer.parseInt(expensemonthly.getText().toString());
-                monthlyIncome = Integer.parseInt(monthlyincome.getText().toString());
-                futureIncome = Integer.parseInt(futureincome.getText().toString());
-                agricultureIncome = Integer.parseInt(agricultureincome.getText().toString());
-                pensionIncome = Integer.parseInt(pensionincome.getText().toString());
-                interestIncome = Integer.parseInt(interestincome.getText().toString());
-                otherIncome = Integer.parseInt(otherincome.getText().toString());
-                earningMemberIncome = Integer.parseInt(earningmemberincome.getText().toString());
-                earningMemberType = earningmembertype.getSelectedItem().toString();
-                occupation = occuption.getSelectedItem().toString();
 
+                boolean allConditionsSatisfied=true;
 
-                firstPageObject.setLoanAmt(loanamount);
-                firstPageObject.setLoanDuration(loanDuration);
-                firstPageObject.setBusinessDetail(businessDetails);
-                firstPageObject.setTPh3(" ");
-                firstPageObject.setLoanReason(loanPurpose);
-                firstPageObject.setAreaOfHouse(0);
-                firstPageObject.setBankName(selectedBank);
-                firstPageObject.setCast("");
-                firstPageObject.setCityCode("CityCode");
-                firstPageObject.setCode(0);
-                firstPageObject.setCreator("HOAGRA");
-                firstPageObject.setFAmilyMember(0);
-                firstPageObject.setLoanEMi(12);
+                if (loanAmount.getText().toString().isEmpty()) {
+                    loanAmount.setError("Invalid loanAmount");
+                    allConditionsSatisfied = false;
+                } else {
+                    loanamount = Integer.parseInt(loanAmount.getText().toString());
+                }
+
+                if (loanduration.getSelectedItem().toString().contains("-Select-")) {
+                    ((TextView) loanduration.getSelectedView()).setError("Please select a loanduration");
+                    allConditionsSatisfied = false;
+                }else{
+                    loanDuration = Integer.parseInt(loanduration.getSelectedItem().toString());
+                }
+
+                if (businessdetail.getSelectedItem().toString().contains("-Select-")) {
+                    ((TextView) businessdetail.getSelectedView()).setError("Please select a businessdetail");
+                    allConditionsSatisfied = false;
+                }else{
+                    businessDetails = businessdetail.getSelectedItem().toString();
+                }
+
+                if (selectbank.getSelectedItem().toString().contains("-Select-")) {
+                    ((TextView) selectbank.getSelectedView()).setError("Please select a selectbank");
+                    allConditionsSatisfied = false;
+                }else{
+                    selectedBank = selectbank.getSelectedItem().toString();
+                }
+
+                if (loanpurpose.getSelectedItem().toString().contains("-Select-")) {
+                    ((TextView) loanpurpose.getSelectedView()).setError("Please select a loanpurpose");
+                    allConditionsSatisfied = false;
+                }else{
+                    loanPurpose = loanpurpose.getSelectedItem().toString();
+                }
+
+                if (expensemonthly.getText().toString().isEmpty()) {
+                    expensemonthly.setError("Invalid expensemonthly");
+                    allConditionsSatisfied = false;
+                } else {
+                    expense = Integer.parseInt(expensemonthly.getText().toString());
+                }
+                if (monthlyincome.getText().toString().isEmpty()) {
+                    monthlyincome.setError("Invalid monthlyincome");
+                    allConditionsSatisfied = false;
+                } else {
+                    monthlyIncome = Integer.parseInt(monthlyincome.getText().toString());
+                }
+
+                if (futureincome.getText().toString().isEmpty()) {
+                    futureincome.setError("Invalid futureincome");
+                    allConditionsSatisfied = false;
+                } else {
+                    futureIncome = Integer.parseInt(futureincome.getText().toString());
+                }
+
+                if (agricultureincome.getText().toString().isEmpty()) {
+                    agricultureincome.setError("Invalid agricultureincome");
+                    allConditionsSatisfied = false;
+                } else {
+                    agricultureIncome = Integer.parseInt(agricultureincome.getText().toString());
+                }
+
+                if (pensionincome.getText().toString().isEmpty()) {
+                    pensionincome.setError("Invalid pensionincome");
+                    allConditionsSatisfied = false;
+                } else {
+                    pensionIncome = Integer.parseInt(pensionincome.getText().toString());
+                }
+
+                if (interestincome.getText().toString().isEmpty()) {
+                    interestincome.setError("Invalid interestincome");
+                    allConditionsSatisfied = false;
+                } else {
+                    interestIncome = Integer.parseInt(interestincome.getText().toString());
+                }
+
+                if (otherincome.getText().toString().isEmpty()) {
+                    otherincome.setError("Invalid otherincome");
+                    allConditionsSatisfied = false;
+                } else {
+                    otherIncome = Integer.parseInt(otherincome.getText().toString());
+                }
+
+                if (earningmemberincome.getText().toString().isEmpty()) {
+                    earningmemberincome.setError("Invalid earningmemberincome");
+                    allConditionsSatisfied = false;
+                } else {
+                    earningMemberIncome = Integer.parseInt(earningmemberincome.getText().toString());
+                }
+
+                if (earningmembertype.getSelectedItem().toString().contains("-Select-")) {
+                    ((TextView) earningmembertype.getSelectedView()).setError("Please select a earningmembertype");
+                    allConditionsSatisfied = false;
+                }else{
+                    earningMemberType = earningmembertype.getSelectedItem().toString();
+                }
+
+                if (occuption.getSelectedItem().toString().contains("-Select-")) {
+                    ((TextView) occuption.getSelectedView()).setError("Please select a occuption");
+                    allConditionsSatisfied = false;
+                }else{
+                    occupation = occuption.getSelectedItem().toString();
+                }
+
+                if (allConditionsSatisfied) {
+
+                    firstPageObject.setLoanAmt(loanamount);
+                    firstPageObject.setLoanDuration(loanDuration);
+                    firstPageObject.setBusinessDetail(businessDetails);
+                    firstPageObject.setTPh3(" ");
+                    firstPageObject.setLoanReason(loanPurpose);
+                    firstPageObject.setAreaOfHouse(0);
+                    firstPageObject.setBankName(selectedBank);
+                    firstPageObject.setCast("");
+                    firstPageObject.setCityCode("CityCode");
+                    firstPageObject.setCode(0);
+                    firstPageObject.setCreator("HOAGRA");
+                    firstPageObject.setFAmilyMember(0);
+                    firstPageObject.setLoanEMi(12);
                /* FirstPageObject.addProperty("Latitude" );
                 FirstPageObject.addProperty("Longitude" */
-                firstPageObject.setLatitude(123.45);
-                firstPageObject.setLongitude(123.45); ;
-                firstPageObject.setTPin(0);
-                firstPageObject.setTag("RTAG");
-                firstPageObject.setUserID("UserID");
-                firstPageObject.setExpense(expense);
+                    firstPageObject.setLatitude(123.45);
+                    firstPageObject.setLongitude(123.45);
+                    ;
+                    firstPageObject.setTPin(0);
+                    firstPageObject.setTag("RTAG");
+                    firstPageObject.setUserID("UserID");
+                    firstPageObject.setExpense(expense);
 
-                fiExtra.setMonthlyIncome(monthlyIncome);
-                fiExtra.setFutureIncome(futureIncome);
-                fiExtra.setAgricultureIncome(agricultureIncome);
-                fiExtra.setPensionIncome(pensionIncome);
-                fiExtra.setInterestIncome(interestIncome);
-                fiExtra.setOtherIncome(otherIncome);
-                fiExtra.setEarningMemberType(earningMemberType);
-                fiExtra.setEarningMemberIncome(earningMemberIncome);
-                fiExtra.setOccupation(occupation);
+                    fiExtra.setMonthlyIncome(monthlyIncome);
+                    fiExtra.setFutureIncome(futureIncome);
+                    fiExtra.setAgricultureIncome(agricultureIncome);
+                    fiExtra.setPensionIncome(pensionIncome);
+                    fiExtra.setInterestIncome(interestIncome);
+                    fiExtra.setOtherIncome(otherIncome);
+                    fiExtra.setEarningMemberType(earningMemberType);
+                    fiExtra.setEarningMemberIncome(earningMemberIncome);
+                    fiExtra.setOccupation(occupation);
 
-                firstPageObject.setFiExtra(fiExtra);
+                    firstPageObject.setFiExtra(fiExtra);
 
-                Gson gson = new Gson();
-                JsonObject jsonObject = gson.fromJson(gson.toJson(firstPageObject), JsonObject.class);
-                Log.d("TAG", "FirstPageObject1: " + jsonObject);
+                    Gson gson = new Gson();
+                    JsonObject jsonObject = gson.fromJson(gson.toJson(firstPageObject), JsonObject.class);
+                    Log.d("TAG", "FirstPageObject1: " + jsonObject);
 
-                ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-                Call<SaveFiModel> call1 = apiInterface.getSaveFi(GlobalClass.Token,GlobalClass.dbname, jsonObject);
-                Log.d("TAG", "rrrrrrrrrrSaveFiParams: " + GlobalClass.Token+ " "+GlobalClass.dbname +" "+ jsonObject);
+                    ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+                    Call<SaveFiModel> call1 = apiInterface.getSaveFi(GlobalClass.Token, GlobalClass.dbname, jsonObject);
+                    Log.d("TAG", "rrrrrrrrrrSaveFiParams: " + GlobalClass.Token + " " + GlobalClass.dbname + " " + jsonObject);
 
-                call1.enqueue(new Callback<SaveFiModel>() {
-                    @Override
-                    public void onResponse(Call<SaveFiModel> call1, Response<SaveFiModel> response1) {
-                        Log.d("TAG", "rrrrrrrrrrSaveFiRun: "+ response1.body());
-                        if(response1.isSuccessful()){
-                            Log.d("TAG", "rrrrrrrrrrSaveFisuccessful: "+ response1.body().getMessage());
+                    call1.enqueue(new Callback<SaveFiModel>() {
+                        @Override
+                        public void onResponse(Call<SaveFiModel> call1, Response<SaveFiModel> response1) {
+                            Log.d("TAG", "rrrrrrrrrrSaveFiRun: " + response1.body());
+                            if (response1.isSuccessful()) {
+                                Log.d("TAG", "rrrrrrrrrrSaveFisuccessful: " + response1.body().getMessage());
 
-                         SaveFiModel saveFiModel = response1.body();
-                            SaveFiDataModel saveFiDataModel = saveFiModel.getData();
+                                SaveFiModel saveFiModel = response1.body();
+                                SaveFiDataModel saveFiDataModel = saveFiModel.getData();
 
-                            String Message1 = saveFiDataModel.getFiCode().toString();
+                                String Message1 = saveFiDataModel.getFiCode().toString();
 
-                            if(Message1 != null){
-                                 jsonObject2 = new JsonObject();
+                                if (Message1 != null) {
+                                    jsonObject2 = new JsonObject();
 
                                     jsonObject2.addProperty("fiCode", Message1.trim());
                                     jsonObject2.addProperty("creator", GlobalClass.Creator);
@@ -273,71 +367,73 @@ public class KYCActivity2 extends AppCompatActivity {
                                     jsonObject2.addProperty("suB_DIST_CODE", subDistCode);
                                     jsonObject2.addProperty("disT_CODE", distCode);
                                     jsonObject2.addProperty("statE_CODE", stateCode);
-                            }
+                                }
 
-                            Log.d("TAG", "jsonobjectstate: " + jsonObject2);
-                            Call<SaveVerifiedInfo> call2 = apiInterface.SaveVerifiedInfo(GlobalClass.Token,GlobalClass.dbname, jsonObject2);
+                                Log.d("TAG", "jsonobjectstate: " + jsonObject2);
+                                Call<SaveVerifiedInfo> call2 = apiInterface.SaveVerifiedInfo(GlobalClass.Token, GlobalClass.dbname, jsonObject2);
 
-                            call2.enqueue(new Callback<SaveVerifiedInfo>() {
-                                @Override
-                                public void onResponse(Call<SaveVerifiedInfo> call2, Response<SaveVerifiedInfo> responses2) {
-                                    Log.d("TAG", "rrrrrrrrrrSaveVIRun: " + responses2.body());
-                                    if(responses2.isSuccessful()){
-                                        Log.d("TAG", "rrrrrrrrrrSaveVISuccessful: " + responses2.body());
-                                        SaveVerifiedInfo saveVerifiedInfo = responses2.body();
-                                        Log.d("TAG", "jsonobjectstate: "+saveVerifiedInfo.getMessage());
-                                        FiCPopup fiCPopup = new FiCPopup("Your Ficode is Here", Message1);
-                                        fiCPopup.show(getSupportFragmentManager(), "CustomDialog");
+                                call2.enqueue(new Callback<SaveVerifiedInfo>() {
+                                    @Override
+                                    public void onResponse(Call<SaveVerifiedInfo> call2, Response<SaveVerifiedInfo> responses2) {
+                                        Log.d("TAG", "rrrrrrrrrrSaveVIRun: " + responses2.body());
+                                        if (responses2.isSuccessful()) {
+                                            Log.d("TAG", "rrrrrrrrrrSaveVISuccessful: " + responses2.body());
+                                            SaveVerifiedInfo saveVerifiedInfo = responses2.body();
+                                            Log.d("TAG", "jsonobjectstate: " + saveVerifiedInfo.getMessage());
+                                            FiCPopup fiCPopup = new FiCPopup("Your Ficode is Here", Message1);
+                                            fiCPopup.show(getSupportFragmentManager(), "CustomDialog");
 
-                                        RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), file);
-                                        MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+                                            RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), file);
+                                            MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
 
-                                        Call<ProfilePicModel> call3 = apiInterface.updateprofilePic(GlobalClass.Token,GlobalClass.dbname, Message1.trim(),GlobalClass.Creator,"CLAR",body);
-                                        call3.enqueue(new Callback<ProfilePicModel>() {
-                                            @Override
-                                            public void onResponse(Call<ProfilePicModel> call3, Response<ProfilePicModel> response3) {
-                                                Log.d("TAG", "rrrrrrrrrrSavePICRUN: "+ response3.body());
-                                                if(response3.isSuccessful()){
-                                                    Log.d("TAG", "rrrrrrrrrrSavePICSuccessful: "+ response3.body().getMessage());
-                                                    FiCPopup fiCPopup = new FiCPopup("Your Ficode is Here", Message1);
-                                                    fiCPopup.show(getSupportFragmentManager(), "CustomDialog");
+                                            Call<ProfilePicModel> call3 = apiInterface.updateprofilePic(GlobalClass.Token, GlobalClass.dbname, Message1.trim(), GlobalClass.Creator, "CLAR", body);
+                                            call3.enqueue(new Callback<ProfilePicModel>() {
+                                                @Override
+                                                public void onResponse(Call<ProfilePicModel> call3, Response<ProfilePicModel> response3) {
+                                                    Log.d("TAG", "rrrrrrrrrrSavePICRUN: " + response3.body());
+                                                    if (response3.isSuccessful()) {
+                                                        Log.d("TAG", "rrrrrrrrrrSavePICSuccessful: " + response3.body().getMessage());
+                                                        FiCPopup fiCPopup = new FiCPopup("Your Ficode is Here", Message1);
+                                                        fiCPopup.show(getSupportFragmentManager(), "CustomDialog");
 
-                                                }else{
-                                                    Log.d("TAG", "rrrrrrrrrrSavePICUNSuccessful: "+ response3.code());
+                                                    } else {
+                                                        Log.d("TAG", "rrrrrrrrrrSavePICUNSuccessful: " + response3.code());
 
+
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onFailure(Call<ProfilePicModel> call3, Throwable t) {
+                                                    Log.d("TAG", "rrrrrrrrrrSavePICUNSuccessful: " + "failure");
 
                                                 }
-                                            }
-
-                                            @Override
-                                            public void onFailure(Call<ProfilePicModel> call3, Throwable t) {
-                                                Log.d("TAG", "rrrrrrrrrrSavePICUNSuccessful: "+ "failure");
-
-                                            }
-                                        });
+                                            });
 
 
-                                    }else{
-                                        Log.d("TAG", "rrrrrrrrrrSaveVIUnsuccessful: " + responses2.code());
+                                        } else {
+                                            Log.d("TAG", "rrrrrrrrrrSaveVIUnsuccessful: " + responses2.code());
+                                        }
                                     }
-                                }
 
-                                @Override
-                                public void onFailure(Call<SaveVerifiedInfo> call2, Throwable t) {
-                                    Log.d("TAG", "rrrrrrrrrrSaveVI: " + "failure");
+                                    @Override
+                                    public void onFailure(Call<SaveVerifiedInfo> call2, Throwable t) {
+                                        Log.d("TAG", "rrrrrrrrrrSaveVI: " + "failure");
 
-                                }
-                            });
-                        }else {
-                            Log.d("TAG", "rrrrrrrrrrSaveFiUnsuccessful: "+ response1.code());
+                                    }
+                                });
+                            } else {
+                                Log.d("TAG", "rrrrrrrrrrSaveFiUnsuccessful: " + response1.code());
+                            }
                         }
-                    }
-                    @Override
-                    public void onFailure(Call<SaveFiModel> call1, Throwable t) {
-                        Toast.makeText(KYCActivity2.this, "Failed", Toast.LENGTH_SHORT).show();
-                        Log.d("TAG", "rrrrrrrrrrSaveFi" + "Failure");
-                    }
-                });
+
+                        @Override
+                        public void onFailure(Call<SaveFiModel> call1, Throwable t) {
+                            Toast.makeText(KYCActivity2.this, "Failed", Toast.LENGTH_SHORT).show();
+                            Log.d("TAG", "rrrrrrrrrrSaveFi" + "Failure");
+                        }
+                    });
+                }
             }
         });
 

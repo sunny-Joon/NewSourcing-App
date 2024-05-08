@@ -1,5 +1,8 @@
 package com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.ApplicationFormFragments;
 
+import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidAddr;
+import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidName;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -136,45 +139,78 @@ public class AadhaarFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                address1 = address1ET.getText().toString();
-                address2 = address2ET.getText().toString();
-                address3 = address3ET.getText().toString();
-                state = spin_aadhaarState.getSelectedItem().toString();
-                city = cityET.getText().toString();
+                  boolean allConditionsSatisfied = true;
+
+                if(!isValidAddr(address1ET.getText().toString().isEmpty() ? "" : address1ET.getText().toString())){
+                    address1ET.setError("Invalid Address");
+                    allConditionsSatisfied = false;
+                }else{
+                    address1 = address1ET.getText().toString();
+                }
+
+                if(!isValidAddr(address2ET.getText().toString().isEmpty() ? "" : address2ET.getText().toString())){
+                    address2ET.setError("Invalid Address");
+                    allConditionsSatisfied = false;
+                }else{
+                    address2 = address2ET.getText().toString();
+                }
+
+                if(!isValidAddr(address3ET.getText().toString().isEmpty() ? "" : address3ET.getText().toString())){
+                    address3ET.setError("Invalid Address");
+                    allConditionsSatisfied = false;
+                }else{
+                    address3 = address3ET.getText().toString();
+                }
+
+                if (spin_aadhaarState.getSelectedItem().toString().contains("-Select-")) {
+                    ((TextView) spin_aadhaarState.getSelectedView()).setError("Please select a state");
+                    allConditionsSatisfied = false;
+                }else{
+                    state = spin_aadhaarState.getSelectedItem().toString();
+                }
+
+                if(!isValidName(cityET.getText().toString().isEmpty() ?" ": cityET.getText().toString())){
+                    cityET.setError("Invalid City");
+                    allConditionsSatisfied = false;
+                }else{
+                    city = cityET.getText().toString();
+                }
+
+             if (allConditionsSatisfied) {
 
 
-                ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-                Call<KycUpdateModel> call = apiInterface.updateAddress(GlobalClass.Token, GlobalClass.dbname, addressJson());
-                Log.d("TAG", "onResponseAdhaarUpdate: " + GlobalClass.Token + " " + GlobalClass.dbname + " " + addressJson());
+                 ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+                 Call<KycUpdateModel> call = apiInterface.updateAddress(GlobalClass.Token, GlobalClass.dbname, addressJson());
+                 Log.d("TAG", "onResponseAdhaarUpdate: " + GlobalClass.Token + " " + GlobalClass.dbname + " " + addressJson());
 
-                call.enqueue(new Callback<KycUpdateModel>() {
-                    @Override
-                    public void onResponse(Call<KycUpdateModel> call, Response<KycUpdateModel> response) {
-                        Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
-                        if (response.isSuccessful()) {
-                            Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
-                            Log.d("TAG", "onResponseAdhaarUpdatemsg: " + response.body().getMessage().toString());
-                            SharedPreferences sharedPreferences = getContext().getSharedPreferences("checkBoxes", Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putBoolean("aadhaarCheckBox", true);
-                            editor.apply();
+                 call.enqueue(new Callback<KycUpdateModel>() {
+                     @Override
+                     public void onResponse(Call<KycUpdateModel> call, Response<KycUpdateModel> response) {
+                         Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
+                         if (response.isSuccessful()) {
+                             Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
+                             Log.d("TAG", "onResponseAdhaarUpdatemsg: " + response.body().getMessage().toString());
+                             SharedPreferences sharedPreferences = getContext().getSharedPreferences("checkBoxes", Context.MODE_PRIVATE);
+                             SharedPreferences.Editor editor = sharedPreferences.edit();
+                             editor.putBoolean("aadhaarCheckBox", true);
+                             editor.apply();
 
-                            Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
-                            startActivity(intent);
-                            getActivity().finish();
-                        } else {
-                            Log.d("TAG", "onResponseAdhaarUpdate: " + response.code());
+                             Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
+                             startActivity(intent);
+                             getActivity().finish();
+                         } else {
+                             Log.d("TAG", "onResponseAdhaarUpdate: " + response.code());
 
-                        }
-                    }
+                         }
+                     }
 
-                    @Override
-                    public void onFailure(Call<KycUpdateModel> call, Throwable t) {
-                        Log.d("TAG", "onResponseAdhaarUpdate: " + "failure");
+                     @Override
+                     public void onFailure(Call<KycUpdateModel> call, Throwable t) {
+                         Log.d("TAG", "onResponseAdhaarUpdate: " + "failure");
 
-                    }
-                });
-
+                     }
+                 });
+             }
 
             }
         });

@@ -3,6 +3,8 @@ package com.paisalo.newinternalsourcingapp.Fragments.OnBoarding;
 import static com.paisalo.newinternalsourcingapp.GlobalClass.SubmitAlert;
 import static com.paisalo.newinternalsourcingapp.GlobalClass.isNumber;
 import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidAddr;
+import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidFullName;
+import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidMName;
 import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidName;
 import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidPan;
 
@@ -1383,7 +1385,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             public void onResponse(Call<PanVerificationModel> call, Response<PanVerificationModel> response) {
                 Log.d("TAG", "onResponseID: " + response.body());
                 if (response.isSuccessful()) {
-                    Log.d("TAG", "onResponseID: " + response.body());
+                    Log.d("TAG", "onResponseID1: " + response.body());
                     PanVerificationModel panVerificationModel = response.body();
                     if (panVerificationModel.getMessage().toString().equals("Get Record Successfully !!")) {
                         pan_Checkbox.setChecked(true);
@@ -1479,7 +1481,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             Age = editTextAge.getText().toString();
         }
 
-        if (!isValidName(editTextName.getText().toString().isEmpty() ? "" : editTextName.getText().toString())) {
+        if (!isValidFullName(editTextName.getText().toString().isEmpty() ? "" : editTextName.getText().toString())) {
             editTextName.setError("Invalid Name");
             allConditionsSatisfied = false;
         } else {
@@ -1558,7 +1560,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         }
 
         if(editTextvoterIdKyc.getText().toString().isEmpty()){
-            editTextvoterIdKyc.setError("Empty License");
+            editTextvoterIdKyc.setError("Empty VoterId");
             allConditionsSatisfied = false;
         }else {
             voterId = editTextvoterIdKyc.getText().toString();
@@ -1571,14 +1573,14 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             fatherName = editTextFatherFname.getText().toString();
         }
 
-        if(!isValidName(editTextfathermiddlename.getText().toString().isEmpty() ?" ": editTextfathermiddlename.getText().toString())){
+        if(!isValidMName(editTextfathermiddlename.getText().toString().isEmpty() ?" ": editTextfathermiddlename.getText().toString())){
             editTextfathermiddlename.setError("Invalid Name");
             allConditionsSatisfied = false;
         }else{
             fatherMiddleName = editTextfathermiddlename.getText().toString();
         }
 
-        if(!isValidName(editTextfatherlastname.getText().toString().isEmpty() ?" ": editTextfatherlastname.getText().toString())){
+        if(!isValidMName(editTextfatherlastname.getText().toString().isEmpty() ?" ": editTextfatherlastname.getText().toString())){
             editTextfatherlastname.setError("Invalid Name");
             allConditionsSatisfied = false;
         }else{
@@ -1592,14 +1594,14 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             motherName = editTextmotherfirstname.getText().toString();
         }
 
-        if(!isValidName(editTextmothermiddlename.getText().toString().isEmpty() ?" ": editTextmothermiddlename.getText().toString())){
+        if(!isValidMName(editTextmothermiddlename.getText().toString().isEmpty() ?" ": editTextmothermiddlename.getText().toString())){
             editTextmothermiddlename.setError("Invalid Name");
             allConditionsSatisfied = false;
         }else{
             motherMiddleName = editTextmothermiddlename.getText().toString();
         }
 
-        if(!isValidName(editTextmotherlastname.getText().toString().isEmpty() ?" ": editTextmotherlastname.getText().toString())){
+        if(!isValidMName(editTextmotherlastname.getText().toString().isEmpty() ?" ": editTextmotherlastname.getText().toString())){
             editTextmotherlastname.setError("Invalid Name");
             allConditionsSatisfied = false;
         }else{
@@ -1613,14 +1615,14 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             spouseFirstName = editTextspousefirstname.getText().toString();
         }
 
-        if(!isValidName(editTextspousemiddlename.getText().toString().isEmpty() ?" ": editTextspousemiddlename.getText().toString())){
+        if(!isValidMName(editTextspousemiddlename.getText().toString().isEmpty() ?" ": editTextspousemiddlename.getText().toString())){
             editTextspousemiddlename.setError("Invalid Name");
             allConditionsSatisfied = false;
         }else{
             spouseMiddleName = editTextspousemiddlename.getText().toString();
         }
 
-        if(!isValidName(editTextspouselastname.getText().toString().isEmpty() ?" ": editTextspouselastname.getText().toString())){
+        if(!isValidMName(editTextspouselastname.getText().toString().isEmpty() ?" ": editTextspouselastname.getText().toString())){
             editTextspouselastname.setError("Invalid Name");
             allConditionsSatisfied = false;
         }else{

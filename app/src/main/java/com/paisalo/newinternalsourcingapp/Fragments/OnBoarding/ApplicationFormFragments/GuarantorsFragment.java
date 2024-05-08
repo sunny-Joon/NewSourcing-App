@@ -1,5 +1,11 @@
 package com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.ApplicationFormFragments;
 
+import static com.paisalo.newinternalsourcingapp.GlobalClass.isNumber;
+import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidAddr;
+import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidFullName;
+import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidName;
+import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidPan;
+
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -33,6 +39,8 @@ import retrofit2.Response;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
+
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.FiGuarantor;
 import com.paisalo.newinternalsourcingapp.RoomDatabase.DatabaseClass;
 import com.paisalo.newinternalsourcingapp.RoomDatabase.RangeCategoryDataClass;
@@ -56,9 +64,12 @@ public class GuarantorsFragment extends Fragment {
     EditText etTextAadhar, etTextName, etTextAge, etTextDob, etTextGuardian, etTextAddress1, etTextAddress2, etTextAddress3, etTextCity, etTextPincode, etTextMobile, etTextvoterid, etTextPAN, etdrivingLicense;
     Spinner spin_gender, spin_state, spin_relationwithborr;
 
+   String code, creator,fi_Code,aadharID,name,age,dob,gender,gurName,perAdd1,perAdd2,perAdd3,perCity,p_Pin,p_StateID,perMob1,voterID,pano,drivingLic,relationwithborr;
+
     public GuarantorsFragment(AllDataAFDataModel allDataAFDataModel) {
         this.allDataAFDataModel = allDataAFDataModel;
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -212,37 +223,167 @@ public class GuarantorsFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
 
-                        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-                        Call<KycUpdateModel> call = apiInterface.updateFamLoans(GlobalClass.Token, GlobalClass.dbname, gurrantorJson());
-                        Log.d("TAG", "onResponseAdhaarUpdate: " + GlobalClass.Token + " " + GlobalClass.dbname + " " + gurrantorJson());
+                        code         = allDataAFDataModel.getCode().toString();
+                        creator      =allDataAFDataModel.getCreator().toString();
+                        fi_Code      = allDataAFDataModel.getTag().toString();
 
-                        call.enqueue(new Callback<KycUpdateModel>() {
-                            @Override
-                            public void onResponse(Call<KycUpdateModel> call, Response<KycUpdateModel> response) {
-                                Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
-                                if (response.isSuccessful()) {
+                        boolean allConditionsSatisfied=true;
+
+                        if (etTextAadhar.getText().toString().isEmpty()) {
+                            etTextAadhar.setError("Invalid ID");
+                            allConditionsSatisfied = false;
+                        } else {
+                            aadharID     = etTextAadhar.getText().toString();
+                        }
+
+                        if (!isValidFullName(etTextName.getText().toString().isEmpty() ? "" : etTextName.getText().toString())) {
+                            etTextName.setError("Invalid Name");
+                            allConditionsSatisfied = false;
+                        } else {
+                            name = etTextName.getText().toString();
+                        }
+
+                        if (etTextAge.getText().toString().isEmpty()) {
+                            etTextAge.setError("Invalid Age");
+                            allConditionsSatisfied = false;
+                        } else {
+                            age          = etTextAge.getText().toString();
+                        }
+
+                        if(etTextDob.getText().toString().isEmpty()){
+                            etTextDob.setError("Select Date");
+                            allConditionsSatisfied = false;
+                        }else{
+                            dob          = etTextDob.getText().toString();
+                        }
+
+
+                        if (spin_gender.getSelectedItem().toString().contains("-Select-")) {
+                            ((TextView) spin_gender.getSelectedView()).setError("Please select a Gender");
+                            allConditionsSatisfied = false;
+                        }else{
+                            gender        = spin_gender.getSelectedItem().toString();
+                        }
+
+                        if (!isValidFullName(etTextGuardian.getText().toString().isEmpty() ? "" : etTextGuardian.getText().toString())) {
+                            etTextGuardian.setError("Invalid GurName");
+                            allConditionsSatisfied = false;
+                        } else {
+                            gurName      = etTextGuardian.getText().toString();
+                        }
+
+
+                        if(!isValidAddr(etTextAddress1.getText().toString().isEmpty() ? "" : etTextAddress1.getText().toString())){
+                            etTextAddress1.setError("Invalid Address");
+                            allConditionsSatisfied = false;
+                        }else{
+                            perAdd1      = etTextAddress1.getText().toString();
+                        }
+
+                        if(!isValidAddr(etTextAddress2.getText().toString().isEmpty() ? "" : etTextAddress2.getText().toString())){
+                            etTextAddress2.setError("Invalid Address");
+                            allConditionsSatisfied = false;
+                        }else{
+                            perAdd2      = etTextAddress2.getText().toString();
+                        }
+
+                        if(!isValidAddr(etTextAddress3.getText().toString().isEmpty() ? "" : etTextAddress3.getText().toString())){
+                            etTextAddress3.setError("Invalid Address");
+                            allConditionsSatisfied = false;
+                        }else{
+                            perAdd3      = etTextAddress3.getText().toString();
+                        }
+
+                        if(!isValidName(etTextCity.getText().toString().isEmpty() ?" ": etTextCity.getText().toString())){
+                            etTextCity.setError("Invalid City");
+                            allConditionsSatisfied = false;
+                        }else{
+                            perCity      = etTextCity.getText().toString();
+                        }
+
+                        if(!isNumber(etTextPincode.getText().toString())){
+                            etTextPincode.setError("Invalid PinCode");
+                            allConditionsSatisfied = false;
+                        }else {
+                            p_Pin        = etTextPincode.getText().toString();
+                        }
+
+                        if (spin_state.getSelectedItem().toString().contains("-Select-")) {
+                            ((TextView) spin_state.getSelectedView()).setError("Please select a state");
+                            allConditionsSatisfied = false;
+                        }else{
+                            p_StateID    = spin_state.getSelectedItem().toString();
+                        }
+
+                        if(!isNumber(etTextMobile.getText().toString())){
+                            etTextMobile.setError("Invalid PinCode");
+                            allConditionsSatisfied = false;
+                        }else {
+                            perMob1      = etTextMobile.getText().toString();
+                        }
+
+                        if(etTextvoterid.getText().toString().isEmpty()){
+                            etTextvoterid.setError("Empty Voter id");
+                            allConditionsSatisfied = false;
+                        }else {
+                            voterID      = etTextvoterid.getText().toString();
+                        }
+
+                        if(!isValidPan(etTextPAN.getText().toString())){
+                            etTextPAN.setError("Invalid Pan");
+                            allConditionsSatisfied = false;
+                        }else{
+                            pano         = etTextPAN.getText().toString();
+                        }
+
+                        if(etdrivingLicense.getText().toString().isEmpty()){
+                            etdrivingLicense.setError("Empty License");
+                            allConditionsSatisfied = false;
+                        }else {
+                            drivingLic   = etdrivingLicense.getText().toString();
+                        }
+
+                        if (spin_relationwithborr.getSelectedItem().toString().contains("-Select-")) {
+                            ((TextView) spin_relationwithborr.getSelectedView()).setError("Please select a relationwithborr");
+                            allConditionsSatisfied = false;
+                        }else{
+                            relationwithborr= spin_relationwithborr.getSelectedItem().toString();
+                        }
+
+                        if (allConditionsSatisfied) {
+
+                            ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+                            Call<KycUpdateModel> call = apiInterface.updateFamLoans(GlobalClass.Token, GlobalClass.dbname, gurrantorJson());
+                            Log.d("TAG", "onResponseAdhaarUpdate: " + GlobalClass.Token + " " + GlobalClass.dbname + " " + gurrantorJson());
+
+                            call.enqueue(new Callback<KycUpdateModel>() {
+                                @Override
+                                public void onResponse(Call<KycUpdateModel> call, Response<KycUpdateModel> response) {
                                     Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
-                                    Log.d("TAG", "onResponseAdhaarUpdatemsg: " + response.body().getMessage().toString());
-                                    SharedPreferences sharedPreferences = getContext().getSharedPreferences("checkBoxes", Context.MODE_PRIVATE);
-                                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                                    editor.putBoolean("guarantorCheckBox", true);
-                                    editor.apply();
+                                    if (response.isSuccessful()) {
+                                        Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
+                                        Log.d("TAG", "onResponseAdhaarUpdatemsg: " + response.body().getMessage().toString());
+                                        SharedPreferences sharedPreferences = getContext().getSharedPreferences("checkBoxes", Context.MODE_PRIVATE);
+                                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                                        editor.putBoolean("guarantorCheckBox", true);
+                                        editor.apply();
 
-                                    Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
-                                    startActivity(intent);
-                                    getActivity().finish();
-                                } else {
-                                    Log.d("TAG", "onResponseAdhaarUpdate: " + response.code());
+                                        Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
+                                        startActivity(intent);
+                                        getActivity().finish();
+                                    } else {
+                                        Log.d("TAG", "onResponseAdhaarUpdate: " + response.code());
+
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<KycUpdateModel> call, Throwable t) {
+                                    Log.d("TAG", "onResponseAdhaarUpdate: " + "failure");
 
                                 }
-                            }
-
-                            @Override
-                            public void onFailure(Call<KycUpdateModel> call, Throwable t) {
-                                Log.d("TAG", "onResponseAdhaarUpdate: " + "failure");
-
-                            }
-                        });
+                            });
+                        }
                     }
                 });
             }
@@ -254,26 +395,26 @@ public class GuarantorsFragment extends Fragment {
 
     private JsonObject gurrantorJson() {
         JsonObject jsonGurrantor = new JsonObject();
-        jsonGurrantor.addProperty("code", allDataAFDataModel.getCode().toString());
-        jsonGurrantor.addProperty("creator", allDataAFDataModel.getCreator().toString());
-        jsonGurrantor.addProperty("fi_Code", allDataAFDataModel.getTag().toString());
-        jsonGurrantor.addProperty("aadharID", etTextAadhar.getText().toString());
-        jsonGurrantor.addProperty("name", etTextName.getText().toString());
-        jsonGurrantor.addProperty("age", etTextAge.getText().toString());
-        jsonGurrantor.addProperty("dob", etTextDob.getText().toString());
-       jsonGurrantor.addProperty("gender", spin_gender.getSelectedItem().toString());
-        jsonGurrantor.addProperty("gurName", etTextGuardian.getText().toString());
-        jsonGurrantor.addProperty("perAdd1", etTextAddress1.getText().toString());
-        jsonGurrantor.addProperty("perAdd2", etTextAddress2.getText().toString());
-        jsonGurrantor.addProperty("perAdd3", etTextAddress3.getText().toString());
-        jsonGurrantor.addProperty("perCity", etTextCity.getText().toString());
-        jsonGurrantor.addProperty("p_Pin", etTextPincode.getText().toString());
-        jsonGurrantor.addProperty("p_StateID", spin_state.getSelectedItem().toString());
-        jsonGurrantor.addProperty("perMob1", etTextMobile.getText().toString());
-        jsonGurrantor.addProperty("voterID", etTextvoterid.getText().toString());
-        jsonGurrantor.addProperty("pano", etTextPAN.getText().toString());
-        jsonGurrantor.addProperty("drivingLic", etdrivingLicense.getText().toString());
-        jsonGurrantor.addProperty("relationwithborr", spin_relationwithborr.getSelectedItem().toString());
+        jsonGurrantor.addProperty("code",   code);
+        jsonGurrantor.addProperty("creator",creator);
+        jsonGurrantor.addProperty("fi_Code", fi_Code);
+        jsonGurrantor.addProperty("aadharID",aadharID);
+        jsonGurrantor.addProperty("name",   name);
+        jsonGurrantor.addProperty("age",    age);
+        jsonGurrantor.addProperty("dob",    dob);
+       jsonGurrantor.addProperty("gender", gender);
+        jsonGurrantor.addProperty("gurName", gurName);
+        jsonGurrantor.addProperty("perAdd1",perAdd1);
+        jsonGurrantor.addProperty("perAdd2", perAdd2);
+        jsonGurrantor.addProperty("perAdd3",perAdd3);
+        jsonGurrantor.addProperty("perCity",perCity);
+        jsonGurrantor.addProperty("p_Pin",  p_Pin);
+       jsonGurrantor.addProperty("p_StateID",p_StateID);
+        jsonGurrantor.addProperty("perMob1", perMob1);
+        jsonGurrantor.addProperty("voterID", voterID);
+        jsonGurrantor.addProperty("pano",    pano);
+     jsonGurrantor.addProperty("drivingLic", drivingLic);
+ jsonGurrantor.addProperty("relationwithborr",relationwithborr);
 
         return jsonGurrantor;
     }
