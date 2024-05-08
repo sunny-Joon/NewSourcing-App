@@ -1,6 +1,7 @@
 package com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.ApplicationFormFragments;
 
 import static com.paisalo.newinternalsourcingapp.GlobalClass.SubmitAlert;
+import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidName;
 
 import android.content.Context;
 import android.content.Intent;
@@ -26,6 +27,7 @@ import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivityMenu;
 import com.paisalo.newinternalsourcingapp.Adapters.RangeCategoryAdapter;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
+import com.paisalo.newinternalsourcingapp.Modelclasses.FiJsonObject;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFDataModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.RangeCategoryModels.RangeCategoryDataModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.UpdateFiModels.KycUpdateModel;
@@ -36,10 +38,12 @@ import com.paisalo.newinternalsourcingapp.Retrofit.ApiInterface;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivityMenu;
@@ -59,13 +63,13 @@ public class FamilyBorrowingsFragment extends Fragment {
     List<String> LoanUsedList = new ArrayList<>();
     AllDataAFDataModel allDataAFDataModel;
 
-    Button  addBorrowings,dltButton,canButton;
+    Button addBorrowings, dltButton, canButton;
     private ApplicationFormActivityMenu activity;
-    EditText etLenderName,etLoanamount,etEmiamount,etbalanceamount;
+    EditText etLenderName, etLoanamount, etEmiamount, etbalanceamount;
 
-    String lenderName,fiCode,creator,tag,lenderType,loanUsed,loanAmount,emiAmount,balanceAmount,ismfi;
+    String lenderName, reasonForLoan, fiCode, creator, tag, lenderType, loanUsed, loanAmount, emiAmount, balanceAmount, ismfi;
 
-    Spinner lenderTypespin,spinnerLoanUsed,spinnerReasonforloan,spinnerisMFI;
+    Spinner lenderTypespin, spinnerLoanUsed, spinnerReasonforloan, spinnerisMFI;
     FloatingActionButton addBorrower;
 
     public FamilyBorrowingsFragment(AllDataAFDataModel allDataAFDataModel) {
@@ -81,10 +85,9 @@ public class FamilyBorrowingsFragment extends Fragment {
         DatabaseClass databaseClass = DatabaseClass.getInstance(getContext());
 
 
-            View view = inflater.inflate(R.layout.fragment_family_borrowings,container,false);
+        View view = inflater.inflate(R.layout.fragment_family_borrowings, container, false);
 
-            addBorrower = view.findViewById(R.id.FMIncome);
-
+        addBorrower = view.findViewById(R.id.FMIncome);
 
 
         addBorrower.setOnClickListener(new View.OnClickListener() {
@@ -102,14 +105,15 @@ public class FamilyBorrowingsFragment extends Fragment {
 
                 popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
 
-                fiCode= allDataAFDataModel.getCode().toString();
-                creator= allDataAFDataModel.getCreator().toString();
-                tag=allDataAFDataModel.getTag().toString();
+                fiCode = allDataAFDataModel.getCode().toString();
+                creator = allDataAFDataModel.getCreator().toString();
+                tag = allDataAFDataModel.getTag().toString();
 
 
                 dltButton = popupView.findViewById(R.id.deleteBorrowings);
                 canButton = popupView.findViewById(R.id.cancelBorrowings);
                 addBorrowings = popupView.findViewById(R.id.addBorrowings);
+
                 etLenderName = popupView.findViewById(R.id.LenderName);
                 etLoanamount = popupView.findViewById(R.id.editLoanamount);
                 etEmiamount = popupView.findViewById(R.id.editTextEmiamount);
@@ -147,68 +151,119 @@ public class FamilyBorrowingsFragment extends Fragment {
                 addBorrowings.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        boolean allConditionsSatisfied = true;
+
+                        if (!isValidName(etLenderName.getText().toString().isEmpty() ? " " : etLenderName.getText().toString())) {
+                            etLenderName.setError("Invalid LenderName");
+                            allConditionsSatisfied = false;
+                        } else {
+                            lenderName = etLenderName.getText().toString();
+                        }
+
+                        if (etLoanamount.getText().toString().isEmpty()) {
+                            etLoanamount.setError("Invalid Loanamount");
+                            allConditionsSatisfied = false;
+                        } else {
+                            loanAmount = etLoanamount.getText().toString();
+                        }
+
+                        if (etEmiamount.getText().toString().isEmpty()) {
+                            etEmiamount.setError("Invalid Emiamount");
+                            allConditionsSatisfied = false;
+                        } else {
+                            emiAmount = etEmiamount.getText().toString();
+                        }
+
+                        if (etbalanceamount.getText().toString().isEmpty()) {
+                            etbalanceamount.setError("Invalid balanceamount");
+                            allConditionsSatisfied = false;
+                        } else {
+                            balanceAmount = etbalanceamount.getText().toString();
+                        }
+
+                        if (lenderTypespin.getSelectedItem().toString().contains("-Select-")) {
+                            ((TextView) lenderTypespin.getSelectedView()).setError("Please select a lenderType");
+                            allConditionsSatisfied = false;
+                        } else {
+                            lenderType = lenderTypespin.getSelectedItem().toString();
+                        }
 
 
-                        lenderName= etLenderName.getText().toString();
-                        loanAmount=etLoanamount.getText().toString();
-                        emiAmount= etEmiamount.getText().toString();
-                        balanceAmount=etbalanceamount.getText().toString();
-                        lenderType = lenderTypespin.getSelectedItem().toString();
-                        ismfi = spinnerisMFI.getSelectedItem().toString();
+                        if (spinnerisMFI.getSelectedItem().toString().contains("-Select-")) {
+                            ((TextView) spinnerisMFI.getSelectedView()).setError("Please select a isMFI");
+                            allConditionsSatisfied = false;
+                        } else {
+                            ismfi = spinnerisMFI.getSelectedItem().toString();
+                        }
 
-                        loanUsed=spinnerLoanUsed.getSelectedItem().toString();
-                        Log.d("TAG", "onCreateView: "+loanUsed);
 
-                        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-                        Call<KycUpdateModel> call = apiInterface.updateFamLoans(GlobalClass.Token, GlobalClass.dbname, borrowingsJson());
-                        Log.d("TAG", "onResponseAdhaarUpdate: " + GlobalClass.Token + " " + GlobalClass.dbname + " " + borrowingsJson());
+                        if (spinnerReasonforloan.getSelectedItem().toString().contains("-Select-")) {
+                            ((TextView) spinnerReasonforloan.getSelectedView()).setError("Please select a Reasonforloan");
+                            allConditionsSatisfied = false;
+                        } else {
+                            reasonForLoan = spinnerReasonforloan.getSelectedItem().toString();
+                        }
 
-                        call.enqueue(new Callback<KycUpdateModel>() {
-                            @Override
-                            public void onResponse(Call<KycUpdateModel> call, Response<KycUpdateModel> response) {
-                                Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
-                                if (response.isSuccessful()) {
-                                    Log.d("TAG", "onResponseAadhaarUpdate: " + response.body());
-                                    Log.d("TAG", "onResponseAadhaarUpdatemsg: " + response.body().getMessage().toString());
+                        if (spinnerLoanUsed.getSelectedItem().toString().contains("-Select-")) {
+                            ((TextView) spinnerLoanUsed.getSelectedView()).setError("Please select a LoanUsed");
+                            allConditionsSatisfied = false;
+                        } else {
+                            loanUsed = spinnerLoanUsed.getSelectedItem().toString();
+                        }
 
-                                    SubmitAlert(getActivity(), "Submit", "Form Submit Successfully ");
-                                    SharedPreferences sharedPreferences = getContext().getSharedPreferences("checkBoxes", Context.MODE_PRIVATE);
-                                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                                    editor.putBoolean("borrowingsCheckBox", true);
-                                    editor.apply();
+                        if (allConditionsSatisfied) {
 
-                                    Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
-                                    startActivity(intent);
-                                    getActivity().finish();
-                                } else {
-                                    SubmitAlert(getActivity(), "Error", "Unsuccessful");
+                            ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+                            Call<KycUpdateModel> call = apiInterface.updateFamLoans(GlobalClass.Token, GlobalClass.dbname, borrowingsJson());
+                            Log.d("TAG", "onResponseAdhaarUpdate: " + GlobalClass.Token + " " + GlobalClass.dbname + " " + borrowingsJson());
 
-                                    Log.d("TAG", "onResponseAadhaarUpdate: " + response.code());
+                            call.enqueue(new Callback<KycUpdateModel>() {
+                                @Override
+                                public void onResponse(Call<KycUpdateModel> call, Response<KycUpdateModel> response) {
+                                    Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
+                                    if (response.isSuccessful()) {
+                                        Log.d("TAG", "onResponseAadhaarUpdate: " + response.body());
+                                        Log.d("TAG", "onResponseAadhaarUpdatemsg: " + response.body().getMessage().toString());
+
+                                        SubmitAlert(getActivity(), "Submit", "Form Submit Successfully ");
+                                        SharedPreferences sharedPreferences = getContext().getSharedPreferences("checkBoxes", Context.MODE_PRIVATE);
+                                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                                        editor.putBoolean("borrowingsCheckBox", true);
+                                        editor.apply();
+
+                                        Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
+                                        startActivity(intent);
+                                        getActivity().finish();
+                                    } else {
+                                        SubmitAlert(getActivity(), "Error", "Unsuccessful");
+
+                                        Log.d("TAG", "onResponseAadhaarUpdate: " + response.code());
+                                    }
                                 }
-                            }
 
-                            @Override
-                            public void onFailure(Call<KycUpdateModel> call, Throwable t) {
-                                Log.d("TAG", "onResponseAdhaarUpdate: " + "failure");
-                                SubmitAlert(getActivity(), "Network Error", "Check Your Internet Connection");
+                                @Override
+                                public void onFailure(Call<KycUpdateModel> call, Throwable t) {
+                                    Log.d("TAG", "onResponseAdhaarUpdate: " + "failure");
+                                    SubmitAlert(getActivity(), "Network Error", "Check Your Internet Connection");
 
-                            }
-                        });
-                    }
-                    });
-
-                canButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        popupWindow.dismiss();
+                                }
+                            });
+                        }
                     }
                 });
+
+//                            canButton.setOnClickListener(new View.OnClickListener() {
+//                                @Override
+//                                public void onClick(View v) {
+//                                    popupWindow.dismiss();
+//                                }
+//                            });
             }
         });
 
 
-
-        return view;    }
+        return view;
+    }
 
     private JsonObject borrowingsJson() {
         JsonObject jsonBorrowings = new JsonObject();
@@ -216,13 +271,13 @@ public class FamilyBorrowingsFragment extends Fragment {
         jsonBorrowings.addProperty("creator", creator);
         jsonBorrowings.addProperty("tag", tag);
         jsonBorrowings.addProperty("lenderName", lenderName);
-        jsonBorrowings.addProperty("lenderType", "");
-        jsonBorrowings.addProperty("loanUsed", "");
-        jsonBorrowings.addProperty("reasonForLoan", "");
+        jsonBorrowings.addProperty("lenderType", lenderType);
+        jsonBorrowings.addProperty("loanUsed", loanUsed);
+        jsonBorrowings.addProperty("reasonForLoan", reasonForLoan);
         jsonBorrowings.addProperty("loanAmount", loanAmount);
         jsonBorrowings.addProperty("emiAmount", emiAmount);
         jsonBorrowings.addProperty("balanceAmount", balanceAmount);
-        jsonBorrowings.addProperty("isMFI", "");
+        jsonBorrowings.addProperty("isMFI", ismfi);
         jsonBorrowings.addProperty("autoID", 0);
 
         return jsonBorrowings;

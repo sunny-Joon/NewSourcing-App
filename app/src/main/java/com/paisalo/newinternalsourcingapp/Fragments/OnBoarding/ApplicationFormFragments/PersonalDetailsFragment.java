@@ -13,6 +13,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
+
 import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivityMenu;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
@@ -132,50 +134,124 @@ public class PersonalDetailsFragment extends Fragment {
                 creator = allDataAFDataModel.getCreator().toString();
                 tag = allDataAFDataModel.getTag().toString();
 
-                EmailId = emailId.getText().toString();
-                PlaceOfBirth = placeOfBirth.getText().toString();
-                caste = casteSpinner.getSelectedItem().toString();
-                religion = religionSpinner.getSelectedItem().toString();
-                presentHouseOwner = houseOwnerSpinner.getSelectedItem().toString();
-                residingFor = residingforSpinner.getSelectedItem().toString();
-                numOfFamMember = noOfFamilyMembersSpinner.getSelectedItem().toString();
-                landHold = landHoldSpinner.getSelectedItem().toString();
-                specialAbility = specialAbilitySpinner.getSelectedItem().toString();
-                specialSocialCategory = specialSocialCategorySpinner.getSelectedItem().toString();
-                educationalCode = educationalCodeSpinner.getSelectedItem().toString();
-                isBorrowerBlind = isBorrowerBlindSpinner.getSelectedItem().toString();
-                yearsInBusiness = yearsInBusinessSpinner.getSelectedItem().toString();
+                boolean allConditionsSatisfied=true;
+                if(emailId.getText().toString().isEmpty()){
+                    emailId.setError("Select emailId");
+                    allConditionsSatisfied = false;
+                }else{
+                    EmailId = emailId.getText().toString();
+                }
+
+                if(placeOfBirth.getText().toString().isEmpty()){
+                    placeOfBirth.setError("Select placeOfBirth");
+                    allConditionsSatisfied = false;
+                }else{
+                    PlaceOfBirth = placeOfBirth.getText().toString();
+                }
+
+                if (casteSpinner.getSelectedItem().toString().contains("-Select-")) {
+                    ((TextView) casteSpinner.getSelectedView()).setError("Please select a Gender");
+                    allConditionsSatisfied = false;
+                }else{
+                    caste = casteSpinner.getSelectedItem().toString();
+                }
+
+                if (religionSpinner.getSelectedItem().toString().contains("-Select-")) {
+                    ((TextView) religionSpinner.getSelectedView()).setError("Please select a religion");
+                    allConditionsSatisfied = false;
+                }else{
+                    religion = religionSpinner.getSelectedItem().toString();
+                }
+
+                if (residingforSpinner.getSelectedItem().toString().contains("-Select-")) {
+                    ((TextView) residingforSpinner.getSelectedView()).setError("Please select a residingfor");
+                    allConditionsSatisfied = false;
+                }else{
+                    residingFor = residingforSpinner.getSelectedItem().toString();
+                }
+
+                if (noOfFamilyMembersSpinner.getSelectedItem().toString().contains("-Select-")) {
+                    ((TextView) noOfFamilyMembersSpinner.getSelectedView()).setError("Please select a noOfFamilyMembers");
+                    allConditionsSatisfied = false;
+                }else{
+                    numOfFamMember = noOfFamilyMembersSpinner.getSelectedItem().toString();
+                }
+
+                if (landHoldSpinner.getSelectedItem().toString().contains("-Select-")) {
+                    ((TextView) landHoldSpinner.getSelectedView()).setError("Please select a landHold");
+                    allConditionsSatisfied = false;
+                }else{
+                    landHold = landHoldSpinner.getSelectedItem().toString();
+                }
+
+                if (specialAbilitySpinner.getSelectedItem().toString().contains("-Select-")) {
+                    ((TextView) specialAbilitySpinner.getSelectedView()).setError("Please select a specialAbility");
+                    allConditionsSatisfied = false;
+                }else{
+                    specialAbility = specialAbilitySpinner.getSelectedItem().toString();
+                }
+
+                if (specialSocialCategorySpinner.getSelectedItem().toString().contains("-Select-")) {
+                    ((TextView) specialSocialCategorySpinner.getSelectedView()).setError("Please select a specialSocialCategory");
+                    allConditionsSatisfied = false;
+                }else{
+                    specialSocialCategory = specialSocialCategorySpinner.getSelectedItem().toString();
+                }
+
+                if (educationalCodeSpinner.getSelectedItem().toString().contains("-Select-")) {
+                    ((TextView) educationalCodeSpinner.getSelectedView()).setError("Please select a educationalCode");
+                    allConditionsSatisfied = false;
+                }else{
+                    educationalCode = educationalCodeSpinner.getSelectedItem().toString();
+                }
+
+                if (isBorrowerBlindSpinner.getSelectedItem().toString().contains("-Select-")) {
+                    ((TextView) isBorrowerBlindSpinner.getSelectedView()).setError("Please select a isBorrowerBlind");
+                    allConditionsSatisfied = false;
+                }else{
+                    isBorrowerBlind = isBorrowerBlindSpinner.getSelectedItem().toString();
+                }
+
+                if (yearsInBusinessSpinner.getSelectedItem().toString().contains("-Select-")) {
+                    ((TextView) yearsInBusinessSpinner.getSelectedView()).setError("Please select a yearsInBusiness");
+                    allConditionsSatisfied = false;
+                }else{
+                    yearsInBusiness = yearsInBusinessSpinner.getSelectedItem().toString();
+                }
+
+                if (allConditionsSatisfied) {
 
 
-                ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-                Call<KycUpdateModel> call = apiInterface.updatePersonalInfo(GlobalClass.Token, GlobalClass.dbname, perwsonalInfoJson());
-                Log.d("TAG", "onResponseAdhaarUpdate: " + GlobalClass.Token + " " + GlobalClass.dbname + " " + perwsonalInfoJson());
+                    ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+                    Call<KycUpdateModel> call = apiInterface.updatePersonalInfo(GlobalClass.Token, GlobalClass.dbname, perwsonalInfoJson());
+                    Log.d("TAG", "onResponseAdhaarUpdate: " + GlobalClass.Token + " " + GlobalClass.dbname + " " + perwsonalInfoJson());
 
-                call.enqueue(new Callback<KycUpdateModel>() {
-                    @Override
-                    public void onResponse(Call<KycUpdateModel> call, Response<KycUpdateModel> response) {
-                        Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
-                        if (response.isSuccessful()) {
+                    call.enqueue(new Callback<KycUpdateModel>() {
+                        @Override
+                        public void onResponse(Call<KycUpdateModel> call, Response<KycUpdateModel> response) {
                             Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
-                            Log.d("TAG", "onResponseAdhaarUpdatemsg: " + response.body().getMessage().toString());
-                            SharedPreferences sharedPreferences = getContext().getSharedPreferences("checkBoxes", Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putBoolean("personaldetailCheckBox", true);
-                            editor.apply();
+                            if (response.isSuccessful()) {
+                                Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
+                                Log.d("TAG", "onResponseAdhaarUpdatemsg: " + response.body().getMessage().toString());
+                                SharedPreferences sharedPreferences = getContext().getSharedPreferences("checkBoxes", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putBoolean("personaldetailCheckBox", true);
+                                editor.apply();
 
-                            Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
-                            startActivity(intent);
-                            getActivity().finish();
-                        } else {
-                            Log.d("TAG", "onResponseAdhaarUpdate: " + response.code());
+                                Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
+                                startActivity(intent);
+                                getActivity().finish();
+                            } else {
+                                Log.d("TAG", "onResponseAdhaarUpdate: " + response.code());
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<KycUpdateModel> call, Throwable t) {
-                        Log.d("TAG", "onResponseAdhaarUpdate: " + "failure");
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<KycUpdateModel> call, Throwable t) {
+                            Log.d("TAG", "onResponseAdhaarUpdate: " + "failure");
+                        }
+                    });
+                }
             }
         });
         return view;

@@ -18,6 +18,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
+
 import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivityMenu;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
@@ -198,54 +200,156 @@ public class FinancialInfoFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                bankAccountType= accountTypeSpinner.getSelectedItem().toString();
-                bankAccNumber = bankAccountNumber.getText().toString();
-                accOpeningDate = etaccount_date.getText().toString();
-                ifscCode = bankIFSCCode.getText().toString();
-                rentalincome = rentalIncome.getText().toString();
-                expenseinRent = expenseInRent.getText().toString();
-                expenseforFood = expenseForFood.getText().toString();
-                expenseforEducation = expenseForEducation.getText().toString();
-                expenseforHealth = expenseForHealth.getText().toString();
-                expenseforTravelling = expenseForTravelling.getText().toString();
-                expenseforEntertainment = expenseForEntertainment.getText().toString();
-                otherexpense = anyOtherExpense.getText().toString();
-                houseType= houseTypeSpinner.getSelectedItem().toString();
-                roofType= roofTypeSpinner.getSelectedItem().toString();
-                personalToilet= personalToiletSpinner.getSelectedItem().toString();
+                boolean allConditionsSatisfied=true;
+
+                if (accountTypeSpinner.getSelectedItem().toString().contains("-Select-")) {
+                    ((TextView) accountTypeSpinner.getSelectedView()).setError("Please select a accountType");
+                    allConditionsSatisfied = false;
+                } else {
+                    bankAccountType= accountTypeSpinner.getSelectedItem().toString();
+                }
 
 
-                ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-                Call<KycUpdateModel> call= apiInterface.updateFinance(GlobalClass.Token,GlobalClass.dbname, financeJson());
-                Log.d("TAG", "onResponseAdhaarUpdate: " + GlobalClass.Token+" "+GlobalClass.dbname+" "+ financeJson());
+                if (bankAccountNumber.getText().toString().isEmpty()) {
+                    bankAccountNumber.setError("Invalid bankAccount");
+                    allConditionsSatisfied = false;
+                } else {
+                    bankAccNumber = bankAccountNumber.getText().toString();
+                }
 
-                call.enqueue(new Callback<KycUpdateModel>() {
-                    @Override
-                    public void onResponse(Call<KycUpdateModel> call, Response<KycUpdateModel> response) {
-                        Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
-                        if(response.isSuccessful()){
+                if(etaccount_date.getText().toString().isEmpty()){
+                    etaccount_date.setError("Select Date");
+                    allConditionsSatisfied = false;
+                }else{
+                    accOpeningDate = etaccount_date.getText().toString();
+                }
+
+
+                if (bankIFSCCode.getText().toString().isEmpty()) {
+                    bankIFSCCode.setError("Invalid bankIFSCCode");
+                    allConditionsSatisfied = false;
+                } else {
+                    ifscCode = bankIFSCCode.getText().toString();
+                }
+
+
+                if (rentalIncome.getText().toString().isEmpty()) {
+                    rentalIncome.setError("Invalid rentalIncome");
+                    allConditionsSatisfied = false;
+                } else {
+                    rentalincome = rentalIncome.getText().toString();
+                }
+
+
+                if (expenseInRent.getText().toString().isEmpty()) {
+                    expenseInRent.setError("Invalid expenseInRent");
+                    allConditionsSatisfied = false;
+                } else {
+                    expenseinRent = expenseInRent.getText().toString();
+                }
+
+
+                if (expenseForFood.getText().toString().isEmpty()) {
+                    expenseForFood.setError("Invalid expenseForFood");
+                    allConditionsSatisfied = false;
+                } else {
+                    expenseforFood = expenseForFood.getText().toString();
+                }
+
+
+                if (expenseForEducation.getText().toString().isEmpty()) {
+                    expenseForEducation.setError("Invalid expenseForEducation");
+                    allConditionsSatisfied = false;
+                } else {
+                    expenseforEducation = expenseForEducation.getText().toString();
+                }
+
+
+                if (expenseForHealth.getText().toString().isEmpty()) {
+                    expenseForHealth.setError("Invalid expenseForHealth");
+                    allConditionsSatisfied = false;
+                } else {
+                    expenseforHealth = expenseForHealth.getText().toString();
+                }
+
+
+                if (expenseForTravelling.getText().toString().isEmpty()) {
+                    expenseForTravelling.setError("Invalid expenseForTravelling");
+                    allConditionsSatisfied = false;
+                } else {
+                    expenseforTravelling = expenseForTravelling.getText().toString();
+                }
+
+
+                if (expenseForEntertainment.getText().toString().isEmpty()) {
+                    expenseForEntertainment.setError("Invalid expenseForEntertainment");
+                    allConditionsSatisfied = false;
+                } else {
+                    expenseforEntertainment = expenseForEntertainment.getText().toString();
+                }
+
+
+                if (anyOtherExpense.getText().toString().isEmpty()) {
+                    anyOtherExpense.setError("Invalid anyOtherExpense");
+                    allConditionsSatisfied = false;
+                } else {
+                    otherexpense = anyOtherExpense.getText().toString();
+                }
+
+                if (houseTypeSpinner.getSelectedItem().toString().contains("-Select-")) {
+                    ((TextView) houseTypeSpinner.getSelectedView()).setError("Please select a houseType");
+                    allConditionsSatisfied = false;
+                } else {
+                    houseType= houseTypeSpinner.getSelectedItem().toString();
+                }
+
+                if (roofTypeSpinner.getSelectedItem().toString().contains("-Select-")) {
+                    ((TextView) roofTypeSpinner.getSelectedView()).setError("Please select a roofType");
+                    allConditionsSatisfied = false;
+                } else {
+                    roofType= roofTypeSpinner.getSelectedItem().toString();
+                }
+
+                if (personalToiletSpinner.getSelectedItem().toString().contains("-Select-")) {
+                    ((TextView) personalToiletSpinner.getSelectedView()).setError("Please select a personalToilet");
+                    allConditionsSatisfied = false;
+                } else {
+                    personalToilet= personalToiletSpinner.getSelectedItem().toString();
+                }
+
+                if (allConditionsSatisfied) {
+                    ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+                    Call<KycUpdateModel> call = apiInterface.updateFinance(GlobalClass.Token, GlobalClass.dbname, financeJson());
+                    Log.d("TAG", "onResponseAdhaarUpdate: " + GlobalClass.Token + " " + GlobalClass.dbname + " " + financeJson());
+
+                    call.enqueue(new Callback<KycUpdateModel>() {
+                        @Override
+                        public void onResponse(Call<KycUpdateModel> call, Response<KycUpdateModel> response) {
                             Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
-                          //  Log.d("TAG", "onResponseAdhaarUpdatemsg: " + response.body().getMessage().toString());
-                            SharedPreferences sharedPreferences = getContext().getSharedPreferences("checkBoxes", Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putBoolean("financialInfoCheckBox", true);
-                            editor.apply();
+                            if (response.isSuccessful()) {
+                                Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
+                                //  Log.d("TAG", "onResponseAdhaarUpdatemsg: " + response.body().getMessage().toString());
+                                SharedPreferences sharedPreferences = getContext().getSharedPreferences("checkBoxes", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putBoolean("financialInfoCheckBox", true);
+                                editor.apply();
 
-                            Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
-                            startActivity(intent);
-                            getActivity().finish();
-                        }else{
-                            Log.d("TAG", "onResponseAdhaarUpdate: " + response.code());
+                                Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
+                                startActivity(intent);
+                                getActivity().finish();
+                            } else {
+                                Log.d("TAG", "onResponseAdhaarUpdate: " + response.code());
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<KycUpdateModel> call, Throwable t) {
+                            Log.d("TAG", "onResponseAdhaarUpdate: " + "failure");
 
                         }
-                    }
+                    });
 
-                    @Override
-                    public void onFailure(Call<KycUpdateModel> call, Throwable t) {
-                        Log.d("TAG", "onResponseAdhaarUpdate: " + "failure");
-
-                    }
-                });
                 SharedPreferences sharedPreferences = getContext().getSharedPreferences("checkBoxes", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putBoolean("financialInfoCheckBox", true);
@@ -254,6 +358,7 @@ public class FinancialInfoFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
                 startActivity(intent);
                 getActivity().finish();
+            }
             }
         });
 

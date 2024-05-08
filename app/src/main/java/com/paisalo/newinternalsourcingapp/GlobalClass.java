@@ -34,6 +34,15 @@ public class GlobalClass extends Application {
         builder.show();
     }
 
+    public static boolean isValidFullName(String name) {
+        if (name.isEmpty()) {
+            return false;
+        }
+        String regex = "^[a-zA-Z. ]+(?:[\\s'-][a-zA-Z]+)*$";
+        Pattern pattern = Pattern.compile(regex);
+        return pattern.matcher(name).matches();
+    }
+
     public static boolean isValidName(String name) {
         if (name.isEmpty()) {
             return false;
@@ -42,8 +51,21 @@ public class GlobalClass extends Application {
         Pattern pattern = Pattern.compile(regex);
         return pattern.matcher(name).matches();
     }
+    public static boolean isValidMName(String name) {
+        String regex = "^[a-zA-Z.]+(?:[\\s'-][a-zA-Z]+)*$";
+        Pattern pattern = Pattern.compile(regex);
+        return pattern.matcher(name).matches();
+    }
 
     public static boolean isValidAddr(String addr) {
+        if (addr.isEmpty()) {
+            return false;
+        }
+        String regex = "^[a-zA-Z.]+(?:[\\s'-][a-zA-Z]+)*$";
+        Pattern pattern = Pattern.compile(regex);
+        return pattern.matcher(addr).matches();
+    }
+    public static boolean isValidSAddr(String addr) {
         if (addr.isEmpty()) {
             return false;
         }
@@ -66,8 +88,10 @@ public class GlobalClass extends Application {
         if (pan.isEmpty()) {
             return false;
         }
+
         String regex = "[A-Z]{5}[0-9]{4}[A-Z]{1}";
         Pattern pattern = Pattern.compile(regex);
         return pattern.matcher(pan).matches();
     }
+
 }

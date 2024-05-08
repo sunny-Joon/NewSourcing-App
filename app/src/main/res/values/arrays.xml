@@ -48,19 +48,19 @@
     </array>
 
     <array name="lenderType">
-        <item>--SELECT--</item>
+        <item>--Select--</item>
         <item>Organised Sector</item>
         <item>Unorganised Sector</item>
     </array>
 
     <array name="ismfi">
-        <item>--SELECT--</item>
+        <item>--Select--</item>
         <item>Yes</item>
         <item>No</item>
     </array>
 
     <string-array name="residingforyears">
-        <item>--SELECT--</item>
+        <item>--Select--</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
@@ -73,7 +73,7 @@
     </string-array>
 
     <string-array name="numOfFamMember">
-        <item>--SELECT--</item>
+        <item>--Select--</item>
         <item>0</item>
         <item>1</item>
         <item>2</item>
@@ -87,7 +87,7 @@
     </string-array>
 
     <string-array name="yearsInBusiness">
-        <item>--SELECT--</item>
+        <item>--Select--</item>
         <item>0</item>
         <item>1</item>
         <item>2</item>
@@ -101,7 +101,7 @@
     </string-array>
 
     <string-array name="landHold">
-        <item>--SELECT--</item>
+        <item>--Select--</item>
         <item>0 Acres</item>
         <item>1 Acres</item>
         <item>2 Acres</item>
@@ -114,19 +114,19 @@
     </string-array>
 
     <array name="specialAbility">
-        <item>--SELECT--</item>
+        <item>--Select--</item>
         <item>YES</item>
     <item>No</item>
     </array>
 
  <array name="specialSocialCategory">
-     <item>--SELECT--</item>
+     <item>--Select--</item>
      <item>YES</item>
     <item>NO</item>
     </array>
 
     <array name="isBorrowerBlind">
-        <item>--SELECT--</item>
+        <item>--Select--</item>
         <item>YES</item>
     <item>NO</item>
     </array>
