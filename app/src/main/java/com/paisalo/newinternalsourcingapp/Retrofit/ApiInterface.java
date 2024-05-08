@@ -150,5 +150,11 @@ public interface ApiInterface {
     Call<HVGetModel> GetHouseVisitData(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("ficode") String fi, @Query("creator") String cr);
     @GET("POSFI/getFiListEditing")
     Call<BorrowerListModel> PendingApplicationForms(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("IMEINO") String IMEINO, @Query("FOCode") String FOCode, @Query("AreaCd") String AreaCd, @Query("Creator") String Creator);
+    @GET("POSDB/GetDataForESignCheck")
+    Call<BorrowerListModel> PendingFEsign(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("IMEINO") String IMEINO, @Query("FOCode") String FOCode, @Query("CityCode") String CityCode, @Query("Creator") String Creator);
+    @GET("POSDB/GetDataPendingForESign")
+    Call<BorrowerListModel> PendingSEsign(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("IMEINO") String IMEINO, @Query("FOCode") String FOCode, @Query("AreaCd") String AreaCd, @Query("Creator") String Creator);
+    @GET("InstCollection/getDueInstallments")
+    Call<BorrowerListModel> PendingCollection(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("IMEINO") String IMEINO, @Query("FOCode") String FOCode, @Query("AreaCd") String AreaCd, @Query("Creator") String Creator);
 
 }

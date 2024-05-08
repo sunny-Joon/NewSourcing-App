@@ -1,7 +1,11 @@
 package com.paisalo.newinternalsourcingapp.Adapters;
 
+import static java.security.AccessController.getContext;
+
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -55,7 +59,11 @@ public class BorrowerListAdapter extends RecyclerView.Adapter<BorrowerListAdapte
         } else {
             holder.fatherOrSpouseTextView.setText(dataModel.getfFname() + " " + dataModel.getfMname() + " " + dataModel.getfLname());
         }
-        holder.fiCodeTextView.setText(dataModel.getCode());
+        if(dataModel.getCode() != null){
+            holder.fiCodeTextView.setText(dataModel.getCode());
+        }else{
+            holder.fiCodeTextView.setText(dataModel.getCode());
+        }
         holder.mobileTextView.setText(dataModel.getpPh3());
         holder.creatorTextView.setText(dataModel.getCreator());
         holder.addressTextView.setText(dataModel.getAddr());
@@ -87,8 +95,9 @@ public class BorrowerListAdapter extends RecyclerView.Adapter<BorrowerListAdapte
                     if (position != RecyclerView.NO_POSITION) {
                         BorrowerListDataModel dataModel = borrowerListDataModel.get(position);
                         Intent intent = ((Activity) itemView.getContext()).getIntent();
-                        String id = intent.getStringExtra("keyName");                        String fiCode = dataModel.getCode(); // Assuming getCode() returns fiCode
-                        String creator = dataModel.getCreator(); // Assuming getCreator() returns creator
+                        String id = intent.getStringExtra("keyName");
+                        String fiCode = dataModel.getCode();
+                        String creator = dataModel.getCreator();
                         if (id != null) {
                             openActivity(id, fiCode, creator);
                         }
@@ -100,7 +109,10 @@ public class BorrowerListAdapter extends RecyclerView.Adapter<BorrowerListAdapte
         public void openActivity(String id, String fiCode, String creator) {
             Intent intent = null;
             switch (id) {
-                case "Esign":
+                case "FEsign":
+                    intent = new Intent(context, DownloadDocumentActivity.class);
+                    break;
+                case "SEsign":
                     intent = new Intent(context, DownloadDocumentActivity.class);
                     break;
                 case "Application":
@@ -111,7 +123,6 @@ public class BorrowerListAdapter extends RecyclerView.Adapter<BorrowerListAdapte
                     intent.putExtra("fiCode", fiCode); // Pass fiCode to the intent
                     intent.putExtra("creator", creator); // Pass creator to the intent
                     break;
-                // Add more cases as needed
             }
 
             if (intent != null) {
