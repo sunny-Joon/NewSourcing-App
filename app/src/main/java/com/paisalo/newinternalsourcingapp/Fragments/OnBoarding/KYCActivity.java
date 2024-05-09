@@ -61,6 +61,7 @@ import com.paisalo.newinternalsourcingapp.Entities.VillageChooseListner;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
 import com.paisalo.newinternalsourcingapp.Modelclasses.FiExtra;
 import com.paisalo.newinternalsourcingapp.Modelclasses.FiJsonObject;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFDataModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.IdVerificationModels.DLVerificationModels.Data_;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.IdVerificationModels.DLVerificationModels.Data_1;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.IdVerificationModels.DLVerificationModels.Data_2;
@@ -128,6 +129,8 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
     private AlertDialog alertDialog;
 
+    AllDataAFDataModel allDataAFDataModel;
+
     EditText editTextAadhar, editTextName, editTextAge, editTextDob, editTextGuardian,
             editTextAddress1, editTextAddress2, editTextAddress3,
             editTextCity, editTextPincode, editTextMobile, editTextPAN, editTextdrivingLicense,
@@ -135,7 +138,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             editTextfatherlastname, editTextspousefirstname, editTextspousemiddlename, editTextspouselastname;
 
     TextView txtVDistrictName, txtCityName, txtVillageName, txtSubDistictName;
-    String AadharID, isAadharVerified, name, Fname, Lname, Age, DOB, guardian,gender, guardianRelatnWithBorrower, P_Add1, P_Add2, P_Add3, P_City, P_State, P_Ph3, PanNO, DrivingLic, voterId, motherName, motherMiddleName, motherLastName, fatherName, fatherMiddleName, fatherLastName, F_Fname, F_Mname, F_Lname, isMarried, spouseFirstName, spouseMiddleName, spouseLastName, verifiedPanName = "", verifiedLicensename = "", verifiedVotername = "", villageCode, subDistCode, distCode, cityCode, stateCode;
+    String AadharID, isAadharVerified, name, Fname, Lname, Age, DOB, guardian, gender, guardianRelatnWithBorrower, P_Add1, P_Add2, P_Add3, P_City, P_State, P_Ph3, PanNO, DrivingLic, voterId, motherName, motherMiddleName, motherLastName, fatherName, fatherMiddleName, fatherLastName, F_Fname, F_Mname, F_Lname, isMarried, spouseFirstName, spouseMiddleName, spouseLastName, verifiedPanName = "", verifiedLicensename = "", verifiedVotername = "", villageCode, subDistCode, distCode, cityCode, stateCode;
     int P_Pin;
     Button submitButton, qrScan, adhaarBack, adhaarFront, panOcr;
     private static final int REQUEST_IMAGE_CAPTURE = 101;
@@ -520,8 +523,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         alertDialog = alertDialogBuilder.create(); // Create AlertDialog
         alertDialog.show(); // Show AlertDialog
     }
-
-
 
 
     private void setDataOfAdhar(File croppedImage, String imageData) {
@@ -1038,13 +1039,32 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             inc = 1;
         }
 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         Log.d("TAG", "decodeData: " + decodedData.get(4 - inc));
-        Date date = formatter.parse(decodedData.get(4 - inc));
-        Log.d("TAG", "decodeData: " + date);
+        try {
+            Date dateOfBirth = formatter.parse(decodedData.get(4 - inc));
+            Log.d("TAG", "decodeData: " + dateOfBirth);
+            Calendar dobCalendar = Calendar.getInstance();
+            dobCalendar.setTime(dateOfBirth);
+            Calendar todayCalendar = Calendar.getInstance();
+            int age = todayCalendar.get(Calendar.YEAR) - dobCalendar.get(Calendar.YEAR);
+            if (todayCalendar.get(Calendar.MONTH) < dobCalendar.get(Calendar.MONTH) ||
+                    (todayCalendar.get(Calendar.MONTH) == dobCalendar.get(Calendar.MONTH) &&
+                            todayCalendar.get(Calendar.DAY_OF_MONTH) < dobCalendar.get(Calendar.DAY_OF_MONTH))) {
+                age--;
+
+                // allDataAFDataModel.setAge(l); =  age;
+            }
+            Log.d("TAG", "decodeData: age " + age);
+            //  editTextAge.setText(jsonData);
+            isAadharVerified = "Q";
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
 
-        isAadharVerified = "Q";
+
 /*
         editTextAadhar.setText(decodedData.get(2 - inc));
 */
@@ -1063,13 +1083,30 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             Log.d("TAG", "Parts======dob=====>  " + editTextDob.getText().toString());
         }
 
+        if (decodedData.get(5 - inc).equals("") || decodedData.get(5 - inc).equals(null)) {
+
+            Log.d("TAG", "Parts======rps=====>  " + "null");
+        } else {
+
+            Log.d("TAG", "PParts======rps=====>  " + decodedData.get(5 - inc));
+        }
+
+        int positionOfGender = 0;
+        for (int genPos = 0; genPos < GenderList.size(); genPos++) {
+            if (GenderList.get(genPos).toUpperCase().startsWith(decodedData.get(5 - inc))) {
+                positionOfGender = genPos;
+            }
+        }
+
+        acspGender.setSelection(positionOfGender);
+
         StringBuilder joinedStringBuilder = new StringBuilder();
         Log.d("TAG", "Value at index " + decodedData.get(8 - inc));
-        Log.d("TAG", "Value at index " +  decodedData.get(9 - inc));
-        Log.d("TAG", "Value at index " +  decodedData.get(10 - inc));
-        Log.d("TAG", "Value at index " +  decodedData.get(12 - inc));
-        Log.d("TAG", "Value at index " +  decodedData.get(14 - inc));
-        Log.d("TAG", "Value at index " +  decodedData.get(15 - inc));
+        Log.d("TAG", "Value at index " + decodedData.get(9 - inc));
+        Log.d("TAG", "Value at index " + decodedData.get(10 - inc));
+        Log.d("TAG", "Value at index " + decodedData.get(12 - inc));
+        Log.d("TAG", "Value at index " + decodedData.get(14 - inc));
+        Log.d("TAG", "Value at index " + decodedData.get(15 - inc));
 
         appendIfNotNullOrEmpty(joinedStringBuilder, decodedData.get(8 - inc));
         appendIfNotNullOrEmpty(joinedStringBuilder, decodedData.get(9 - inc));
@@ -1079,7 +1116,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         appendIfNotNullOrEmpty(joinedStringBuilder, decodedData.get(15 - inc));
 
         String joinedString = joinedStringBuilder.toString();
-        Log.d("TAG", "Value at indexsss: "+ joinedString);
+        Log.d("TAG", "Value at indexsss: " + joinedString);
 
         boolean changesMade;
         do {
@@ -1118,13 +1155,23 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             editTextPincode.setText(decodedData.get(11 - inc));
         }
 
+        if (decodedData.get(13 - inc).equals("") || decodedData.get(13 - inc).equals(null)) {
+
+            Log.d("TAG", "Parts======rps_state=====>  " + "null");
+        } else {
+
+            Log.d("TAG", "PParts======rps-state=====>  " + decodedData.get(13 - inc));
+        }
+        //  AadharUtils.getStateCode(decodedData.get(13-inc)
+      // Utils.setSpinnerPosition(acspAadharState, decodedData.get(13 - inc),true);
+
         if (decodedData.get(6 - inc).equals("") || decodedData.get(6 - inc).equals(null)) {
 
         } else {
             if (decodedData.get(6 - inc).startsWith("S/O:") || decodedData.get(6 - inc).startsWith("D/O:") || decodedData.get(6 - inc).startsWith("W/O:")) {
                 editTextGuardian.setText(decodedData.get(6 - inc).split(":")[1].replace("S/O:", "").replace("D/O:", "").replace("W/O:", "").replace("S/O", "").replace("D/O", "").replace("\"", "").replace("W/O", "").trim());
                 if (decodedData.get(6 - inc).toUpperCase().startsWith("W/O:")) {
-                    //  Utils.setSpinnerPosition(spinnerMarritalStatus, "Married", false);
+                    Utils.setSpinnerPosition(acspRelationship, "Married", false);
                     String[] spouseName = decodedData.get(6 - inc).split(" ");
                     switch (spouseName.length) {
                         case 2:
@@ -1240,18 +1287,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
             }
         }
-
-
-        if (decodedData.get(13 - inc).equals("") || decodedData.get(13 - inc).equals(null)) {
-        }/*else{
-            borrower.p_state = AadharUtils.getStateCode(decodedData.get(13-inc));
-        }*/
-
-
-       /* editTextAge.setEnabled(false);
-        editTextDob.setEnabled(false);
-        acspAadharState.setEnabled(false);
-        acspGender.setEnabled(false);*/
 
     }
 
@@ -1495,172 +1530,172 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             }
         }
 
-        if(editTextDob.getText().toString().isEmpty()){
+        if (editTextDob.getText().toString().isEmpty()) {
             editTextDob.setError("Select Date");
             allConditionsSatisfied = false;
-        }else{
+        } else {
             DOB = editTextDob.getText().toString();
         }
 
 
-        if(!isValidAddr(editTextAddress1.getText().toString().isEmpty() ? "" : editTextAddress1.getText().toString())){
+        if (!isValidAddr(editTextAddress1.getText().toString().isEmpty() ? "" : editTextAddress1.getText().toString())) {
             editTextAddress1.setError("Invalid Address");
             allConditionsSatisfied = false;
-        }else{
+        } else {
             P_Add1 = editTextAddress1.getText().toString();
         }
 
-        if(!isValidAddr(editTextAddress2.getText().toString().isEmpty() ? "" : editTextAddress2.getText().toString())){
+        if (!isValidAddr(editTextAddress2.getText().toString().isEmpty() ? "" : editTextAddress2.getText().toString())) {
             editTextAddress2.setError("Invalid Address");
             allConditionsSatisfied = false;
-        }else{
+        } else {
             P_Add2 = editTextAddress2.getText().toString();
         }
 
-        if(!isValidAddr(editTextAddress3.getText().toString().isEmpty() ? "" : editTextAddress3.getText().toString())){
+        if (!isValidAddr(editTextAddress3.getText().toString().isEmpty() ? "" : editTextAddress3.getText().toString())) {
             editTextAddress3.setError("Invalid Address");
             allConditionsSatisfied = false;
-        }else{
+        } else {
             P_Add3 = editTextAddress3.getText().toString();
         }
 
-        if(!isValidName(editTextCity.getText().toString().isEmpty() ?" ": editTextCity.getText().toString())){
+        if (!isValidName(editTextCity.getText().toString().isEmpty() ? " " : editTextCity.getText().toString())) {
             editTextCity.setError("Invalid City");
             allConditionsSatisfied = false;
-        }else{
+        } else {
             P_City = editTextCity.getText().toString();
         }
 
-        if(!isNumber(editTextPincode.getText().toString())){
+        if (!isNumber(editTextPincode.getText().toString())) {
             editTextPincode.setError("Invalid PinCode");
             allConditionsSatisfied = false;
-        }else {
+        } else {
             P_Pin = Integer.parseInt(editTextPincode.getText().toString());
         }
 
-        if(!isNumber(editTextMobile.getText().toString())){
+        if (!isNumber(editTextMobile.getText().toString())) {
             editTextMobile.setError("Invalid PinCode");
             allConditionsSatisfied = false;
-        }else {
+        } else {
             P_Ph3 = editTextMobile.getText().toString();
         }
 
-        if(!isValidPan(editTextPAN.getText().toString())){
+        if (!isValidPan(editTextPAN.getText().toString())) {
             editTextPAN.setError("Invalid Pan");
             allConditionsSatisfied = false;
-        }else{
+        } else {
             PanNO = editTextPAN.getText().toString();
         }
 
-        if(editTextdrivingLicense.getText().toString().isEmpty()){
+        if (editTextdrivingLicense.getText().toString().isEmpty()) {
             editTextdrivingLicense.setError("Empty License");
             allConditionsSatisfied = false;
-        }else {
+        } else {
             DrivingLic = editTextdrivingLicense.getText().toString();
         }
 
-        if(editTextvoterIdKyc.getText().toString().isEmpty()){
+        if (editTextvoterIdKyc.getText().toString().isEmpty()) {
             editTextvoterIdKyc.setError("Empty VoterId");
             allConditionsSatisfied = false;
-        }else {
+        } else {
             voterId = editTextvoterIdKyc.getText().toString();
         }
 
-        if(!isValidName(editTextFatherFname.getText().toString().isEmpty() ?" ": editTextFatherFname.getText().toString())){
+        if (!isValidName(editTextFatherFname.getText().toString().isEmpty() ? " " : editTextFatherFname.getText().toString())) {
             editTextFatherFname.setError("Invalid Name");
             allConditionsSatisfied = false;
-        }else{
+        } else {
             fatherName = editTextFatherFname.getText().toString();
         }
 
-        if(!isValidMName(editTextfathermiddlename.getText().toString().isEmpty() ?" ": editTextfathermiddlename.getText().toString())){
+        if (!isValidMName(editTextfathermiddlename.getText().toString().isEmpty() ? " " : editTextfathermiddlename.getText().toString())) {
             editTextfathermiddlename.setError("Invalid Name");
             allConditionsSatisfied = false;
-        }else{
+        } else {
             fatherMiddleName = editTextfathermiddlename.getText().toString();
         }
 
-        if(!isValidMName(editTextfatherlastname.getText().toString().isEmpty() ?" ": editTextfatherlastname.getText().toString())){
+        if (!isValidMName(editTextfatherlastname.getText().toString().isEmpty() ? " " : editTextfatherlastname.getText().toString())) {
             editTextfatherlastname.setError("Invalid Name");
             allConditionsSatisfied = false;
-        }else{
+        } else {
             fatherLastName = editTextfatherlastname.getText().toString();
         }
 
-        if(!isValidName(editTextmotherfirstname.getText().toString().isEmpty() ?" ": editTextmotherfirstname.getText().toString())){
+        if (!isValidName(editTextmotherfirstname.getText().toString().isEmpty() ? " " : editTextmotherfirstname.getText().toString())) {
             editTextmotherfirstname.setError("Invalid Name");
             allConditionsSatisfied = false;
-        }else{
+        } else {
             motherName = editTextmotherfirstname.getText().toString();
         }
 
-        if(!isValidMName(editTextmothermiddlename.getText().toString().isEmpty() ?" ": editTextmothermiddlename.getText().toString())){
+        if (!isValidMName(editTextmothermiddlename.getText().toString().isEmpty() ? " " : editTextmothermiddlename.getText().toString())) {
             editTextmothermiddlename.setError("Invalid Name");
             allConditionsSatisfied = false;
-        }else{
+        } else {
             motherMiddleName = editTextmothermiddlename.getText().toString();
         }
 
-        if(!isValidMName(editTextmotherlastname.getText().toString().isEmpty() ?" ": editTextmotherlastname.getText().toString())){
+        if (!isValidMName(editTextmotherlastname.getText().toString().isEmpty() ? " " : editTextmotherlastname.getText().toString())) {
             editTextmotherlastname.setError("Invalid Name");
             allConditionsSatisfied = false;
-        }else{
+        } else {
             motherLastName = editTextmotherlastname.getText().toString();
         }
 
-        if(!isValidName(editTextspousefirstname.getText().toString().isEmpty() ?" ": editTextspousefirstname.getText().toString())){
+        if (!isValidName(editTextspousefirstname.getText().toString().isEmpty() ? " " : editTextspousefirstname.getText().toString())) {
             editTextspousefirstname.setError("Invalid Name");
             allConditionsSatisfied = false;
-        }else{
+        } else {
             spouseFirstName = editTextspousefirstname.getText().toString();
         }
 
-        if(!isValidMName(editTextspousemiddlename.getText().toString().isEmpty() ?" ": editTextspousemiddlename.getText().toString())){
+        if (!isValidMName(editTextspousemiddlename.getText().toString().isEmpty() ? " " : editTextspousemiddlename.getText().toString())) {
             editTextspousemiddlename.setError("Invalid Name");
             allConditionsSatisfied = false;
-        }else{
+        } else {
             spouseMiddleName = editTextspousemiddlename.getText().toString();
         }
 
-        if(!isValidMName(editTextspouselastname.getText().toString().isEmpty() ?" ": editTextspouselastname.getText().toString())){
+        if (!isValidMName(editTextspouselastname.getText().toString().isEmpty() ? " " : editTextspouselastname.getText().toString())) {
             editTextspouselastname.setError("Invalid Name");
             allConditionsSatisfied = false;
-        }else{
+        } else {
             spouseLastName = editTextspouselastname.getText().toString();
         }
 
         if (acspRelationship.getSelectedItem().toString().contains("-Select-")) {
             ((TextView) acspRelationship.getSelectedView()).setError("Please select a relationship");
             allConditionsSatisfied = false;
-        }else{
+        } else {
             guardianRelatnWithBorrower = acspRelationship.getSelectedItem().toString();
         }
 
         if (acspAadharState.getSelectedItem().toString().contains("-Select-")) {
             ((TextView) acspAadharState.getSelectedView()).setError("Please select a state");
             allConditionsSatisfied = false;
-        }else{
+        } else {
             P_State = acspAadharState.getSelectedItem().toString();
         }
 
         if (acspGender.getSelectedItem().toString().contains("-Select-")) {
             ((TextView) acspGender.getSelectedView()).setError("Please select a Gender");
             allConditionsSatisfied = false;
-        }else{
+        } else {
             gender = acspGender.getSelectedItem().toString();
         }
 
         if (isMarriedSpinner.getSelectedItem().toString().contains("-Select-")) {
             ((TextView) isMarriedSpinner.getSelectedView()).setError("Select Marital Status");
             allConditionsSatisfied = false;
-        }else{
+        } else {
             isMarried = isMarriedSpinner.getSelectedItem().toString();
         }
 
         if (!isValidName(editTextGuardian.getText().toString())) {
             editTextGuardian.setError("Invalid Name");
             allConditionsSatisfied = false;
-        }else{
+        } else {
             guardian = editTextGuardian.getText().toString();
         }
         if (!isValidName(txtVillageName.getText().toString())) {
@@ -1672,7 +1707,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             editTextAadhar.setError("Click Image");
             allConditionsSatisfied = false;
         }
-
 
 
         if (guardian != null) {

@@ -92,6 +92,7 @@
                         android:imeOptions="actionNext"
                         android:inputType="textAutoComplete|textAutoCorrect|textCapCharacters"
                         android:paddingStart="15dp"
+                        android:maxLength="10"
                         android:singleLine="true"
                         android:text="GRST000223"
                         android:textSize="18dp" />
