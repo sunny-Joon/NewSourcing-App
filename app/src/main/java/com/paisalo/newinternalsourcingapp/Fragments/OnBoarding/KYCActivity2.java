@@ -84,8 +84,16 @@ public class KYCActivity2 extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        Serializable receivedObject = intent.getSerializableExtra("jsonData");
-        Serializable fiExtras = intent.getSerializableExtra("fiExtra");
+        String jsonDataString = getIntent().getStringExtra("jsonData");
+        Log.d("TAG", "Sunny joon: " +jsonDataString );
+        FiJsonObject receivedObject = new Gson().fromJson(jsonDataString, FiJsonObject.class);
+        Log.d("TAG", "onCreate: "+new Gson().toJson(receivedObject));
+
+      //  Serializable receivedObject = intent.getSerializableExtra("jsonData");
+        fiExtra = receivedObject.getFiExtra();
+        Log.d("TAG", "onCreateeee: "+fiExtra.getFatherLastName());
+        Log.d("TAG", "onCreateeee: "+fiExtra);
+
         String vName = intent.getStringExtra("vName");
         String vPanName = intent.getStringExtra("vPanName");
         String vVoterIdName = intent.getStringExtra("vVoterIdName");
@@ -103,10 +111,6 @@ public class KYCActivity2 extends AppCompatActivity {
         if (receivedObject != null && receivedObject instanceof FiJsonObject) {
              firstPageObject = (FiJsonObject) receivedObject;
         }
-        if (fiExtras != null && fiExtras instanceof FiExtra) {
-            fiExtra = (FiExtra) fiExtras;
-        }
-
 
         savedata = findViewById(R.id.savedata);
 
@@ -308,7 +312,7 @@ public class KYCActivity2 extends AppCompatActivity {
                     firstPageObject.setCast("");
                     firstPageObject.setCityCode("CityCode");
                     firstPageObject.setCode(0);
-                    firstPageObject.setCreator("HOAGRA");
+                    firstPageObject.setCreator(GlobalClass.Creator);
                     firstPageObject.setFAmilyMember(0);
                     firstPageObject.setLoanEMi(12);
                /* FirstPageObject.addProperty("Latitude" );
@@ -318,7 +322,7 @@ public class KYCActivity2 extends AppCompatActivity {
                     ;
                     firstPageObject.setTPin(0);
                     firstPageObject.setTag("RTAG");
-                    firstPageObject.setUserID("UserID");
+                    firstPageObject.setUserID(GlobalClass.Id);
                     firstPageObject.setExpense(expense);
 
                     fiExtra.setMonthlyIncome(monthlyIncome);
@@ -334,7 +338,9 @@ public class KYCActivity2 extends AppCompatActivity {
                     firstPageObject.setFiExtra(fiExtra);
 
                     Gson gson = new Gson();
-                    JsonObject jsonObject = gson.fromJson(gson.toJson(firstPageObject), JsonObject.class);
+               //     JsonObject jsonObject = gson.fromJson(gson.toJson(firstPageObject.toString()), JsonObject.class);
+                    JsonObject jsonObject = gson.fromJson(firstPageObject.toString(), JsonObject.class);
+
                     Log.d("TAG", "FirstPageObject1: " + jsonObject);
 
                     ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
@@ -375,13 +381,9 @@ public class KYCActivity2 extends AppCompatActivity {
                                 call2.enqueue(new Callback<SaveVerifiedInfo>() {
                                     @Override
                                     public void onResponse(Call<SaveVerifiedInfo> call2, Response<SaveVerifiedInfo> responses2) {
-                                        Log.d("TAG", "rrrrrrrrrrSaveVIRun: " + responses2.body());
                                         if (responses2.isSuccessful()) {
-                                            Log.d("TAG", "rrrrrrrrrrSaveVISuccessful: " + responses2.body());
                                             SaveVerifiedInfo saveVerifiedInfo = responses2.body();
-                                            Log.d("TAG", "jsonobjectstate: " + saveVerifiedInfo.getMessage());
-                                            FiCPopup fiCPopup = new FiCPopup("Your Ficode is Here", Message1);
-                                            fiCPopup.show(getSupportFragmentManager(), "CustomDialog");
+
 
                                             RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), file);
                                             MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
@@ -390,47 +392,42 @@ public class KYCActivity2 extends AppCompatActivity {
                                             call3.enqueue(new Callback<ProfilePicModel>() {
                                                 @Override
                                                 public void onResponse(Call<ProfilePicModel> call3, Response<ProfilePicModel> response3) {
-                                                    Log.d("TAG", "rrrrrrrrrrSavePICRUN: " + response3.body());
                                                     if (response3.isSuccessful()) {
-                                                        Log.d("TAG", "rrrrrrrrrrSavePICSuccessful: " + response3.body().getMessage());
                                                         FiCPopup fiCPopup = new FiCPopup("Your Ficode is Here", Message1);
                                                         fiCPopup.show(getSupportFragmentManager(), "CustomDialog");
 
                                                     } else {
-                                                        Log.d("TAG", "rrrrrrrrrrSavePICUNSuccessful: " + response3.code());
-
+                                                        Toast.makeText(KYCActivity2.this, "Failed", Toast.LENGTH_SHORT).show();
 
                                                     }
                                                 }
 
                                                 @Override
                                                 public void onFailure(Call<ProfilePicModel> call3, Throwable t) {
-                                                    Log.d("TAG", "rrrrrrrrrrSavePICUNSuccessful: " + "failure");
-
+                                                    Toast.makeText(KYCActivity2.this, "Network Issue", Toast.LENGTH_SHORT).show();
                                                 }
                                             });
 
 
                                         } else {
-                                            Log.d("TAG", "rrrrrrrrrrSaveVIUnsuccessful: " + responses2.code());
+                                            Toast.makeText(KYCActivity2.this, "Failed", Toast.LENGTH_SHORT).show();
                                         }
                                     }
 
                                     @Override
                                     public void onFailure(Call<SaveVerifiedInfo> call2, Throwable t) {
-                                        Log.d("TAG", "rrrrrrrrrrSaveVI: " + "failure");
-
+                                        Toast.makeText(KYCActivity2.this, "Network Issue", Toast.LENGTH_SHORT).show();
                                     }
                                 });
                             } else {
-                                Log.d("TAG", "rrrrrrrrrrSaveFiUnsuccessful: " + response1.code());
+                                Toast.makeText(KYCActivity2.this, "Failed", Toast.LENGTH_SHORT).show();
+
                             }
                         }
 
                         @Override
                         public void onFailure(Call<SaveFiModel> call1, Throwable t) {
-                            Toast.makeText(KYCActivity2.this, "Failed", Toast.LENGTH_SHORT).show();
-                            Log.d("TAG", "rrrrrrrrrrSaveFi" + "Failure");
+                            Toast.makeText(KYCActivity2.this, "Network Issue", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -443,4 +440,15 @@ public class KYCActivity2 extends AppCompatActivity {
     }// onCreate Closed
 
 }
-
+/*{aadharID='4664947', age='24', fname='gags', lname='null', dob='1999-05-23', pAdd1='suus',
+        pAdd2='hzhz', pAdd3='', pCity='syys', pPin=110043, pPh3='9910238307', panNO='BKXPJ1310C',
+        drivingLic='DL0420170426232', voterId='null', fFname='suhshs', fMname='null', fLname='null',
+        isMarried='Unmarried', gender='Male', pState='13', guardianRelatnWithBorrower='Father',
+        loanAmt=null, loanDuration=0, businessDetail='null', tPh3='null', loanReason='null',
+        areaOfHouse=null, bankName='null', cast='null', cityCode='null', code=null, creator='null',
+        fAmilyMember=0, loanEMi=null, latitude=null, longitude=null, tPin=null, tag='null',
+        userID='null', expense=null, fiExtra=AdditionalDetails{motherName='shs', motherMiddleName='',
+        motherLastName='hsh', fatherName='suhshs', fatherMiddleName='', fatherLastName='',
+        spouseFirstName='null', spouseMiddleName='null', spouseLastName='null', monthlyIncome=null,
+        futureIncome=null, agricultureIncome=null, pensionIncome=null, interestIncome=null,
+        otherIncome=null, earningMemberType='null', earningMemberIncome=null, occupation='null'}}*/
