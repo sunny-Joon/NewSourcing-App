@@ -191,9 +191,9 @@ public class Utils {
         //return retValue;
     }
 
- /*   public static <E> int setSpinnerPosition(Spinner spinner, E searchValue) {
+    public static <E> int setSpinnerPosition(Spinner spinner, E searchValue) {
         return setSpinnerPosition(spinner, searchValue, false);
-    }*/
+    }
 
     public static <E> int setSpinnerPosition(Spinner spinner, E searchValue, boolean matchLength) {
         int index1 = -1;

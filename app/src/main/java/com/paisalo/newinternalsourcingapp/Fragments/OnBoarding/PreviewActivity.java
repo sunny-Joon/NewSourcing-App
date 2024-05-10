@@ -18,15 +18,12 @@ public class PreviewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preview);
 
-        imageView = findViewById(R.id.imagePreview); // Initialize your ImageView
+        imageView = findViewById(R.id.imagePreview);
 
-        // Retrieve the image URI from the Intent
         String imageUriString = getIntent().getStringExtra("imageUri");
 
-        // Convert the URI string back to a URI
         Uri imageUri = Uri.parse(imageUriString);
 
-        // Set the image URI to the ImageView to display it
         imageView.setImageURI(imageUri);
     }
 }

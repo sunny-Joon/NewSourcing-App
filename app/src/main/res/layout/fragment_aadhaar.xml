@@ -450,6 +450,7 @@
                         android:id="@+id/Address1"
                         android:layout_width="match_parent"
                         android:hint="Address1"
+                        android:inputType="textCapWords|textFilter"
                         android:layout_height="45dp"/>
 
                 </androidx.cardview.widget.CardView>
@@ -464,6 +465,7 @@
                         android:id="@+id/Address2"
                         android:layout_width="match_parent"
                         android:hint="Address2"
+                        android:inputType="textCapWords|textFilter"
                         android:layout_height="45dp"/>
 
                 </androidx.cardview.widget.CardView>
@@ -478,6 +480,7 @@
                         android:id="@+id/Address3"
                         android:layout_width="match_parent"
                         android:hint="Address3"
+                        android:inputType="textCapWords|textFilter"
                         android:layout_height="45dp"/>
 
                 </androidx.cardview.widget.CardView>
@@ -515,6 +518,7 @@
                             android:id="@+id/city"
                             android:layout_width="match_parent"
                             android:hint="City"
+                            android:inputType="textCapWords|textFilter"
                             android:layout_height="45dp"/>
 
                     </androidx.cardview.widget.CardView>
@@ -532,6 +536,7 @@
                         android:id="@+id/pinCode"
                         android:layout_width="match_parent"
                         android:hint="Pin Code"
+                        android:inputType="number"
                         android:layout_height="45dp"/>
 
                 </androidx.cardview.widget.CardView>
