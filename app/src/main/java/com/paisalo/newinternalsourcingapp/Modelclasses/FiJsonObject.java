@@ -1,5 +1,7 @@
 package com.paisalo.newinternalsourcingapp.Modelclasses;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -50,7 +52,7 @@ public class FiJsonObject implements Serializable {
     private String drivingLic;
     @SerializedName("voterId")
     @Expose
-    private String voterId;
+    private String VoterId;
     @SerializedName("F_Fname")
     @Expose
     private String fFname;
@@ -238,11 +240,11 @@ public class FiJsonObject implements Serializable {
     }
 
     public String getVoterId() {
-        return voterId;
+        return VoterId;
     }
 
     public void setVoterId(String voterId) {
-        this.voterId = voterId;
+        this.VoterId = voterId;
     }
 
     public String getFFname() {
@@ -460,5 +462,55 @@ public class FiJsonObject implements Serializable {
     public void setFiExtra(FiExtra fiExtra) {
         this.fiExtra = fiExtra;
     }
+
+
+    @Override
+    public String toString() {
+        return "{" +
+                "\"AadharID\": \"" + aadharID + "\"," +
+                "\"Age\": \"" + age + "\"," +
+                "\"Fname\": \"" + fname + "\"," +
+                "\"Lname\": " + (lname != null ? "\"" + lname + "\"" : null) + "," +
+                "\"DOB\": \"" + dob + "\"," +
+                "\"P_Add1\": \"" + pAdd1 + "\"," +
+                "\"P_Add2\": \"" + pAdd2 + "\"," +
+                "\"P_Add3\": \"" + pAdd3 + "\"," +
+                "\"P_City\": \"" + pCity + "\"," +
+                "\"P_Pin\": " + pPin + "," +
+                "\"P_Ph3\": \"" + pPh3 + "\"," +
+                "\"PanNO\": \"" + panNO + "\"," +
+                "\"DrivingLic\": \"" + drivingLic + "\"," +
+                "\"voterId\": " + (VoterId != null ? "\"" + VoterId + "\"" : null) + "," +
+                "\"F_Fname\": \"" + fFname + "\"," +
+                "\"F_Mname\": " + (fMname != null ? "\"" + fMname + "\"" : null) + "," +
+                "\"F_Lname\": " + (fLname != null ? "\"" + fLname + "\"" : null) + "," +
+                "\"isMarried\": \"" + isMarried + "\"," +
+                "\"Gender\": \"" + gender + "\"," +
+                "\"P_State\": \"" + pState + "\"," +
+                "\"guardianRelatnWithBorrower\": \"" + guardianRelatnWithBorrower + "\"," +
+                "\"Loan_Amt\": " + loanAmt + "," +
+                "\"Loan_Duration\": " + loanDuration + "," +
+                "\"Business_Detail\": " + (businessDetail != null ? "\"" + businessDetail + "\"" : null) + "," +
+                "\"T_Ph3\": " + (tPh3 != null ? "\"" + tPh3 + "\"" : null) + "," +
+                "\"Loan_Reason\": " + (loanReason != null ? "\"" + loanReason + "\"" : null) + "," +
+                "\"Area_Of_House\": " + areaOfHouse + "," +
+                "\"BankName\": " + (bankName != null ? "\"" + bankName + "\"" : null) + "," +
+                "\"Cast\": " + (cast != null ? "\"" + cast + "\"" : null) + "," +
+                "\"CityCode\": " + (cityCode != null ? "\"" + cityCode + "\"" : null) + "," +
+                "\"Code\": " + code + "," +
+                "\"Creator\": " + (creator != null ? "\"" + creator + "\"" : null) + "," +
+                "\"FAmily_member\": " + fAmilyMember + "," +
+                "\"Loan_EMi\": " + loanEMi + "," +
+                "\"Latitude\": " + latitude + "," +
+                "\"Longitude\": " + longitude + "," +
+                "\"T_Pin\": " + tPin + "," +
+                "\"Tag\": " + (tag != null ? "\"" + tag + "\"" : null) + "," +
+                "\"UserID\": " + (userID != null ? "\"" + userID + "\"" : null) + "," +
+                "\"Expense\": " + expense + "," +
+                "\"fiExtra\": " + (fiExtra != null ? fiExtra.toString() : null) +
+                "}";
+    }
+
+
 
 }

@@ -52,27 +52,32 @@ public class GlobalClass extends Application {
         return pattern.matcher(name).matches();
     }
     public static boolean isValidMName(String name) {
-        String regex = "^[a-zA-Z.]+(?:[\\s'-][a-zA-Z]+)*$";
+        if (name == null || name.trim().isEmpty()) {
+            return true;
+        }
+
+        String regex = "^[a-zA-Z.]+(?:[\\s'-][a-zA-Z ]+)*$";
         Pattern pattern = Pattern.compile(regex);
         return pattern.matcher(name).matches();
     }
 
-    public static boolean isValidAddr(String addr) {
-        if (addr.isEmpty()) {
+    public static boolean isValidAddr(String input) {
+        if (input.isEmpty()) {
             return false;
         }
-        String regex = "^[a-zA-Z.]+(?:[\\s'-][a-zA-Z]+)*$";
-        Pattern pattern = Pattern.compile(regex);
-        return pattern.matcher(addr).matches();
+        String allowedCharactersRegex = "[a-zA-Z0-9 ,:./\\-()]+";
+
+        return (input.matches(allowedCharactersRegex) && !(input.startsWith(".") || input.startsWith(":") || input.startsWith("/") || input.startsWith("-") || input.startsWith(",")));
     }
-    public static boolean isValidSAddr(String addr) {
-        if (addr.isEmpty()) {
-            return false;
+
+    public static boolean isValidSAddr(String input) {
+        if (input == null || input.trim().isEmpty()) {
+            return true;
         }
-        String regex = "^[a-zA-Z.]+(?:[\\s'-][a-zA-Z]+)*$";
-        Pattern pattern = Pattern.compile(regex);
-        return pattern.matcher(addr).matches();
+        String allowedCharactersRegex = "[a-zA-Z0-9 ,:./\\-()]+";
+        return (input.matches(allowedCharactersRegex) && !(input.startsWith(".") || input.startsWith(":") || input.startsWith("/") || input.startsWith("-") || input.startsWith(",")));
     }
+
 
     public static boolean isNumber(String input) {
 

@@ -206,4 +206,30 @@ public class FiExtra implements Serializable {
         this.occupation = occupation;
     }
 
+
+    @Override
+    public String toString() {
+        return "{" +
+                "\"motherName\": \"" + motherName + "\"," +
+                "\"motherMiddleName\": \"" + motherMiddleName + "\"," +
+                "\"motherLastName\": \"" + motherLastName + "\"," +
+                "\"fatherName\": \"" + fatherName + "\"," +
+                "\"fatherMiddleName\": \"" + fatherMiddleName + "\"," +
+                "\"fatherLastName\": \"" + fatherLastName + "\"," +
+                "\"spouseFirstName\": " + (spouseFirstName != null ? "\"" + spouseFirstName + "\"" : null) + "," +
+                "\"spouseMiddleName\": " + (spouseMiddleName != null ? "\"" + spouseMiddleName + "\"" : null) + "," +
+                "\"spouseLastName\": " + (spouseLastName != null ? "\"" + spouseLastName + "\"" : null) + "," +
+                "\"monthlyIncome\": " + monthlyIncome + "," +
+                "\"futureIncome\": " + futureIncome + "," +
+                "\"agricultureIncome\": " + agricultureIncome + "," +
+                "\"pensionIncome\": " + pensionIncome + "," +
+                "\"interestIncome\": " + interestIncome + "," +
+                "\"otherIncome\": " + otherIncome + "," +
+                "\"earningMemberType\": " + (earningMemberType != null ? "\"" + earningMemberType + "\"" : null) + "," +
+                "\"earningMemberIncome\": " + earningMemberIncome + "," +
+                "\"occupation\": " + (occupation != null ? "\"" + occupation + "\"" : null) +
+                "}";
+    }
+
+
 }
