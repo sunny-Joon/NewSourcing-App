@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivityMenu;
@@ -67,8 +68,6 @@ public class PersonalDetailsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_personal_details, container, false);
         DatabaseClass databaseClass = DatabaseClass.getInstance(getContext());
 
-
-
         emailId = view.findViewById(R.id.emailId);
         placeOfBirth = view.findViewById(R.id.placeOfBirth);
         casteSpinner = view.findViewById(R.id.caste);
@@ -90,8 +89,10 @@ public class PersonalDetailsFragment extends Fragment {
         presentHouseOwnerList.add(selectOption);
         educationalCodeList.add(selectOption);
 
-        emailId.setText(allDataAFDataModel.getFiExtra().getEmaiLID());
-        placeOfBirth.setText(allDataAFDataModel.getFiExtra().getPlacEOFBIRTH());
+
+
+
+
         DatabaseClass.databaseWriteExecutor.execute(new Runnable() {
             @Override
             public void run() {
@@ -126,6 +127,30 @@ public class PersonalDetailsFragment extends Fragment {
                 }
             }
             });
+
+        if(allDataAFDataModel != null) {
+            try {
+                if (allDataAFDataModel.getFiExtra() != null) {
+                    if (allDataAFDataModel.getFiExtra().getEmaiLID() != null) {
+                        emailId.setText(allDataAFDataModel.getFiExtra().getEmaiLID());
+                    }
+                    String caste=allDataAFDataModel.getCast();
+                    Log.d("TAG", "onCreateView: "+caste);
+                    int casePos=CasteList.indexOf(caste);
+                    casteSpinner.setSelection(casePos);
+
+
+
+
+                    if (allDataAFDataModel.getFiExtra().getPlacEOFBIRTH() != null) {
+                        placeOfBirth.setText(allDataAFDataModel.getFiExtra().getPlacEOFBIRTH());
+                    }
+                }
+            }catch (Exception exception){
+                Toast.makeText(getContext(), "Fiextra is null here", Toast.LENGTH_SHORT).show();
+            }
+
+        }
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

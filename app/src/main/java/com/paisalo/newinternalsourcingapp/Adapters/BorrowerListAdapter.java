@@ -1,11 +1,7 @@
 package com.paisalo.newinternalsourcingapp.Adapters;
 
-import static java.security.AccessController.getContext;
-
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,7 +13,8 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivityMenu;
-import com.paisalo.newinternalsourcingapp.Activities.DownloadDocumentActivity;
+import com.paisalo.newinternalsourcingapp.Activities.FirstEsignActivity;
+import com.paisalo.newinternalsourcingapp.Activities.SecondEsignActivity;
 import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.HouseVisitActivity1;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.BorrowerListModels.BorrowerListDataModel;
 import com.paisalo.newinternalsourcingapp.R;
@@ -110,13 +107,15 @@ public class BorrowerListAdapter extends RecyclerView.Adapter<BorrowerListAdapte
             Intent intent = null;
             switch (id) {
                 case "FEsign":
-                    intent = new Intent(context, DownloadDocumentActivity.class);
+                    intent = new Intent(context, FirstEsignActivity.class);
                     break;
                 case "SEsign":
-                    intent = new Intent(context, DownloadDocumentActivity.class);
+                    intent = new Intent(context, SecondEsignActivity.class);
                     break;
                 case "Application":
                     intent = new Intent(context, ApplicationFormActivityMenu.class);
+                    intent.putExtra("fiCode", fiCode); // Pass fiCode to the intent
+                    intent.putExtra("creator", creator); // Pass creator to the intent
                     break;
                 case "HV":
                     intent = new Intent(context, HouseVisitActivity1.class);

@@ -34,6 +34,7 @@ import org.json.JSONObject;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -157,4 +158,6 @@ public interface ApiInterface {
     @GET("InstCollection/getDueInstallments")
     Call<BorrowerListModel> PendingCollection(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("IMEINO") String IMEINO, @Query("FOCode") String FOCode, @Query("AreaCd") String AreaCd, @Query("Creator") String Creator);
 
+    @GET("DocSignIn/GetXMLDoc")
+    Call<ResponseBody>   getXMLforESign();
 }

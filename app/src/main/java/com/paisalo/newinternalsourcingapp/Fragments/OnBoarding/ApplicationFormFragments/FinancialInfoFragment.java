@@ -72,9 +72,12 @@ public class FinancialInfoFragment extends Fragment {
 
         DatabaseClass databaseClass = DatabaseClass.getInstance(getContext());
 
-        fiCode =  allDataAFDataModel.getCode().toString();
-        creator =  allDataAFDataModel.getCreator().toString();
-        tag =  allDataAFDataModel.getTag().toString();
+        if(allDataAFDataModel != null){
+            fiCode =  allDataAFDataModel.getCode().toString();
+            creator =  allDataAFDataModel.getCreator().toString();
+            tag =  allDataAFDataModel.getTag().toString();
+        }
+
 
 
         bankAccountNumber = view.findViewById(R.id.bankAccountNumber);

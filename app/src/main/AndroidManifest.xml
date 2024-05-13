@@ -57,7 +57,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".Activities.DownloadDocumentActivity"
+            android:name=".Activities.SecondEsignActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -78,7 +78,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".Activities.ActivityEsignWithDownloadPL"
+            android:name=".Activities.FirstEsignActivity"
             android:exported="false" />
         <activity
             android:name=".Activities.BorrowerListActivity"

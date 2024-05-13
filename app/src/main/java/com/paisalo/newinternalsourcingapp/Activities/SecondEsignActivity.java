@@ -3,16 +3,14 @@ package com.paisalo.newinternalsourcingapp.Activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
 import com.paisalo.newinternalsourcingapp.Adapters.CustomAdapter;
 import com.paisalo.newinternalsourcingapp.R;
 
-public class DownloadDocumentActivity extends AppCompatActivity {
+public class SecondEsignActivity extends AppCompatActivity {
 
 
     ListView lvLoanDetails;
@@ -25,8 +23,7 @@ public class DownloadDocumentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_download_document);
-
+        setContentView(R.layout.activity_second_esign);
 
         btnLoanDetailsDownloadDoc = findViewById(R.id.btnLoanDetailsDownloadDoc);
         lvLoanDetails = findViewById(R.id.lvLoanDetails);
@@ -34,7 +31,7 @@ public class DownloadDocumentActivity extends AppCompatActivity {
 //        lvLoanDetails.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                Intent intent = new Intent(DownloadDocumentActivity.this, ActivityEsignWithDownloadPL.class);
+//                Intent intent = new Intent(SecondEsignActivity.this, FirstEsignActivity.class);
 //                 startActivity(intent);
 //            }
 //        });
