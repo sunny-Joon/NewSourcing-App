@@ -290,7 +290,6 @@ public class FamilyMembersIncomeFragment extends Fragment {
 
                       if (allConditionsSatisfied) {
 
-
                           ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
                           Call<KycUpdateModel> call = apiInterface.updateFamMemIncome(GlobalClass.Token, GlobalClass.dbname, FamIncomeJson());
                           Log.d("TAG", "onResponseAdhaarUpdate: " + GlobalClass.Token + " " + GlobalClass.dbname + " " + FamIncomeJson());
