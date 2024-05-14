@@ -7,8 +7,8 @@
             android:endColor="#FAEDCF"
             android:startColor="#ffffff"
             android:type="linear" />
-        <corners
-            android:topRightRadius="50dp"/>
+       <!-- <corners
+            android:topRightRadius="50dp"/>-->
         <stroke android:width=".6dp"
             android:color="#FBEFD4"/>
        <!-- <padding

@@ -45,11 +45,22 @@ public class ApplicationFormActivityMenu extends AppCompatActivity {
     List<FiFamMem> fiFamMem;
     List<FiGuarantor> fiGuarantor;
     List<UploadedFiDocs> uploadedFiDocs;
+    String fiCode,creator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_application_form_menu);
+
+        Intent intent = getIntent();
+
+        if(intent != null) {
+            fiCode = intent.getStringExtra("fiCode");
+            creator = intent.getStringExtra("creator");
+
+            Log.d("Tag", "fiCode: " + fiCode);
+            Log.d("Tag", "fiCode: " + creator);
+        }
 
         aadhaar = findViewById(R.id.aadhaar);
         personalDetails = findViewById(R.id.personalDetails);
@@ -68,7 +79,7 @@ public class ApplicationFormActivityMenu extends AppCompatActivity {
         kycScanningCheckBox = findViewById(R.id.kycScanningCheckBox);
 
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<AllDataAFModel> call= apiInterface.getAllAFData(GlobalClass.Token,GlobalClass.dbname,"250075","HOAGRA");
+        Call<AllDataAFModel> call= apiInterface.getAllAFData(GlobalClass.Token,GlobalClass.dbname,fiCode,creator);
 
         call.enqueue(new Callback<AllDataAFModel>() {
             @Override
@@ -76,17 +87,37 @@ public class ApplicationFormActivityMenu extends AppCompatActivity {
                 Log.d("TAG", "getAllData: " + response.body());
                 if(response.isSuccessful()){
                     AllDataAFModel allDataAFModel = response.body();
-                    allDataAFDataModel = allDataAFModel.getData();
-                    fiExtra = allDataAFDataModel.getFiExtra();
-                    fiExtraBankBo = allDataAFDataModel.getFiExtraBankBo();
-                    fiFamExpenses = allDataAFDataModel.getFiFamExpenses();
-                    fiFamLoan = allDataAFDataModel.getFiFamLoans();
-                    fiFamMem = allDataAFDataModel.getFiFamMems();
-                    fiGuarantor =allDataAFDataModel.getFiGuarantors();
-                    uploadedFiDocs =allDataAFDataModel.getUploadedFiDocsList();
+                    if (allDataAFModel != null) {
+                        AllDataAFDataModel allDataAFDataModel = allDataAFModel.getData();
 
+                        if (allDataAFDataModel != null) {
+                            fiExtra = allDataAFDataModel.getFiExtra();
+                            fiExtraBankBo = allDataAFDataModel.getFiExtraBankBo();
+                            fiFamExpenses = allDataAFDataModel.getFiFamExpenses();
+                            fiFamLoan = allDataAFDataModel.getFiFamLoans();
+                            fiFamMem = allDataAFDataModel.getFiFamMems();
+                            fiGuarantor = allDataAFDataModel.getFiGuarantors();
+                            uploadedFiDocs = allDataAFDataModel.getUploadedFiDocsList();
 
-                    Log.d("TAG", "getAllData: " + allDataAFDataModel.getAadharID());
+                            if(allDataAFDataModel.getAadharID() == null){
+                                aadhaarCheckBox.setChecked(true);
+
+                            } else{
+                                aadhaarCheckBox.setChecked(true);
+                            }
+
+                            if (allDataAFDataModel.getAadharID() == null){
+                            }else {
+                                personaldetailCheckBox.setChecked(true);
+                            }
+
+                        } else {
+
+                        }
+                    } else {
+
+                    }
+
                 }else {
                     Log.d("TAG", "getAllData: " + response.code());
                 }
@@ -99,21 +130,10 @@ public class ApplicationFormActivityMenu extends AppCompatActivity {
             }
         });
 
-        SharedPreferences sharedPreferences = getSharedPreferences("checkBoxes", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        if(!sharedPreferences.getBoolean("aadhaarCheckBox",false))
-        {  editor.putBoolean("aadhaarCheckBox", false);
-            editor.apply();
-        } else{
-            aadhaarCheckBox.setChecked(true);
-        }
-        if (!sharedPreferences.getBoolean("personaldetailCheckBox",false)) {
-            editor.putBoolean("personaldetailCheckBox", false);
-            editor.apply();
-        }else {
-            personaldetailCheckBox.setChecked(true);
-        }
-        if (!sharedPreferences.getBoolean("financialInfoCheckBox",false)) {
+
+
+
+  /*      if (!sharedPreferences.getBoolean("financialInfoCheckBox",false)) {
             editor.putBoolean("financialInfoCheckBox", false);
             editor.apply();
         }else{
@@ -142,7 +162,9 @@ public class ApplicationFormActivityMenu extends AppCompatActivity {
             editor.apply();
         }else{
             kycScanningCheckBox.setChecked(true);
-        }
+        }*/
+
+
 
         aadhaar.setOnClickListener(new View.OnClickListener() {
             @Override

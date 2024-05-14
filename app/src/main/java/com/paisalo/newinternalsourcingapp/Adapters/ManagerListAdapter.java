@@ -6,13 +6,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.Button;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,11 +17,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.paisalo.newinternalsourcingapp.Activities.BorrowerListActivity;
 import com.paisalo.newinternalsourcingapp.Activities.CustomerListActivity;
-import com.paisalo.newinternalsourcingapp.Activities.DownloadDocumentActivity;
-import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.HouseVisitActivity1;
 import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.KYCActivity;
-import com.paisalo.newinternalsourcingapp.ModelclassesRoom.ManagerModel;
-import com.paisalo.newinternalsourcingapp.ModelsRetrofit.BorrowerListModels.BorrowerListDataModel;
 import com.paisalo.newinternalsourcingapp.R;
 import com.paisalo.newinternalsourcingapp.RoomDatabase.ManagerListDataClass;
 
@@ -164,7 +157,7 @@ public class ManagerListAdapter extends RecyclerView.Adapter<ManagerListAdapter.
             documentation.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                 //   Intent intent = new Intent(itemView.getContext(), DownloadDocumentActivity.class);
+                 //   Intent intent = new Intent(itemView.getContext(), SecondEsignActivity.class);
                     Intent intent = new Intent(itemView.getContext(), BorrowerListActivity.class);
                     intent.putExtra("keyName", "SEsign");
                     intent.putExtra("foCode", foCode);

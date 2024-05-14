@@ -75,7 +75,7 @@
                     android:textSize="10dp" />
 
                 <Button
-                    android:id="@+id/sub"
+                    android:id="@+id/proceed"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="2dp"

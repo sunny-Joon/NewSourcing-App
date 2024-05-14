@@ -6,11 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.paisalo.newinternalsourcingapp.Activities.ActivityEsignWithDownloadPL;
+import com.paisalo.newinternalsourcingapp.Activities.FirstEsignActivity;
 import com.paisalo.newinternalsourcingapp.R;
 
 public class CustomAdapter extends ArrayAdapter<String> {
@@ -42,7 +42,7 @@ public class CustomAdapter extends ArrayAdapter<String> {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, ActivityEsignWithDownloadPL.class);
+                Intent intent = new Intent(mContext, FirstEsignActivity.class);
                 mContext.startActivity(intent);
             }
         });
