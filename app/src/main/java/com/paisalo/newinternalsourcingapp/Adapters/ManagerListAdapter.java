@@ -96,6 +96,9 @@ public class ManagerListAdapter extends RecyclerView.Adapter<ManagerListAdapter.
             if (id.equals("KYC")) {
                 Log.d("Kyc","kkk"+id);
                 Intent intent = new Intent(itemView.getContext(), KYCActivity.class);
+                intent.putExtra("foCode", foCode);
+                intent.putExtra("creator", creator);
+                intent.putExtra("areaCode", areaCode);
                 itemView.getContext().startActivity(intent);
             }else if (id.equals("Application")) {
                 Log.d("Application", "kkk" + id);

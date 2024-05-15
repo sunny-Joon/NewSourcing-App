@@ -88,16 +88,18 @@ public class ApplicationFormActivityMenu extends AppCompatActivity {
                 if(response.isSuccessful()){
                     AllDataAFModel allDataAFModel = response.body();
                     if (allDataAFModel != null) {
-                        AllDataAFDataModel allDataAFDataModel = allDataAFModel.getData();
+                        allDataAFDataModel = allDataAFModel.getData();
 
                         if (allDataAFDataModel != null) {
-                            fiExtra = allDataAFDataModel.getFiExtra();
+                            Log.d("TAG", "getAadharID: " + allDataAFDataModel.getAadharID());
+                            Log.d("TAG", "getAadharID: " + allDataAFDataModel.getCode());
+                          /*  fiExtra = allDataAFDataModel.getFiExtra();
                             fiExtraBankBo = allDataAFDataModel.getFiExtraBankBo();
                             fiFamExpenses = allDataAFDataModel.getFiFamExpenses();
                             fiFamLoan = allDataAFDataModel.getFiFamLoans();
                             fiFamMem = allDataAFDataModel.getFiFamMems();
                             fiGuarantor = allDataAFDataModel.getFiGuarantors();
-                            uploadedFiDocs = allDataAFDataModel.getUploadedFiDocsList();
+                            uploadedFiDocs = allDataAFDataModel.getUploadedFiDocsList();*/
 
                             if(allDataAFDataModel.getAadharID() == null){
                                 aadhaarCheckBox.setChecked(true);
@@ -211,6 +213,12 @@ public class ApplicationFormActivityMenu extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), ApplicationFormActivity.class);
                 intent.putExtra("Id","kycScanning" );
+                if(allDataAFDataModel!=null){
+                    Log.d("TAG", "sunny: " + " Not Null");
+
+                }else{
+                    Log.d("TAG", "sunny: " + "Null");
+                }
                 intent.putExtra("allDataAFDataModel",allDataAFDataModel);
                 startActivity(intent);
             }

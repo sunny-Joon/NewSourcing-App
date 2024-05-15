@@ -1,21 +1,35 @@
 package com.paisalo.newinternalsourcingapp.ModelclassesRoom;
 
+import java.io.File;
+
 public class KYCScanningModel {
 
     private String name;
     private String type;
     private String docType;
     private String remarks;
- //   private String aadhar;
+    private File file;
 
-   /* public KYCScanningModel(String name, String type, String docType, String remarks, String aadhar) {*/
-   public KYCScanningModel(String name, String type, String docType, String remarks) {
+
+    public KYCScanningModel(String name, String type, String docType, String remarks,File file) {
         this.name = name;
         this.type = type;
         this.docType = docType;
         this.remarks = remarks;
-   //     this.aadhar = aadhar;
+        this.file= file;
     }
+
+    public File getFile() {
+        return file;
+    }
+
+    public void setFile(File file) {
+        this.file = file;
+    }
+
+ //   private String aadhar;
+
+   /* public KYCScanningModel(String name, String type, String docType, String remarks, String aadhar) {*/
 
     public String getName() {
         return name;

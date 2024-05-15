@@ -31,6 +31,7 @@ import com.paisalo.newinternalsourcingapp.Retrofit.ApiClient;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiInterface;
 import com.paisalo.newinternalsourcingapp.RoomDatabase.DatabaseClass;
 import com.paisalo.newinternalsourcingapp.RoomDatabase.RangeCategoryDataClass;
+import com.paisalo.newinternalsourcingapp.Utils.CustomProgressDialog;
 import com.paisalo.newinternalsourcingapp.location.GpsTracker;
 
 import org.json.JSONException;
@@ -56,6 +57,7 @@ public class KYCActivity2 extends AppCompatActivity {
 
     String earningMemberType,businessDetails,loanPurpose,occupation, selectedBank;
     int monthlyIncome,expense,futureIncome,earningMemberIncome,agricultureIncome,pensionIncome,interestIncome,loanDuration,otherIncome,loanamount;
+    CustomProgressDialog customProgressDialog;
 
     List<String> BankList = new ArrayList<>();
     List<String> BusinessTypeList = new ArrayList<>();
@@ -73,6 +75,7 @@ public class KYCActivity2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kycactivity2);
+        customProgressDialog = new CustomProgressDialog(this);
 
         DatabaseClass databaseClass = DatabaseClass.getInstance(this);
 
@@ -305,21 +308,18 @@ public class KYCActivity2 extends AppCompatActivity {
                     firstPageObject.setLoanAmt(loanamount);
                     firstPageObject.setLoanDuration(loanDuration);
                     firstPageObject.setBusinessDetail(businessDetails);
-                    firstPageObject.setTPh3(" ");
+                    firstPageObject.setTPh3(selectedBank);
                     firstPageObject.setLoanReason(loanPurpose);
                     firstPageObject.setAreaOfHouse(0);
                     firstPageObject.setBankName(selectedBank);
                     firstPageObject.setCast("");
-                    firstPageObject.setCityCode("CityCode");
                     firstPageObject.setCode(0);
-                    firstPageObject.setCreator(GlobalClass.Creator);
                     firstPageObject.setFAmilyMember(0);
                     firstPageObject.setLoanEMi(12);
                /* FirstPageObject.addProperty("Latitude" );
                 FirstPageObject.addProperty("Longitude" */
                     firstPageObject.setLatitude(123.45);
                     firstPageObject.setLongitude(123.45);
-                    ;
                     firstPageObject.setTPin(0);
                     firstPageObject.setTag("RTAG");
                     firstPageObject.setUserID(GlobalClass.Id);
@@ -343,6 +343,7 @@ public class KYCActivity2 extends AppCompatActivity {
 
                     Log.d("TAG", "FirstPageObject1: " + jsonObject);
 
+                    customProgressDialog.show();
                     ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
                     Call<SaveFiModel> call1 = apiInterface.getSaveFi(GlobalClass.Token, GlobalClass.dbname, jsonObject);
                     Log.d("TAG", "rrrrrrrrrrSaveFiParams: " + GlobalClass.Token + " " + GlobalClass.dbname + " " + jsonObject);
@@ -361,7 +362,6 @@ public class KYCActivity2 extends AppCompatActivity {
 
                                 if (Message1 != null) {
                                     jsonObject2 = new JsonObject();
-
                                     jsonObject2.addProperty("fiCode", Message1.trim());
                                     jsonObject2.addProperty("creator", GlobalClass.Creator);
                                     jsonObject2.addProperty("type", "Basic");
@@ -372,7 +372,7 @@ public class KYCActivity2 extends AppCompatActivity {
                                     jsonObject2.addProperty("villagE_CODE", villageCode);
                                     jsonObject2.addProperty("suB_DIST_CODE", subDistCode);
                                     jsonObject2.addProperty("disT_CODE", distCode);
-                                    jsonObject2.addProperty("statE_CODE", stateCode);
+                                    jsonObject2.addProperty("statE_CODE", cityCode);
                                 }
 
                                 Log.d("TAG", "jsonobjectstate: " + jsonObject2);
@@ -393,10 +393,12 @@ public class KYCActivity2 extends AppCompatActivity {
                                                 @Override
                                                 public void onResponse(Call<ProfilePicModel> call3, Response<ProfilePicModel> response3) {
                                                     if (response3.isSuccessful()) {
+                                                        customProgressDialog.dismiss();
                                                         FiCPopup fiCPopup = new FiCPopup("Your Ficode is Here", Message1);
                                                         fiCPopup.show(getSupportFragmentManager(), "CustomDialog");
 
                                                     } else {
+                                                        customProgressDialog.dismiss();
                                                         Toast.makeText(KYCActivity2.this, "Failed", Toast.LENGTH_SHORT).show();
 
                                                     }
@@ -404,22 +406,26 @@ public class KYCActivity2 extends AppCompatActivity {
 
                                                 @Override
                                                 public void onFailure(Call<ProfilePicModel> call3, Throwable t) {
+                                                    customProgressDialog.dismiss();
                                                     Toast.makeText(KYCActivity2.this, "Network Issue", Toast.LENGTH_SHORT).show();
                                                 }
                                             });
 
 
                                         } else {
+                                            customProgressDialog.dismiss();
                                             Toast.makeText(KYCActivity2.this, "Failed", Toast.LENGTH_SHORT).show();
                                         }
                                     }
 
                                     @Override
                                     public void onFailure(Call<SaveVerifiedInfo> call2, Throwable t) {
+                                        customProgressDialog.dismiss();
                                         Toast.makeText(KYCActivity2.this, "Network Issue", Toast.LENGTH_SHORT).show();
                                     }
                                 });
                             } else {
+                                customProgressDialog.dismiss();
                                 Toast.makeText(KYCActivity2.this, "Failed", Toast.LENGTH_SHORT).show();
 
                             }
@@ -427,28 +433,13 @@ public class KYCActivity2 extends AppCompatActivity {
 
                         @Override
                         public void onFailure(Call<SaveFiModel> call1, Throwable t) {
+                            customProgressDialog.dismiss();
                             Toast.makeText(KYCActivity2.this, "Network Issue", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
             }
         });
-
-
-
-
     }// onCreate Closed
-
 }
-/*{aadharID='4664947', age='24', fname='gags', lname='null', dob='1999-05-23', pAdd1='suus',
-        pAdd2='hzhz', pAdd3='', pCity='syys', pPin=110043, pPh3='9910238307', panNO='BKXPJ1310C',
-        drivingLic='DL0420170426232', voterId='null', fFname='suhshs', fMname='null', fLname='null',
-        isMarried='Unmarried', gender='Male', pState='13', guardianRelatnWithBorrower='Father',
-        loanAmt=null, loanDuration=0, businessDetail='null', tPh3='null', loanReason='null',
-        areaOfHouse=null, bankName='null', cast='null', cityCode='null', code=null, creator='null',
-        fAmilyMember=0, loanEMi=null, latitude=null, longitude=null, tPin=null, tag='null',
-        userID='null', expense=null, fiExtra=AdditionalDetails{motherName='shs', motherMiddleName='',
-        motherLastName='hsh', fatherName='suhshs', fatherMiddleName='', fatherLastName='',
-        spouseFirstName='null', spouseMiddleName='null', spouseLastName='null', monthlyIncome=null,
-        futureIncome=null, agricultureIncome=null, pensionIncome=null, interestIncome=null,
-        otherIncome=null, earningMemberType='null', earningMemberIncome=null, occupation='null'}}*/
+
