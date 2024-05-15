@@ -206,6 +206,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
     protected ArrayList<String> decodedData;
     FiExtra fiExtra;
     FiJsonObject jsonData;
+    String foCode,creator,areaCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -215,6 +216,11 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
         DatabaseClass databaseClass = DatabaseClass.getInstance(this);
         customProgressDialog = new CustomProgressDialog(this);
+
+        Intent intent = getIntent();
+        foCode = intent.getStringExtra("foCode");
+        creator = intent.getStringExtra("creator");
+        areaCode = intent.getStringExtra("areaCode");
 
         progressBar = findViewById(R.id.simpleProgressBar);
         progressBar.setMax(maxProgress);
@@ -2025,6 +2031,9 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             Log.d("TAG", "onClickTAG: " +allConditionsSatisfied);
 
             jsonData = new FiJsonObject();
+            jsonData.setgroupCode(foCode);
+            jsonData.setCreator(creator);
+            jsonData.setCityCode(areaCode);
             jsonData.setAadharID(AadharID);
             jsonData.setAge(Age);
             jsonData.setFname(Fname);
@@ -2222,6 +2231,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                 Log.d("TAG", "onDismiss: " + cityData.getCitYNAME());
                 txtCityName.setText(cityData.getCitYNAME());
                 cityCode = cityData.getCitYCODE().toString();
+                Log.d("TAG", "onDismiss: " +cityCode );
             }
         });
         recViewOfCreator.setLayoutManager(new LinearLayoutManager(this));

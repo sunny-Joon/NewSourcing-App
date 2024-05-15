@@ -13,6 +13,7 @@ public class GlobalClass extends Application {
     public static String Id = "";
     public static String Creator = "";
     public static String Address = "";
+    public static String AreaCode = "";
     public static String UserName = "";
     public static String Token = "";
     public static String Imei = "";

@@ -3,6 +3,7 @@ package com.paisalo.newinternalsourcingapp.Activities;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 
 import androidx.annotation.NonNull;
@@ -32,13 +33,8 @@ public class ApplicationFormActivity extends AppCompatActivity {
 
     static AllDataAFDataModel allDataAFDataModel;
 
-    public ApplicationFormActivity(AllDataAFDataModel allDataAFDataModel) {
-        this.allDataAFDataModel = allDataAFDataModel;
-    }
-public  ApplicationFormActivity(){
 
-}
-    public ApplicationFormActivity(ViewPager2 viewPager) {}
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +51,13 @@ public  ApplicationFormActivity(){
 
         if (afDataObject != null && afDataObject instanceof AllDataAFDataModel) {
             allDataAFDataModel = (AllDataAFDataModel) afDataObject;
+            if(allDataAFDataModel!=null){
+                Log.d("TAG", "sunny: " + " Not Null");
+
+            }else{
+                Log.d("TAG", "sunny: " + "Null");
+
+            }
         }
 
         setSupportActionBar(toolbar);

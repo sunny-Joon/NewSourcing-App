@@ -24,7 +24,7 @@ public class FiCPopup extends DialogFragment {
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        getActivity().finish();
                     }
                 });
 

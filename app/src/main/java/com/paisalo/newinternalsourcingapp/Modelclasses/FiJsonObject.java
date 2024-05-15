@@ -11,6 +11,9 @@ import java.util.Date;
 
 public class FiJsonObject implements Serializable {
 
+    @SerializedName("groupCode")
+    @Expose
+    private String groupCode;
     @SerializedName("AadharID")
     @Expose
     private String aadharID;
@@ -135,6 +138,13 @@ public class FiJsonObject implements Serializable {
     @Expose
     private FiExtra fiExtra;
 
+    public String getgroupCode() {
+        return groupCode;
+    }
+
+    public void setgroupCode(String groupCode) {
+        this.groupCode = groupCode;
+    }
     public String getAadharID() {
         return aadharID;
     }
@@ -467,6 +477,7 @@ public class FiJsonObject implements Serializable {
     @Override
     public String toString() {
         return "{" +
+                "\"groupCode\": \"" + groupCode + "\"," +
                 "\"AadharID\": \"" + aadharID + "\"," +
                 "\"Age\": \"" + age + "\"," +
                 "\"Fname\": \"" + fname + "\"," +
