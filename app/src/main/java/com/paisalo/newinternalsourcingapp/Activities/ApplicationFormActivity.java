@@ -3,6 +3,7 @@ package com.paisalo.newinternalsourcingapp.Activities;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 
 import androidx.annotation.NonNull;
@@ -55,6 +56,10 @@ public  ApplicationFormActivity(){
 
         if (afDataObject != null && afDataObject instanceof AllDataAFDataModel) {
             allDataAFDataModel = (AllDataAFDataModel) afDataObject;
+            Log.d("TAG", "onCreateViewadhaar: "+"check data");
+            if(allDataAFDataModel!=null) {
+                Log.d("TAG", "onCreateViewadhaar: " + "confirm data");
+            }
         }
 
         setSupportActionBar(toolbar);

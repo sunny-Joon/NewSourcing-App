@@ -78,16 +78,16 @@ public class FiExtra implements Serializable {
     private Integer agriculturaLINCOME;
     @SerializedName("pension_Income")
     @Expose
-    private Object pensionIncome;
+    private String pensionIncome;
     @SerializedName("interest_Income")
     @Expose
-    private Object interestIncome;
+    private String interestIncome;
     @SerializedName("rentalIncome")
     @Expose
-    private Object rentalIncome;
+    private String rentalIncome;
     @SerializedName("isBorrowerHandicap")
     @Expose
-    private Object isBorrowerHandicap;
+    private String isBorrowerHandicap;
     @SerializedName("soC_ATTR_2_INCOME")
     @Expose
     private Integer soCATTR2INCOME;
@@ -117,10 +117,10 @@ public class FiExtra implements Serializable {
     private String visuallYIMPAIREDYN;
     @SerializedName("forM60_TNX_DT")
     @Expose
-    private Object forM60TNXDT;
+    private String forM60TNXDT;
     @SerializedName("forM60_SUBMISSIONDATE")
     @Expose
-    private Object forM60SUBMISSIONDATE;
+    private String forM60SUBMISSIONDATE;
     @SerializedName("forM60_PAN_APPLIED_YN")
     @Expose
     private String forM60PANAPPLIEDYN;
@@ -183,7 +183,7 @@ public class FiExtra implements Serializable {
     private String fatheRLASTNAME;
     @SerializedName("years_in_business")
     @Expose
-    private Integer yearsInBusiness;
+    private String yearsInBusiness;
 
     public Integer getCode() {
         return code;
@@ -369,35 +369,35 @@ public class FiExtra implements Serializable {
         this.agriculturaLINCOME = agriculturaLINCOME;
     }
 
-    public Object getPensionIncome() {
+    public String getPensionIncome() {
         return pensionIncome;
     }
 
-    public void setPensionIncome(Object pensionIncome) {
+    public void setPensionIncome(String pensionIncome) {
         this.pensionIncome = pensionIncome;
     }
 
-    public Object getInterestIncome() {
+    public String getInterestIncome() {
         return interestIncome;
     }
 
-    public void setInterestIncome(Object interestIncome) {
+    public void setInterestIncome(String interestIncome) {
         this.interestIncome = interestIncome;
     }
 
-    public Object getRentalIncome() {
+    public String getRentalIncome() {
         return rentalIncome;
     }
 
-    public void setRentalIncome(Object rentalIncome) {
+    public void setRentalIncome(String rentalIncome) {
         this.rentalIncome = rentalIncome;
     }
 
-    public Object getIsBorrowerHandicap() {
+    public String getIsBorrowerHandicap() {
         return isBorrowerHandicap;
     }
 
-    public void setIsBorrowerHandicap(Object isBorrowerHandicap) {
+    public void setIsBorrowerHandicap(String isBorrowerHandicap) {
         this.isBorrowerHandicap = isBorrowerHandicap;
     }
 
@@ -473,19 +473,19 @@ public class FiExtra implements Serializable {
         this.visuallYIMPAIREDYN = visuallYIMPAIREDYN;
     }
 
-    public Object getForM60TNXDT() {
+    public String getForM60TNXDT() {
         return forM60TNXDT;
     }
 
-    public void setForM60TNXDT(Object forM60TNXDT) {
+    public void setForM60TNXDT(String forM60TNXDT) {
         this.forM60TNXDT = forM60TNXDT;
     }
 
-    public Object getForM60SUBMISSIONDATE() {
+    public String getForM60SUBMISSIONDATE() {
         return forM60SUBMISSIONDATE;
     }
 
-    public void setForM60SUBMISSIONDATE(Object forM60SUBMISSIONDATE) {
+    public void setForM60SUBMISSIONDATE(String forM60SUBMISSIONDATE) {
         this.forM60SUBMISSIONDATE = forM60SUBMISSIONDATE;
     }
 
@@ -649,11 +649,11 @@ public class FiExtra implements Serializable {
         this.fatheRLASTNAME = fatheRLASTNAME;
     }
 
-    public Integer getYearsInBusiness() {
+    public String getYearsInBusiness() {
         return yearsInBusiness;
     }
 
-    public void setYearsInBusiness(Integer yearsInBusiness) {
+    public void setYearsInBusiness(String yearsInBusiness) {
         this.yearsInBusiness = yearsInBusiness;
     }
 

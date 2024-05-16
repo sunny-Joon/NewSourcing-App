@@ -88,9 +88,11 @@ public class ApplicationFormActivityMenu extends AppCompatActivity {
                 if(response.isSuccessful()){
                     AllDataAFModel allDataAFModel = response.body();
                     if (allDataAFModel != null) {
-                        AllDataAFDataModel allDataAFDataModel = allDataAFModel.getData();
+                        allDataAFDataModel = allDataAFModel.getData();
 
                         if (allDataAFDataModel != null) {
+                            Log.d("TAG", "onCreateViewadhaar: "+"confirm data");
+
                             fiExtra = allDataAFDataModel.getFiExtra();
                             fiExtraBankBo = allDataAFDataModel.getFiExtraBankBo();
                             fiFamExpenses = allDataAFDataModel.getFiFamExpenses();

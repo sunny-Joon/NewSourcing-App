@@ -1,7 +1,11 @@
 package com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.ApplicationFormFragments;
 
+import static com.paisalo.newinternalsourcingapp.GlobalClass.SubmitAlert;
+
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -19,11 +23,14 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivityMenu;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFDataModel;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.FiFamExpenses;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.FiFamLoan;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.UpdateFiModels.KycUpdateModel;
 import com.paisalo.newinternalsourcingapp.R;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiClient;
@@ -41,9 +48,9 @@ import retrofit2.Response;
 
 public class FinancialInfoFragment extends Fragment {
 
-    Spinner accountTypeSpinner,houseTypeSpinner,roofTypeSpinner,personalToiletSpinner;
-    EditText bankAccountNumber,bankIFSCCode,rentalIncome,expenseInRent,expenseForFood,expenseForEducation,expenseForHealth,
-            expenseForTravelling,expenseForEntertainment,anyOtherExpense,etaccount_date;
+    Spinner accountTypeSpinner, houseTypeSpinner, roofTypeSpinner, personalToiletSpinner;
+    EditText bankAccountNumber, bankIFSCCode, rentalIncome, expenseInRent, expenseForFood, expenseForEducation, expenseForHealth,
+            expenseForTravelling, expenseForEntertainment, anyOtherExpense, etaccount_date;
     Button submit;
     List<String> houseType_List = new ArrayList<>();
     List<String> roofType_List = new ArrayList<>();
@@ -51,13 +58,12 @@ public class FinancialInfoFragment extends Fragment {
     List<String> accountType_List = new ArrayList<>();
     ImageView calender_icon;
 
-    String fiCode,creator,tag,bankAccountType,bankAccNumber,accOpeningDate,ifscCode,rentalincome,expenseinRent
-             ,expenseforFood,expenseforEducation,expenseforHealth,expenseforTravelling,expenseforEntertainment
-            ,otherexpense,houseType,roofType,personalToilet;
-
+    String fiCode, creator, tag, bankAccountType, bankAccNumber, accOpeningDate, ifscCode, houseType, roofType, personalToilet;
+     Integer expenseforEducation,expenseforEntertainment,expenseforFood,expenseforHealth,expenseforTravelling,expenseinRent,otherexpense,rentalincome;
     AllDataAFDataModel allDataAFDataModel;
+
     public FinancialInfoFragment(AllDataAFDataModel allDataAFDataModel) {
-        this.allDataAFDataModel=allDataAFDataModel;
+        this.allDataAFDataModel = allDataAFDataModel;
     }
 
     @Override
@@ -68,15 +74,9 @@ public class FinancialInfoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_financial_info, container, false);
+        View view = inflater.inflate(R.layout.fragment_financial_info, container, false);
 
         DatabaseClass databaseClass = DatabaseClass.getInstance(getContext());
-
-        if(allDataAFDataModel != null){
-            fiCode =  allDataAFDataModel.getCode().toString();
-            creator =  allDataAFDataModel.getCreator().toString();
-            tag =  allDataAFDataModel.getTag().toString();
-        }
 
 
 
@@ -109,68 +109,130 @@ public class FinancialInfoFragment extends Fragment {
         accountType_List.add(selectOption);
 
 
-       /* bankAccountNumber.setText(allDataAFDataModel.getBankAcNo());
-        bankIFSCCode.setText(allDataAFDataModel.getBankAcNo());
-        rentalIncome.setText(allDataAFDataModel.getBankAcNo());
-        expenseInRent.setText(allDataAFDataModel.getBankAcNo());
-        expenseForFood.setText(allDataAFDataModel.getBankAcNo());
-        expenseForEducation.setText(allDataAFDataModel.getBankAcNo());
-        expenseForHealth.setText(allDataAFDataModel.getBankAcNo());
-        expenseForTravelling.setText(allDataAFDataModel.getBankAcNo());
-        expenseForEntertainment.setText(allDataAFDataModel.getBankAcNo());
-        anyOtherExpense.setText(allDataAFDataModel.getBankAcNo());
-        bankAccountNumber.setText(allDataAFDataModel.getBankAcNo().toString());
-       // bankIFSCCode.setText(allDataAFDataModel.getFiExtra().);
-        rentalIncome.setText(allDataAFDataModel.getFiExtra().getRentalIncome().toString());
-        expenseInRent.setText(allDataAFDataModel.getRentOfHouse());
-        expenseForFood.setText(allDataAFDataModel.getFiFamExpenses().getFooding());
-        expenseForEducation.setText(allDataAFDataModel.getFiFamExpenses().getEducation());
-        expenseForHealth.setText(allDataAFDataModel.getFiFamExpenses().getHealth());
-        expenseForTravelling.setText(allDataAFDataModel.getFiFamExpenses().getTravelling());
-        expenseForEntertainment.setText(allDataAFDataModel.getFiFamExpenses().getEntertainment());
-        anyOtherExpense.setText(allDataAFDataModel.getFiFamExpenses().getOthers());
-        etaccount_date.setText(allDataAFDataModel.getBankAcOpenDt().toString());*/
+        List<RangeCategoryDataClass> houseType_DataList = databaseClass.dao().getAllRCDataListby_catKey("house-type");
+        for (RangeCategoryDataClass data : houseType_DataList) {
+            String descriptionEn = data.getDescriptionEn();
+            houseType_List.add(descriptionEn);
+
+        }
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, houseType_List);
+        houseTypeSpinner.setAdapter(adapter1);
+
+        List<RangeCategoryDataClass> roofType_DataList = databaseClass.dao().getAllRCDataListby_catKey("house-roof-type");
+        for (RangeCategoryDataClass data : roofType_DataList) {
+            String descriptionEn = data.getDescriptionEn();
+            roofType_List.add(descriptionEn);
+
+        }
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, roofType_List);
+        roofTypeSpinner.setAdapter(adapter2);
+
+        List<RangeCategoryDataClass> personalToilet_DataList = databaseClass.dao().getAllRCDataListby_catKey("toilet-type");
+        for (RangeCategoryDataClass data : personalToilet_DataList) {
+            String descriptionEn = data.getDescriptionEn();
+            personalToilet_List.add(descriptionEn);
+
+        }
+        ArrayAdapter<String> adapter3 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, personalToilet_List);
+        personalToiletSpinner.setAdapter(adapter3);
+
+
+        List<RangeCategoryDataClass> accountType_DataList = databaseClass.dao().getAllRCDataListby_catKey("bank_ac_type");
+        for (RangeCategoryDataClass data : accountType_DataList) {
+            String descriptionEn = data.getDescriptionEn();
+            accountType_List.add(descriptionEn);
+        }
+        ArrayAdapter<String> adapter4 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, accountType_List);
+        accountTypeSpinner.setAdapter(adapter4);
+
+        if (allDataAFDataModel != null) {
+            fiCode = allDataAFDataModel.getCode().toString();
+            creator = allDataAFDataModel.getCreator().toString();
+            tag = allDataAFDataModel.getTag().toString();
+            Log.d("TAG", "onCreateView222: " + fiCode + tag + creator);
+            try {
+
+                if (allDataAFDataModel != null) {
+                    Log.d("TAG", "onCreate:view1 "+allDataAFDataModel.getBankAcNo());
+                    if (allDataAFDataModel.getBankAcNo() != null) {
+                        bankAccountNumber.setText(allDataAFDataModel.getBankAcNo());
+                    }
+
+                    Log.d("TAG", "onCreate:view3 "+allDataAFDataModel.getBankAcOpenDt());
+                    if (allDataAFDataModel.getBankAcOpenDt() != null) {
+                        etaccount_date.setText(allDataAFDataModel.getBankAcOpenDt());
+                    }
+
+//                    Log.d("TAG", "onCreate:view4 "+allDataAFDataModel.geti());
+//                    if (allDataAFDataModel.getBankAcOpenDt() != null) {
+//                        bankIFSCCode.setText(allDataAFDataModel.getBankAcOpenDt());
+//                    }
+
+                    Log.d("TAG", "onCreate:view5 "+allDataAFDataModel.getFiExtra().getRentalIncome());
+                    if (allDataAFDataModel.getFiExtra().getRentalIncome() != null) {
+                        rentalIncome.setText(allDataAFDataModel.getFiExtra().getRentalIncome());
+                    }
+
+                    Log.d("TAG", "onCreate:view6 "+allDataAFDataModel.getFiFamExpenses().getRent());
+                    if (allDataAFDataModel.getFiFamExpenses().getRent() != null) {
+                        expenseInRent.setText(allDataAFDataModel.getFiFamExpenses().getRent());
+                    }
+
+                    Log.d("TAG", "onCreate:view8 "+allDataAFDataModel.getFiFamExpenses().getFooding());
+                    if (allDataAFDataModel.getFiFamExpenses().getFooding() != null) {
+                        expenseForFood.setText(allDataAFDataModel.getFiFamExpenses().getFooding());
+                    }
+
+                    Log.d("TAG", "onCreate:view9 "+allDataAFDataModel.getFiFamExpenses().getEducation());
+                    if (allDataAFDataModel.getFiFamExpenses().getEducation() != null) {
+                        expenseForEducation.setText(allDataAFDataModel.getFiFamExpenses().getEducation());
+                    }
+
+                    Log.d("TAG", "onCreate:view10 "+allDataAFDataModel.getFiFamExpenses().getHealth());
+                    if (allDataAFDataModel.getFiFamExpenses().getHealth() != null) {
+                        expenseForHealth.setText(allDataAFDataModel.getFiFamExpenses().getHealth());
+                    }
+
+                    Log.d("TAG", "onCreate:view11 "+allDataAFDataModel.getFiFamExpenses().getTravelling());
+                    if (allDataAFDataModel.getFiFamExpenses().getTravelling() != null) {
+                        expenseForTravelling.setText(allDataAFDataModel.getFiFamExpenses().getTravelling());
+                    }
+
+                    Log.d("TAG", "onCreate:view12 "+allDataAFDataModel.getFiFamExpenses().getEntertainment());
+                    if (allDataAFDataModel.getFiFamExpenses().getEntertainment() != null) {
+                        expenseForEntertainment.setText(allDataAFDataModel.getFiFamExpenses().getEntertainment());
+                    }
+
+                    Log.d("TAG", "onCreate:view13 "+allDataAFDataModel.getFiFamExpenses().getOthers());
+                    if (allDataAFDataModel.getFiFamExpenses().getOthers() != null) {
+                        anyOtherExpense.setText(allDataAFDataModel.getFiFamExpenses().getOthers());
+                    }
 
 
 
-        DatabaseClass.databaseWriteExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
+                    if (allDataAFDataModel.getFiFamExpenses().getHomeType() != null) {
+                        int castePos = adapter1.getPosition(allDataAFDataModel.getFiFamExpenses().getHomeType());
+                        houseTypeSpinner.setSelection(castePos);
+                    }
+                    if (allDataAFDataModel.getFiFamExpenses().getHomeRoofType() != null) {
+                        int castePos1 = adapter2.getPosition(allDataAFDataModel.getFiFamExpenses().getHomeRoofType());
+                        roofTypeSpinner.setSelection(castePos1);
+                    }
+                    if (allDataAFDataModel.getFiFamExpenses().getToiletType() != null) {
+                        int castePos2 = adapter3.getPosition(allDataAFDataModel.getFiFamExpenses().getToiletType());
+                        personalToiletSpinner.setSelection(castePos2);
+                    }
 
-                List<RangeCategoryDataClass> houseType_DataList = databaseClass.dao().getAllRCDataListby_catKey("house-type");
-                for (RangeCategoryDataClass data : houseType_DataList) {
-                    String descriptionEn = data.getDescriptionEn();
-                    houseType_List.add(descriptionEn);
-                    ArrayAdapter<String> adapter1 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, houseType_List);
-                    houseTypeSpinner.setAdapter(adapter1);
+                    Log.d("TAG", "onCreate:view7 "+allDataAFDataModel.getBankAcType());
+                    if (allDataAFDataModel.getBankAcType() != null) {
+                        int castePos3 = adapter4.getPosition(allDataAFDataModel.getBankAcType());
+                        accountTypeSpinner.setSelection(castePos3);
+                    }
                 }
-
-                List<RangeCategoryDataClass> roofType_DataList = databaseClass.dao().getAllRCDataListby_catKey("house-roof-type");
-                for (RangeCategoryDataClass data : roofType_DataList) {
-                    String descriptionEn = data.getDescriptionEn();
-                    roofType_List.add(descriptionEn);
-                    ArrayAdapter<String> adapter1 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, roofType_List);
-                    roofTypeSpinner.setAdapter(adapter1);
+                } catch(Exception exception){
+                    Toast.makeText(getContext(), "fifamloans is null here", Toast.LENGTH_SHORT).show();
                 }
-
-                List<RangeCategoryDataClass> personalToilet_DataList = databaseClass.dao().getAllRCDataListby_catKey("toilet-type");
-                for (RangeCategoryDataClass data : personalToilet_DataList) {
-                    String descriptionEn = data.getDescriptionEn();
-                    personalToilet_List.add(descriptionEn);
-                    ArrayAdapter<String> adapter1 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, personalToilet_List);
-                    personalToiletSpinner.setAdapter(adapter1);
-                }
-                List<RangeCategoryDataClass> accountType_DataList = databaseClass.dao().getAllRCDataListby_catKey("bank_ac_type");
-                for (RangeCategoryDataClass data : accountType_DataList) {
-                    String descriptionEn = data.getDescriptionEn();
-                    accountType_List.add(descriptionEn);
-                    ArrayAdapter<String> adapter1 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, accountType_List);
-                    accountTypeSpinner.setAdapter(adapter1);
-                }
-
-
-    }
-});
+            }
 
 
         calender_icon.setOnClickListener(new View.OnClickListener() {
@@ -191,7 +253,7 @@ public class FinancialInfoFragment extends Fragment {
                     public void onDateSet(android.widget.DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
                         String selectedDate = String.format("%04d-%02d-%02d", selectedYear, selectedMonth + 1, selectedDay);
                         etaccount_date.setText(selectedDate);
-                       // progressBar.incrementProgressBy(1);
+                        // progressBar.incrementProgressBy(1);
                     }
                 }, year, month, day);
 
@@ -203,13 +265,13 @@ public class FinancialInfoFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                boolean allConditionsSatisfied=true;
+                boolean allConditionsSatisfied = true;
 
                 if (accountTypeSpinner.getSelectedItem().toString().contains("-Select-")) {
                     ((TextView) accountTypeSpinner.getSelectedView()).setError("Please select a accountType");
                     allConditionsSatisfied = false;
                 } else {
-                    bankAccountType= accountTypeSpinner.getSelectedItem().toString();
+                    bankAccountType = accountTypeSpinner.getSelectedItem().toString();
                 }
 
 
@@ -220,10 +282,10 @@ public class FinancialInfoFragment extends Fragment {
                     bankAccNumber = bankAccountNumber.getText().toString();
                 }
 
-                if(etaccount_date.getText().toString().isEmpty()){
+                if (etaccount_date.getText().toString().isEmpty()) {
                     etaccount_date.setError("Select Date");
                     allConditionsSatisfied = false;
-                }else{
+                } else {
                     accOpeningDate = etaccount_date.getText().toString();
                 }
 
@@ -240,7 +302,7 @@ public class FinancialInfoFragment extends Fragment {
                     rentalIncome.setError("Invalid rentalIncome");
                     allConditionsSatisfied = false;
                 } else {
-                    rentalincome = rentalIncome.getText().toString();
+                    rentalincome = Integer.valueOf(rentalIncome.getText().toString());
                 }
 
 
@@ -248,7 +310,7 @@ public class FinancialInfoFragment extends Fragment {
                     expenseInRent.setError("Invalid expenseInRent");
                     allConditionsSatisfied = false;
                 } else {
-                    expenseinRent = expenseInRent.getText().toString();
+                    expenseinRent = Integer.valueOf(expenseInRent.getText().toString());
                 }
 
 
@@ -256,7 +318,7 @@ public class FinancialInfoFragment extends Fragment {
                     expenseForFood.setError("Invalid expenseForFood");
                     allConditionsSatisfied = false;
                 } else {
-                    expenseforFood = expenseForFood.getText().toString();
+                    expenseforFood = Integer.valueOf(expenseForFood.getText().toString());
                 }
 
 
@@ -264,7 +326,7 @@ public class FinancialInfoFragment extends Fragment {
                     expenseForEducation.setError("Invalid expenseForEducation");
                     allConditionsSatisfied = false;
                 } else {
-                    expenseforEducation = expenseForEducation.getText().toString();
+                    expenseforEducation = Integer.valueOf(expenseForEducation.getText().toString());
                 }
 
 
@@ -272,7 +334,7 @@ public class FinancialInfoFragment extends Fragment {
                     expenseForHealth.setError("Invalid expenseForHealth");
                     allConditionsSatisfied = false;
                 } else {
-                    expenseforHealth = expenseForHealth.getText().toString();
+                    expenseforHealth = Integer.valueOf(expenseForHealth.getText().toString());
                 }
 
 
@@ -280,7 +342,7 @@ public class FinancialInfoFragment extends Fragment {
                     expenseForTravelling.setError("Invalid expenseForTravelling");
                     allConditionsSatisfied = false;
                 } else {
-                    expenseforTravelling = expenseForTravelling.getText().toString();
+                    expenseforTravelling = Integer.valueOf(expenseForTravelling.getText().toString());
                 }
 
 
@@ -288,7 +350,7 @@ public class FinancialInfoFragment extends Fragment {
                     expenseForEntertainment.setError("Invalid expenseForEntertainment");
                     allConditionsSatisfied = false;
                 } else {
-                    expenseforEntertainment = expenseForEntertainment.getText().toString();
+                    expenseforEntertainment = Integer.valueOf(expenseForEntertainment.getText().toString());
                 }
 
 
@@ -296,28 +358,28 @@ public class FinancialInfoFragment extends Fragment {
                     anyOtherExpense.setError("Invalid anyOtherExpense");
                     allConditionsSatisfied = false;
                 } else {
-                    otherexpense = anyOtherExpense.getText().toString();
+                    otherexpense = Integer.valueOf(anyOtherExpense.getText().toString());
                 }
 
                 if (houseTypeSpinner.getSelectedItem().toString().contains("-Select-")) {
                     ((TextView) houseTypeSpinner.getSelectedView()).setError("Please select a houseType");
                     allConditionsSatisfied = false;
                 } else {
-                    houseType= houseTypeSpinner.getSelectedItem().toString();
+                    houseType = houseTypeSpinner.getSelectedItem().toString();
                 }
 
                 if (roofTypeSpinner.getSelectedItem().toString().contains("-Select-")) {
                     ((TextView) roofTypeSpinner.getSelectedView()).setError("Please select a roofType");
                     allConditionsSatisfied = false;
                 } else {
-                    roofType= roofTypeSpinner.getSelectedItem().toString();
+                    roofType = roofTypeSpinner.getSelectedItem().toString();
                 }
 
                 if (personalToiletSpinner.getSelectedItem().toString().contains("-Select-")) {
                     ((TextView) personalToiletSpinner.getSelectedView()).setError("Please select a personalToilet");
                     allConditionsSatisfied = false;
                 } else {
-                    personalToilet= personalToiletSpinner.getSelectedItem().toString();
+                    personalToilet = personalToiletSpinner.getSelectedItem().toString();
                 }
 
                 if (allConditionsSatisfied) {
@@ -332,16 +394,14 @@ public class FinancialInfoFragment extends Fragment {
                             if (response.isSuccessful()) {
                                 Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
                                 //  Log.d("TAG", "onResponseAdhaarUpdatemsg: " + response.body().getMessage().toString());
-                                SharedPreferences sharedPreferences = getContext().getSharedPreferences("checkBoxes", Context.MODE_PRIVATE);
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.putBoolean("financialInfoCheckBox", true);
-                                editor.apply();
+                                SubmitAlert(getActivity(), "success", "Data set Successfully");
 
                                 Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
                                 startActivity(intent);
                                 getActivity().finish();
                             } else {
                                 Log.d("TAG", "onResponseAdhaarUpdate: " + response.code());
+                                SubmitAlert(getActivity(), "unsuccessful", "Check Your Internet Connection");
 
                             }
                         }
@@ -349,19 +409,16 @@ public class FinancialInfoFragment extends Fragment {
                         @Override
                         public void onFailure(Call<KycUpdateModel> call, Throwable t) {
                             Log.d("TAG", "onResponseAdhaarUpdate: " + "failure");
+                            SubmitAlert(getActivity(), "Network Error", "Check Your Internet Connection");
 
                         }
                     });
 
-                SharedPreferences sharedPreferences = getContext().getSharedPreferences("checkBoxes", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean("financialInfoCheckBox", true);
-                editor.apply();
 
-                Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
-                startActivity(intent);
-                getActivity().finish();
-            }
+                    Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
+                    startActivity(intent);
+                    getActivity().finish();
+                }
             }
         });
 
@@ -370,10 +427,10 @@ public class FinancialInfoFragment extends Fragment {
 
     private JsonObject financeJson() {
         JsonObject jsonFinance = new JsonObject();
-        jsonFinance.addProperty("fiCode",fiCode);
+        jsonFinance.addProperty("fiCode", fiCode);
         jsonFinance.addProperty("creator", creator);
         jsonFinance.addProperty("tag", tag);
-        jsonFinance.addProperty("bankAccountType",bankAccountType );
+        jsonFinance.addProperty("bankAccountType", bankAccountType);
         jsonFinance.addProperty("bankAccNumber", bankAccNumber);
         jsonFinance.addProperty("accOpeningDate", accOpeningDate);
         jsonFinance.addProperty("ifscCode", ifscCode);

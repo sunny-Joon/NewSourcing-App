@@ -46,4 +46,7 @@ public interface DaoClass {
     @Query("SELECT *  FROM ManagerListDataBase")
     List<ManagerListDataClass> getAllManagerDataList();
 
+    @Query("Select * from RangeCategory_Database where cat_key=:catKey and code=:code")
+    RangeCategoryDataClass getStateByCode(String catKey,String code);
+
 }

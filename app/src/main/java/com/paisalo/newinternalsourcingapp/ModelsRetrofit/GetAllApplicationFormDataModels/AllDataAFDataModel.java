@@ -1,6 +1,7 @@
 package com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -189,7 +190,7 @@ public class AllDataAFDataModel implements Serializable {
     private String propertyDet;
     @SerializedName("fAmily_member")
     @Expose
-    private Integer fAmilyMember;
+    private String fAmilyMember;
     @SerializedName("enc_Property")
     @Expose
     private String encProperty;
@@ -294,7 +295,7 @@ public class AllDataAFDataModel implements Serializable {
     private String religion;
     @SerializedName("landHolding")
     @Expose
-    private Integer landHolding;
+    private String landHolding;
     @SerializedName("exServiceMan")
     @Expose
     private String exServiceMan;
@@ -333,7 +334,7 @@ public class AllDataAFDataModel implements Serializable {
     private String bankAcType;
     @SerializedName("bankAcOpenDt")
     @Expose
-    private Object bankAcOpenDt;
+    private String bankAcOpenDt;
     @SerializedName("latitude")
     @Expose
     private Object latitude;
@@ -938,11 +939,11 @@ public class AllDataAFDataModel implements Serializable {
         this.propertyDet = propertyDet;
     }
 
-    public Integer getfAmilyMember() {
+    public String getfAmilyMember() {
         return fAmilyMember;
     }
 
-    public void setfAmilyMember(Integer fAmilyMember) {
+    public void setfAmilyMember(String fAmilyMember) {
         this.fAmilyMember = fAmilyMember;
     }
 
@@ -1218,11 +1219,11 @@ public class AllDataAFDataModel implements Serializable {
         this.religion = religion;
     }
 
-    public Integer getLandHolding() {
+    public String getLandHolding() {
         return landHolding;
     }
 
-    public void setLandHolding(Integer landHolding) {
+    public void setLandHolding(String landHolding) {
         this.landHolding = landHolding;
     }
 
@@ -1322,11 +1323,11 @@ public class AllDataAFDataModel implements Serializable {
         this.bankAcType = bankAcType;
     }
 
-    public Object getBankAcOpenDt() {
+    public String getBankAcOpenDt() {
         return bankAcOpenDt;
     }
 
-    public void setBankAcOpenDt(Object bankAcOpenDt) {
+    public void setBankAcOpenDt(String bankAcOpenDt) {
         this.bankAcOpenDt = bankAcOpenDt;
     }
 
