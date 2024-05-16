@@ -187,4 +187,7 @@ public interface ApiInterface {
     @Multipart
     @POST("OCR/DocVerifyforOSVSpaceOCR")
     Call<KycScanningModel> scanDoc(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("imgType") String imgType, @Part MultipartBody.Part file);
+
+    @GET("Miscellaneous/HomeVisitExistance")
+    Call<TargetSetModel> checkHVForm(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("FiCode") String FiCode, @Query("Creator") String Creator);
 }

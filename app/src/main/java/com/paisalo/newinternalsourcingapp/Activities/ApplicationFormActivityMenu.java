@@ -1,5 +1,8 @@
 package com.paisalo.newinternalsourcingapp.Activities;
 
+import static com.paisalo.newinternalsourcingapp.GlobalClass.SubmitAlert;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
@@ -12,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 
+import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFDataModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFModel;
@@ -22,6 +26,7 @@ import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDa
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.FiFamMem;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.FiGuarantor;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.UploadedFiDocs;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.TargetSetModel;
 import com.paisalo.newinternalsourcingapp.R;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiClient;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiInterface;
@@ -35,16 +40,8 @@ import retrofit2.Response;
 public class ApplicationFormActivityMenu extends AppCompatActivity {
 
     CardView aadhaar,personalDetails,borrowings,guarantors,kycScanning,financialInfo,familyIncome;
-
     CheckBox kycScanningCheckBox, guarantorCheckBox,borrowingsCheckBox, familyIncomeCheckBox,financialInfoCheckBox,personaldetailCheckBox,aadhaarCheckBox;
     AllDataAFDataModel allDataAFDataModel;
-    FiExtra fiExtra;
-    FiExtraBankBo fiExtraBankBo;
-    FiFamExpenses fiFamExpenses;
-    List<FiFamLoan> fiFamLoan;
-    List<FiFamMem> fiFamMem;
-    List<FiGuarantor> fiGuarantor;
-    List<UploadedFiDocs> uploadedFiDocs;
     String fiCode,creator;
 
     @Override
@@ -77,6 +74,21 @@ public class ApplicationFormActivityMenu extends AppCompatActivity {
         borrowingsCheckBox = findViewById(R.id.borrowingsCheckBox);
         guarantorCheckBox = findViewById(R.id.guarantorCheckBox);
         kycScanningCheckBox = findViewById(R.id.kycScanningCheckBox);
+
+        aadhaarCheckBox.setChecked(false);
+        aadhaarCheckBox.setClickable(false);
+        personaldetailCheckBox.setChecked(false);
+        personaldetailCheckBox.setClickable(false);
+        financialInfoCheckBox.setChecked(false);
+        financialInfoCheckBox.setClickable(false);
+        familyIncomeCheckBox.setChecked(false);
+        familyIncomeCheckBox.setClickable(false);
+        borrowingsCheckBox.setChecked(false);
+        borrowingsCheckBox.setClickable(false);
+        guarantorCheckBox.setChecked(false);
+        guarantorCheckBox.setClickable(false);
+        kycScanningCheckBox.setChecked(false);
+        kycScanningCheckBox.setClickable(false);
 
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<AllDataAFModel> call= apiInterface.getAllAFData(GlobalClass.Token,GlobalClass.dbname,fiCode,creator);
@@ -132,42 +144,6 @@ public class ApplicationFormActivityMenu extends AppCompatActivity {
             }
         });
 
-
-
-
-  /*      if (!sharedPreferences.getBoolean("financialInfoCheckBox",false)) {
-            editor.putBoolean("financialInfoCheckBox", false);
-            editor.apply();
-        }else{
-            financialInfoCheckBox.setChecked(true);
-        }
-        if (!sharedPreferences.getBoolean("familyIncomeCheckBox",false)) {
-            editor.putBoolean("familyIncomeCheckBox", false);
-            editor.apply();
-        }else{
-            familyIncomeCheckBox.setChecked(true);
-        }
-        if (!sharedPreferences.getBoolean("borrowingsCheckBox",false)) {
-            editor.putBoolean("borrowingsCheckBox", false);
-            editor.apply();
-        }else{
-            borrowingsCheckBox.setChecked(true);
-        }
-        if (!sharedPreferences.getBoolean("guarantorCheckBox",false)) {
-            editor.putBoolean("guarantorCheckBox", false);
-            editor.apply();
-        }else{
-            guarantorCheckBox.setChecked(true);
-        }
-        if (!sharedPreferences.getBoolean("kycScanningCheckBox",false)) {
-            editor.putBoolean("kycScanningCheckBox", false);
-            editor.apply();
-        }else{
-            kycScanningCheckBox.setChecked(true);
-        }*/
-
-
-
         aadhaar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -211,16 +187,43 @@ public class ApplicationFormActivityMenu extends AppCompatActivity {
         kycScanning.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), ApplicationFormActivity.class);
-                intent.putExtra("Id","kycScanning" );
-                if(allDataAFDataModel!=null){
-                    Log.d("TAG", "sunny: " + " Not Null");
 
-                }else{
-                    Log.d("TAG", "sunny: " + "Null");
-                }
-                intent.putExtra("allDataAFDataModel",allDataAFDataModel);
-                startActivity(intent);
+                ApiInterface apiInterface1 = ApiClient.getClient().create(ApiInterface.class);
+                Call<TargetSetModel> call1 = apiInterface1.checkHVForm(GlobalClass.Token,GlobalClass.dbname,fiCode,creator);
+
+                call1.enqueue(new Callback<TargetSetModel>() {
+                    @Override
+                    public void onResponse(Call<TargetSetModel> call, Response<TargetSetModel> response) {
+                        if(response.isSuccessful()){
+                            if(response.body() !=null){
+                                if(response.body().getMessage().equals("Record Not Found !!")){
+                                    SubmitAlert(ApplicationFormActivityMenu.this, "Note", "Please Fill House Visit Form First ");
+                                }else if (!aadhaarCheckBox.isChecked() || !personaldetailCheckBox.isChecked() ||
+                                        !financialInfoCheckBox.isChecked() || !familyIncomeCheckBox.isChecked() ||
+                                        !borrowingsCheckBox.isChecked() || !guarantorCheckBox.isChecked()) {
+                                    SubmitAlert(ApplicationFormActivityMenu.this, "Note", "Please Fill Above Forms First ");
+
+                                }else{
+                                    Intent intent = new Intent(view.getContext(), ApplicationFormActivity.class);
+                                    intent.putExtra("Id","kycScanning" );
+                                    intent.putExtra("allDataAFDataModel",allDataAFDataModel);
+                                    startActivity(intent);
+                                }
+                            }else{
+                                SubmitAlert(ApplicationFormActivityMenu.this, "Note", "Unable To Open ");
+                            }
+                        }else{
+                            SubmitAlert(ApplicationFormActivityMenu.this, "Note", "Unable To Open ");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<TargetSetModel> call, Throwable t) {
+                        SubmitAlert(ApplicationFormActivityMenu.this, "Error", "Network Error ");
+
+                    }
+                });
+
             }
         });
 
