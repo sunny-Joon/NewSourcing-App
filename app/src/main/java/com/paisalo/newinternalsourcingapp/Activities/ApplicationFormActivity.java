@@ -30,16 +30,7 @@ public class ApplicationFormActivity extends AppCompatActivity {
 
     private ViewPager2 viewPager;
     private MaterialToolbar toolbar;
-
     static AllDataAFDataModel allDataAFDataModel;
-
-    public ApplicationFormActivity(AllDataAFDataModel allDataAFDataModel) {
-        this.allDataAFDataModel = allDataAFDataModel;
-    }
-public  ApplicationFormActivity(){
-
-}
-    public ApplicationFormActivity(ViewPager2 viewPager) {}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +39,6 @@ public  ApplicationFormActivity(){
 
         viewPager = findViewById(R.id.viewPager);
         toolbar = findViewById(R.id.toolbar);
-
 
         Intent intent = getIntent();
 
@@ -59,6 +49,7 @@ public  ApplicationFormActivity(){
             Log.d("TAG", "onCreateViewadhaar: "+"check data");
             if(allDataAFDataModel!=null) {
                 Log.d("TAG", "onCreateViewadhaar: " + "confirm data");
+
             }
         }
 

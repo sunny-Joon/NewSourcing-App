@@ -11,6 +11,7 @@ import com.paisalo.newinternalsourcingapp.ModelsRetrofit.IdVerificationModels.PA
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.IdVerificationModels.DLVerificationModels.DLVerificationModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.IdVerificationModels.VoterIdVerificationModels.VoterIdVerificationModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.ImeiMappingModel;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.KycScanningModels.KycScanningModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.OCRScanModels.AdharDataResponse;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.ProfilePicModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.SaveFiModels.SaveFiModel;
@@ -58,6 +59,10 @@ public interface ApiInterface {
     @POST("/POSFI/SaveFi")
     Call<KycSubmitModel> SubmitKycApi(@Header("Authorization") String token, @Header("dbname") String dbName, @Body JsonObject object);
 
+    @POST("POSFI/SaveFi")
+    Call<SaveFiModel> getSaveFi(@Header("Authorization") String token, @Header("dbname") String dbname, @Body JsonObject object);
+
+
     @GET("api/LiveTrack/GetCSOMothlyTargetByUserId")
     public Call<LeaderboardModel> getLeaderboardData(@Header("Authorization") String token, @Header("dbname") String dbname);
 
@@ -88,8 +93,6 @@ public interface ApiInterface {
     @GET("DDLHelper/GetSBIVillageMaster")
     Call<VillageListModel> getVillageList(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("stcode") String stcode, @Query("discode") String discode, @Query("subdiscode") String subdiscode);
 
-    @POST("POSFI/SaveFi")
-    Call<SaveFiModel> getSaveFi(@Header("Authorization") String token, @Header("dbname") String dbname, @Body JsonObject object);
 
     @POST("OCR/GetIdentityVerfication")
     Call<PanVerificationModel> getpanVerified(@Header("Authorization") String token, @Header("dbname") String dbname, @Body JsonObject object);
@@ -147,17 +150,44 @@ public interface ApiInterface {
 
     @GET("Miscellaneous/GetHomeVisitBorrowerData")
     Call<HVBorrowerModel> HouseVisitBorrowerData(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("ficode") String fi, @Query("creator") String cr);
+
     @GET("Miscellaneous/GetHomeVisitData")
     Call<HVGetModel> GetHouseVisitData(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("ficode") String fi, @Query("creator") String cr);
+
     @GET("POSFI/getFiListEditing")
     Call<BorrowerListModel> PendingApplicationForms(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("IMEINO") String IMEINO, @Query("FOCode") String FOCode, @Query("AreaCd") String AreaCd, @Query("Creator") String Creator);
+
     @GET("POSDB/GetDataForESignCheck")
     Call<BorrowerListModel> PendingFEsign(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("IMEINO") String IMEINO, @Query("FOCode") String FOCode, @Query("CityCode") String CityCode, @Query("Creator") String Creator);
+
     @GET("POSDB/GetDataPendingForESign")
     Call<BorrowerListModel> PendingSEsign(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("IMEINO") String IMEINO, @Query("FOCode") String FOCode, @Query("AreaCd") String AreaCd, @Query("Creator") String Creator);
+
     @GET("InstCollection/getDueInstallments")
     Call<BorrowerListModel> PendingCollection(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("IMEINO") String IMEINO, @Query("FOCode") String FOCode, @Query("AreaCd") String AreaCd, @Query("Creator") String Creator);
 
     @GET("DocSignIn/GetXMLDoc")
-    Call<ResponseBody>   getXMLforESign();
+    Call<ResponseBody> getXMLforESign();
+
+    @Multipart
+    @POST("UploadDocs/SaveFiDocsJson")
+    Call<JsonObject> saveDocKyc(@Header("Authorization") String token, @Header("dbname") String dbname,
+                                      @Part MultipartBody.Part Document,
+                                      @Part("ficode") RequestBody ficode,
+                                      @Part("DbName") RequestBody DbName,
+                                      @Part("Creator") RequestBody Creator,
+                                      @Part("FiTag") RequestBody FiTag,
+                                      @Part("CheckListId") RequestBody CheckListId,
+                                      @Part("Remarks") RequestBody Remarks,
+                                      @Part("UserId") RequestBody UserId,
+                                      @Part("GrNo") RequestBody GrNo,
+                                      @Part("fileName") RequestBody fileName,
+                                      @Part("imageTag") RequestBody imageTag);
+
+    @Multipart
+    @POST("OCR/DocVerifyforOSVSpaceOCR")
+    Call<KycScanningModel> scanDoc(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("imgType") String imgType, @Part MultipartBody.Part file);
+
+    @GET("Miscellaneous/HomeVisitExistance")
+    Call<TargetSetModel> checkHVForm(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("FiCode") String FiCode, @Query("Creator") String Creator);
 }

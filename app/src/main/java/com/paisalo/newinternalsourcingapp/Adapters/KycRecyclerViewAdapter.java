@@ -20,7 +20,7 @@ public class KycRecyclerViewAdapter extends RecyclerView.Adapter<KycRecyclerView
 
     private Context context;
     private List<KYCScanningModel> kycScanning;
-    private OnItemClickListener onItemClickListener; // Add this interface
+    private OnItemClickListener onItemClickListener;
 
     public interface OnItemClickListener {
         void onItemClick(int position);

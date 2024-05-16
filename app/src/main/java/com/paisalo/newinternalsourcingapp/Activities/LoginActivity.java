@@ -598,6 +598,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                         GlobalClass.DevId = tokenDetailsModel.getDeviceSrNo().toString();
                         GlobalClass.UserName = foModel.get(0).getFoName().toString();
                         GlobalClass.Creator = foModel.get(0).getCreator().toString();
+                        GlobalClass.AreaCode = foModel.get(0).getAreaCd().toString();
                         Log.d("TAG", "MyAppCreator: "+ foModel.get(0).getImeino().toString());
 
                         Log.d("TAG", "MyApp: "+ foModel.get(0).getCreator().toString());
