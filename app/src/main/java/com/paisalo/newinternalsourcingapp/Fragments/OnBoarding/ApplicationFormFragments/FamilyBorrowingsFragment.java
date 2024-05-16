@@ -3,7 +3,9 @@ package com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.ApplicationFormF
 import static com.paisalo.newinternalsourcingapp.GlobalClass.SubmitAlert;
 import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidName;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -29,6 +31,8 @@ import com.paisalo.newinternalsourcingapp.Adapters.RangeCategoryAdapter;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
 import com.paisalo.newinternalsourcingapp.Modelclasses.FiJsonObject;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFDataModel;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.FiFamLoan;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.FiFamMem;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.RangeCategoryModels.RangeCategoryDataModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.UpdateFiModels.KycUpdateModel;
 import com.paisalo.newinternalsourcingapp.R;
@@ -44,6 +48,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivityMenu;
@@ -83,12 +88,12 @@ public class FamilyBorrowingsFragment extends Fragment {
 
 
         DatabaseClass databaseClass = DatabaseClass.getInstance(getContext());
+        List<FiFamLoan> list = allDataAFDataModel.getFiFamLoans();
 
 
         View view = inflater.inflate(R.layout.fragment_family_borrowings, container, false);
 
         addBorrower = view.findViewById(R.id.FMIncome);
-
 
         addBorrower.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,10 +109,6 @@ public class FamilyBorrowingsFragment extends Fragment {
                 final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
 
                 popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
-
-                fiCode = allDataAFDataModel.getCode().toString();
-                creator = allDataAFDataModel.getCreator().toString();
-                tag = allDataAFDataModel.getTag().toString();
 
 
                 dltButton = popupView.findViewById(R.id.deleteBorrowings);
@@ -127,26 +128,89 @@ public class FamilyBorrowingsFragment extends Fragment {
                 String selectOption = "--Select--";
                 ReasonforloanList.add(selectOption);
                 LoanUsedList.add(selectOption);
-                DatabaseClass.databaseWriteExecutor.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        List<RangeCategoryDataClass> LoanUsed_DataList = databaseClass.dao().getAllRCDataListby_catKey("loan_purpose");
-                        for (RangeCategoryDataClass data : LoanUsed_DataList) {
-                            String descriptionEn = data.getDescriptionEn();
-                            LoanUsedList.add(descriptionEn);
-                            ArrayAdapter<String> adapter1 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, LoanUsedList);
-                            spinnerReasonforloan.setAdapter(adapter1);
+
+                List<RangeCategoryDataClass> LoanUsed_DataList = databaseClass.dao().getAllRCDataListby_catKey("loan_purpose");
+                for (RangeCategoryDataClass data : LoanUsed_DataList) {
+                    String descriptionEn = data.getDescriptionEn();
+                    LoanUsedList.add(descriptionEn);
+
+                }
+                ArrayAdapter<String> adapter1 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, LoanUsedList);
+                spinnerReasonforloan.setAdapter(adapter1);
+
+                List<RangeCategoryDataClass> Reasonforloan_DataList = databaseClass.dao().getAllRCDataListby_catKey("relationship");
+                for (RangeCategoryDataClass data : Reasonforloan_DataList) {
+                    String descriptionEn = data.getDescriptionEn();
+                    ReasonforloanList.add(descriptionEn);
+                }
+                ArrayAdapter<String> adapter2 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, ReasonforloanList);
+                spinnerLoanUsed.setAdapter(adapter2);
+
+                ArrayAdapter<CharSequence> adapter3 = ArrayAdapter.createFromResource(getActivity(), R.array.lenderType, android.R.layout.simple_spinner_item);
+                adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                lenderTypespin.setAdapter(adapter3);
+
+                ArrayAdapter<CharSequence> adapter4 = ArrayAdapter.createFromResource(getActivity(), R.array.ismfi, android.R.layout.simple_spinner_item);
+                adapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerisMFI.setAdapter(adapter4);
+
+
+                if (allDataAFDataModel != null) {
+                    fiCode = allDataAFDataModel.getCode().toString();
+                    creator = allDataAFDataModel.getCreator().toString();
+                    tag = allDataAFDataModel.getTag().toString();
+                    Log.d("TAG", "onCreateView222: " + fiCode + tag + creator);
+                    try {
+
+                        Log.d("TAG", "onClick:1 "+list.get(0).getLenderName());
+                        if (!list.isEmpty() && list.get(0).getLenderName() != null) {
+                            etLenderName.setText(list.get(0).getLenderName());
                         }
 
-                        List<RangeCategoryDataClass> Reasonforloan_DataList = databaseClass.dao().getAllRCDataListby_catKey("relationship");
-                        for (RangeCategoryDataClass data : Reasonforloan_DataList) {
-                            String descriptionEn = data.getDescriptionEn();
-                            ReasonforloanList.add(descriptionEn);
-                            ArrayAdapter<String> adapter1 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, ReasonforloanList);
-                            spinnerLoanUsed.setAdapter(adapter1);
+                        Log.d("TAG", "onClick:2 "+list.get(0).getLoanAmount());
+                        if (!list.isEmpty() && list.get(0).getLoanAmount() != 0) {
+                            etLoanamount.setText(list.get(0).getLoanAmount());
                         }
+
+                        Log.d("TAG", "onClick:3 "+list.get(0).getLoanEMIAmount());
+                        if (!list.isEmpty() && list.get(0).getLoanEMIAmount() != 0) {
+                            etEmiamount.setText(list.get(0).getLoanEMIAmount());
+                        }
+
+                        Log.d("TAG", "onClick:4 "+list.get(0).getLoanBalanceAmount());
+                        if (!list.isEmpty() && list.get(0).getLoanBalanceAmount() != 0) {
+                            etbalanceamount.setText(list.get(0).getLoanBalanceAmount());
+                        }
+
+                        Log.d("TAG", "onClick:4 "+list.get(0).getLoanReason());
+                        if (!list.isEmpty() && list.get(0).getLoanReason() != null) {
+                            int Reasonforloan = adapter2.getPosition(list.get(0).getLoanReason());
+                            spinnerReasonforloan.setSelection(Reasonforloan);
+                        }
+
+                        Log.d("TAG", "onClick:5 "+list.get(0).getLenderType());
+                        if (!list.isEmpty() && list.get(0).getLenderType() != null) {
+                            int Reasonforloan = adapter3.getPosition(list.get(0).getLenderType());
+                            lenderTypespin.setSelection(Reasonforloan);
+                        }
+
+                        Log.d("TAG", "onClick:6 "+list.get(0).getIsMFI());
+                        if (!list.isEmpty() && list.get(0).getIsMFI() != null) {
+                            int Reasonforloan = adapter4.getPosition(list.get(0).getIsMFI());
+                            spinnerisMFI.setSelection(Reasonforloan);
+                        }
+
+                        Log.d("TAG", "onClick:7 "+allDataAFDataModel.getRelationWBorrower());
+                        if (allDataAFDataModel.getRelationWBorrower() != null) {
+                            int LoanUsed = adapter1.getPosition(allDataAFDataModel.getRelationWBorrower());
+                            spinnerLoanUsed.setSelection(LoanUsed);
+
+                        }
+
+                    } catch (Exception exception) {
+                        Toast.makeText(getContext(), "fifamloans is null here", Toast.LENGTH_SHORT).show();
                     }
-                });
+                }
 
                 addBorrowings.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -222,18 +286,19 @@ public class FamilyBorrowingsFragment extends Fragment {
                                 public void onResponse(Call<KycUpdateModel> call, Response<KycUpdateModel> response) {
                                     Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
                                     if (response.isSuccessful()) {
-                                        Log.d("TAG", "onResponseAadhaarUpdate: " + response.body());
-                                        Log.d("TAG", "onResponseAadhaarUpdatemsg: " + response.body().getMessage().toString());
+                                        Log.d("TAG", "onResponseAadhaarUpdate121: " + response.body());
+                                        Log.d("TAG", "onResponseAadhaarUpdatemsg121: " + response.body().getMessage().toString());
 
-                                        SubmitAlert(getActivity(), "Submit", "Form Submit Successfully ");
-                                        SharedPreferences sharedPreferences = getContext().getSharedPreferences("checkBoxes", Context.MODE_PRIVATE);
-                                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                                        editor.putBoolean("borrowingsCheckBox", true);
-                                        editor.apply();
-
-                                        Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
-                                        startActivity(intent);
-                                        getActivity().finish();
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                        builder.setMessage("Data submitted successfully.")
+                                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                                    public void onClick(DialogInterface dialog, int id) {
+                                                        Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
+                                                        startActivity(intent);
+                                                        getActivity().finish();
+                                                    }
+                                                });
+                                        builder.create().show();
                                     } else {
                                         SubmitAlert(getActivity(), "Error", "Unsuccessful");
 

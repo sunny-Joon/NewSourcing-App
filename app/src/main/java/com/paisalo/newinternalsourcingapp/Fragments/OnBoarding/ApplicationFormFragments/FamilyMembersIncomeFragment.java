@@ -23,25 +23,21 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivityMenu;
-import com.paisalo.newinternalsourcingapp.Adapters.RangeCategoryAdapter;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFDataModel;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.FiFamMem;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.UpdateFiModels.KycUpdateModel;
 import com.paisalo.newinternalsourcingapp.R;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiClient;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiInterface;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivityMenu;
-import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFDataModel;
-import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.FiFamMem;
-import com.paisalo.newinternalsourcingapp.R;
 import com.paisalo.newinternalsourcingapp.RoomDatabase.DatabaseClass;
 import com.paisalo.newinternalsourcingapp.RoomDatabase.RangeCategoryDataClass;
 
@@ -86,12 +82,12 @@ public class FamilyMembersIncomeFragment extends Fragment {
 
         DatabaseClass databaseClass = DatabaseClass.getInstance(getContext());
 
-//        List<FiFamMem> list = allDataAFDataModel.getFiFamMems();
+    //  List<FiFamMem> list = allDataAFDataModel.getFiFamMems();
 
         FMIncomeButton = view.findViewById(R.id.addButton);
-        fiCode =  allDataAFDataModel.getCode().toString();
-        creator =  allDataAFDataModel.getCreator().toString();
-        tag =  allDataAFDataModel.getTag().toString();
+
+
+
 
        /* if(!list.isEmpty()){
             faimlMemberName.setText(list.get(0).getMemName());
@@ -149,71 +145,139 @@ public class FamilyMembersIncomeFragment extends Fragment {
                 incomeType_List.add(selectOption);
 
 
-                DatabaseClass.databaseWriteExecutor.execute(new Runnable() {
-                    @Override
-                    public void run() {
-
                         List<RangeCategoryDataClass>  relationship_DataList = databaseClass.dao().getAllRCDataListby_catKey("relationship");
                         for (RangeCategoryDataClass data : relationship_DataList) {
                             String descriptionEn = data.getDescriptionEn();
                             relationship_List.add(descriptionEn);
-                            ArrayAdapter<String> adapter1 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, relationship_List);
-                            relationship_spin.setAdapter(adapter1);
                         }
+                        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, relationship_List);
+                         relationship_spin.setAdapter(adapter1);
+
 
                         List<RangeCategoryDataClass>  gender_DataList = databaseClass.dao().getAllRCDataListby_catKey("gender");
                         for (RangeCategoryDataClass data : gender_DataList) {
                             String descriptionEn = data.getDescriptionEn();
                             gender_List.add(descriptionEn);
-                            ArrayAdapter<String> adapter2 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, gender_List);
-                            gender_spin.setAdapter(adapter2);
                         }
+                        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, gender_List);
+                          gender_spin.setAdapter(adapter2);
 
                         List<RangeCategoryDataClass>  Health_DataList = databaseClass.dao().getAllRCDataListby_catKey("health");
                         for (RangeCategoryDataClass data : Health_DataList) {
                             String descriptionEn = data.getDescriptionEn();
                             Health_List.add(descriptionEn);
-                            ArrayAdapter<String> adapter3 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, Health_List);
-                            Health_spin.setAdapter(adapter3);
-                        }
 
-                        List<RangeCategoryDataClass>  Education_DataList = databaseClass.dao().getAllRCDataListby_catKey("health");
+                        }
+                        ArrayAdapter<String> adapter3 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, Health_List);
+                        Health_spin.setAdapter(adapter3);
+
+                        List<RangeCategoryDataClass>  Education_DataList = databaseClass.dao().getAllRCDataListby_catKey("education");
                         for (RangeCategoryDataClass data : Education_DataList) {
                             String descriptionEn = data.getDescriptionEn();
                             Education_List.add(descriptionEn);
-                            ArrayAdapter<String> adapter3 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, Education_List);
-                            Education_spin.setAdapter(adapter3);
                         }
+                        ArrayAdapter<String> adapter4 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, Education_List);
+                         Education_spin.setAdapter(adapter4);
 
-                        List<RangeCategoryDataClass> schoolType_DataList  = databaseClass.dao().getAllRCDataListby_catKey("health");
+                        List<RangeCategoryDataClass> schoolType_DataList  = databaseClass.dao().getAllRCDataListby_catKey("school-type");
                         for (RangeCategoryDataClass data : schoolType_DataList) {
                             String descriptionEn = data.getDescriptionEn();
                             schoolType_List.add(descriptionEn);
-                            ArrayAdapter<String> adapter3 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, schoolType_List);
-                            schoolType_spin.setAdapter(adapter3);
                         }
+                        ArrayAdapter<String> adapter5 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, schoolType_List);
+                       schoolType_spin.setAdapter(adapter5);
 
-                        List<RangeCategoryDataClass> businessType_DataList  = databaseClass.dao().getAllRCDataListby_catKey("health");
+                        List<RangeCategoryDataClass> businessType_DataList  = databaseClass.dao().getAllRCDataListby_catKey("business-type");
                         for (RangeCategoryDataClass data : businessType_DataList) {
                             String descriptionEn = data.getDescriptionEn();
                             businessType_List.add(descriptionEn);
-                            ArrayAdapter<String> adapter3 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, businessType_List);
-                            businessType_spin.setAdapter(adapter3);
                         }
+                        ArrayAdapter<String> adapter6 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, businessType_List);
+                           businessType_spin.setAdapter(adapter6);
 
-                        List<RangeCategoryDataClass> incomeType_DataList  = databaseClass.dao().getAllRCDataListby_catKey("health");
+                        List<RangeCategoryDataClass> incomeType_DataList  = databaseClass.dao().getAllRCDataListby_catKey("income-type");
                         for (RangeCategoryDataClass data : incomeType_DataList) {
                             String descriptionEn = data.getDescriptionEn();
                             incomeType_List.add(descriptionEn);
-                            ArrayAdapter<String> adapter3 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, incomeType_List);
-                            incomeType_spin.setAdapter(adapter3);
                         }
+                        ArrayAdapter<String> adapter7 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, incomeType_List);
+                        incomeType_spin.setAdapter(adapter7);
+
+                if(allDataAFDataModel != null) {
+                    fiCode = allDataAFDataModel.getCode().toString();
+                    creator = allDataAFDataModel.getCreator().toString();
+                    tag = allDataAFDataModel.getTag().toString();
+                    Log.d("TAG", "onCreateView222: "+fiCode + tag + creator );
+                    try {
+                        if (allDataAFDataModel.getFiExtra() != null) {
 
 
+                       /*     if (list.get(0).getMemName() != null) {
+                                faimlMemberName.setText(list.get(0).getMemName());
+                            }
+*/
+                            if (allDataAFDataModel.getBusinessDetail() != null) {
+                                etBusiness.setText(allDataAFDataModel.getBusinessDetail());
+                            }
+
+                            if (allDataAFDataModel.getIncome() != null) {
+                                etTextincome.setText(allDataAFDataModel.getIncome());
+                            }
+                            if (allDataAFDataModel.getAge() != null) {
+                                etage.setText(allDataAFDataModel.getAge());
+                            }
+
+                            Log.d("TAG", "onCreate:view1 "+allDataAFDataModel.getRelationWBorrower());
+                            if (allDataAFDataModel.getRelationWBorrower() != null) {
+                                int castePos3 = adapter1.getPosition(allDataAFDataModel.getRelationWBorrower());
+                                relationship_spin.setSelection(castePos3);
+                            }
+
+                            Log.d("TAG", "onCreate:view2 "+allDataAFDataModel.getGender());
+                            if (allDataAFDataModel.getGender() != null) {
+                                int castePos3 = adapter2.getPosition(allDataAFDataModel.getGender());
+                                gender_spin.setSelection(castePos3);
+                            }
+
+//                            Log.d("TAG", "onCreate:view3 "+allDataAFDataModel.getFiExtra().geth);
+//                            if (allDataAFDataModel.getGender() != null) {
+//                                int castePos3 = adapter2.getPosition(allDataAFDataModel.getGender());
+//                                Health_spin.setSelection(castePos3);
+//                            }
+
+//                            Log.d("TAG", "onCreate:view4"+allDataAFDataModel.get);
+//                            if (allDataAFDataModel.getGender() != null) {
+//                                int castePos3 = adapter4.getPosition(allDataAFDataModel.getGender());
+//                                Education_spin.setSelection(castePos3);
+//                            }
+
+//                            Log.d("TAG", "onCreate:view5 "+allDataAFDataModel.());
+//                            if (allDataAFDataModel.getGender() != null) {
+//                                int castePos3 = adapter5.getPosition(allDataAFDataModel.getGender());
+//                                schoolType_spin.setSelection(castePos3);
+//                            }
 
 
+//                            Log.d("TAG", "onCreate:view6 "+allDataAFDataModel.());
+//                            if (allDataAFDataModel.getGender() != null) {
+//                                int castePos3 = adapter6.getPosition(allDataAFDataModel.());
+//                                businessType_spin.setSelection(castePos3);
+//                            }
+
+//                            Log.d("TAG", "onCreate:view7 "+allDataAFDataModel.());
+//                            if (allDataAFDataModel.getGender() != null) {
+//                                int castePos3 = adapter7.getPosition(allDataAFDataModel.());
+//                                incomeType_spin.setSelection(castePos3);
+//                            }
+
+                        }
+                    }catch (Exception exception){
+                        Toast.makeText(getContext(), "Fiextra is null here", Toast.LENGTH_SHORT).show();
                     }
-                });
+
+                }
+
+
                 addBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

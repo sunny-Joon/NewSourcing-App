@@ -144,7 +144,7 @@
                 <TextView
                     android:id="@+id/aadhaarDOB"
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="match_parent"
                     android:textColor="@color/white"
                     android:text="Aadhaar Id"
                     android:layout_weight="1"
@@ -239,7 +239,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
                     android:textColor="@color/white"
-                    android:text="Aadhaar Id"
+                    android:text=""
                     android:layout_weight="1"
                     android:textSize="@dimen/heading"
                     android:gravity="center_vertical"
@@ -287,7 +287,7 @@
                 <TextView
                     android:id="@+id/aadhaarAddress"
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="match_parent"
                     android:textColor="@color/white"
                     android:text="Aadhaar Id"
                     android:layout_weight="1"
@@ -312,9 +312,9 @@
                 <TextView
                     android:id="@+id/aadhaarPincode"
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="wrap_content"
                     android:textColor="@color/white"
-                    android:text="Aadhaar Id"
+                    android:text=""
                     android:layout_weight="1"
                     android:textSize="@dimen/heading"
                     android:gravity="center_vertical"
@@ -409,7 +409,7 @@
                     android:layout_height="match_parent"
                     android:textSize="@dimen/titleheading"
                     android:textColor="@color/red"
-                    android:text="00000"
+                    android:text="0000"
                     android:layout_weight="1"
                     android:textStyle="bold"
                     android:gravity="center"/>
@@ -424,7 +424,7 @@
             android:id="@+id/addressCheckBox"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:text="Is current address different from Aadhaar"
+            android:text="Is current address same as Aadhaar"
             android:layout_marginHorizontal="16dp"
             android:textSize="@dimen/heading"
             android:fontFamily="@font/visbycfregular"/>

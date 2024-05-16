@@ -1,5 +1,7 @@
 package com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.ApplicationFormFragments;
 
+import static android.content.Intent.getIntent;
+import static com.paisalo.newinternalsourcingapp.GlobalClass.SubmitAlert;
 import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidAddr;
 import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidName;
 
@@ -49,7 +51,7 @@ public class AadhaarFragment extends Fragment {
 
     CustomProgressDialog customProgressDialog;
 
-
+    RangeCategoryAdapter rangeCategoryAdapter;
     Spinner spin_aadhaarState;
 
     public AadhaarFragment(AllDataAFDataModel allDataAFDataModel) {
@@ -81,15 +83,13 @@ public class AadhaarFragment extends Fragment {
         aadhaarPincode = view.findViewById(R.id.aadhaarPincode);
         aadhaarCity = view.findViewById(R.id.aadhaarCity);
         aadhaarState = view.findViewById(R.id.aadhaarState);
-        loanAmount = view.findViewById(R.id.loanAmount);
 
         currentAddress = view.findViewById(R.id.currentAddress);
         addressCheckBox = view.findViewById(R.id.addressCheckBox);
-        currentAddress.setVisibility(View.GONE);
+     //   currentAddress.setVisibility(View.GONE);
         address1ET = view.findViewById(R.id.Address1);
         address2ET = view.findViewById(R.id.Address2);
         address3ET = view.findViewById(R.id.Address3);
-        address1ET = view.findViewById(R.id.pinCode);
         cityET = view.findViewById(R.id.city);
         pinCodeET = view.findViewById(R.id.pinCode);
 
@@ -100,39 +100,86 @@ public class AadhaarFragment extends Fragment {
         submit = view.findViewById(R.id.aadhaarSubmitButton);
         currentAddress = view.findViewById(R.id.currentAddress);
         addressCheckBox = view.findViewById(R.id.addressCheckBox);
-        currentAddress.setVisibility(View.GONE);
+        //currentAddress.setVisibility(View.GONE);
 
         addressCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            currentAddress.setVisibility(isChecked ? View.VISIBLE : View.GONE);
+            //currentAddress.setVisibility(isChecked ? View.VISIBLE : View.GONE);
+            // Assume allDataAFDataModel is the object and address1ET, address2ET, etc. are the EditText widgets
+
+            if (allDataAFDataModel != null) {
+                if (allDataAFDataModel.getpAdd1() != null) {
+                    address1ET.setText(allDataAFDataModel.getpAdd1());
+                } else {
+                    address1ET.setText(""); // or set a default text
+                }
+
+                if (allDataAFDataModel.getpAdd2() != null) {
+                    address2ET.setText(allDataAFDataModel.getpAdd2());
+                } else {
+                    address2ET.setText("");
+                }
+
+                if (allDataAFDataModel.getpAdd3() != null) {
+                    address3ET.setText(allDataAFDataModel.getpAdd3());
+                } else {
+                    address3ET.setText("");
+                }
+
+                if (allDataAFDataModel.getpPin() != null) {
+                    pinCodeET.setText(String.valueOf(allDataAFDataModel.getpPin()));
+                } else {
+                    pinCodeET.setText("");
+                }
+
+                if (allDataAFDataModel.getpCity() != null) {
+                    cityET.setText(allDataAFDataModel.getpCity());
+                } else {
+                    cityET.setText("");
+                }
+            }
+
         });
 
-        DatabaseClass.databaseWriteExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
+
                 List<RangeCategoryDataClass> stateDataList = new ArrayList<>();
                 RangeCategoryDataClass rangeCategoryDataClass = new RangeCategoryDataClass("--Select--","--Select--","--Select--","--Select--","--Select--",0,"99");
                 stateDataList.add(rangeCategoryDataClass);
                 stateDataList.addAll(databaseClass.dao().getAllRCDataListby_catKey("state"));
-                RangeCategoryAdapter rangeCategoryAdapter = new RangeCategoryAdapter(getActivity(),stateDataList );
+                rangeCategoryAdapter = new RangeCategoryAdapter(getActivity(),stateDataList );
                 spin_aadhaarState.setAdapter(rangeCategoryAdapter);
 
-            }
-        });
+       if (allDataAFDataModel.getpState() != null) {
+            int castePos3=-1;
+           for (int i=0;i<rangeCategoryAdapter.getCount();i++){
+               if (rangeCategoryAdapter.getItem(i).code.equals(databaseClass.dao().getStateByCode("state",allDataAFDataModel.getpState()).code)){
+                   castePos3=i;
+                   break;
+               }
+           }
 
-       /* aadhaarName.setText(allDataAFDataModel.getFname() + " " + allDataAFDataModel.getLname());
-        aadhaarid.setText(allDataAFDataModel.getAadharID());
-        aadhaarAge.setText(allDataAFDataModel.getAge().toString());
-        aadhaarGendre.setText(allDataAFDataModel.getGender());
-        aadhaarDOB.setText(allDataAFDataModel.getDob());
-        aadhaarGuardian.setText(allDataAFDataModel.getfFname());
-        aadhaarmobile.setText(allDataAFDataModel.getpPh1());
-        aadhaarDrivingLicense.setText(allDataAFDataModel.getDrivingLic());
-        aadhaarAddress.setText(allDataAFDataModel.getpAdd1() + " " + allDataAFDataModel.getpAdd2() + " " + allDataAFDataModel.getpAdd3());
-        aadhaarPincode.setText(allDataAFDataModel.getoPin().toString());
-        aadhaarCity.setText(allDataAFDataModel.getpCity());
-        aadhaarState.setText(allDataAFDataModel.getpState());
-        loanAmount.setText(allDataAFDataModel.getLoanAmt().toString());*/
+           Log.d("TAG", "onCreateView: "+castePos3);
+            spin_aadhaarState.setSelection(castePos3);
+      }
 
+        Log.d("TAG", "onCreateViewadhaar: "+"check data");
+        if (allDataAFDataModel!=null) {
+            Log.d("TAG", "onCreateViewadhaar: "+"confirm data");
+
+            aadhaarName.setText(allDataAFDataModel.getFname() + " " + allDataAFDataModel.getLname());
+            aadhaarid.setText(allDataAFDataModel.getAadharID());
+            aadhaarAge.setText(allDataAFDataModel.getAge().toString());
+            aadhaarGendre.setText(allDataAFDataModel.getGender());
+            aadhaarDOB.setText(allDataAFDataModel.getDob());
+            aadhaarGuardian.setText(allDataAFDataModel.getfFname());
+            aadhaarmobile.setText(allDataAFDataModel.getpPh3());
+            aadhaarPAN.setText(allDataAFDataModel.getPanNO());
+            aadhaarDrivingLicense.setText(allDataAFDataModel.getDrivingLic());
+            aadhaarAddress.setText(allDataAFDataModel.getpAdd1() + " " + allDataAFDataModel.getpAdd2() + " " + allDataAFDataModel.getpAdd3());
+            aadhaarPincode.setText(allDataAFDataModel.getpPin().toString());
+            aadhaarCity.setText(allDataAFDataModel.getpCity());
+            aadhaarState.setText(allDataAFDataModel.getpState());
+            loanAmount.setText(allDataAFDataModel.getLoanAmt().toString());
+        }
 
 
         submit.setOnClickListener(new View.OnClickListener() {
@@ -166,7 +213,7 @@ public class AadhaarFragment extends Fragment {
                     ((TextView) spin_aadhaarState.getSelectedView()).setError("Please select a state");
                     allConditionsSatisfied = false;
                 }else{
-                    state = spin_aadhaarState.getSelectedItem().toString();
+                    state = ((RangeCategoryDataClass)spin_aadhaarState.getSelectedItem()).getCode();
                 }
 
                 if(!isValidName(cityET.getText().toString().isEmpty() ?" ": cityET.getText().toString())){
@@ -190,16 +237,14 @@ public class AadhaarFragment extends Fragment {
                          if (response.isSuccessful()) {
                              Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
                              Log.d("TAG", "onResponseAdhaarUpdatemsg: " + response.body().getMessage().toString());
-                             SharedPreferences sharedPreferences = getContext().getSharedPreferences("checkBoxes", Context.MODE_PRIVATE);
-                             SharedPreferences.Editor editor = sharedPreferences.edit();
-                             editor.putBoolean("aadhaarCheckBox", true);
-                             editor.apply();
+                             SubmitAlert(getActivity(), "success", "Data set Successfully");
 
                              Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
                              startActivity(intent);
                              getActivity().finish();
                          } else {
                              Log.d("TAG", "onResponseAdhaarUpdate: " + response.code());
+                             SubmitAlert(getActivity(), "unsuccessful", "Check Your Internet Connection");
 
                          }
                      }
@@ -207,6 +252,7 @@ public class AadhaarFragment extends Fragment {
                      @Override
                      public void onFailure(Call<KycUpdateModel> call, Throwable t) {
                          Log.d("TAG", "onResponseAdhaarUpdate: " + "failure");
+                         SubmitAlert(getActivity(), "Network Error", "Check Your Internet Connection");
 
                      }
                  });

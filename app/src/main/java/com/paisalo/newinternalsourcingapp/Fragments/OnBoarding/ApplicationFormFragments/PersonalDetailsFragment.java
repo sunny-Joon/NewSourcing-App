@@ -1,10 +1,16 @@
 package com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.ApplicationFormFragments;
 
+import static com.paisalo.newinternalsourcingapp.GlobalClass.SubmitAlert;
+
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
 import androidx.fragment.app.Fragment;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,16 +32,18 @@ import com.paisalo.newinternalsourcingapp.Retrofit.ApiClient;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiInterface;
 import com.paisalo.newinternalsourcingapp.RoomDatabase.DatabaseClass;
 import com.paisalo.newinternalsourcingapp.RoomDatabase.RangeCategoryDataClass;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class PersonalDetailsFragment extends Fragment {
 
-    Spinner casteSpinner,religionSpinner,houseOwnerSpinner,residingforSpinner,noOfFamilyMembersSpinner,landHoldSpinner,specialAbilitySpinner,specialSocialCategorySpinner,educationalCodeSpinner,isBorrowerBlindSpinner,yearsInBusinessSpinner;
-    EditText emailId,placeOfBirth;
+    Spinner casteSpinner, religionSpinner, houseOwnerSpinner, residingforSpinner, noOfFamilyMembersSpinner, landHoldSpinner, specialAbilitySpinner, specialSocialCategorySpinner, educationalCodeSpinner, isBorrowerBlindSpinner, yearsInBusinessSpinner;
+    EditText emailId, placeOfBirth;
     Button submit;
     AllDataAFDataModel allDataAFDataModel;
     List<String> CasteList = new ArrayList<>();
@@ -47,13 +55,14 @@ public class PersonalDetailsFragment extends Fragment {
     List<String> specialAbilityList = new ArrayList<>();
     List<String> specialSocialCategoryList = new ArrayList<>();*/
     List<String> educationalCodeList = new ArrayList<>();
+    ArrayAdapter<String> adapter1,adapter2,adapter3,adapter4;
 
-
-    String fiCode,creator,tag,EmailId,caste,religion,PlaceOfBirth,presentHouseOwner,residingFor,numOfFamMember,
-            landHold,specialAbility,specialSocialCategory,educationalCode,isBorrowerBlind,yearsInBusiness;
+    List<RangeCategoryDataClass> casteDataList,religionDataList,presentHouseOwnerDataList,educationDataList;
+    String fiCode, creator, tag, EmailId, caste, religion, PlaceOfBirth, presentHouseOwner, residingFor, numOfFamMember,
+            landHold, specialAbility, specialSocialCategory, educationalCode, isBorrowerBlind, yearsInBusiness;
 
     public PersonalDetailsFragment(AllDataAFDataModel allDataAFDataModel) {
-        this.allDataAFDataModel=allDataAFDataModel;
+        this.allDataAFDataModel = allDataAFDataModel;
     }
 
     @Override
@@ -70,6 +79,7 @@ public class PersonalDetailsFragment extends Fragment {
 
         emailId = view.findViewById(R.id.emailId);
         placeOfBirth = view.findViewById(R.id.placeOfBirth);
+
         casteSpinner = view.findViewById(R.id.caste);
         religionSpinner = view.findViewById(R.id.religion);
         houseOwnerSpinner = view.findViewById(R.id.presentHouseOwner);
@@ -89,158 +99,259 @@ public class PersonalDetailsFragment extends Fragment {
         presentHouseOwnerList.add(selectOption);
         educationalCodeList.add(selectOption);
 
+        casteDataList = databaseClass.dao().getAllRCDataListby_catKey("caste");
+        for (RangeCategoryDataClass data : casteDataList) {
+            String descriptionEn = data.getDescriptionEn();
+            CasteList.add(descriptionEn);
+        }
+        adapter1 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, CasteList);
+        casteSpinner.setAdapter(adapter1);
+        adapter1.notifyDataSetChanged();
 
 
+        religionDataList = databaseClass.dao().getAllRCDataListby_catKey("religion");
+        for (RangeCategoryDataClass data : religionDataList) {
+            String descriptionEn = data.getDescriptionEn();
+            Log.d("TAG", "onCreateView: "+descriptionEn);
+            religionList.add(descriptionEn);
+        }
+        adapter2 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, religionList);
+        religionSpinner.setAdapter(adapter2);
+        adapter2.notifyDataSetChanged();
 
 
-        DatabaseClass.databaseWriteExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
+        presentHouseOwnerDataList = databaseClass.dao().getAllRCDataListby_catKey("land_owner");
+        for (RangeCategoryDataClass data : presentHouseOwnerDataList) {
+            String descriptionEn = data.getDescriptionEn();
+            presentHouseOwnerList.add(descriptionEn);
 
-                List<RangeCategoryDataClass> casteDataList = databaseClass.dao().getAllRCDataListby_catKey("caste");
-                for (RangeCategoryDataClass data : casteDataList) {
-                    String descriptionEn = data.getDescriptionEn();
-                    CasteList.add(descriptionEn);
-                    ArrayAdapter<String> adapter1 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, CasteList);
-                    casteSpinner.setAdapter(adapter1);
-                }
-                List<RangeCategoryDataClass> religionDataList = databaseClass.dao().getAllRCDataListby_catKey("religion");
-                for (RangeCategoryDataClass data : religionDataList) {
-                    String descriptionEn = data.getDescriptionEn();
-                    religionList.add(descriptionEn);
-                    ArrayAdapter<String> adapter2 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, religionList);
-                    religionSpinner.setAdapter(adapter2);
-                }
-                List<RangeCategoryDataClass> presentHouseOwnerDataList = databaseClass.dao().getAllRCDataListby_catKey("land_owner");
-                for (RangeCategoryDataClass data : presentHouseOwnerDataList) {
-                    String descriptionEn = data.getDescriptionEn();
-                    presentHouseOwnerList.add(descriptionEn);
-                    ArrayAdapter<String> adapter3 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, presentHouseOwnerList);
-                    houseOwnerSpinner.setAdapter(adapter3);
-                }
-                List<RangeCategoryDataClass> educationDataList = databaseClass.dao().getAllRCDataListby_catKey("education");
-                for (RangeCategoryDataClass data : educationDataList) {
-                    String descriptionEn = data.getDescriptionEn();
-                    educationalCodeList.add(descriptionEn);
-                    ArrayAdapter<String> adapter4 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, educationalCodeList);
-                    educationalCodeSpinner.setAdapter(adapter4);
-                }
-            }
-            });
+        }
+        adapter3 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, presentHouseOwnerList);
+        houseOwnerSpinner.setAdapter(adapter3);
+        adapter3.notifyDataSetChanged();
 
-        if(allDataAFDataModel != null) {
+
+        educationDataList = databaseClass.dao().getAllRCDataListby_catKey("education");
+        for (RangeCategoryDataClass data : educationDataList) {
+            String descriptionEn = data.getDescriptionEn();
+            Log.d("TAG", "onCreateView: "+descriptionEn);
+            educationalCodeList.add(descriptionEn);
+        }
+        adapter4 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, educationalCodeList);
+        educationalCodeSpinner.setAdapter(adapter4);
+        adapter4.notifyDataSetChanged();
+
+
+        ArrayAdapter<CharSequence> adapter5 = ArrayAdapter.createFromResource(getActivity(), R.array.residingforyears, android.R.layout.simple_spinner_item);
+        adapter5.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        residingforSpinner.setAdapter(adapter5);
+
+
+        ArrayAdapter<CharSequence> adapter6 = ArrayAdapter.createFromResource(getActivity(), R.array.numOfFamMember, android.R.layout.simple_spinner_item);
+        adapter6.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        noOfFamilyMembersSpinner.setAdapter(adapter6);
+
+
+        ArrayAdapter<CharSequence> adapter7 = ArrayAdapter.createFromResource(getActivity(), R.array.landHold, android.R.layout.simple_spinner_item);
+        adapter7.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        landHoldSpinner.setAdapter(adapter7);
+
+
+        ArrayAdapter<CharSequence> adapter8 = ArrayAdapter.createFromResource(getActivity(), R.array.specialAbility, android.R.layout.simple_spinner_item);
+        adapter8.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        specialAbilitySpinner.setAdapter(adapter8);
+
+        ArrayAdapter<CharSequence> adapter9 = ArrayAdapter.createFromResource(getActivity(), R.array.specialSocialCategory, android.R.layout.simple_spinner_item);
+        adapter9.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        specialSocialCategorySpinner.setAdapter(adapter9);
+
+        ArrayAdapter<CharSequence> adapter10 = ArrayAdapter.createFromResource(getActivity(), R.array.yearsInBusiness, android.R.layout.simple_spinner_item);
+        adapter10.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        yearsInBusinessSpinner.setAdapter(adapter10);
+
+        ArrayAdapter<CharSequence> adapter11 = ArrayAdapter.createFromResource(getActivity(), R.array.isBorrowerBlind, android.R.layout.simple_spinner_item);
+        adapter11.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        isBorrowerBlindSpinner.setAdapter(adapter11);
+
+
+        if (allDataAFDataModel != null) {
+            fiCode = allDataAFDataModel.getCode().toString();
+            creator = allDataAFDataModel.getCreator().toString();
+            tag = allDataAFDataModel.getTag().toString();
+            Log.d("TAG", "onCreateView222: " + fiCode + tag + creator);
             try {
+
                 if (allDataAFDataModel.getFiExtra() != null) {
+
+                    Log.d("TAG", "onCreateView:email "+allDataAFDataModel.getFiExtra().getEmaiLID());
                     if (allDataAFDataModel.getFiExtra().getEmaiLID() != null) {
                         emailId.setText(allDataAFDataModel.getFiExtra().getEmaiLID());
+                        Log.d("TAG", "onCreateView:email " + allDataAFDataModel.getFiExtra().getEmaiLID());
                     }
-                    String caste=allDataAFDataModel.getCast();
-                    Log.d("TAG", "onCreateView: "+caste);
-                    int casePos=CasteList.indexOf(caste);
-                    casteSpinner.setSelection(casePos);
+
+                    if (allDataAFDataModel.getCast() != null) {
+                        int castePos = adapter1.getPosition(allDataAFDataModel.getCast());
+                        casteSpinner.setSelection(castePos);
+                    }
+
+                    if (allDataAFDataModel.getReligion() != null) {
+                        int religionPos = adapter2.getPosition(allDataAFDataModel.getReligion());
+                        Log.d("TAG", "onCreateView: "+religionPos);
+                        religionSpinner.setSelection(religionPos);
+                    }
+
+                    if (allDataAFDataModel.getHouseOwner() != null) {
+                        int houseOwnerPos = adapter3.getPosition(allDataAFDataModel.getHouseOwner());
+                        houseOwnerSpinner.setSelection(houseOwnerPos);
+                    }
 
 
+                    if (allDataAFDataModel.getFiExtra().getEducatioNCODE() != null) {
+                        int EducatioNCODEPos = adapter4.getPosition(allDataAFDataModel.getFiExtra().getEducatioNCODE());
+                        Log.d("TAG", "onCreateView:EducatioNCODEPos "+EducatioNCODEPos);
+                        educationalCodeSpinner.setSelection(EducatioNCODEPos);
+                    }
 
+                    if (allDataAFDataModel.getLiveInPresentPlace() != null) {
+                        int spinnerPosition = adapter5.getPosition(allDataAFDataModel.getLiveInPresentPlace());
+                        residingforSpinner.setSelection(spinnerPosition);
+                    }
+
+                    if (allDataAFDataModel.getfAmilyMember()!= null) {
+                        int spinnerPosition2 = adapter6.getPosition(allDataAFDataModel.getfAmilyMember());
+                        noOfFamilyMembersSpinner.setSelection(spinnerPosition2);
+                    }
+                    Log.d("TAG", "onCreateView:is "+allDataAFDataModel.getLandHolding());
+
+                     if (allDataAFDataModel.getLandHolding() != null) {
+                        int spinnerPosition3 = adapter7.getPosition(allDataAFDataModel.getLandHolding());
+                        landHoldSpinner.setSelection(spinnerPosition3);
+                    }
+                    Log.d("TAG", "onCreateView:is "+allDataAFDataModel.getFiExtra().getIsBorrowerHandicap());
+
+                     if (allDataAFDataModel.getFiExtra().getIsBorrowerHandicap() != null) {
+                         int spinnerPosition4 = adapter8.getPosition(allDataAFDataModel.getFiExtra().getIsBorrowerHandicap());
+                        specialAbilitySpinner.setSelection(spinnerPosition4);
+                    }
+
+                     if (allDataAFDataModel.getFiExtra().getIsBorrowerHandicap() != null) {
+                         int spinnerPosition6 = adapter9.getPosition(allDataAFDataModel.getFiExtra().getIsBorrowerHandicap());
+                        specialAbilitySpinner.setSelection(spinnerPosition6);
+                    }
+
+                    if (allDataAFDataModel.getFiExtra().getYearsInBusiness() != null) {
+                        int spinnerPosition5 = adapter10.getPosition(allDataAFDataModel.getFiExtra().getYearsInBusiness());
+                        yearsInBusinessSpinner.setSelection(spinnerPosition5);
+                    }
+
+                    if (allDataAFDataModel.getFiExtra().getIsBorrowerHandicap() != null) {
+                        int spinnerPosition5 = adapter10.getPosition(allDataAFDataModel.getFiExtra().getIsBorrowerHandicap());
+                        isBorrowerBlindSpinner.setSelection(spinnerPosition5);
+                    }
 
                     if (allDataAFDataModel.getFiExtra().getPlacEOFBIRTH() != null) {
                         placeOfBirth.setText(allDataAFDataModel.getFiExtra().getPlacEOFBIRTH());
                     }
                 }
-            }catch (Exception exception){
+            } catch (Exception exception) {
                 Toast.makeText(getContext(), "Fiextra is null here", Toast.LENGTH_SHORT).show();
             }
-
         }
+
+
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                fiCode = allDataAFDataModel.getCode().toString();
-                creator = allDataAFDataModel.getCreator().toString();
-                tag = allDataAFDataModel.getTag().toString();
 
-                boolean allConditionsSatisfied=true;
-                if(emailId.getText().toString().isEmpty()){
+                boolean allConditionsSatisfied = true;
+                if (emailId.getText().toString().isEmpty()) {
                     emailId.setError("Select emailId");
                     allConditionsSatisfied = false;
-                }else{
+                } else {
                     EmailId = emailId.getText().toString();
                 }
 
-                if(placeOfBirth.getText().toString().isEmpty()){
+                if (placeOfBirth.getText().toString().isEmpty()) {
                     placeOfBirth.setError("Select placeOfBirth");
                     allConditionsSatisfied = false;
-                }else{
+                } else {
                     PlaceOfBirth = placeOfBirth.getText().toString();
                 }
 
                 if (casteSpinner.getSelectedItem().toString().contains("-Select-")) {
                     ((TextView) casteSpinner.getSelectedView()).setError("Please select a Gender");
                     allConditionsSatisfied = false;
-                }else{
+                } else {
                     caste = casteSpinner.getSelectedItem().toString();
                 }
 
                 if (religionSpinner.getSelectedItem().toString().contains("-Select-")) {
                     ((TextView) religionSpinner.getSelectedView()).setError("Please select a religion");
                     allConditionsSatisfied = false;
-                }else{
+                } else {
                     religion = religionSpinner.getSelectedItem().toString();
+                }
+                if (houseOwnerSpinner.getSelectedItem().toString().contains("-Select-")) {
+                    ((TextView) houseOwnerSpinner.getSelectedView()).setError("Please select a presentHouseOwner");
+                    allConditionsSatisfied = false;
+                } else {
+                    presentHouseOwner = houseOwnerSpinner.getSelectedItem().toString();
                 }
 
                 if (residingforSpinner.getSelectedItem().toString().contains("-Select-")) {
                     ((TextView) residingforSpinner.getSelectedView()).setError("Please select a residingfor");
                     allConditionsSatisfied = false;
-                }else{
+                } else {
                     residingFor = residingforSpinner.getSelectedItem().toString();
                 }
 
                 if (noOfFamilyMembersSpinner.getSelectedItem().toString().contains("-Select-")) {
                     ((TextView) noOfFamilyMembersSpinner.getSelectedView()).setError("Please select a noOfFamilyMembers");
                     allConditionsSatisfied = false;
-                }else{
+                } else {
                     numOfFamMember = noOfFamilyMembersSpinner.getSelectedItem().toString();
                 }
 
                 if (landHoldSpinner.getSelectedItem().toString().contains("-Select-")) {
                     ((TextView) landHoldSpinner.getSelectedView()).setError("Please select a landHold");
                     allConditionsSatisfied = false;
-                }else{
+                } else {
                     landHold = landHoldSpinner.getSelectedItem().toString();
                 }
 
                 if (specialAbilitySpinner.getSelectedItem().toString().contains("-Select-")) {
                     ((TextView) specialAbilitySpinner.getSelectedView()).setError("Please select a specialAbility");
                     allConditionsSatisfied = false;
-                }else{
+                } else {
                     specialAbility = specialAbilitySpinner.getSelectedItem().toString();
                 }
 
                 if (specialSocialCategorySpinner.getSelectedItem().toString().contains("-Select-")) {
                     ((TextView) specialSocialCategorySpinner.getSelectedView()).setError("Please select a specialSocialCategory");
                     allConditionsSatisfied = false;
-                }else{
+                } else {
                     specialSocialCategory = specialSocialCategorySpinner.getSelectedItem().toString();
                 }
 
                 if (educationalCodeSpinner.getSelectedItem().toString().contains("-Select-")) {
                     ((TextView) educationalCodeSpinner.getSelectedView()).setError("Please select a educationalCode");
                     allConditionsSatisfied = false;
-                }else{
+                } else {
                     educationalCode = educationalCodeSpinner.getSelectedItem().toString();
                 }
 
                 if (isBorrowerBlindSpinner.getSelectedItem().toString().contains("-Select-")) {
                     ((TextView) isBorrowerBlindSpinner.getSelectedView()).setError("Please select a isBorrowerBlind");
                     allConditionsSatisfied = false;
-                }else{
+                } else {
                     isBorrowerBlind = isBorrowerBlindSpinner.getSelectedItem().toString();
                 }
 
                 if (yearsInBusinessSpinner.getSelectedItem().toString().contains("-Select-")) {
                     ((TextView) yearsInBusinessSpinner.getSelectedView()).setError("Please select a yearsInBusiness");
                     allConditionsSatisfied = false;
-                }else{
+                } else {
                     yearsInBusiness = yearsInBusinessSpinner.getSelectedItem().toString();
                 }
 
@@ -256,16 +367,16 @@ public class PersonalDetailsFragment extends Fragment {
                         public void onResponse(Call<KycUpdateModel> call, Response<KycUpdateModel> response) {
                             Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
                             if (response.isSuccessful()) {
-                                Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
-                                Log.d("TAG", "onResponseAdhaarUpdatemsg: " + response.body().getMessage().toString());
-                                SharedPreferences sharedPreferences = getContext().getSharedPreferences("checkBoxes", Context.MODE_PRIVATE);
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.putBoolean("personaldetailCheckBox", true);
-                                editor.apply();
-
-                                Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
-                                startActivity(intent);
-                                getActivity().finish();
+                                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                builder.setMessage("Data submitted successfully.")
+                                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
+                                                startActivity(intent);
+                                                getActivity().finish();
+                                            }
+                                        });
+                                builder.create().show();
                             } else {
                                 Log.d("TAG", "onResponseAdhaarUpdate: " + response.code());
                             }
@@ -273,6 +384,7 @@ public class PersonalDetailsFragment extends Fragment {
 
                         @Override
                         public void onFailure(Call<KycUpdateModel> call, Throwable t) {
+                            SubmitAlert(getActivity(), "Network Error", "Check Your Internet Connection");
                             Log.d("TAG", "onResponseAdhaarUpdate: " + "failure");
                         }
                     });
@@ -288,7 +400,7 @@ public class PersonalDetailsFragment extends Fragment {
         jsonPersonalInfo.addProperty("fiCode", fiCode);
         jsonPersonalInfo.addProperty("creator", creator);
         jsonPersonalInfo.addProperty("tag", tag);
-        jsonPersonalInfo.addProperty("emailId",EmailId );
+        jsonPersonalInfo.addProperty("emailId", EmailId);
         jsonPersonalInfo.addProperty("caste", caste);
         jsonPersonalInfo.addProperty("religion", religion);
         jsonPersonalInfo.addProperty("placeOfBirth", PlaceOfBirth);

@@ -1,5 +1,6 @@
 package com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.ApplicationFormFragments;
 
+import static com.paisalo.newinternalsourcingapp.GlobalClass.SubmitAlert;
 import static com.paisalo.newinternalsourcingapp.GlobalClass.isNumber;
 import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidAddr;
 import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidFullName;
@@ -11,7 +12,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
 import androidx.fragment.app.Fragment;
+
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -22,6 +25,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivityMenu;
@@ -33,13 +37,16 @@ import com.paisalo.newinternalsourcingapp.ModelsRetrofit.UpdateFiModels.KycUpdat
 import com.paisalo.newinternalsourcingapp.R;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiClient;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiInterface;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.FiGuarantor;
 import com.paisalo.newinternalsourcingapp.RoomDatabase.DatabaseClass;
@@ -48,6 +55,7 @@ import com.paisalo.newinternalsourcingapp.RoomDatabase.RangeCategoryDataClass;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
 public class GuarantorsFragment extends Fragment {
 
     List<String> gender_List = new ArrayList<>();
@@ -64,7 +72,7 @@ public class GuarantorsFragment extends Fragment {
     EditText etTextAadhar, etTextName, etTextAge, etTextDob, etTextGuardian, etTextAddress1, etTextAddress2, etTextAddress3, etTextCity, etTextPincode, etTextMobile, etTextvoterid, etTextPAN, etdrivingLicense;
     Spinner spin_gender, spin_state, spin_relationwithborr;
 
-   String code, creator,fi_Code,aadharID,name,age,dob,gender,gurName,perAdd1,perAdd2,perAdd3,perCity,p_Pin,p_StateID,perMob1,voterID,pano,drivingLic,relationwithborr;
+    String code, creator,tag, fiCode, aadharID, name, age, dob, gender, gurName, perAdd1, perAdd2, perAdd3, perCity, p_Pin, p_StateID, perMob1, voterID, pano, drivingLic, relationwithborr;
 
     public GuarantorsFragment(AllDataAFDataModel allDataAFDataModel) {
         this.allDataAFDataModel = allDataAFDataModel;
@@ -146,37 +154,77 @@ public class GuarantorsFragment extends Fragment {
 
                 }
 
-                DatabaseClass.databaseWriteExecutor.execute(new Runnable() {
-                    @Override
-                    public void run() {
 
-                        List<RangeCategoryDataClass> gender_DataList = databaseClass.dao().getAllRCDataListby_catKey("gender");
-                        for (RangeCategoryDataClass data : gender_DataList) {
-                            String descriptionEn = data.getDescriptionEn();
-                            gender_List.add(descriptionEn);
-                            ArrayAdapter<String> adapter1 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, gender_List);
-                            spin_gender.setAdapter(adapter1);
+                List<RangeCategoryDataClass> gender_DataList = databaseClass.dao().getAllRCDataListby_catKey("gender");
+                for (RangeCategoryDataClass data : gender_DataList) {
+                    String descriptionEn = data.getDescriptionEn();
+                    gender_List.add(descriptionEn);
+
+                }
+                ArrayAdapter<String> adapter1 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, gender_List);
+                spin_gender.setAdapter(adapter1);
+
+                List<RangeCategoryDataClass> stateDataList = new ArrayList<>();
+                RangeCategoryDataClass rangeCategoryDataClass = new RangeCategoryDataClass("--Select--", "--Select--", "--Select--", "--Select--", "--Select--", 0, "99");
+                stateDataList.add(rangeCategoryDataClass);
+                stateDataList.addAll(databaseClass.dao().getAllRCDataListby_catKey("state"));
+                RangeCategoryAdapter rangeCategoryAdapter = new RangeCategoryAdapter(getActivity(), stateDataList);
+                spin_state.setAdapter(rangeCategoryAdapter);
+
+
+                List<RangeCategoryDataClass> relationwithborr_DataList = databaseClass.dao().getAllRCDataListby_catKey("relationship");
+                for (RangeCategoryDataClass data : relationwithborr_DataList) {
+                    String descriptionEn = data.getDescriptionEn();
+                    relationwithborr_List.add(descriptionEn);
+
+                }
+                ArrayAdapter<String> adapter3 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, relationwithborr_List);
+                spin_relationwithborr.setAdapter(adapter3);
+
+
+
+                if (allDataAFDataModel != null) {
+                    fiCode = allDataAFDataModel.getCode().toString();
+                    creator = allDataAFDataModel.getCreator().toString();
+                    tag = allDataAFDataModel.getTag().toString();
+                    Log.d("TAG", "onCreateView222: " + fiCode + tag + creator);
+                    try {
+
+                        if (allDataAFDataModel != null) {
+
+                            Log.d("TAG", "onCreate:view1 "+list.get(0).getGender());
+                            if (list.get(0).getGender() != null) {
+                                int castePos3 = adapter1.getPosition(list.get(0).getGender());
+                                spin_gender.setSelection(castePos3);
+                            }
+
+                            if (allDataAFDataModel.getpState() != null) {
+                                int castePos3=-1;
+                                for (int i=0;i<rangeCategoryAdapter.getCount();i++){
+                                    if (rangeCategoryAdapter.getItem(i).code.equals(databaseClass.dao().getStateByCode("state",allDataAFDataModel.getpState()).code)){
+                                        castePos3=i;
+                                        break;
+                                    }
+                                }
+
+                                Log.d("TAG", "onCreateView: "+castePos3);
+                                spin_state.setSelection(castePos3);
+                            }
+
+                            Log.d("TAG", "onCreate:view1 "+list.get(0).getRelation());
+                            if (list.get(0).getRelation() != null) {
+                                int castePos3 = adapter1.getPosition(list.get(0).getRelation());
+                                spin_relationwithborr.setSelection(castePos3);
+                            }
+
                         }
-
-                        List<RangeCategoryDataClass> stateDataList = new ArrayList<>();
-                        RangeCategoryDataClass rangeCategoryDataClass = new RangeCategoryDataClass("--Select--", "--Select--", "--Select--", "--Select--", "--Select--", 0, "99");
-                        stateDataList.add(rangeCategoryDataClass);
-                        stateDataList.addAll(databaseClass.dao().getAllRCDataListby_catKey("state"));
-                        RangeCategoryAdapter rangeCategoryAdapter = new RangeCategoryAdapter(getActivity(), stateDataList);
-                        spin_state.setAdapter(rangeCategoryAdapter);
-
-
-                        List<RangeCategoryDataClass> relationwithborr_DataList = databaseClass.dao().getAllRCDataListby_catKey("relationship");
-                        for (RangeCategoryDataClass data : relationwithborr_DataList) {
-                            String descriptionEn = data.getDescriptionEn();
-                            relationwithborr_List.add(descriptionEn);
-                            ArrayAdapter<String> adapter3 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, relationwithborr_List);
-                            spin_relationwithborr.setAdapter(adapter3);
+                        } catch(Exception exception){
+                            Toast.makeText(getContext(), "fifamloans is null here", Toast.LENGTH_SHORT).show();
                         }
                     }
-                });
 
-                calendericon.setOnClickListener(new View.OnClickListener() {
+
+                            calendericon.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         showDatePickerDialog();
@@ -194,7 +242,7 @@ public class GuarantorsFragment extends Fragment {
                                 String selectedDate = String.format("%04d-%02d-%02d", selectedYear, selectedMonth + 1, selectedDay);
                                 etTextDob.setText(selectedDate);
                                 calculateAge(selectedYear, selectedMonth, selectedDay);
-                             //   progressBar.incrementProgressBy(1);
+                                //   progressBar.incrementProgressBy(1);
                             }
                         }, year, month, day);
 
@@ -223,17 +271,14 @@ public class GuarantorsFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
 
-                        code         = allDataAFDataModel.getCode().toString();
-                        creator      =allDataAFDataModel.getCreator().toString();
-                        fi_Code      = allDataAFDataModel.getTag().toString();
 
-                        boolean allConditionsSatisfied=true;
+                        boolean allConditionsSatisfied = true;
 
                         if (etTextAadhar.getText().toString().isEmpty()) {
                             etTextAadhar.setError("Invalid ID");
                             allConditionsSatisfied = false;
                         } else {
-                            aadharID     = etTextAadhar.getText().toString();
+                            aadharID = etTextAadhar.getText().toString();
                         }
 
                         if (!isValidFullName(etTextName.getText().toString().isEmpty() ? "" : etTextName.getText().toString())) {
@@ -247,107 +292,107 @@ public class GuarantorsFragment extends Fragment {
                             etTextAge.setError("Invalid Age");
                             allConditionsSatisfied = false;
                         } else {
-                            age          = etTextAge.getText().toString();
+                            age = etTextAge.getText().toString();
                         }
 
-                        if(etTextDob.getText().toString().isEmpty()){
+                        if (etTextDob.getText().toString().isEmpty()) {
                             etTextDob.setError("Select Date");
                             allConditionsSatisfied = false;
-                        }else{
-                            dob          = etTextDob.getText().toString();
+                        } else {
+                            dob = etTextDob.getText().toString();
                         }
 
 
                         if (spin_gender.getSelectedItem().toString().contains("-Select-")) {
                             ((TextView) spin_gender.getSelectedView()).setError("Please select a Gender");
                             allConditionsSatisfied = false;
-                        }else{
-                            gender        = spin_gender.getSelectedItem().toString();
+                        } else {
+                            gender = spin_gender.getSelectedItem().toString();
                         }
 
                         if (!isValidFullName(etTextGuardian.getText().toString().isEmpty() ? "" : etTextGuardian.getText().toString())) {
                             etTextGuardian.setError("Invalid GurName");
                             allConditionsSatisfied = false;
                         } else {
-                            gurName      = etTextGuardian.getText().toString();
+                            gurName = etTextGuardian.getText().toString();
                         }
 
 
-                        if(!isValidAddr(etTextAddress1.getText().toString().isEmpty() ? "" : etTextAddress1.getText().toString())){
+                        if (!isValidAddr(etTextAddress1.getText().toString().isEmpty() ? "" : etTextAddress1.getText().toString())) {
                             etTextAddress1.setError("Invalid Address");
                             allConditionsSatisfied = false;
-                        }else{
-                            perAdd1      = etTextAddress1.getText().toString();
+                        } else {
+                            perAdd1 = etTextAddress1.getText().toString();
                         }
 
-                        if(!isValidAddr(etTextAddress2.getText().toString().isEmpty() ? "" : etTextAddress2.getText().toString())){
+                        if (!isValidAddr(etTextAddress2.getText().toString().isEmpty() ? "" : etTextAddress2.getText().toString())) {
                             etTextAddress2.setError("Invalid Address");
                             allConditionsSatisfied = false;
-                        }else{
-                            perAdd2      = etTextAddress2.getText().toString();
+                        } else {
+                            perAdd2 = etTextAddress2.getText().toString();
                         }
 
-                        if(!isValidAddr(etTextAddress3.getText().toString().isEmpty() ? "" : etTextAddress3.getText().toString())){
+                        if (!isValidAddr(etTextAddress3.getText().toString().isEmpty() ? "" : etTextAddress3.getText().toString())) {
                             etTextAddress3.setError("Invalid Address");
                             allConditionsSatisfied = false;
-                        }else{
-                            perAdd3      = etTextAddress3.getText().toString();
+                        } else {
+                            perAdd3 = etTextAddress3.getText().toString();
                         }
 
-                        if(!isValidName(etTextCity.getText().toString().isEmpty() ?" ": etTextCity.getText().toString())){
+                        if (!isValidName(etTextCity.getText().toString().isEmpty() ? " " : etTextCity.getText().toString())) {
                             etTextCity.setError("Invalid City");
                             allConditionsSatisfied = false;
-                        }else{
-                            perCity      = etTextCity.getText().toString();
+                        } else {
+                            perCity = etTextCity.getText().toString();
                         }
 
-                        if(!isNumber(etTextPincode.getText().toString())){
+                        if (!isNumber(etTextPincode.getText().toString())) {
                             etTextPincode.setError("Invalid PinCode");
                             allConditionsSatisfied = false;
-                        }else {
-                            p_Pin        = etTextPincode.getText().toString();
+                        } else {
+                            p_Pin = etTextPincode.getText().toString();
                         }
 
                         if (spin_state.getSelectedItem().toString().contains("-Select-")) {
                             ((TextView) spin_state.getSelectedView()).setError("Please select a state");
                             allConditionsSatisfied = false;
-                        }else{
-                            p_StateID    = spin_state.getSelectedItem().toString();
+                        } else {
+                            p_StateID = ((RangeCategoryDataClass)spin_state.getSelectedItem()).getCode();
                         }
 
-                        if(!isNumber(etTextMobile.getText().toString())){
+                        if (!isNumber(etTextMobile.getText().toString())) {
                             etTextMobile.setError("Invalid PinCode");
                             allConditionsSatisfied = false;
-                        }else {
-                            perMob1      = etTextMobile.getText().toString();
+                        } else {
+                            perMob1 = etTextMobile.getText().toString();
                         }
 
-                        if(etTextvoterid.getText().toString().isEmpty()){
+                        if (etTextvoterid.getText().toString().isEmpty()) {
                             etTextvoterid.setError("Empty Voter id");
                             allConditionsSatisfied = false;
-                        }else {
-                            voterID      = etTextvoterid.getText().toString();
+                        } else {
+                            voterID = etTextvoterid.getText().toString();
                         }
 
-                        if(!isValidPan(etTextPAN.getText().toString())){
+                        if (!isValidPan(etTextPAN.getText().toString())) {
                             etTextPAN.setError("Invalid Pan");
                             allConditionsSatisfied = false;
-                        }else{
-                            pano         = etTextPAN.getText().toString();
+                        } else {
+                            pano = etTextPAN.getText().toString();
                         }
 
-                        if(etdrivingLicense.getText().toString().isEmpty()){
+                        if (etdrivingLicense.getText().toString().isEmpty()) {
                             etdrivingLicense.setError("Empty License");
                             allConditionsSatisfied = false;
-                        }else {
-                            drivingLic   = etdrivingLicense.getText().toString();
+                        } else {
+                            drivingLic = etdrivingLicense.getText().toString();
                         }
 
                         if (spin_relationwithborr.getSelectedItem().toString().contains("-Select-")) {
                             ((TextView) spin_relationwithborr.getSelectedView()).setError("Please select a relationwithborr");
                             allConditionsSatisfied = false;
-                        }else{
-                            relationwithborr= spin_relationwithborr.getSelectedItem().toString();
+                        } else {
+                            relationwithborr = spin_relationwithborr.getSelectedItem().toString();
                         }
 
                         if (allConditionsSatisfied) {
@@ -363,16 +408,15 @@ public class GuarantorsFragment extends Fragment {
                                     if (response.isSuccessful()) {
                                         Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
                                         Log.d("TAG", "onResponseAdhaarUpdatemsg: " + response.body().getMessage().toString());
-                                        SharedPreferences sharedPreferences = getContext().getSharedPreferences("checkBoxes", Context.MODE_PRIVATE);
-                                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                                        editor.putBoolean("guarantorCheckBox", true);
-                                        editor.apply();
+                                        SubmitAlert(getActivity(), "success", "Data set Successfully");
+
 
                                         Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
                                         startActivity(intent);
                                         getActivity().finish();
                                     } else {
                                         Log.d("TAG", "onResponseAdhaarUpdate: " + response.code());
+                                        SubmitAlert(getActivity(), "unsuccessful", "Check Your Internet Connection");
 
                                     }
                                 }
@@ -380,6 +424,7 @@ public class GuarantorsFragment extends Fragment {
                                 @Override
                                 public void onFailure(Call<KycUpdateModel> call, Throwable t) {
                                     Log.d("TAG", "onResponseAdhaarUpdate: " + "failure");
+                                    SubmitAlert(getActivity(), "Network Error", "Check Your Internet Connection");
 
                                 }
                             });
@@ -395,26 +440,26 @@ public class GuarantorsFragment extends Fragment {
 
     private JsonObject gurrantorJson() {
         JsonObject jsonGurrantor = new JsonObject();
-        jsonGurrantor.addProperty("code",   code);
-        jsonGurrantor.addProperty("creator",creator);
-        jsonGurrantor.addProperty("fi_Code", fi_Code);
-        jsonGurrantor.addProperty("aadharID",aadharID);
-        jsonGurrantor.addProperty("name",   name);
-        jsonGurrantor.addProperty("age",    age);
-        jsonGurrantor.addProperty("dob",    dob);
-       jsonGurrantor.addProperty("gender", gender);
+        jsonGurrantor.addProperty("code", code);
+        jsonGurrantor.addProperty("creator", creator);
+        jsonGurrantor.addProperty("fi_Code", fiCode);
+        jsonGurrantor.addProperty("aadharID", aadharID);
+        jsonGurrantor.addProperty("name", name);
+        jsonGurrantor.addProperty("age", age);
+        jsonGurrantor.addProperty("dob", dob);
+        jsonGurrantor.addProperty("gender", gender);
         jsonGurrantor.addProperty("gurName", gurName);
-        jsonGurrantor.addProperty("perAdd1",perAdd1);
+        jsonGurrantor.addProperty("perAdd1", perAdd1);
         jsonGurrantor.addProperty("perAdd2", perAdd2);
-        jsonGurrantor.addProperty("perAdd3",perAdd3);
-        jsonGurrantor.addProperty("perCity",perCity);
-        jsonGurrantor.addProperty("p_Pin",  p_Pin);
-       jsonGurrantor.addProperty("p_StateID",p_StateID);
+        jsonGurrantor.addProperty("perAdd3", perAdd3);
+        jsonGurrantor.addProperty("perCity", perCity);
+        jsonGurrantor.addProperty("p_Pin", p_Pin);
+        jsonGurrantor.addProperty("p_StateID", p_StateID);
         jsonGurrantor.addProperty("perMob1", perMob1);
         jsonGurrantor.addProperty("voterID", voterID);
-        jsonGurrantor.addProperty("pano",    pano);
-     jsonGurrantor.addProperty("drivingLic", drivingLic);
- jsonGurrantor.addProperty("relationwithborr",relationwithborr);
+        jsonGurrantor.addProperty("pano", pano);
+        jsonGurrantor.addProperty("drivingLic", drivingLic);
+        jsonGurrantor.addProperty("relationwithborr", relationwithborr);
 
         return jsonGurrantor;
     }

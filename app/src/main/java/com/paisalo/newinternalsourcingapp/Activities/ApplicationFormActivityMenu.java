@@ -103,9 +103,12 @@ public class ApplicationFormActivityMenu extends AppCompatActivity {
                         allDataAFDataModel = allDataAFModel.getData();
 
                         if (allDataAFDataModel != null) {
-                            Log.d("TAG", "getAadharID: " + allDataAFDataModel.getAadharID());
-                            Log.d("TAG", "getAadharID: " + allDataAFDataModel.getCode());
+
+
+                            fiExtra = allDataAFDataModel.getFiExtra();
+
                           /*  fiExtra = allDataAFDataModel.getFiExtra();
+
                             fiExtraBankBo = allDataAFDataModel.getFiExtraBankBo();
                             fiFamExpenses = allDataAFDataModel.getFiFamExpenses();
                             fiFamLoan = allDataAFDataModel.getFiFamLoans();

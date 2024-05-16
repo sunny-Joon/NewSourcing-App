@@ -46,11 +46,9 @@ public class ApplicationFormActivity extends AppCompatActivity {
 
         if (afDataObject != null && afDataObject instanceof AllDataAFDataModel) {
             allDataAFDataModel = (AllDataAFDataModel) afDataObject;
-            if(allDataAFDataModel!=null){
-                Log.d("TAG", "sunny: " + " Not Null");
-
-            }else{
-                Log.d("TAG", "sunny: " + "Null");
+            Log.d("TAG", "onCreateViewadhaar: "+"check data");
+            if(allDataAFDataModel!=null) {
+                Log.d("TAG", "onCreateViewadhaar: " + "confirm data");
 
             }
         }
