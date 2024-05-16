@@ -30,11 +30,7 @@ public class ApplicationFormActivity extends AppCompatActivity {
 
     private ViewPager2 viewPager;
     private MaterialToolbar toolbar;
-
     static AllDataAFDataModel allDataAFDataModel;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +39,6 @@ public class ApplicationFormActivity extends AppCompatActivity {
 
         viewPager = findViewById(R.id.viewPager);
         toolbar = findViewById(R.id.toolbar);
-
 
         Intent intent = getIntent();
 

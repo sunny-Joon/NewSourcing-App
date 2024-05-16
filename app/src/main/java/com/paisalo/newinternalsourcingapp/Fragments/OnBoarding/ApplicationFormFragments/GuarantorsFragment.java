@@ -353,7 +353,7 @@ public class GuarantorsFragment extends Fragment {
                         if (allConditionsSatisfied) {
 
                             ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-                            Call<KycUpdateModel> call = apiInterface.updateFamLoans(GlobalClass.Token, GlobalClass.dbname, gurrantorJson());
+                            Call<KycUpdateModel> call = apiInterface.updateGaurantors(GlobalClass.Token, GlobalClass.dbname, gurrantorJson());
                             Log.d("TAG", "onResponseAdhaarUpdate: " + GlobalClass.Token + " " + GlobalClass.dbname + " " + gurrantorJson());
 
                             call.enqueue(new Callback<KycUpdateModel>() {
