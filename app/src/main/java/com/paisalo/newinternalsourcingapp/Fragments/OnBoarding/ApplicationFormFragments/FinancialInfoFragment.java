@@ -155,12 +155,12 @@ public class FinancialInfoFragment extends Fragment {
                 if (allDataAFDataModel != null) {
                     Log.d("TAG", "onCreate:view1 "+allDataAFDataModel.getBankAcNo());
                     if (allDataAFDataModel.getBankAcNo() != null) {
-                        bankAccountNumber.setText(allDataAFDataModel.getBankAcNo());
+                        bankAccountNumber.setText(String.valueOf(allDataAFDataModel.getBankAcNo()));
                     }
 
                     Log.d("TAG", "onCreate:view3 "+allDataAFDataModel.getBankAcOpenDt());
                     if (allDataAFDataModel.getBankAcOpenDt() != null) {
-                        etaccount_date.setText(allDataAFDataModel.getBankAcOpenDt());
+                        etaccount_date.setText(String.valueOf(allDataAFDataModel.getBankAcOpenDt()));
                     }
 
 //                    Log.d("TAG", "onCreate:view4 "+allDataAFDataModel.geti());
@@ -170,62 +170,61 @@ public class FinancialInfoFragment extends Fragment {
 
                     Log.d("TAG", "onCreate:view5 "+allDataAFDataModel.getFiExtra().getRentalIncome());
                     if (allDataAFDataModel.getFiExtra().getRentalIncome() != null) {
-                        rentalIncome.setText(allDataAFDataModel.getFiExtra().getRentalIncome());
+                        rentalIncome.setText(String.valueOf(allDataAFDataModel.getFiExtra().getRentalIncome()));
                     }
 
                     Log.d("TAG", "onCreate:view6 "+allDataAFDataModel.getFiFamExpenses().getRent());
                     if (allDataAFDataModel.getFiFamExpenses().getRent() != null) {
-                        expenseInRent.setText(allDataAFDataModel.getFiFamExpenses().getRent());
+                        expenseInRent.setText(String.valueOf(allDataAFDataModel.getFiFamExpenses().getRent()));
                     }
 
                     Log.d("TAG", "onCreate:view8 "+allDataAFDataModel.getFiFamExpenses().getFooding());
                     if (allDataAFDataModel.getFiFamExpenses().getFooding() != null) {
-                        expenseForFood.setText(allDataAFDataModel.getFiFamExpenses().getFooding());
+                        expenseForFood.setText(String.valueOf(allDataAFDataModel.getFiFamExpenses().getFooding()));
                     }
 
                     Log.d("TAG", "onCreate:view9 "+allDataAFDataModel.getFiFamExpenses().getEducation());
                     if (allDataAFDataModel.getFiFamExpenses().getEducation() != null) {
-                        expenseForEducation.setText(allDataAFDataModel.getFiFamExpenses().getEducation());
+                        expenseForEducation.setText(String.valueOf(allDataAFDataModel.getFiFamExpenses().getEducation()));
                     }
 
                     Log.d("TAG", "onCreate:view10 "+allDataAFDataModel.getFiFamExpenses().getHealth());
                     if (allDataAFDataModel.getFiFamExpenses().getHealth() != null) {
-                        expenseForHealth.setText(allDataAFDataModel.getFiFamExpenses().getHealth());
+                        expenseForHealth.setText(String.valueOf(allDataAFDataModel.getFiFamExpenses().getHealth()));
                     }
 
                     Log.d("TAG", "onCreate:view11 "+allDataAFDataModel.getFiFamExpenses().getTravelling());
                     if (allDataAFDataModel.getFiFamExpenses().getTravelling() != null) {
-                        expenseForTravelling.setText(allDataAFDataModel.getFiFamExpenses().getTravelling());
+                        expenseForTravelling.setText(String.valueOf(allDataAFDataModel.getFiFamExpenses().getTravelling()));
                     }
 
                     Log.d("TAG", "onCreate:view12 "+allDataAFDataModel.getFiFamExpenses().getEntertainment());
                     if (allDataAFDataModel.getFiFamExpenses().getEntertainment() != null) {
-                        expenseForEntertainment.setText(allDataAFDataModel.getFiFamExpenses().getEntertainment());
+                        expenseForEntertainment.setText(String.valueOf(allDataAFDataModel.getFiFamExpenses().getEntertainment()));
                     }
 
                     Log.d("TAG", "onCreate:view13 "+allDataAFDataModel.getFiFamExpenses().getOthers());
                     if (allDataAFDataModel.getFiFamExpenses().getOthers() != null) {
-                        anyOtherExpense.setText(allDataAFDataModel.getFiFamExpenses().getOthers());
+                        anyOtherExpense.setText(String.valueOf(allDataAFDataModel.getFiFamExpenses().getOthers()));
                     }
-
 
 
                     if (allDataAFDataModel.getFiFamExpenses().getHomeType() != null) {
-                        int castePos = adapter1.getPosition(allDataAFDataModel.getFiFamExpenses().getHomeType());
+                        int castePos = adapter1.getPosition(String.valueOf(allDataAFDataModel.getFiFamExpenses().getHomeType()));
                         houseTypeSpinner.setSelection(castePos);
                     }
                     if (allDataAFDataModel.getFiFamExpenses().getHomeRoofType() != null) {
-                        int castePos1 = adapter2.getPosition(allDataAFDataModel.getFiFamExpenses().getHomeRoofType());
+                        int castePos1 = adapter2.getPosition(String.valueOf(allDataAFDataModel.getFiFamExpenses().getHomeRoofType()));
                         roofTypeSpinner.setSelection(castePos1);
                     }
                     if (allDataAFDataModel.getFiFamExpenses().getToiletType() != null) {
-                        int castePos2 = adapter3.getPosition(allDataAFDataModel.getFiFamExpenses().getToiletType());
+                        int castePos2 = adapter3.getPosition(String.valueOf(allDataAFDataModel.getFiFamExpenses().getToiletType()));
                         personalToiletSpinner.setSelection(castePos2);
                     }
 
                     Log.d("TAG", "onCreate:view7 "+allDataAFDataModel.getBankAcType());
                     if (allDataAFDataModel.getBankAcType() != null) {
-                        int castePos3 = adapter4.getPosition(allDataAFDataModel.getBankAcType());
+                        int castePos3 = adapter4.getPosition(String.valueOf(allDataAFDataModel.getBankAcType()));
                         accountTypeSpinner.setSelection(castePos3);
                     }
                 }
@@ -396,9 +395,9 @@ public class FinancialInfoFragment extends Fragment {
                                 //  Log.d("TAG", "onResponseAdhaarUpdatemsg: " + response.body().getMessage().toString());
                                 SubmitAlert(getActivity(), "success", "Data set Successfully");
 
-                                Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
-                                startActivity(intent);
-                                getActivity().finish();
+//                                Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
+//                                startActivity(intent);
+//                                getActivity().finish();
                             } else {
                                 Log.d("TAG", "onResponseAdhaarUpdate: " + response.code());
                                 SubmitAlert(getActivity(), "unsuccessful", "Check Your Internet Connection");

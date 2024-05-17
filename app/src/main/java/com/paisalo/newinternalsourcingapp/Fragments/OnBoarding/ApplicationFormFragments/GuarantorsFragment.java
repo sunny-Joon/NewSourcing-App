@@ -72,7 +72,7 @@ public class GuarantorsFragment extends Fragment {
     EditText etTextAadhar, etTextName, etTextAge, etTextDob, etTextGuardian, etTextAddress1, etTextAddress2, etTextAddress3, etTextCity, etTextPincode, etTextMobile, etTextvoterid, etTextPAN, etdrivingLicense;
     Spinner spin_gender, spin_state, spin_relationwithborr;
 
-    String code, creator,tag, fiCode, aadharID, name, age, dob, gender, gurName, perAdd1, perAdd2, perAdd3, perCity, p_Pin, p_StateID, perMob1, voterID, pano, drivingLic, relationwithborr;
+    String code, creator,tag, fiCode, aadharID, name, age, dob, gender, gurName, perAdd1, perAdd2, perAdd3, perCity, p_Pin, p_StateID, perMob1, voterID, panno, drivingLic, relationwithborr;
 
     public GuarantorsFragment(AllDataAFDataModel allDataAFDataModel) {
         this.allDataAFDataModel = allDataAFDataModel;
@@ -378,7 +378,7 @@ public class GuarantorsFragment extends Fragment {
                             etTextPAN.setError("Invalid Pan");
                             allConditionsSatisfied = false;
                         } else {
-                            pano = etTextPAN.getText().toString();
+                            panno = etTextPAN.getText().toString();
                         }
 
                         if (etdrivingLicense.getText().toString().isEmpty()) {
@@ -410,10 +410,6 @@ public class GuarantorsFragment extends Fragment {
                                         Log.d("TAG", "onResponseAdhaarUpdatemsg: " + response.body().getMessage().toString());
                                         SubmitAlert(getActivity(), "success", "Data set Successfully");
 
-
-                                        Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
-                                        startActivity(intent);
-                                        getActivity().finish();
                                     } else {
                                         Log.d("TAG", "onResponseAdhaarUpdate: " + response.code());
                                         SubmitAlert(getActivity(), "unsuccessful", "Check Your Internet Connection");
@@ -457,7 +453,7 @@ public class GuarantorsFragment extends Fragment {
         jsonGurrantor.addProperty("p_StateID", p_StateID);
         jsonGurrantor.addProperty("perMob1", perMob1);
         jsonGurrantor.addProperty("voterID", voterID);
-        jsonGurrantor.addProperty("pano", pano);
+        jsonGurrantor.addProperty("pano", panno);
         jsonGurrantor.addProperty("drivingLic", drivingLic);
         jsonGurrantor.addProperty("relationwithborr", relationwithborr);
 
