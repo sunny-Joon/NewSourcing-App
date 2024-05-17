@@ -103,10 +103,7 @@ public class ApplicationFormActivityMenu extends AppCompatActivity {
                         allDataAFDataModel = allDataAFModel.getData();
 
                         if (allDataAFDataModel != null) {
-
-
-                            fiExtra = allDataAFDataModel.getFiExtra();
-
+                            
                           /*  fiExtra = allDataAFDataModel.getFiExtra();
 
                             fiExtraBankBo = allDataAFDataModel.getFiExtraBankBo();
@@ -116,16 +113,36 @@ public class ApplicationFormActivityMenu extends AppCompatActivity {
                             fiGuarantor = allDataAFDataModel.getFiGuarantors();
                             uploadedFiDocs = allDataAFDataModel.getUploadedFiDocsList();*/
 
-                            if(allDataAFDataModel.getAadharID() == null){
-                                aadhaarCheckBox.setChecked(true);
-
+                            if(allDataAFDataModel.getoAdd1() == null){
+                                aadhaarCheckBox.setChecked(false);
                             } else{
                                 aadhaarCheckBox.setChecked(true);
                             }
 
-                            if (allDataAFDataModel.getAadharID() == null){
-                            }else {
+                            if (allDataAFDataModel.getFiExtra() != null &&  allDataAFDataModel.getFiExtra().getEmaiLID() != null){
                                 personaldetailCheckBox.setChecked(true);
+                            }else {
+                                personaldetailCheckBox.setChecked(false);
+                            }
+                            if (allDataAFDataModel.getBankAcNo() != null){
+                                financialInfoCheckBox.setChecked(true);
+                            }else {
+                                financialInfoCheckBox.setChecked(false);
+                            }
+                            if(allDataAFDataModel.getFiFamMems() !=null && allDataAFDataModel.getFiFamMems().size() >0 && allDataAFDataModel.getFiFamMems().get(0).getMemName() !=null){
+                                familyIncomeCheckBox.setChecked(true);
+                            }else{
+                                familyIncomeCheckBox.setChecked(false);
+                            }
+                            if(allDataAFDataModel.getFiFamLoans() != null && allDataAFDataModel.getFiFamLoans().size() >0 && allDataAFDataModel.getFiFamLoans().get(0).getLenderName() !=null){
+                                borrowingsCheckBox.setChecked(true);
+                            }else{
+                                borrowingsCheckBox.setChecked(false);
+                            }
+                            if(allDataAFDataModel.getFiGuarantors() != null && allDataAFDataModel.getFiGuarantors().size() >0 && allDataAFDataModel.getFiGuarantors().get(0).getName() !=null){
+                                guarantorCheckBox.setChecked(true);
+                            }else{
+                                guarantorCheckBox.setChecked(false);
                             }
 
                         } else {
