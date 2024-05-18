@@ -188,21 +188,16 @@ public class KycScanningFragment extends Fragment implements KycRecyclerViewAdap
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
-                startActivity(intent);
-                getActivity().finish();*/
-
-                RequestBody ficodeRB=RequestBody.create(MediaType.parse("multipart/form-data"),"ficode");
+                RequestBody ficodeRB=RequestBody.create(MediaType.parse("multipart/form-data"),allDataAFDataModel.getCode().toString());
                 RequestBody dbnameRB=RequestBody.create(MediaType.parse("multipart/form-data"),BuildConfig.dbname);
                 RequestBody CreatorRB=RequestBody.create(MediaType.parse("multipart/form-data"),GlobalClass.Creator);
                 RequestBody fiTagRB=RequestBody.create(MediaType.parse("multipart/form-data"),"RTAG");
-                RequestBody CheckListIdRB=RequestBody.create(MediaType.parse("multipart/form-data"),"1");
+                RequestBody CheckListIdRB=RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(position));
                 RequestBody RemarksRB=RequestBody.create(MediaType.parse("multipart/form-data"),"aadhafront");
                 RequestBody userIDRB=RequestBody.create(MediaType.parse("multipart/form-data"),GlobalClass.Id);
                 RequestBody GrNoRB=RequestBody.create(MediaType.parse("multipart/form-data"),"1");
                 RequestBody fileNameRB=RequestBody.create(MediaType.parse("multipart/form-data"),"fileName");
                 RequestBody imageTagRB=RequestBody.create(MediaType.parse("multipart/form-data"),"1");
-
 
                 RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), file);
 
