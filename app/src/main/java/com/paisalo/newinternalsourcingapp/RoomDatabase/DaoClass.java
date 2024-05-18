@@ -49,4 +49,5 @@ public interface DaoClass {
     @Query("Select * from RangeCategory_Database where cat_key=:catKey and code=:code")
     RangeCategoryDataClass getStateByCode(String catKey,String code);
 
+
 }

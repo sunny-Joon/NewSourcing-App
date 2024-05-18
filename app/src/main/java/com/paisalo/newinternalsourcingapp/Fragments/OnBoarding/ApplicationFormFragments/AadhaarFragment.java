@@ -239,9 +239,7 @@ public class AadhaarFragment extends Fragment {
                              Log.d("TAG", "onResponseAdhaarUpdatemsg: " + response.body().getMessage().toString());
                              SubmitAlert(getActivity(), "success", "Data set Successfully");
 
-                             Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
-                             startActivity(intent);
-                             getActivity().finish();
+
                          } else {
                              Log.d("TAG", "onResponseAdhaarUpdate: " + response.code());
                              SubmitAlert(getActivity(), "unsuccessful", "Check Your Internet Connection");

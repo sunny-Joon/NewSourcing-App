@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivityMenu;
+import com.paisalo.newinternalsourcingapp.Adapters.CustomArrayAdapter;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFDataModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.UpdateFiModels.KycUpdateModel;
@@ -152,9 +153,11 @@ public class PersonalDetailsFragment extends Fragment {
         noOfFamilyMembersSpinner.setAdapter(adapter6);
 
 
-        ArrayAdapter<CharSequence> adapter7 = ArrayAdapter.createFromResource(getActivity(), R.array.landHold, android.R.layout.simple_spinner_item);
+        String[] landHoldArray = getResources().getStringArray(R.array.landHold);
+        CustomArrayAdapter adapter7 = new CustomArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, landHoldArray);
         adapter7.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         landHoldSpinner.setAdapter(adapter7);
+
 
 
         ArrayAdapter<CharSequence> adapter8 = ArrayAdapter.createFromResource(getActivity(), R.array.specialAbility, android.R.layout.simple_spinner_item);
@@ -221,12 +224,13 @@ public class PersonalDetailsFragment extends Fragment {
                         int spinnerPosition2 = adapter6.getPosition(allDataAFDataModel.getfAmilyMember());
                         noOfFamilyMembersSpinner.setSelection(spinnerPosition2);
                     }
-                    Log.d("TAG", "onCreateView:is "+allDataAFDataModel.getLandHolding());
 
-                     if (allDataAFDataModel.getLandHolding() != null) {
-                        int spinnerPosition3 = adapter7.getPosition(allDataAFDataModel.getLandHolding());
+                    Log.d("TAG", "onCreateView:is "+allDataAFDataModel.getLandHolding());
+                    if (allDataAFDataModel.getLandHolding() != null) {
+                        int spinnerPosition3 = adapter7.getPosition(allDataAFDataModel.getLandHolding() + " Acres");
                         landHoldSpinner.setSelection(spinnerPosition3);
                     }
+
                     Log.d("TAG", "onCreateView:is "+allDataAFDataModel.getFiExtra().getIsBorrowerHandicap());
 
                      if (allDataAFDataModel.getFiExtra().getIsBorrowerHandicap() != null) {
@@ -367,6 +371,7 @@ public class PersonalDetailsFragment extends Fragment {
                         public void onResponse(Call<KycUpdateModel> call, Response<KycUpdateModel> response) {
                             Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
                             if (response.isSuccessful()) {
+                                Log.d("TAG", "onResponseAdhaarUpdate: " + response.body().getMessage());
                                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                                 builder.setMessage("Data submitted successfully.")
                                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -405,15 +410,15 @@ public class PersonalDetailsFragment extends Fragment {
         jsonPersonalInfo.addProperty("religion", religion);
         jsonPersonalInfo.addProperty("placeOfBirth", PlaceOfBirth);
         jsonPersonalInfo.addProperty("presentHouseOwner", presentHouseOwner);
-        jsonPersonalInfo.addProperty("residingFor", residingFor);
-        jsonPersonalInfo.addProperty("numOfFamMember", numOfFamMember);
+        jsonPersonalInfo.addProperty("residingFor", Integer.parseInt(residingFor));
+        jsonPersonalInfo.addProperty("numOfFamMember", Integer.parseInt(numOfFamMember));
         jsonPersonalInfo.addProperty("landHold", landHold);
         jsonPersonalInfo.addProperty("specialAbility", specialAbility);
         jsonPersonalInfo.addProperty("specialSocialCategory", specialSocialCategory);
         jsonPersonalInfo.addProperty("educationalCode", educationalCode);
         jsonPersonalInfo.addProperty("panApplied", "pinCode");
         jsonPersonalInfo.addProperty("isBorrowerBlind", isBorrowerBlind);
-        jsonPersonalInfo.addProperty("yearsInBusiness", yearsInBusiness);
+        jsonPersonalInfo.addProperty("yearsInBusiness", Integer.parseInt(yearsInBusiness));
         return jsonPersonalInfo;
     }
 }

@@ -1,5 +1,6 @@
 package com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.ApplicationFormFragments;
 
+import static com.paisalo.newinternalsourcingapp.GlobalClass.SubmitAlert;
 import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidName;
 
 import android.content.Context;
@@ -59,14 +60,13 @@ public class FamilyMembersIncomeFragment extends Fragment {
 
     String fiCode,creator,tag,famMemName,relationship,age,gender,health,education,schoolType,business,businessType,income,incomeType;
 
-
-
-
     Spinner relationship_spin,gender_spin,Health_spin,Education_spin,schoolType_spin,businessType_spin,incomeType_spin;
     FloatingActionButton FMIncomeButton;
 
     AllDataAFDataModel allDataAFDataModel;
+    List<RangeCategoryDataClass>  relationship_DataList,incomeType_DataList,businessType_DataList,schoolType_DataList,Education_DataList,Health_DataList,gender_DataList;
 
+    ArrayAdapter<String> adapter1,adapter2,adapter3,adapter4,adapter5,adapter6,adapter7;
     public FamilyMembersIncomeFragment(AllDataAFDataModel allDataAFDataModel) {
         this.allDataAFDataModel=allDataAFDataModel;
     }
@@ -82,21 +82,9 @@ public class FamilyMembersIncomeFragment extends Fragment {
 
         DatabaseClass databaseClass = DatabaseClass.getInstance(getContext());
 
-    //  List<FiFamMem> list = allDataAFDataModel.getFiFamMems();
+     List<FiFamMem> list = allDataAFDataModel.getFiFamMems();
 
         FMIncomeButton = view.findViewById(R.id.addButton);
-
-
-
-
-       /* if(!list.isEmpty()){
-            faimlMemberName.setText(list.get(0).getMemName());
-            etBusiness.setText(list.get(0).getBusiness());
-            etTextincome.setText(list.get(0).getIncome());
-
-        }
-        etage.setText(allDataAFDataModel.getAge());
-*/
 
 
 
@@ -145,62 +133,62 @@ public class FamilyMembersIncomeFragment extends Fragment {
                 incomeType_List.add(selectOption);
 
 
-                        List<RangeCategoryDataClass>  relationship_DataList = databaseClass.dao().getAllRCDataListby_catKey("relationship");
+                        relationship_DataList = databaseClass.dao().getAllRCDataListby_catKey("relationship");
                         for (RangeCategoryDataClass data : relationship_DataList) {
                             String descriptionEn = data.getDescriptionEn();
                             relationship_List.add(descriptionEn);
                         }
-                        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, relationship_List);
+                         adapter1 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, relationship_List);
                          relationship_spin.setAdapter(adapter1);
 
 
-                        List<RangeCategoryDataClass>  gender_DataList = databaseClass.dao().getAllRCDataListby_catKey("gender");
+                         gender_DataList = databaseClass.dao().getAllRCDataListby_catKey("gender");
                         for (RangeCategoryDataClass data : gender_DataList) {
                             String descriptionEn = data.getDescriptionEn();
                             gender_List.add(descriptionEn);
                         }
-                        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, gender_List);
+                       adapter2 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, gender_List);
                           gender_spin.setAdapter(adapter2);
 
-                        List<RangeCategoryDataClass>  Health_DataList = databaseClass.dao().getAllRCDataListby_catKey("health");
+                          Health_DataList = databaseClass.dao().getAllRCDataListby_catKey("health");
                         for (RangeCategoryDataClass data : Health_DataList) {
                             String descriptionEn = data.getDescriptionEn();
                             Health_List.add(descriptionEn);
 
                         }
-                        ArrayAdapter<String> adapter3 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, Health_List);
+                         adapter3 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, Health_List);
                         Health_spin.setAdapter(adapter3);
 
-                        List<RangeCategoryDataClass>  Education_DataList = databaseClass.dao().getAllRCDataListby_catKey("education");
+                          Education_DataList = databaseClass.dao().getAllRCDataListby_catKey("education");
                         for (RangeCategoryDataClass data : Education_DataList) {
                             String descriptionEn = data.getDescriptionEn();
                             Education_List.add(descriptionEn);
                         }
-                        ArrayAdapter<String> adapter4 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, Education_List);
+                        adapter4 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, Education_List);
                          Education_spin.setAdapter(adapter4);
 
-                        List<RangeCategoryDataClass> schoolType_DataList  = databaseClass.dao().getAllRCDataListby_catKey("school-type");
+                        schoolType_DataList  = databaseClass.dao().getAllRCDataListby_catKey("school-type");
                         for (RangeCategoryDataClass data : schoolType_DataList) {
                             String descriptionEn = data.getDescriptionEn();
                             schoolType_List.add(descriptionEn);
                         }
-                        ArrayAdapter<String> adapter5 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, schoolType_List);
+                        adapter5 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, schoolType_List);
                        schoolType_spin.setAdapter(adapter5);
 
-                        List<RangeCategoryDataClass> businessType_DataList  = databaseClass.dao().getAllRCDataListby_catKey("business-type");
+                         businessType_DataList  = databaseClass.dao().getAllRCDataListby_catKey("business-type");
                         for (RangeCategoryDataClass data : businessType_DataList) {
                             String descriptionEn = data.getDescriptionEn();
                             businessType_List.add(descriptionEn);
                         }
-                        ArrayAdapter<String> adapter6 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, businessType_List);
+                         adapter6 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, businessType_List);
                            businessType_spin.setAdapter(adapter6);
 
-                        List<RangeCategoryDataClass> incomeType_DataList  = databaseClass.dao().getAllRCDataListby_catKey("income-type");
+                         incomeType_DataList  = databaseClass.dao().getAllRCDataListby_catKey("income-type");
                         for (RangeCategoryDataClass data : incomeType_DataList) {
                             String descriptionEn = data.getDescriptionEn();
                             incomeType_List.add(descriptionEn);
                         }
-                        ArrayAdapter<String> adapter7 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, incomeType_List);
+                        adapter7 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, incomeType_List);
                         incomeType_spin.setAdapter(adapter7);
 
                 if(allDataAFDataModel != null) {
@@ -209,66 +197,67 @@ public class FamilyMembersIncomeFragment extends Fragment {
                     tag = allDataAFDataModel.getTag().toString();
                     Log.d("TAG", "onCreateView222: "+fiCode + tag + creator );
                     try {
-                        if (allDataAFDataModel.getFiExtra() != null) {
+                        if (!allDataAFDataModel.getFiFamMems().isEmpty()) {
+                            Log.d("TAG", "onCreateView222: "+allDataAFDataModel.getFiFamMems().get(0).getIncome() );
+                            Log.d("TAG", "onCreateView222: "+allDataAFDataModel.getFiFamMems().get(0).getGender() );
+                            Log.d("TAG", "onCreateView222: "+allDataAFDataModel.getFiFamMems().get(0).getSchoolType() );
 
 
-                       /*     if (list.get(0).getMemName() != null) {
-                                faimlMemberName.setText(list.get(0).getMemName());
-                            }
-*/
-                            if (allDataAFDataModel.getBusinessDetail() != null) {
-                                etBusiness.setText(allDataAFDataModel.getBusinessDetail());
-                            }
-
-                            if (allDataAFDataModel.getIncome() != null) {
-                                etTextincome.setText(allDataAFDataModel.getIncome());
-                            }
-                            if (allDataAFDataModel.getAge() != null) {
-                                etage.setText(allDataAFDataModel.getAge());
+                            if (allDataAFDataModel.getFiFamMems().get(0).getMemName() != null) {
+                                faimlMemberName.setText(allDataAFDataModel.getFiFamMems().get(0).getMemName());
                             }
 
-                            Log.d("TAG", "onCreate:view1 "+allDataAFDataModel.getRelationWBorrower());
-                            if (allDataAFDataModel.getRelationWBorrower() != null) {
-                                int castePos3 = adapter1.getPosition(allDataAFDataModel.getRelationWBorrower());
-                                relationship_spin.setSelection(castePos3);
+                            if (allDataAFDataModel.getFiFamMems().get(0).getBusiness() != null) {
+                                etBusiness.setText(allDataAFDataModel.getFiFamMems().get(0).getBusiness());
                             }
 
-                            Log.d("TAG", "onCreate:view2 "+allDataAFDataModel.getGender());
-                            if (allDataAFDataModel.getGender() != null) {
-                                int castePos3 = adapter2.getPosition(allDataAFDataModel.getGender());
-                                gender_spin.setSelection(castePos3);
+                            if (allDataAFDataModel.getFiFamMems().get(0).getIncome() != null) {
+                                etTextincome.setText(String.valueOf(allDataAFDataModel.getFiFamMems().get(0).getIncome()));
+                            }
+                            if (allDataAFDataModel.getFiFamMems().get(0).getAge() != null) {
+                                etage.setText(allDataAFDataModel.getFiFamMems().get(0).getAge().toString());
                             }
 
-//                            Log.d("TAG", "onCreate:view3 "+allDataAFDataModel.getFiExtra().geth);
-//                            if (allDataAFDataModel.getGender() != null) {
-//                                int castePos3 = adapter2.getPosition(allDataAFDataModel.getGender());
-//                                Health_spin.setSelection(castePos3);
-//                            }
+                            Log.d("TAG", "onCreate:view1 "+allDataAFDataModel.getFiFamMems().get(0).getRelationWBorrower());
+                            if (allDataAFDataModel.getFiFamMems().get(0).getRelationWBorrower() != null) {
+                                relationship_spin.setSelection(adapter1.getPosition(allDataAFDataModel.getFiFamMems().get(0).getRelationWBorrower()));
 
-//                            Log.d("TAG", "onCreate:view4"+allDataAFDataModel.get);
-//                            if (allDataAFDataModel.getGender() != null) {
-//                                int castePos3 = adapter4.getPosition(allDataAFDataModel.getGender());
-//                                Education_spin.setSelection(castePos3);
-//                            }
+                            }
 
-//                            Log.d("TAG", "onCreate:view5 "+allDataAFDataModel.());
-//                            if (allDataAFDataModel.getGender() != null) {
-//                                int castePos3 = adapter5.getPosition(allDataAFDataModel.getGender());
-//                                schoolType_spin.setSelection(castePos3);
-//                            }
+                            Log.d("TAG", "onCreate:view2 "+list.get(0).getGender() );
+                            if (allDataAFDataModel.getFiFamMems().get(0).getGender() != null) {
+                                gender_spin.setSelection(adapter2.getPosition(allDataAFDataModel.getFiFamMems().get(0).getGender()));
+                            }
+
+                            Log.d("TAG", "onCreate:view3 "+allDataAFDataModel.getFiFamMems().get(0).getHealth());
+                            if (allDataAFDataModel.getFiFamMems().get(0).getHealth() != null) {
+                                Health_spin.setSelection(adapter3.getPosition(allDataAFDataModel.getFiFamMems().get(0).getHealth()));
+                            }
+
+                            Log.d("TAG", "onCreate:view4"+allDataAFDataModel.getFiFamMems().get(0).getEducatioin());
+                            if (allDataAFDataModel.getFiFamMems().get(0).getEducatioin() != null) {
+                                int castePos3 = adapter4.getPosition(allDataAFDataModel.getFiFamMems().get(0).getEducatioin());
+                                Education_spin.setSelection(castePos3);
+                            }
+
+                            Log.d("TAG", "onCreate:view5 "+allDataAFDataModel.getFiFamMems().get(0).getSchoolType());
+                            if (allDataAFDataModel.getFiFamMems().get(0).getSchoolType() != null) {
+                                int castePos3 = adapter5.getPosition(allDataAFDataModel.getFiFamMems().get(0).getSchoolType());
+                                schoolType_spin.setSelection(castePos3);
+                            }
 
 
-//                            Log.d("TAG", "onCreate:view6 "+allDataAFDataModel.());
-//                            if (allDataAFDataModel.getGender() != null) {
-//                                int castePos3 = adapter6.getPosition(allDataAFDataModel.());
-//                                businessType_spin.setSelection(castePos3);
-//                            }
+                            Log.d("TAG", "onCreate:view6 "+allDataAFDataModel.getFiFamMems().get(0).getBusinessType());
+                            if (allDataAFDataModel.getFiFamMems().get(0).getBusinessType() != null) {
+                                int castePos3 = adapter6.getPosition(allDataAFDataModel.getFiFamMems().get(0).getBusinessType());
+                                businessType_spin.setSelection(castePos3);
+                            }
 
-//                            Log.d("TAG", "onCreate:view7 "+allDataAFDataModel.());
-//                            if (allDataAFDataModel.getGender() != null) {
-//                                int castePos3 = adapter7.getPosition(allDataAFDataModel.());
-//                                incomeType_spin.setSelection(castePos3);
-//                            }
+                            Log.d("TAG", "onCreate:view7 "+allDataAFDataModel.getFiFamMems().get(0).getIncomeType());
+                            if (allDataAFDataModel.getFiFamMems().get(0).getIncomeType() != null) {
+                                int castePos3 = adapter7.getPosition(allDataAFDataModel.getFiFamMems().get(0).getIncomeType());
+                                incomeType_spin.setSelection(castePos3);
+                            }
 
                         }
                     }catch (Exception exception){
@@ -365,16 +354,11 @@ public class FamilyMembersIncomeFragment extends Fragment {
                                   if (response.isSuccessful()) {
                                       Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
                                       Log.d("TAG", "onResponseAdhaarUpdatemsg: " + response.body().getMessage().toString());
-                                      SharedPreferences sharedPreferences = getContext().getSharedPreferences("checkBoxes", Context.MODE_PRIVATE);
-                                      SharedPreferences.Editor editor = sharedPreferences.edit();
-                                      editor.putBoolean("familyIncomeCheckBox", true);
-                                      editor.apply();
+                                      SubmitAlert(getActivity(), "success", "Data set Successfully");
 
-                                      Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
-                                      startActivity(intent);
-                                      getActivity().finish();
                                   } else {
                                       Log.d("TAG", "onResponseAdhaarUpdate: " + response.code());
+                                      SubmitAlert(getActivity(), "unsuccessful", "Check Your Internet Connection");
 
                                   }
                               }
@@ -382,6 +366,7 @@ public class FamilyMembersIncomeFragment extends Fragment {
                               @Override
                               public void onFailure(Call<KycUpdateModel> call, Throwable t) {
                                   Log.d("TAG", "onResponseAdhaarUpdate: " + "failure");
+                                  SubmitAlert(getActivity(), "Network Error", "Check Your Internet Connection");
 
                               }
                           });
