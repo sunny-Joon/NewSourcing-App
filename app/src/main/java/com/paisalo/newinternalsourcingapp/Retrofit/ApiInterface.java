@@ -10,6 +10,7 @@ import com.paisalo.newinternalsourcingapp.ModelsRetrofit.HouseVisitModels.HouseV
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.IdVerificationModels.PANerificationModels.PanVerificationModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.IdVerificationModels.DLVerificationModels.DLVerificationModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.IdVerificationModels.VoterIdVerificationModels.VoterIdVerificationModel;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.IfscModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.ImeiMappingModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.KycScanningModels.KycScanningModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.OCRScanModels.AdharDataResponse;
@@ -43,6 +44,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiInterface {
@@ -190,4 +192,18 @@ public interface ApiInterface {
 
     @GET("Miscellaneous/HomeVisitExistance")
     Call<TargetSetModel> checkHVForm(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("FiCode") String FiCode, @Query("Creator") String Creator);
+
+    @GET("{ifsccode}")
+    Call<JsonObject> getIfscCode(@Path("ifsccode") String ifsccode);
+
+    //--------------------------------------------------------------------------------------
+    @POST("OCR/GetIdentityVerfication")
+    Call<JsonObject> accValidate(@Header("Authorization") String token, @Header("dbname") String dbname, @Body JsonObject object);
+
+
+    @POST("LiveTrack/CreateKycVerification")
+    public Call<JsonObject> kycVerficationlog(@Body JsonObject object);
+
+    @POST("Miscellaneous/CreateFiVerfiedInfo")
+    public  Call<JsonObject> getDocNameDate(@Body JsonObject object);
 }
