@@ -186,6 +186,8 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
     SubDistChooseListner listSubDistructInteraction;
     CityChooseListner cityChooseListner;
     List<String> GenderList = new ArrayList<>();
+
+    List<RangeCategoryDataClass> stateDataList,maritalStatusList,relatnshipList,gendreDataList;
     List<String> RelationWithBorrowerList = new ArrayList<>();
     List<String> MaritalStatusList = new ArrayList<>();
     CardView spouseCardView;
@@ -393,19 +395,14 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                         ".jpeg",         /* suffix */
                         storageDir      /* directory */
                 );
-                // Create an empty bitmap with the desired size (adjust as needed)
                 Bitmap bitmap = Bitmap.createBitmap(256, 256, Bitmap.Config.ARGB_8888);
 
-                // Create a file output stream
                 FileOutputStream fos = new FileOutputStream(image);
 
-                // Compress the bitmap into JPEG format and write it to the file
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
 
-                // Close the file output stream
                 fos.close();
 
-                // Optionally, you can recycle the bitmap to free up memory
                 bitmap.recycle();
 
                 currentPhotoPathBefWork = image.getAbsolutePath();
@@ -413,11 +410,9 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             }
         });
 
-        DatabaseClass.databaseWriteExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
 
-                List<RangeCategoryDataClass> gendreDataList = databaseClass.dao().getAllRCDataListby_catKey("gender");
+
+                gendreDataList = databaseClass.dao().getAllRCDataListby_catKey("gender");
                 for (RangeCategoryDataClass data : gendreDataList) {
                     String descriptionEn = data.getDescriptionEn();
                     GenderList.add(descriptionEn);
@@ -425,15 +420,28 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                     acspGender.setAdapter(adapter1);
                 }
 
-                List<RangeCategoryDataClass> stateDataList = new ArrayList<>();
-                RangeCategoryDataClass rangeCategoryDataClass = new RangeCategoryDataClass("--Select--", "--Select--", "--Select--", "--Select--", "--Select--", 0, "99");
-                stateDataList.add(rangeCategoryDataClass);
-                stateDataList.addAll(databaseClass.dao().getAllRCDataListby_catKey("state"));
-                RangeCategoryAdapter rangeCategoryAdapter = new RangeCategoryAdapter(KYCActivity.this, stateDataList);
-                acspAadharState.setAdapter(rangeCategoryAdapter);
+//                stateDataList = new ArrayList<>();
+//                RangeCategoryDataClass rangeCategoryDataClass = new RangeCategoryDataClass("--Select--", "--Select--", "--Select--", "--Select--", "--Select--", 0, "99");
+//                stateDataList.add(rangeCategoryDataClass);
+//                stateDataList.addAll(databaseClass.dao().getAllRCDataListby_catKey("state"));
+//                RangeCategoryAdapter rangeCategoryAdapter = new RangeCategoryAdapter(KYCActivity.this, stateDataList);
+//                acspAadharState.setAdapter(rangeCategoryAdapter);
 
 
-                List<RangeCategoryDataClass> relatnshipList = databaseClass.dao().getAllRCDataListby_catKey("relationship");
+         stateDataList = new ArrayList<>();
+        RangeCategoryDataClass rangeCategoryDataClass = new RangeCategoryDataClass("--Select--", "--Select--", "--Select--", "--Select--", "--Select--", 0, "99");
+        stateDataList.add(rangeCategoryDataClass);
+        stateDataList.addAll(databaseClass.dao().getAllRCDataListby_catKey("state"));
+        for (RangeCategoryDataClass item : stateDataList) {
+            Log.d("TAG", "decodeData item: " + item.getCode());
+        }
+        RangeCategoryAdapter rangeCategoryAdapter = new RangeCategoryAdapter(KYCActivity.this, stateDataList);
+        acspAadharState.setAdapter(rangeCategoryAdapter);
+
+
+
+
+                relatnshipList = databaseClass.dao().getAllRCDataListby_catKey("relationship");
                 for (RangeCategoryDataClass data : relatnshipList) {
                     String descriptionEn = data.getDescriptionEn();
                     RelationWithBorrowerList.add(descriptionEn);
@@ -441,7 +449,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                     acspRelationship.setAdapter(adapter3);
                 }
 
-                List<RangeCategoryDataClass> maritalStatusList = databaseClass.dao().getAllRCDataListby_catKey("marrital_status");
+                maritalStatusList = databaseClass.dao().getAllRCDataListby_catKey("marrital_status");
                 for (RangeCategoryDataClass data : maritalStatusList) {
                     String descriptionEn = data.getDescriptionEn();
                     MaritalStatusList.add(descriptionEn);
@@ -449,8 +457,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                     isMarriedSpinner.setAdapter(adapter4);
                 }
 
-            }
-        });
+
         txtCityName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -837,7 +844,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 //                                                 acspRelationship.setSelection(1);
 //                                             }
                                     Log.d("TAG", "onResponse(relation): " + Relation);
-                                    String Relation1 = (String) adharDataModel.getRelation();
+                                    String Relation1 =  adharDataModel.getRelation();
                                     if (Relation1 != null) {
                                         if (Relation1.equals("Father")) {
                                             String guardian1 = adharDataModel.getGuardianName();
@@ -945,9 +952,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         Log.d("TAG", "onActivityResult: " + data + "" + requestCode);
         if (requestCode == IntentIntegrator.REQUEST_CODE) {
             IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-            //Log.d("QR Scan","Executed");
             if (scanningResult != null) {
-                //we have a result
                 String scanContent = scanningResult.getContents();
                 String scanFormat = scanningResult.getFormatName();
                 Log.d("CheckXMLDATA3", "AadharData:->" + scanContent);
@@ -1352,8 +1357,38 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
             Log.d("TAG", "PParts======rps-state=====>  " + decodedData.get(13 - inc));
         }
-        //  AadharUtils.getStateCode(decodedData.get(13-inc)
-      // Utils.setSpinnerPosition(acspAadharState, decodedData.get(13 - inc),true);
+
+        String state = decodedData.get(13 - inc);
+        Log.d("TAG", "decodeData:state "+state);
+        int position1 = -1;
+        for (int j = 0; j < stateDataList.size(); j++) {
+            String itemCode = stateDataList.get(j).getCode().trim();
+            Log.d("TAG", "decodeData: state " + state + " with itemCode " + itemCode);
+            if (itemCode.equalsIgnoreCase(state)) {
+                position1 = j;
+                Log.d("TAG", "decodeData: position found at " + j);
+                break;
+            }
+        }
+
+        if (position1 != -1) {
+            acspAadharState.setSelection(position1);
+        } else {
+            Log.d("TAG", "decodeData: state not found in list");
+        }
+
+        if (position1 != -1) {
+            final int finalPosition = position1;
+            acspAadharState.post(new Runnable() {
+                @Override
+                public void run() {
+                    acspAadharState.setSelection(finalPosition);
+                }
+            });
+        } else {
+            Log.d("TAG", "decodeData:state not found in list");
+        }
+
 
         if (decodedData.get(6 - inc).equals("") || decodedData.get(6 - inc).equals(null)) {
 
