@@ -70,6 +70,7 @@ public class FinancialInfoFragment extends Fragment {
 
     String fiCode, creator, tag, bankAccountType, bankAccNumber, accOpeningDate, ifscCode, houseType, roofType, personalToilet,
             requestforVerification="",ResponseforVerification="",isAccountVerify="N";
+
      Integer expenseforEducation,expenseforEntertainment,expenseforFood,expenseforHealth,expenseforTravelling,expenseinRent,otherexpense,rentalincome;
     AllDataAFDataModel allDataAFDataModel;
 
@@ -197,13 +198,13 @@ public class FinancialInfoFragment extends Fragment {
                         etaccount_date.setText(String.valueOf(allDataAFDataModel.getBankAcOpenDt()));
                     }
 
-//                    Log.d("TAG", "onCreate:view4 "+allDataAFDataModel.geti());
-//                    if (allDataAFDataModel.getBankAcOpenDt() != null) {
-//                        bankIFSCCode.setText(allDataAFDataModel.getBankAcOpenDt());
-//                    }
+                    Log.d("TAG", "onCreate:view4 "+allDataAFDataModel.getIFSCCode());
+                    if (allDataAFDataModel.getIFSCCode() != null) {
+                        bankIFSCCode.setText(allDataAFDataModel.getIFSCCode());
+                    }
 
                     Log.d("TAG", "onCreate:view5 "+allDataAFDataModel.getFiExtra().getRentalIncome());
-                    if (allDataAFDataModel.getFiExtra().getRentalIncome() != null) {
+                    if (allDataAFDataModel.getFiExtra().getRentalIncome().toString() != null) {
                         rentalIncome.setText(String.valueOf(allDataAFDataModel.getFiExtra().getRentalIncome()));
                     }
 
@@ -299,14 +300,6 @@ public class FinancialInfoFragment extends Fragment {
             public void onClick(View view) {
 
                 boolean allConditionsSatisfied = true;
-
-                if (accountTypeSpinner.getSelectedItem().toString().contains("-Select-")) {
-                    ((TextView) accountTypeSpinner.getSelectedView()).setError("Please select a accountType");
-                    allConditionsSatisfied = false;
-                } else {
-                    bankAccountType = accountTypeSpinner.getSelectedItem().toString();
-                }
-
 
                 if (bankAccountNumber.getText().toString().isEmpty()) {
                     bankAccountNumber.setError("Invalid bankAccount");
@@ -426,12 +419,10 @@ public class FinancialInfoFragment extends Fragment {
                             Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
                             if (response.isSuccessful()) {
                                 Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
-                                //  Log.d("TAG", "onResponseAdhaarUpdatemsg: " + response.body().getMessage().toString());
+                         //  Log.d("TAG", "onResponseAdhaarUpdatemsg: " + response.body().getMessage().toString());
                                 SubmitAlert(getActivity(), "success", "Data set Successfully");
 
-//                                Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
-//                                startActivity(intent);
-//                                getActivity().finish();
+//
                             } else {
                                 Log.d("TAG", "onResponseAdhaarUpdate: " + response.code());
                                 SubmitAlert(getActivity(), "unsuccessful", "Check Your Internet Connection");
@@ -680,7 +671,7 @@ public class FinancialInfoFragment extends Fragment {
         jsonFinance.addProperty("fiCode", fiCode);
         jsonFinance.addProperty("creator", creator);
         jsonFinance.addProperty("tag", tag);
-        jsonFinance.addProperty("bankAccountType", bankAccountType);
+        jsonFinance.addProperty("bankAccountType", "sa");
         jsonFinance.addProperty("bankAccNumber", bankAccNumber);
         jsonFinance.addProperty("accOpeningDate", accOpeningDate);
         jsonFinance.addProperty("ifscCode", ifscCode);

@@ -947,11 +947,11 @@ public class AllDataAFDataModel implements Serializable {
         this.fAmilyMember = fAmilyMember;
     }
 
-    public String getEncProperty() {
+    public String getIFSCCode() {
         return encProperty;
     }
 
-    public void setEncProperty(String encProperty) {
+    public void setIFSCCode(String encProperty) {
         this.encProperty = encProperty;
     }
 

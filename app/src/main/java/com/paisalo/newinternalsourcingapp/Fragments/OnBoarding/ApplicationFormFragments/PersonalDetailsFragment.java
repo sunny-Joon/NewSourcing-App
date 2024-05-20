@@ -249,7 +249,7 @@ public class PersonalDetailsFragment extends Fragment {
                     }
 
                     if (allDataAFDataModel.getFiExtra().getIsBorrowerHandicap() != null) {
-                        int spinnerPosition5 = adapter10.getPosition(allDataAFDataModel.getFiExtra().getIsBorrowerHandicap());
+                        int spinnerPosition5 = adapter11.getPosition(allDataAFDataModel.getFiExtra().getIsBorrowerHandicap());
                         isBorrowerBlindSpinner.setSelection(spinnerPosition5);
                     }
 
