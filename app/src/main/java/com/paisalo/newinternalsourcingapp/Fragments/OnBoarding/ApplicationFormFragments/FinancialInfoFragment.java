@@ -1,15 +1,14 @@
 package com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.ApplicationFormFragments;
 
 import static com.paisalo.newinternalsourcingapp.GlobalClass.SubmitAlert;
+import static com.paisalo.newinternalsourcingapp.Retrofit.ApiClient.getClient;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.content.Context;
-import android.content.DialogInterface;
+import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -18,39 +17,50 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivityMenu;
+import com.paisalo.newinternalsourcingapp.BuildConfig;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFDataModel;
-import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.FiFamExpenses;
-import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.FiFamLoan;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.UpdateFiModels.KycUpdateModel;
 import com.paisalo.newinternalsourcingapp.R;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiClient;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiInterface;
 import com.paisalo.newinternalsourcingapp.RoomDatabase.DatabaseClass;
 import com.paisalo.newinternalsourcingapp.RoomDatabase.RangeCategoryDataClass;
+import com.paisalo.newinternalsourcingapp.Utils.MyTextWatcher;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FinancialInfoFragment extends Fragment {
 
     Spinner accountTypeSpinner, houseTypeSpinner, roofTypeSpinner, personalToiletSpinner;
     EditText bankAccountNumber, bankIFSCCode, rentalIncome, expenseInRent, expenseForFood, expenseForEducation, expenseForHealth,
             expenseForTravelling, expenseForEntertainment, anyOtherExpense, etaccount_date;
+    TextView tvBankBranch,tvBankName,tilBankAccountName;
+    CheckBox accountVerification;
     Button submit;
     List<String> houseType_List = new ArrayList<>();
     List<String> roofType_List = new ArrayList<>();
@@ -58,7 +68,9 @@ public class FinancialInfoFragment extends Fragment {
     List<String> accountType_List = new ArrayList<>();
     ImageView calender_icon;
 
-    String fiCode, creator, tag, bankAccNumber, accOpeningDate, ifscCode, houseType, roofType, personalToilet;
+    String fiCode, creator, tag, bankAccountType, bankAccNumber, accOpeningDate, ifscCode, houseType, roofType, personalToilet,
+            requestforVerification="",ResponseforVerification="",isAccountVerify="N";
+
      Integer expenseforEducation,expenseforEntertainment,expenseforFood,expenseforHealth,expenseforTravelling,expenseinRent,otherexpense,rentalincome;
     AllDataAFDataModel allDataAFDataModel;
 
@@ -93,8 +105,7 @@ public class FinancialInfoFragment extends Fragment {
         anyOtherExpense = view.findViewById(R.id.anyOtherExpense);
 
         calender_icon = view.findViewById(R.id.ac_date_calender);
-
-
+        accountVerification = view.findViewById(R.id.accountVerification);
         accountTypeSpinner = view.findViewById(R.id.bankAccountType);
 
         houseTypeSpinner = view.findViewById(R.id.houseType);
@@ -109,6 +120,30 @@ public class FinancialInfoFragment extends Fragment {
         accountType_List.add(selectOption);
 
 
+        bankIFSCCode.addTextChangedListener(new MyTextWatcher(bankIFSCCode) {
+            @Override
+            public void validate(EditText editText, String text) {
+                editText.setError(null);
+                if (editText.length() != 11) {
+                    editText.setError("Must be 11 Character");
+                } else if (!GlobalClass.validateIFSC(text)) {
+                    editText.setError("Please input a valid IFSC. " + " " + text + "is not a valid IFSC");
+                } else {
+                    CheckValidateIFSC(editText, text);
+                }
+            }
+        });
+
+        accountVerification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!bankAccountNumber.getText().toString().equals("") && !bankIFSCCode.getText().toString().equals("") && !tvBankName.getText().toString().equals("")){
+                    cardValidate(bankAccountNumber.getText().toString().trim(),bankIFSCCode.getText().toString().trim());
+                }else{
+                    Toast.makeText(getContext(), "Please enter account number and IFSC code Properly", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         List<RangeCategoryDataClass> houseType_DataList = databaseClass.dao().getAllRCDataListby_catKey("house-type");
         for (RangeCategoryDataClass data : houseType_DataList) {
             String descriptionEn = data.getDescriptionEn();
@@ -374,7 +409,7 @@ public class FinancialInfoFragment extends Fragment {
                 }
 
                 if (allConditionsSatisfied) {
-                    ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+                    ApiInterface apiInterface = getClient().create(ApiInterface.class);
                     Call<KycUpdateModel> call = apiInterface.updateFinance(GlobalClass.Token, GlobalClass.dbname, financeJson());
                     Log.d("TAG", "onResponseAdhaarUpdate: " + GlobalClass.Token + " " + GlobalClass.dbname + " " + financeJson());
 
@@ -414,6 +449,223 @@ public class FinancialInfoFragment extends Fragment {
         return view;
     }
 
+    private void cardValidate(String id,String bankIfsc) {
+        ProgressDialog progressDialog = new ProgressDialog(getContext());
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setIndeterminate(false);
+        progressDialog.setTitle("Fetching Details");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.show();
+        ApiInterface apiInterface= getClientPan("https://agra.paisalo.in:8462/creditmatrix/api/").create(ApiInterface.class);
+        requestforVerification= String.valueOf(getJsonOfString(id,bankIfsc));
+        Call<JsonObject> call=apiInterface.accValidate(GlobalClass.Token, BuildConfig.dbname,getJsonOfString(id,bankIfsc));
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                try {
+                    ResponseforVerification= String.valueOf(response.body().get("data"));
+                //    saveVerficationLogs(GlobalClass.getPrefString(getContext(), GlobalClass.Id, ""),"Bank Account",requestforVerification,ResponseforVerification);
+                    if(response.body().get("data").getAsJsonObject().get("account_exists").getAsBoolean()){
+                        tilBankAccountName.setVisibility(View.VISIBLE);
+                        tilBankAccountName.setText(response.body().get("data").getAsJsonObject().get("full_name").getAsString());
+                        //tilBankAccountName.setTextColor(getResources().getColor(R.color.green));
+                        accountVerification.setChecked(true);
+                        accountVerification.setEnabled(false);
+                        isAccountVerify="V";
+                        UpdatefiVerificationDocName();
+                    }else {
+                        showDialog(bankAccountNumber);
+                        SubmitAlert(getActivity(), "success", "Data set Successfully");
+                        tilBankAccountName.setVisibility(View.VISIBLE);
+                        tilBankAccountName.setText("BANK not Verify");
+                        //tilBankAccountName.setTextColor(getResources().getColor(R.color.green));
+
+
+                    }
+                }catch (Exception e){
+                    showDialog(bankAccountNumber);
+                    tilBankAccountName.setVisibility(View.VISIBLE);
+                    tilBankAccountName.setText("BANK API not Working");
+
+                }
+                progressDialog.cancel();
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                tilBankAccountName.setText(t.getMessage());
+                progressDialog.cancel();
+                accountVerification.setChecked(false);
+            }
+        });
+    }
+
+    private void UpdatefiVerificationDocName() {
+        ApiInterface apiInterface= getClient().create(ApiInterface.class);
+        Call<JsonObject> call=apiInterface.getDocNameDate(getJsonOfDocName());
+        call.enqueue(new Callback<JsonObject>(){
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response){
+                Log.d("TAG", "onResponse: "+response.body());
+                if(response.body() != null){
+                }
+            }
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.d("TAG", "onFailure: "+t.getMessage());
+
+            }
+        });
+    }
+
+    private JsonObject getJsonOfDocName() {
+        JsonObject jsonObject=new JsonObject();
+        jsonObject.addProperty("type","bank");
+        jsonObject.addProperty("pan_Name","");
+        jsonObject.addProperty("voterId_Name","");
+        jsonObject.addProperty("aadhar_Name","");
+        jsonObject.addProperty("drivingLic_Name","");
+        jsonObject.addProperty("bankAcc_Name",tilBankAccountName.getText().toString());
+        jsonObject.addProperty("bank_Name",tvBankName.getText().toString());
+        jsonObject.addProperty("fiCode",String.valueOf(allDataAFDataModel.getCode()));
+        jsonObject.addProperty("creator",GlobalClass.Creator);
+        return jsonObject;
+    }
+
+
+    private JsonObject getJsonOfString(String id, String bankIfsc) {
+        JsonObject jsonObject=new JsonObject();
+        jsonObject.addProperty("type","bankaccount");
+        jsonObject.addProperty("txtnumber",id);
+        jsonObject.addProperty("ifsc",bankIfsc);
+        jsonObject.addProperty("userdob","");
+        jsonObject.addProperty("key","1");
+        return  jsonObject;
+    }
+
+    public static Retrofit getClientService(String BASE_URL) {
+        Retrofit retrofit=null;
+        if (retrofit==null) {
+            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder(
+
+            );
+            httpClient.connectTimeout(1, TimeUnit.MINUTES);
+            httpClient.readTimeout(1,TimeUnit.MINUTES);
+            httpClient.addInterceptor(logging);
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(httpClient.build())
+                    .build();
+        }
+        return retrofit;
+    }
+
+    public static Retrofit getClientPan(String BASE_URL) {
+        Retrofit retrofit = null;
+        if (retrofit==null) {
+            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder(
+            );
+            httpClient.connectTimeout(1, TimeUnit.MINUTES);
+            httpClient.readTimeout(1,TimeUnit.MINUTES);
+            httpClient.addInterceptor(logging);
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(httpClient.build())
+                    .build();
+        }
+        return retrofit;
+    }
+  /*  private void saveVerficationLogs(String id,String type,String request,String response) {
+        ApiInterface apiInterface= getClientPan(SEILIGL.NEW_SERVERAPI).create(ApiInterface.class);
+        Call<JsonObject> call=apiInterface.kycVerficationlog(getJsonOfKyCLogs(id,type,request,response));
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                Log.d("TAG", "checkCrifScore: "+response.body());
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+
+            }
+        });
+    }*/
+
+    private JsonObject getJsonOfKyCLogs(String id, String type,String bankIfsc,String userDOB) {
+        JsonObject jsonObject=new JsonObject();
+        jsonObject.addProperty("Type",type);
+        jsonObject.addProperty("Userid",id);
+        jsonObject.addProperty("Request",bankIfsc);
+        jsonObject.addProperty("Response",userDOB);
+        return  jsonObject;
+    }
+
+    private void CheckValidateIFSC(final EditText editText, String text){
+        ApiInterface apiInterface= getClientService("https://ifsc.razorpay.com/").create(ApiInterface.class);
+        Call<JsonObject> call=apiInterface.getIfscCode(text);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                Log.d("TAG", "onResponse: "+response.body());
+                tvBankName = (TextView) getView().findViewById(R.id.tvLoanAppFinanceBankName);
+                tvBankBranch = (TextView) getView().findViewById(R.id.tvLoanAppFinanceBankBranch);
+                if(response.body() != null){
+                    try {
+                        boolean bankNotAllowed=false;
+                        tvBankName.setText("");
+                        tvBankBranch.setText("");
+                        JSONObject jo = new JSONObject(String.valueOf(response.body()));
+                        String bankname=jo.getString("BANK");
+                        String address=jo.getString("ADDRESS");
+                        tvBankName.setText(bankname);
+                        tvBankBranch.setText(address);
+                      /*  if (borrower != null) {
+                            for (String restrictBank:restrictBanks) {
+                                Log.d("TAG", "onResponse: "+restrictBank+"///"+bankname);
+                                if (bankname.toUpperCase().trim().contains(restrictBank)){
+                                    bankNotAllowed =true;
+                                    break;
+                                }
+                            }
+                            if (bankNotAllowed){
+                                Utils.alert(activity,"This bank is not allowed please try with another");
+                                etIFSC.setText("");
+                                etBankAccount.setText("");
+                                etBankAccount.setEnabled(true);
+                            }else{
+                                borrower.BankName = bankname;
+                                borrower.Bank_Address =address;
+                                tvBankName.setText(borrower.BankName);
+                                tvBankBranch.setText(borrower.Bank_Address);
+                                borrower.save();
+                            }
+
+                        }*/
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }else{
+                    tvBankName.setText("");
+                    tvBankBranch.setText("");
+                    editText.setError("This IFSC not available");
+                }
+
+
+            }
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.d("TAG", "onFailure: "+t.getMessage());
+
+            }
+        });
+    }
+
     private JsonObject financeJson() {
         JsonObject jsonFinance = new JsonObject();
         jsonFinance.addProperty("fiCode", fiCode);
@@ -437,4 +689,53 @@ public class FinancialInfoFragment extends Fragment {
         jsonFinance.addProperty("livingWSpouse", "Y");
         return jsonFinance;
     }
+
+    private void showDialog(EditText editText) {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_input, null);
+        dialogBuilder.setView(dialogView);
+        EditText editTextInput = dialogView.findViewById(R.id.editTextInput);
+        Button buttonSubmit = dialogView.findViewById(R.id.buttonSubmit);
+        ImageButton buttonClose = dialogView.findViewById(R.id.buttonClose);
+        AlertDialog dialog = dialogBuilder.create();
+        dialog.show();
+        editText.setVisibility(View.GONE);
+        // Button click listener to retrieve the entered text
+        buttonSubmit.setOnClickListener(view -> {
+            String userInput = editTextInput.getText().toString().trim();
+            if (!userInput.isEmpty()) {
+                if (userInput.trim().equals(editText.getText().toString().trim())){
+                    Toast.makeText(getActivity(), "Account Number Matched!!", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                    editText.setVisibility(View.VISIBLE);
+                    accountVerification.setChecked(true);
+                    accountVerification.setEnabled(false);
+                    isAccountVerify="V";
+                    UpdatefiVerificationDocName();
+                }else{
+                    Toast.makeText(getActivity(), "Account Number Did not Match. Please Enter Again!!", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(getContext(), "Please Enter Account number", Toast.LENGTH_SHORT).show();
+            }
+        });
+        buttonClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                editText.setVisibility(View.VISIBLE);
+                isAccountVerify="N";
+                accountVerification.setChecked(false);
+
+            }
+        });
+
+
+
+
+        // Close button click listener to dismiss the dialog
+
+    }
+
 }

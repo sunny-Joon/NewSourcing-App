@@ -215,7 +215,7 @@ public class ApplicationFormActivityMenu extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<TargetSetModel> call, Response<TargetSetModel> response) {
                         if(response.isSuccessful()){
-                            if(response.body() !=null){
+                         /*   if(response.body() !=null){
                                 if(response.body().getMessage().equals("Record Not Found !!")){
                                     SubmitAlert(ApplicationFormActivityMenu.this, "Note", "Please Fill House Visit Form First ");
                                 }else if (!aadhaarCheckBox.isChecked() || !personaldetailCheckBox.isChecked() ||
@@ -223,15 +223,15 @@ public class ApplicationFormActivityMenu extends AppCompatActivity {
                                         !borrowingsCheckBox.isChecked() || !guarantorCheckBox.isChecked()) {
                                     SubmitAlert(ApplicationFormActivityMenu.this, "Note", "Please Fill Above Forms First ");
 
-                                }else{
+                                }else{*/
                                     Intent intent = new Intent(view.getContext(), ApplicationFormActivity.class);
                                     intent.putExtra("Id","kycScanning" );
                                     intent.putExtra("allDataAFDataModel",allDataAFDataModel);
                                     startActivity(intent);
-                                }
-                            }else{
+                            /*      }
+                          }else{
                                 SubmitAlert(ApplicationFormActivityMenu.this, "Note", "Unable To Open ");
-                            }
+                            }*/
                         }else{
                             SubmitAlert(ApplicationFormActivityMenu.this, "Note", "Unable To Open ");
                         }

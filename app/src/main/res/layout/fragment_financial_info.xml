@@ -57,9 +57,8 @@
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_weight="1"
-                    android:layout_marginVertical="8dp">
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                     <EditText
                         android:id="@+id/bankAccountNumber"
@@ -69,17 +68,20 @@
 
                 </androidx.cardview.widget.CardView>
 
-                <ImageButton
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_marginVertical="5dp"
-                    android:layout_marginHorizontal="12dp"
-                    android:backgroundTint="@color/white"
-                    android:layout_gravity="center_horizontal|bottom"
-                    android:src="@drawable/circlecheck"/>
+                <CheckBox
+                    android:id="@+id/accountVerification"
+                    android:button="@drawable/custom_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="8dp" />
 
 
             </LinearLayout>
+            <TextView
+                android:id="@+id/tilBankAccountName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/green"/>
 
 
 
@@ -128,10 +130,15 @@
                 android:textColor="@color/white"
                 android:fontFamily="@font/visbycfregular"/>
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginVertical="8dp">
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
                 <EditText
                     android:id="@+id/bankIFSCCode"
@@ -140,6 +147,23 @@
 
             </androidx.cardview.widget.CardView>
 
+            <TextView
+                android:textSize="14dp"
+                android:id="@+id/tvLoanAppFinanceBankName"
+                android:paddingStart="10dp"
+                android:textColor="@color/green"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:textSize="14dp"
+                android:id="@+id/tvLoanAppFinanceBankBranch"
+                android:paddingStart="10dp"
+                android:textColor="@color/green"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
