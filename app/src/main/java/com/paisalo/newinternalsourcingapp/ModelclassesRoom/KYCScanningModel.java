@@ -10,13 +10,15 @@ public class KYCScanningModel {
     private String remarks;
     private File file;
 
+    private String docId;
 
-    public KYCScanningModel(String name, String type, String docType, String remarks,File file) {
+    public KYCScanningModel(String name, String type, String docType, String remarks, File file, String docId) {
         this.name = name;
         this.type = type;
         this.docType = docType;
         this.remarks = remarks;
-        this.file= file;
+        this.file = file;
+        this.docId = docId;
     }
 
     public File getFile() {
@@ -70,4 +72,12 @@ public class KYCScanningModel {
     public void setAadhar(String aadhar) {
         this.aadhar = aadhar;
     }*/
+
+    public String getDocId() {
+        return docId;
+    }
+
+    public void setDocId(String docId) {
+        this.docId = docId;
+    }
 }
