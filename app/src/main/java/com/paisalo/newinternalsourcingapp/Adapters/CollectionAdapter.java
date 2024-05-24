@@ -26,7 +26,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.application_form_list_item, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.borrower_list_item, parent, false);
         return new ViewHolder(view);
     }
 

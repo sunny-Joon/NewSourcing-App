@@ -96,7 +96,7 @@
             android:id="@+id/editTextName"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="textCapWords|textFilter"
+            android:inputType="textCapWords"
             android:hint="Name" />
 
         </androidx.cardview.widget.CardView>

@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/borrowerCardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:cardElevation="8dp"
+        android:backgroundTint="@color/darkred"
+        android:layout_margin="10dp"
+        app:cardCornerRadius="14dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/profileimage"/>
+
+                <TextView
+                    android:id="@+id/lenderNameTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="User Name"
+                    android:textSize="@dimen/heading"
+                    android:layout_marginStart="5dp"
+                    android:fontFamily="@font/visbycfregular"
+                    android:textColor="@color/white"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Lender Type"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/heading"
+                    android:fontFamily="@font/visbycfregular" />
+                <TextView
+                    android:id="@+id/lenderTypeTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Father/Spouse"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/heading"
+                    android:fontFamily="@font/visbycfregular"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Reason For Loan"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/heading"
+                    android:fontFamily="@font/visbycfregular" />
+                <TextView
+                    android:id="@+id/reasonForLoanTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2666"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/heading"
+                    android:fontFamily="@font/visbycfregular" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Is MFI"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/heading"
+                    android:fontFamily="@font/visbycfregular" />
+                <TextView
+                    android:id="@+id/IsMFITV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Is MFI"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/heading"
+                    android:fontFamily="@font/visbycfregular" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lonee"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/heading"
+                    android:fontFamily="@font/visbycfregular" />
+                <TextView
+                    android:id="@+id/loneeTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="AGRA"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/heading"
+                    android:fontFamily="@font/visbycfregular"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Loan Amount"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/heading"
+                    android:fontFamily="@font/visbycfregular" />
+                <TextView
+                    android:id="@+id/loanAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="AGRA"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/heading"
+                    android:fontFamily="@font/visbycfregular" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Loan EMI"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/heading"
+                    android:fontFamily="@font/visbycfregular" />
+
+                <TextView
+                    android:id="@+id/loanEmiTV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="loan emi"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/heading"
+                    android:fontFamily="@font/visbycfregular"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Balance"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/heading"
+                    android:fontFamily="@font/visbycfregular" />
+
+                <TextView
+                    android:id="@+id/balance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="balance"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/heading"
+                    android:fontFamily="@font/visbycfregular"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

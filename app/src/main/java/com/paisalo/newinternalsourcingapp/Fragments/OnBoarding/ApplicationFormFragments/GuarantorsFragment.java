@@ -14,6 +14,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.Gravity;
@@ -29,6 +31,9 @@ import android.widget.PopupWindow;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivityMenu;
+import com.paisalo.newinternalsourcingapp.Activities.ManagerList;
+import com.paisalo.newinternalsourcingapp.Adapters.GurrantorListAdapter;
+import com.paisalo.newinternalsourcingapp.Adapters.ManagerListAdapter;
 import com.paisalo.newinternalsourcingapp.Adapters.RangeCategoryAdapter;
 import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.KYCActivity;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
@@ -58,26 +63,24 @@ import java.util.List;
 
 public class GuarantorsFragment extends Fragment {
 
+    private RecyclerView recyclerView;
+    private GurrantorListAdapter adapter;
+
     List<String> gender_List = new ArrayList<>();
     List<String> state_List = new ArrayList<>();
     List<String> relationwithborr_List = new ArrayList<>();
-    Button update;
+    Button update,submitGurrantor,delete;
     ImageView calendericon;
-
-    private ProgressBar progressBar;
     FloatingActionButton gurrantorFormButton;
     AllDataAFDataModel allDataAFDataModel;
-
-    private Calendar calendar;
+    ArrayList<FiGuarantor> gurrantorList;
     EditText etTextAadhar, etTextName, etTextAge, etTextDob, etTextGuardian, etTextAddress1, etTextAddress2, etTextAddress3, etTextCity, etTextPincode, etTextMobile, etTextvoterid, etTextPAN, etdrivingLicense;
     Spinner spin_gender, spin_state, spin_relationwithborr;
-
-    String code, creator,tag, fiCode, aadharID, name, age, dob, gender, gurName, perAdd1, perAdd2, perAdd3, perCity, p_Pin, p_StateID, perMob1, voterID, panno, drivingLic, relationwithborr;
+    String  creator,tag, fiCode, aadharID, name, age, dob, gender, gurName, perAdd1, perAdd2, perAdd3, perCity, p_Pin, p_StateID, perMob1, voterID, panno, drivingLic, relationwithborr;
 
     public GuarantorsFragment(AllDataAFDataModel allDataAFDataModel) {
         this.allDataAFDataModel = allDataAFDataModel;
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -90,8 +93,13 @@ public class GuarantorsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_guarantors, container, false);
 
         gurrantorFormButton = view.findViewById(R.id.guarantorFormButton);
+        submitGurrantor = view.findViewById(R.id.submitGurrantor);
+        recyclerView = view.findViewById(R.id.gurrantorsList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        gurrantorList = new ArrayList<>();
+
         List<FiGuarantor> list = allDataAFDataModel.getFiGuarantors();
-        gurrantorFormButton = view.findViewById(R.id.guarantorFormButton);
 
         DatabaseClass databaseClass = DatabaseClass.getInstance(getContext());
 
@@ -265,12 +273,10 @@ public class GuarantorsFragment extends Fragment {
                     }
                 });
 
-
                 update = popupView.findViewById(R.id.updateGuarantor);
                 update.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
 
                         boolean allConditionsSatisfied = true;
 
@@ -397,66 +403,108 @@ public class GuarantorsFragment extends Fragment {
 
                         if (allConditionsSatisfied) {
 
-                            ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-                            Call<KycUpdateModel> call = apiInterface.updateGaurantors(GlobalClass.Token, GlobalClass.dbname, gurrantorJson());
-                            Log.d("TAG", "onResponseAdhaarUpdate: " + GlobalClass.Token + " " + GlobalClass.dbname + " " + gurrantorJson());
-
-                            call.enqueue(new Callback<KycUpdateModel>() {
-                                @Override
-                                public void onResponse(Call<KycUpdateModel> call, Response<KycUpdateModel> response) {
-                                    Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
-                                    if (response.isSuccessful()) {
-                                        Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
-                                        Log.d("TAG", "onResponseAdhaarUpdatemsg: " + response.body().getMessage().toString());
-                                        SubmitAlert(getActivity(), "success", "Data set Successfully");
-
-                                    } else {
-                                        Log.d("TAG", "onResponseAdhaarUpdate: " + response.code());
-                                        SubmitAlert(getActivity(), "unsuccessful", "Check Your Internet Connection");
-
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<KycUpdateModel> call, Throwable t) {
-                                    Log.d("TAG", "onResponseAdhaarUpdate: " + "failure");
-                                    SubmitAlert(getActivity(), "Network Error", "Check Your Internet Connection");
-
-                                }
-                            });
+                            FiGuarantor guarantor = new FiGuarantor();
+                            guarantor.setCreator(creator);
+                            guarantor.setFiCode(Integer.parseInt(fiCode));
+                            guarantor.setAadharID(aadharID);
+                            guarantor.setName(name);
+                            guarantor.setAge(Integer.parseInt(age));
+                            guarantor.setDob(dob);
+                            guarantor.setGender(gender);
+                            guarantor.setGurName(gurName);
+                            guarantor.setPerAdd1(perAdd1);
+                            guarantor.setPerAdd2(perAdd2);
+                            guarantor.setPerAdd3(perAdd3);
+                            guarantor.setPerCity(perCity);
+                            guarantor.setpPin(Integer.parseInt(p_Pin));
+                            guarantor.setpStateID(p_StateID);
+                            guarantor.setPerMob1(perMob1);
+                            guarantor.setVoterID(voterID);
+                            guarantor.setPanNo(panno);
+                            guarantor.setDrivingLic(drivingLic);
+                            guarantor.setRelation(relationwithborr);
+                            gurrantorList.add(guarantor);
+                            adapter = new GurrantorListAdapter(getActivity(), gurrantorList);
+                            recyclerView.setAdapter(adapter);
+                            popupWindow.dismiss();
                         }
+                    }
+                });
+
+                delete = popupView.findViewById(R.id.button2);
+                delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        popupWindow.dismiss();
                     }
                 });
             }
         });
 
+        submitGurrantor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                for (FiGuarantor guarantor : gurrantorList) {
+                    JsonObject jsonGuarantor = gurrantorJson(guarantor);
+
+
+                    ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+                    Call<KycUpdateModel> call = apiInterface.updateGaurantors(GlobalClass.Token, GlobalClass.dbname, jsonGuarantor);
+                    Log.d("TAG", "GurrantorLog: " + GlobalClass.Token + " " + GlobalClass.dbname + " " + jsonGuarantor);
+
+                    call.enqueue(new Callback<KycUpdateModel>() {
+                        @Override
+                        public void onResponse(Call<KycUpdateModel> call, Response<KycUpdateModel> response) {
+                            Log.d("TAG", "GurrantorLog: " + response.body());
+                            if (response.isSuccessful()) {
+                                Log.d("TAG", "GurrantorLog: " + response.body());
+                                Log.d("TAG", "GurrantorLog: " + response.body().getMessage().toString());
+
+                                SubmitAlert(getActivity(), "success", "Data set Successfully");
+
+
+                            } else {
+                                Log.d("TAG", "GurrantorLog: " + response.code());
+                                SubmitAlert(getActivity(), "unsuccessful", "Check Your Internet Connection");
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<KycUpdateModel> call, Throwable t) {
+                            Log.d("TAG", "GurrantorLog: " + "failure");
+                            SubmitAlert(getActivity(), "Network Error", "Check Your Internet Connection");
+
+                        }
+                    });
+                }
+            }
+        });
         return view;
     }
 
-
-    private JsonObject gurrantorJson() {
-        JsonObject jsonGurrantor = new JsonObject();
-        jsonGurrantor.addProperty("code", code);
-        jsonGurrantor.addProperty("creator", creator);
-        jsonGurrantor.addProperty("fi_Code", fiCode);
-        jsonGurrantor.addProperty("aadharID", aadharID);
-        jsonGurrantor.addProperty("name", name);
-        jsonGurrantor.addProperty("age", age);
-        jsonGurrantor.addProperty("dob", dob);
-        jsonGurrantor.addProperty("gender", gender);
-        jsonGurrantor.addProperty("gurName", gurName);
-        jsonGurrantor.addProperty("perAdd1", perAdd1);
-        jsonGurrantor.addProperty("perAdd2", perAdd2);
-        jsonGurrantor.addProperty("perAdd3", perAdd3);
-        jsonGurrantor.addProperty("perCity", perCity);
-        jsonGurrantor.addProperty("p_Pin", p_Pin);
-        jsonGurrantor.addProperty("p_StateID", p_StateID);
-        jsonGurrantor.addProperty("perMob1", perMob1);
-        jsonGurrantor.addProperty("voterID", voterID);
-        jsonGurrantor.addProperty("pano", panno);
-        jsonGurrantor.addProperty("drivingLic", drivingLic);
-        jsonGurrantor.addProperty("relationwithborr", relationwithborr);
-
-        return jsonGurrantor;
+    private JsonObject gurrantorJson(FiGuarantor guarantor) {
+        JsonObject jsonGuarantor = new JsonObject();
+        jsonGuarantor.addProperty("code", guarantor.getFiCode());
+        jsonGuarantor.addProperty("creator", guarantor.getCreator());
+        jsonGuarantor.addProperty("fi_Code", guarantor.getFiCode());
+        jsonGuarantor.addProperty("aadharID", guarantor.getAadharID());
+        jsonGuarantor.addProperty("name", guarantor.getName());
+        jsonGuarantor.addProperty("age", guarantor.getAge());
+        jsonGuarantor.addProperty("dob", guarantor.getDob());
+        jsonGuarantor.addProperty("gender", guarantor.getGender());
+        jsonGuarantor.addProperty("gurName", guarantor.getGurName());
+        jsonGuarantor.addProperty("perAdd1", guarantor.getPerAdd1());
+        jsonGuarantor.addProperty("perAdd2", guarantor.getPerAdd2());
+        jsonGuarantor.addProperty("perAdd3", guarantor.getPerAdd3());
+        jsonGuarantor.addProperty("perCity", guarantor.getPerCity());
+        jsonGuarantor.addProperty("p_Pin", guarantor.getpPin());
+        jsonGuarantor.addProperty("p_StateID", guarantor.getpStateID());
+        jsonGuarantor.addProperty("perMob1", guarantor.getPerMob1());
+        jsonGuarantor.addProperty("voterID", guarantor.getVoterID());
+        jsonGuarantor.addProperty("panNo", guarantor.getPanNo());
+        jsonGuarantor.addProperty("drivingLic", guarantor.getDrivingLic());
+        jsonGuarantor.addProperty("relationwithborr", guarantor.getRelation());
+        return jsonGuarantor;
     }
 }

@@ -3,6 +3,7 @@ package com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.ApplicationFormF
 import static com.paisalo.newinternalsourcingapp.GlobalClass.SubmitAlert;
 import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidName;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,6 +12,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 import android.util.Log;
@@ -27,12 +30,16 @@ import android.widget.PopupWindow;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivityMenu;
+import com.paisalo.newinternalsourcingapp.Adapters.BorrowerListAdapter;
+import com.paisalo.newinternalsourcingapp.Adapters.FamilyBorrowingsAdapter;
+import com.paisalo.newinternalsourcingapp.Adapters.GurrantorListAdapter;
 import com.paisalo.newinternalsourcingapp.Adapters.RangeCategoryAdapter;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
 import com.paisalo.newinternalsourcingapp.Modelclasses.FiJsonObject;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFDataModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.FiFamLoan;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.FiFamMem;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.FiGuarantor;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.RangeCategoryModels.RangeCategoryDataModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.UpdateFiModels.KycUpdateModel;
 import com.paisalo.newinternalsourcingapp.R;
@@ -64,11 +71,14 @@ import java.util.List;
 
 public class FamilyBorrowingsFragment extends Fragment {
 
+    RecyclerView recyclerView;
+    ArrayList<FiFamLoan> borrowerListdata;
+    FamilyBorrowingsAdapter familyBorrowingsAdapter;
     List<String> ReasonforloanList = new ArrayList<>();
     List<String> LoanUsedList = new ArrayList<>();
     AllDataAFDataModel allDataAFDataModel;
 
-    Button addBorrowings, dltButton, canButton;
+    Button addBorrowings, dltButton, canButton,submitborrowerList;
     private ApplicationFormActivityMenu activity;
     EditText etLenderName, etLoanamount, etEmiamount, etbalanceamount;
 
@@ -82,16 +92,22 @@ public class FamilyBorrowingsFragment extends Fragment {
     }
 
 
+    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
 
         DatabaseClass databaseClass = DatabaseClass.getInstance(getContext());
+        borrowerListdata = new ArrayList<>();
         List<FiFamLoan> list = allDataAFDataModel.getFiFamLoans();
 
-
         View view = inflater.inflate(R.layout.fragment_family_borrowings, container, false);
+
+        recyclerView = view.findViewById(R.id.borrowerList);
+        submitborrowerList = view.findViewById(R.id.submitborrowerList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
 
         addBorrower = view.findViewById(R.id.FMIncome);
 
@@ -277,9 +293,48 @@ public class FamilyBorrowingsFragment extends Fragment {
 
                         if (allConditionsSatisfied) {
 
+                            FiFamLoan fiFamLoan=new FiFamLoan();
+                            fiFamLoan.setCreator(creator);
+                            fiFamLoan.setLenderName(lenderName);
+                            fiFamLoan.setCode(Integer.parseInt(fiCode));
+                            fiFamLoan.setLenderType(lenderType);
+                            fiFamLoan.setLoanReason(reasonForLoan);
+                            fiFamLoan.setIsMFI(ismfi);
+                            fiFamLoan.setLoneeName(loanUsed);
+                            fiFamLoan.setLoanAmount(Integer.valueOf(loanAmount));
+                            fiFamLoan.setLoanEMIAmount(Integer.valueOf(emiAmount));
+                            fiFamLoan.setLoanBalanceAmount(Integer.valueOf(balanceAmount));
+
+
+                            borrowerListdata.add(fiFamLoan);
+                            familyBorrowingsAdapter = new FamilyBorrowingsAdapter(getActivity(), borrowerListdata);
+
+                            recyclerView.setAdapter(familyBorrowingsAdapter);
+                            popupWindow.dismiss();
+                        }
+                    }
+                });
+
+                canButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        popupWindow.dismiss();
+                    }
+                });
+            }
+        });
+
+
+
+                submitborrowerList.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        for (FiFamLoan fiFamLoan : borrowerListdata) {
+                            JsonObject jsonborr = borrowingsJson(fiFamLoan);
+
                             ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-                            Call<KycUpdateModel> call = apiInterface.updateFamLoans(GlobalClass.Token, GlobalClass.dbname, borrowingsJson());
-                            Log.d("TAG", "onResponseAdhaarUpdate: " + GlobalClass.Token + " " + GlobalClass.dbname + " " + borrowingsJson());
+                            Call<KycUpdateModel> call = apiInterface.updateFamLoans(GlobalClass.Token, GlobalClass.dbname, jsonborr);
+                            Log.d("TAG", "onResponseAdhaarUpdate: " + GlobalClass.Token + " " + GlobalClass.dbname + " " + jsonborr);
 
                             call.enqueue(new Callback<KycUpdateModel>() {
                                 @Override
@@ -313,37 +368,28 @@ public class FamilyBorrowingsFragment extends Fragment {
 
                                 }
                             });
+
                         }
                     }
                 });
 
-//                            canButton.setOnClickListener(new View.OnClickListener() {
-//                                @Override
-//                                public void onClick(View v) {
-//                                    popupWindow.dismiss();
-//                                }
-//                            });
-            }
-        });
-
-
         return view;
     }
 
-    private JsonObject borrowingsJson() {
+    private JsonObject borrowingsJson(FiFamLoan fiFamLoan) {
         JsonObject jsonBorrowings = new JsonObject();
-        jsonBorrowings.addProperty("fiCode", fiCode);
-        jsonBorrowings.addProperty("creator", creator);
-        jsonBorrowings.addProperty("tag", tag);
-        jsonBorrowings.addProperty("lenderName", lenderName);
-        jsonBorrowings.addProperty("lenderType", lenderType);
-        jsonBorrowings.addProperty("loanUsed", loanUsed);
-        jsonBorrowings.addProperty("reasonForLoan", reasonForLoan);
-        jsonBorrowings.addProperty("loanAmount", loanAmount);
-        jsonBorrowings.addProperty("emiAmount", emiAmount);
-        jsonBorrowings.addProperty("balanceAmount", balanceAmount);
-        jsonBorrowings.addProperty("isMFI", ismfi);
-        jsonBorrowings.addProperty("autoID", 0);
+        jsonBorrowings.addProperty("fiCode", fiFamLoan.getCode());
+        jsonBorrowings.addProperty("creator", fiFamLoan.getCreator());
+        jsonBorrowings.addProperty("tag", "RTAG");
+        jsonBorrowings.addProperty("lenderName", fiFamLoan.getLenderName());
+        jsonBorrowings.addProperty("lenderType", fiFamLoan.getLenderType());
+        jsonBorrowings.addProperty("loanUsed", fiFamLoan.getLoneeName());
+        jsonBorrowings.addProperty("reasonForLoan", fiFamLoan.getLoanReason());
+        jsonBorrowings.addProperty("loanAmount", fiFamLoan.getLoanAmount());
+        jsonBorrowings.addProperty("emiAmount", fiFamLoan.getLoanEMIAmount());
+        jsonBorrowings.addProperty("balanceAmount", fiFamLoan.getLoanBalanceAmount());
+        jsonBorrowings.addProperty("isMFI", fiFamLoan.getIsMFI());
+        jsonBorrowings.addProperty("autoID", fiFamLoan.getAutoID());
 
         return jsonBorrowings;
     }
