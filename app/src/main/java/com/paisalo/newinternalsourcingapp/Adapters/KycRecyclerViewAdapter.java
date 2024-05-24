@@ -2,6 +2,7 @@ package com.paisalo.newinternalsourcingapp.Adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.paisalo.newinternalsourcingapp.ModelclassesRoom.KYCScanningModel;
 
@@ -23,7 +25,7 @@ public class KycRecyclerViewAdapter extends RecyclerView.Adapter<KycRecyclerView
     private OnItemClickListener onItemClickListener;
 
     public interface OnItemClickListener {
-        void onItemClick(int position);
+        void onItemClick(KYCScanningModel item, int position);
     }
 
     public KycRecyclerViewAdapter(Context context, List<KYCScanningModel> kycScanning, OnItemClickListener onItemClickListener) {
@@ -47,9 +49,17 @@ public class KycRecyclerViewAdapter extends RecyclerView.Adapter<KycRecyclerView
         holder.imgViewKycItemLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onItemClickListener.onItemClick(position);
+                onItemClickListener.onItemClick(entry, position);
             }
         });
+
+        if (kycScanning.get(position).getFile()!=null){
+            holder.docsCardView.setBackgroundColor(context.getResources().getColor(R.color.green));
+            holder.imgViewKycItemLayout.setImageURI(Uri.fromFile(kycScanning.get(position).getFile()));
+        }else{
+            holder.docsCardView.setBackgroundColor(context.getResources().getColor(R.color.red));
+
+        }
 
     }
 
@@ -62,10 +72,12 @@ public class KycRecyclerViewAdapter extends RecyclerView.Adapter<KycRecyclerView
 
         TextView tvKycItemLayoutName, tvKycItemLayoutType, tvKycItemLayoutDocType, tvKycItemLayoutRemarks, tvKycItemLayoutAadhar;
         ImageView imgViewKycItemLayout;
+        CardView docsCardView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            docsCardView = itemView.findViewById(R.id.docsCardView);
             imgViewKycItemLayout = itemView.findViewById(R.id.imgViewKycItemLayout);
             tvKycItemLayoutName = itemView.findViewById(R.id.tvKycItemLayoutName);
             tvKycItemLayoutType = itemView.findViewById(R.id.tvKycItemLayoutType);
