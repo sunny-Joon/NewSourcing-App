@@ -1,6 +1,7 @@
 package com.paisalo.newinternalsourcingapp.Retrofit;
 
 import com.google.gson.JsonObject;
+import com.paisalo.newinternalsourcingapp.Entities.CkycNoMODEL;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.BorrowerListModels.BorrowerListModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.CreatorListModels.CreatorListModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFModel;
@@ -47,6 +48,7 @@ import retrofit2.http.Query;
 
 public interface ApiInterface {
 
+
     @POST("Account/GetToken")
     Call<LoginModel> LoginApi(@Header("devid") String devid, @Header("dbname") String dbname, @Header("imeino") String imeino, @Body JsonObject object);
 
@@ -56,13 +58,11 @@ public interface ApiInterface {
     @GET("POSDB/GetMappedFO")
     Call<ManagerListModel> ManagerListApi(@Header("Authorization") String token, @Header("dbname") String dbName, @Query("IMEINO") String imeiNo, @Query("UserID") String userId);
 
-    @POST("/POSFI/SaveFi")
-    Call<KycSubmitModel> SubmitKycApi(@Header("Authorization") String token, @Header("dbname") String dbName, @Body JsonObject object);
 
     @POST("POSFI/SaveFi")
     Call<SaveFiModel> getSaveFi(@Header("Authorization") String token, @Header("dbname") String dbname, @Body JsonObject object);
 
-
+//-----------------------------------------------------------------------------------------------------------------------------------------
     @GET("api/LiveTrack/GetCSOMothlyTargetByUserId")
     public Call<LeaderboardModel> getLeaderboardData(@Header("Authorization") String token, @Header("dbname") String dbname);
 
@@ -74,13 +74,13 @@ public interface ApiInterface {
 
     @GET("Notification/GetBannerPostingMobile")
     Call<ImageDataModel> getTopImage(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("AppType") String AppType);
-
+//----
     @GET("api/LiveTrack/MonthlyTargetCsoIdCount")
-    public Call<TargetCountModel> getTargetCount(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("CsoId") String CsoId);
+     Call<TargetCountModel> getTargetCount(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("CsoId") String CsoId);
 
     @POST("api/LiveTrack/InsertMonthTargetCSO")
-    public Call<TargetSetModel> setTarget(@Header("Authorization") String token, @Header("dbname") String dbname, @Body JsonObject object);
-
+     Call<TargetSetModel> setTarget(@Header("Authorization") String token, @Header("dbname") String dbname, @Body JsonObject object);
+//----
     @GET("DDLHelper/GetSBICityMaster")
     Call<CityModelList> getCityList(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("ststecode") String stcode);
 
@@ -190,4 +190,7 @@ public interface ApiInterface {
 
     @GET("Miscellaneous/HomeVisitExistance")
     Call<TargetSetModel> checkHVForm(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("FiCode") String FiCode, @Query("Creator") String Creator);
+
+    @POST("UserMobile/SearchCkycNo")
+    Call<CkycNoMODEL> getCkycNo(@Header("Authorization") String token, @Header("dbname") String dbName,@Query("FiCode") String FiCode, @Query("Creator") String Creator);
 }

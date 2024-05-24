@@ -55,16 +55,12 @@ public class CameraUtils {
     @SuppressLint("QueryPermissionsNeeded")
     public static void dispatchTakePictureIntent(Fragment fragment) throws IOException {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Ensure that there's a camera activity to handle the intent
         if (takePictureIntent.resolveActivity(fragment.requireActivity().getPackageManager()) != null) {
 
-            // Create the File where the photo should go
             File photoFile = createImageFile(fragment.getActivity());
             mCurrentPhotoPath = photoFile.getAbsolutePath();
 
-            // Continue only if the File was successfully created
             if (photoFile != null) {
-                //Uri photoURI = Uri.fromFile(photoFile);
                 Uri photoURI = FileProvider.getUriForFile(fragment.getActivity(), fragment.getActivity().getApplicationContext().getPackageName() + ".provider", photoFile);
                 ((OnCameraCaptureUpdate) fragment).cameraCaptureUpdate(photoURI);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);

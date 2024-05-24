@@ -139,6 +139,10 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
     private AlertDialog alertDialog;
     AllDataAFDataModel allDataAFDataModel;
     String timeStamp;
+
+    RangeCategoryAdapter rangeCategoryAdapter;
+
+    DatabaseClass databaseClass;
     boolean allConditionsSatisfied = true;
 
     EditText editTextAadhar, editTextName, editTextAge, editTextDob, editTextGuardian,
@@ -1360,35 +1364,24 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
         String state = decodedData.get(13 - inc);
         Log.d("TAG", "decodeData:state "+state);
-        int position1 = -1;
-        for (int j = 0; j < stateDataList.size(); j++) {
-            String itemCode = stateDataList.get(j).getCode().trim();
-            Log.d("TAG", "decodeData: state " + state + " with itemCode " + itemCode);
-            if (itemCode.equalsIgnoreCase(state)) {
-                position1 = j;
-                Log.d("TAG", "decodeData: position found at " + j);
+
+        int castePos3=-1;
+        for (int j=0;j<rangeCategoryAdapter.getCount();j++){
+            if (rangeCategoryAdapter.getItem(j).code.equals(databaseClass.dao().getStateByCode("state",allDataAFDataModel.getpState()).code)){
+                castePos3=j;
                 break;
             }
         }
 
-        if (position1 != -1) {
-            acspAadharState.setSelection(position1);
-        } else {
-            Log.d("TAG", "decodeData: state not found in list");
-        }
+        Log.d("TAG", "onCreateView: "+castePos3);
+        acspAadharState.setSelection(castePos3);
 
-        if (position1 != -1) {
-            final int finalPosition = position1;
-            acspAadharState.post(new Runnable() {
-                @Override
-                public void run() {
-                    acspAadharState.setSelection(finalPosition);
-                }
-            });
-        } else {
-            Log.d("TAG", "decodeData:state not found in list");
-        }
 
+
+//        if (state.equals("")||state.equals(null)){
+//        }else{
+//            acspAadharState.setText(AadharUtils.getStateCode(decodedData.get(13-inc)));
+//        }
 
         if (decodedData.get(6 - inc).equals("") || decodedData.get(6 - inc).equals(null)) {
 

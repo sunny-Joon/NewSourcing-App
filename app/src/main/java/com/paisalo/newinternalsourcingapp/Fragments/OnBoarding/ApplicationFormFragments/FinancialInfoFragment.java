@@ -266,7 +266,7 @@ public class FinancialInfoFragment extends Fragment {
 
                 boolean allConditionsSatisfied = true;
 
-                if (bankAccountNumber.getText().toString().isEmpty()) {
+                if (bankAccountNumber.getText().toString().isEmpty() && bankAccNumber!=null) {
                     bankAccountNumber.setError("Invalid bankAccount");
                     allConditionsSatisfied = false;
                 } else {

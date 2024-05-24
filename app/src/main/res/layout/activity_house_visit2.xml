@@ -56,8 +56,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:hint="@string/branch"
-                                
-
                                 android:inputType="textCapWords"
                                 android:textSize="15dp" />
 
@@ -859,6 +857,7 @@
                             android:id="@+id/reference_PhoneNo1"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
+                            android:maxLength="10"
                             android:inputType="number"
                             android:textSize="15dp" />
 
@@ -935,6 +934,7 @@
                             android:id="@+id/reference_PhoneNo2"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
+                            android:maxLength="10"
                             android:inputType="number"
                             android:textSize="15dp" />
 

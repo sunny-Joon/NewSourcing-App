@@ -160,22 +160,16 @@
             call.enqueue(new Callback<LeaderboardModel>() {
                 @Override
                 public void onResponse(Call<LeaderboardModel> call, Response<LeaderboardModel> response) {
-                    Log.d("TAG", "onCreateView:zz1 "+ "start");
 
                     if(response.isSuccessful()){
                         LeaderboardModel leaderboardModel = response.body();
-
                         List<LeaderboardDataModel> leaderboardEntrie =leaderboardModel.getData();
                         for (LeaderboardDataModel leaderboarddata:leaderboardEntrie) {
 
                             if (leaderboarddata.getkOID() != null && Id != null && leaderboarddata.getkOID().equalsIgnoreCase(Id)) {
                                 position = leaderboarddata.getPosition().toString();
-                                Log.d("TAG", "onCreateView:zz1 "+ position);
-
                                 if(position.equals('1')){
                                     progressEnd = position;
-                                    Log.d("TAG", "onCreateView:zz1 "+ progressEnd);
-
                                 }
                             }
                             LeaderboardEntry leaderboardEntry=new LeaderboardEntry(leaderboarddata.getPosition().toString(),leaderboarddata.getFullName(),leaderboarddata.getTargetCommAmt().toString());
@@ -183,9 +177,6 @@
 
                             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(HomePageActivity.this);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
-
-                            Log.d("TAG", "onCreateView:zz1 "+ leaderboardEntries);
-
                             editor.putString("position", position);
                             editor.putString("progressEnd", progressEnd);
 
@@ -240,12 +231,11 @@
         private void getLoginLocation(String login,String address){
 
             ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-            Log.d("TAG", "checkCrifScore: "+getdatalocation(login, address));
             Call<JsonObject> call=apiInterface.livetrack(GlobalClass.Token,GlobalClass.dbname,getdatalocation(login,address));
             call.enqueue(new Callback<JsonObject>() {
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                    Log.d("TAG", "onResponse: "+response.body());
+
                 }
 
                 @Override

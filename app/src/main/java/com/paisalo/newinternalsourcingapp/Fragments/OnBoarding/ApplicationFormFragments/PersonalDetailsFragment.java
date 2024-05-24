@@ -249,8 +249,8 @@ public class PersonalDetailsFragment extends Fragment {
                     }
 
                     if (allDataAFDataModel.getFiExtra().getIsBorrowerHandicap() != null) {
-                        int spinnerPosition5 = adapter11.getPosition(allDataAFDataModel.getFiExtra().getIsBorrowerHandicap());
-                        isBorrowerBlindSpinner.setSelection(spinnerPosition5);
+                        int spinnerPosition6 = adapter11.getPosition(allDataAFDataModel.getFiExtra().getIsBorrowerHandicap());
+                        isBorrowerBlindSpinner.setSelection(spinnerPosition6);
                     }
 
                     if (allDataAFDataModel.getFiExtra().getPlacEOFBIRTH() != null) {

@@ -108,7 +108,7 @@ public class BorrowerListActivity extends AppCompatActivity {
                 }
             });
 
-        } else if (id.equals("Hvisit") ||id.equals("Application")) {
+        } else if (id.equals("HVisit") ||id.equals("Application")) {
             ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
             Call<BorrowerListModel> call = apiInterface.PendingApplicationForms(GlobalClass.Token, BuildConfig.dbname,GlobalClass.Imei,foCode,areaCode,creator);
             call.enqueue(new Callback<BorrowerListModel>() {

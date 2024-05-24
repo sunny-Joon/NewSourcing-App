@@ -115,7 +115,7 @@ public class ManagerListAdapter extends RecyclerView.Adapter<ManagerListAdapter.
             }else if (id.equals("HVisit")) {
                 Log.d("Hvisit","kkk"+id);
                 Intent intent = new Intent(itemView.getContext(), BorrowerListActivity.class);
-                intent.putExtra("keyName", "HV");
+                intent.putExtra("keyName", "HVisit");
                 intent.putExtra("foCode", foCode);
                 intent.putExtra("creator", creator);
                 intent.putExtra("areaCode", areaCode);

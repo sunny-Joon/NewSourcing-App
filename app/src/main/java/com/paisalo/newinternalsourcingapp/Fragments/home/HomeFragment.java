@@ -139,7 +139,7 @@ public class HomeFragment extends Fragment {
 
                 if (response.isSuccessful()) {
                     TargetCountModel targetCountModel = response.body();
-                    Log.d("TAG_A", "onResponse: " + targetCountModel);
+                    Log.d("TAG_A", "onResponse:123456789 " + targetCountModel);
                     if (targetCountModel.getData() == -1) {
                         binding.targetCount.setText("you are earning Highest incentive");
                     } else {
@@ -147,12 +147,12 @@ public class HomeFragment extends Fragment {
                     }
                 }
                 else
-                    Log.d("TAG_A", "onResponse: " + "else"+response.code());
+                    Log.d("TAG_A", "onResponse:123456789 " + "else"+response.code());
             }
 
             @Override
             public void onFailure(Call<TargetCountModel> call, Throwable t) {
-                Log.d("TAG_A", "onResponse: " + "failure");
+                Log.d("TAG_A", "onResponse:123456789 " + "failure");
 
             }
         });
@@ -223,28 +223,33 @@ public class HomeFragment extends Fragment {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("stTarget_Popup", target);
         editor.apply();
-        Log.d("TAG", "settargetAPIII: "+target);
+        Log.d("TAG", "settargetAPIII:11 "+target);
 
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<TargetSetModel> call = apiInterface.setTarget(com.paisalo.newinternalsourcingapp.GlobalClass.Token, com.paisalo.newinternalsourcingapp.GlobalClass.dbname,JsonOfTarget(target));
-
         call.enqueue(new Callback<TargetSetModel>() {
 
             @Override
             public void onResponse(Call<TargetSetModel> call, Response<TargetSetModel> response) {
-                Log.d("TAG4", "settargetAPIII: "+response.body());
+                Log.d("TAG", "settargetAPIII:22 "+response.body());
 
                 if(response.isSuccessful()){
-                    Log.d("TAG4", "onResponsemessage: "+response.body());
+                    Log.d("TAG", "onResponse: "+"success");
+                    Log.d("TAG", "onResponsemessage:33 "+response.body());
                     String message = response.body().getMessage();
-                    Log.d("TAG", "settargetAPIII: "+message);
+                    Log.d("TAG", "settargetAPIII:44 "+message);
                     targetCountApi();
+                }
+                else {
+                    Log.d("TAG", "settargetAPIII:response not successful or body is null");
+                    Log.d("TAG", "settargetAPIII:response code: " + response.code());
+                    Log.d("TAG", "settargetAPIII:response error body: " + response.errorBody());
                 }
             }
 
             @Override
             public void onFailure(Call<TargetSetModel> call, Throwable t) {
-                Log.d("TAG4", "settargetAPIII: "+"Error");
+                Log.d("TAG4", "settargetAPIII:55 "+"Error");
             }
         });
 
