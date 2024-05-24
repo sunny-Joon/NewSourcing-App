@@ -2,7 +2,6 @@ package com.paisalo.newinternalsourcingapp.Fragments.OnBoarding;
 
 import android.content.Intent;
 import android.os.Bundle;
-
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -11,13 +10,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.paisalo.newinternalsourcingapp.Entities.CkycNoMODEL;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
 import com.paisalo.newinternalsourcingapp.Modelclasses.FiExtra;
 import com.paisalo.newinternalsourcingapp.Modelclasses.FiJsonObject;
@@ -33,12 +29,7 @@ import com.paisalo.newinternalsourcingapp.RoomDatabase.DatabaseClass;
 import com.paisalo.newinternalsourcingapp.RoomDatabase.RangeCategoryDataClass;
 import com.paisalo.newinternalsourcingapp.Utils.CustomProgressDialog;
 import com.paisalo.newinternalsourcingapp.location.GpsTracker;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -138,9 +129,7 @@ public class KYCActivity2 extends AppCompatActivity {
         earningmembertypeList.add("--Select--");
         loanpurposeList.add("--Select--");
         occuptionList.add("--Select--");
-        DatabaseClass.databaseWriteExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
+
 
                 List<RangeCategoryDataClass> bankData = databaseClass.dao().getAllRCDataListby_catKey("banks");
                 for (RangeCategoryDataClass data : bankData) {
@@ -190,8 +179,7 @@ public class KYCActivity2 extends AppCompatActivity {
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(KYCActivity2.this, android.R.layout.simple_spinner_item, loandurationList);
                     loanduration.setAdapter(adapter);
                 }
-            }
-        });
+
 
         savedata.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -393,9 +381,33 @@ public class KYCActivity2 extends AppCompatActivity {
                                                 @Override
                                                 public void onResponse(Call<ProfilePicModel> call3, Response<ProfilePicModel> response3) {
                                                     if (response3.isSuccessful()) {
-                                                        customProgressDialog.dismiss();
-                                                        FiCPopup fiCPopup = new FiCPopup("Your Ficode is Here", Message1);
-                                                        fiCPopup.show(getSupportFragmentManager(), "CustomDialog");
+                                                            Call<CkycNoMODEL> call = apiInterface.getCkycNo(GlobalClass.Token, GlobalClass.dbname,Message1, GlobalClass.Creator );
+                                                            call.enqueue(new Callback<CkycNoMODEL>() {
+                                                                @Override
+                                                                public void onResponse(Call<CkycNoMODEL> call, Response<CkycNoMODEL> response) {
+                                                                    if (response.isSuccessful()) {
+                                                                        CkycNoMODEL result = response.body();
+                                                                        if (result != null) {
+                                                                            Log.d("TAG", "onResponse1:ckyc1 " + result.getData());
+                                                                            customProgressDialog.dismiss();
+                                                                            FiCPopup fiCPopup = new FiCPopup("Your Ficode is Here", Message1);
+                                                                            fiCPopup.show(getSupportFragmentManager(), "CustomDialog");
+                                                                        } else {
+                                                                            Toast.makeText(KYCActivity2.this, "Failed", Toast.LENGTH_SHORT).show();
+                                                                            Log.d("TAG", "onResponse1:ckyc2 Response body is null"+response.body());
+                                                                        }
+                                                                    } else {
+                                                                        Toast.makeText(KYCActivity2.this, "Failed", Toast.LENGTH_SHORT).show();
+                                                                        Log.d("TAG", "onResponse3:ckyc3 " + response.code());
+                                                                    }
+                                                                }
+                                                                @Override
+                                                                public void onFailure(Call<CkycNoMODEL> call, Throwable t) {
+                                                                    Log.d("TAG", "onFailure3: " + t.getMessage());
+                                                                }
+                                                            });
+
+
 
                                                     } else {
                                                         customProgressDialog.dismiss();

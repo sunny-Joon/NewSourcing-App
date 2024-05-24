@@ -19,9 +19,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.google.gson.JsonObject;
-import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivityMenu;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFDataModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.UpdateFiModels.KycUpdateModel;
@@ -42,6 +42,7 @@ import java.util.List;
 public class AadhaarFragment extends Fragment {
 
     Button submit;
+    ImageView adhaarImage;
     CardView currentAddress;
     CheckBox addressCheckBox;
     AllDataAFDataModel allDataAFDataModel;
@@ -70,6 +71,7 @@ public class AadhaarFragment extends Fragment {
         DatabaseClass databaseClass = DatabaseClass.getInstance(getActivity());
         customProgressDialog = new CustomProgressDialog(getActivity());
 
+        adhaarImage= view.findViewById(R.id.adhaarImage);
         aadhaarName = view.findViewById(R.id.aadhaarName);
         aadhaarid = view.findViewById(R.id.aadhaarid);
         aadhaarAge = view.findViewById(R.id.aadhaarAge);
@@ -101,6 +103,14 @@ public class AadhaarFragment extends Fragment {
         currentAddress = view.findViewById(R.id.currentAddress);
         addressCheckBox = view.findViewById(R.id.addressCheckBox);
         //currentAddress.setVisibility(View.GONE);
+
+
+        adhaarImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         addressCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             //currentAddress.setVisibility(isChecked ? View.VISIBLE : View.GONE);

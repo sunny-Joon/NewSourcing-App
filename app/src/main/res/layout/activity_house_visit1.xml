@@ -63,9 +63,7 @@
                         android:layout_height="40dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:enabled="false"
-                        android:hint="Applicant Name"
-                        android:inputType="textCapWords"
+                        android:textColor="@color/black"
                         android:textSize="15dp" />
 
                 </LinearLayout>
@@ -99,8 +97,7 @@
                         android:layout_height="40dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:hint="Marital Status"
-                        android:inputType="textCapWords"
+                        android:textColor="@color/black"
                         android:textSize="15dp" />
 
                 </LinearLayout>
@@ -135,8 +132,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:hint="0000"
-                        android:inputType="textCapWords"
+                        android:textColor="@color/black"
                         android:textSize="15dp" />
 
                 </LinearLayout>
@@ -171,8 +167,7 @@
                         android:layout_height="40dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:hint="Loan Purpose"
-                        android:inputType="textCapWords"
+                        android:textColor="@color/black"
                         android:textSize="15dp" />
 
                 </LinearLayout>
@@ -207,8 +202,7 @@
                         android:layout_height="40dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:hint="Loan Duration"
-                        android:inputType="textCapWords"
+                        android:textColor="@color/black"
                         android:textSize="15dp" />
 
                 </LinearLayout>
@@ -243,8 +237,7 @@
                         android:layout_height="40dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:hint="Applicant Status"
-                        android:inputType="textCapWords"
+                        android:textColor="@color/black"
                         android:textSize="15dp" />
 
                 </LinearLayout>
@@ -278,8 +271,7 @@
                         android:layout_height="40dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:hint="Residing With"
-                        android:inputType="textCapWords"
+                        android:textColor="@color/black"
                         android:textSize="15dp" />
 
                 </LinearLayout>
@@ -314,8 +306,7 @@
                         android:layout_height="40dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:hint="Occupation Type"
-                        android:inputType="textCapWords"
+                        android:textColor="@color/black"
                         android:textSize="15dp" />
 
                 </LinearLayout>
@@ -350,8 +341,7 @@
                         android:layout_height="40dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:hint="Land Ownership"
-                        android:inputType="textCapWords"
+                        android:textColor="@color/black"
                         android:textSize="15dp" />
 
                 </LinearLayout>
@@ -386,8 +376,7 @@
                         android:layout_height="40dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:hint="Residence Ownership"
-                        android:inputType="textCapWords"
+                        android:textColor="@color/black"
                         android:textSize="15dp" />
 
                 </LinearLayout>

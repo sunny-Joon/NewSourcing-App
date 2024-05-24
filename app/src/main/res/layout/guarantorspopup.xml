@@ -129,6 +129,7 @@
                         android:id="@+id/editTextAge"
                         android:layout_width="match_parent"
                         android:inputType="number"
+                        android:maxLength="3"
                         android:layout_height="match_parent"
                         android:hint="Age"/>
 
@@ -240,7 +241,8 @@
         <EditText
             android:id="@+id/editTextAddress1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"            
+            android:layout_height="match_parent"
+            android:inputType="textCapWords"
             android:hint="Address1"
             android:padding="10dp" />
 
@@ -264,6 +266,7 @@
             android:id="@+id/editTextAddress2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:inputType="textCapWords"
             android:hint="Address2"
             android:padding="10dp" />
             
@@ -290,6 +293,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="Address3"
+                android:inputType="textCapWords"
                 android:padding="10dp" />
 
         </androidx.cardview.widget.CardView>
@@ -431,6 +435,7 @@
             android:drawableRight="@drawable/circlecheck"
             android:hint="Voter Id"
             android:maxLength="10"
+            android:inputType="textCapWords"
             android:padding="10dp" />
 
         </androidx.cardview.widget.CardView>
@@ -455,6 +460,7 @@
             android:layout_height="match_parent"
             android:drawableRight="@drawable/circlecheck"
             android:hint="PAN Number"
+            android:inputType="textCapWords"
             android:maxLength="10"
             android:padding="10dp" />
 
@@ -481,6 +487,7 @@
             android:drawableRight="@drawable/circlecheck"
             android:hint="DL Number"
             android:maxLength="16"
+            android:inputType="textCapWords"
             android:padding="10dp" />
 
         </androidx.cardview.widget.CardView>

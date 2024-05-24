@@ -258,7 +258,7 @@ public class HouseVisitActivity2 extends AppCompatActivity {
                     progressDialog.setMessage("Saving...");
                     progressDialog.setCancelable(false);
                     progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                    progressDialog.show();
+//                    progressDialog.show();
 
                     MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
                     RequestBody surveyBody = RequestBody.create(MediaType.parse("*/*"), photoFile);
@@ -347,6 +347,7 @@ public class HouseVisitActivity2 extends AppCompatActivity {
                         public void onResponse(Call<HouseVisitSaveModel> call, Response<HouseVisitSaveModel> response) {
                             if(response.isSuccessful()){
                                 assert response.body() != null;
+                                Log.d("TAG", "onResponse:home "+response.body().getMessage());
                                 if(response.body().getMessage().contains("Record Insert Successfully")) {
                                     progressDialog.dismiss();
                                     SubmitAlert(HouseVisitActivity2.this, "Successful", "House Visit Form Submit Successfully");
