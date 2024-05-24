@@ -117,7 +117,7 @@ public class BorrowerListAdapter extends RecyclerView.Adapter<BorrowerListAdapte
                     intent.putExtra("fiCode", fiCode); // Pass fiCode to the intent
                     intent.putExtra("creator", creator); // Pass creator to the intent
                     break;
-                case "HV":
+                case "HVisit":
                     intent = new Intent(context, HouseVisitActivity1.class);
                     intent.putExtra("fiCode", fiCode); // Pass fiCode to the intent
                     intent.putExtra("creator", creator); // Pass creator to the intent

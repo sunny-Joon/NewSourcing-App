@@ -1,6 +1,7 @@
 package com.paisalo.newinternalsourcingapp.Retrofit;
 
 import com.google.gson.JsonObject;
+import com.paisalo.newinternalsourcingapp.Entities.CkycNoMODEL;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.BorrowerListModels.BorrowerListModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.CreatorListModels.CreatorListModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFModel;
@@ -10,7 +11,6 @@ import com.paisalo.newinternalsourcingapp.ModelsRetrofit.HouseVisitModels.HouseV
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.IdVerificationModels.PANerificationModels.PanVerificationModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.IdVerificationModels.DLVerificationModels.DLVerificationModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.IdVerificationModels.VoterIdVerificationModels.VoterIdVerificationModel;
-import com.paisalo.newinternalsourcingapp.ModelsRetrofit.IfscModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.ImeiMappingModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.KycScanningModels.KycScanningModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.OCRScanModels.AdharDataResponse;
@@ -44,10 +44,10 @@ import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiInterface {
+
 
     @POST("Account/GetToken")
     Call<LoginModel> LoginApi(@Header("devid") String devid, @Header("dbname") String dbname, @Header("imeino") String imeino, @Body JsonObject object);
@@ -58,13 +58,11 @@ public interface ApiInterface {
     @GET("POSDB/GetMappedFO")
     Call<ManagerListModel> ManagerListApi(@Header("Authorization") String token, @Header("dbname") String dbName, @Query("IMEINO") String imeiNo, @Query("UserID") String userId);
 
-    @POST("/POSFI/SaveFi")
-    Call<KycSubmitModel> SubmitKycApi(@Header("Authorization") String token, @Header("dbname") String dbName, @Body JsonObject object);
 
     @POST("POSFI/SaveFi")
     Call<SaveFiModel> getSaveFi(@Header("Authorization") String token, @Header("dbname") String dbname, @Body JsonObject object);
 
-
+//-----------------------------------------------------------------------------------------------------------------------------------------
     @GET("api/LiveTrack/GetCSOMothlyTargetByUserId")
     public Call<LeaderboardModel> getLeaderboardData(@Header("Authorization") String token, @Header("dbname") String dbname);
 
@@ -76,13 +74,13 @@ public interface ApiInterface {
 
     @GET("Notification/GetBannerPostingMobile")
     Call<ImageDataModel> getTopImage(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("AppType") String AppType);
-
+//----
     @GET("api/LiveTrack/MonthlyTargetCsoIdCount")
-    public Call<TargetCountModel> getTargetCount(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("CsoId") String CsoId);
+     Call<TargetCountModel> getTargetCount(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("CsoId") String CsoId);
 
     @POST("api/LiveTrack/InsertMonthTargetCSO")
-    public Call<TargetSetModel> setTarget(@Header("Authorization") String token, @Header("dbname") String dbname, @Body JsonObject object);
-
+     Call<TargetSetModel> setTarget(@Header("Authorization") String token, @Header("dbname") String dbname, @Body JsonObject object);
+//----
     @GET("DDLHelper/GetSBICityMaster")
     Call<CityModelList> getCityList(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("ststecode") String stcode);
 
@@ -193,17 +191,6 @@ public interface ApiInterface {
     @GET("Miscellaneous/HomeVisitExistance")
     Call<TargetSetModel> checkHVForm(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("FiCode") String FiCode, @Query("Creator") String Creator);
 
-    @GET("{ifsccode}")
-    Call<JsonObject> getIfscCode(@Path("ifsccode") String ifsccode);
-
-    //--------------------------------------------------------------------------------------
-    @POST("OCR/GetIdentityVerfication")
-    Call<JsonObject> accValidate(@Header("Authorization") String token, @Header("dbname") String dbname, @Body JsonObject object);
-
-
-    @POST("LiveTrack/CreateKycVerification")
-    public Call<JsonObject> kycVerficationlog(@Body JsonObject object);
-
-    @POST("Miscellaneous/CreateFiVerfiedInfo")
-    public  Call<JsonObject> getDocNameDate(@Body JsonObject object);
+    @POST("UserMobile/SearchCkycNo")
+    Call<CkycNoMODEL> getCkycNo(@Header("Authorization") String token, @Header("dbname") String dbName,@Query("FiCode") String FiCode, @Query("Creator") String Creator);
 }

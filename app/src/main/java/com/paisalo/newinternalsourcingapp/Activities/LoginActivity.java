@@ -629,30 +629,25 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
         });
     }
     private void getTargetApi() {
-        Log.d("TAG", "MyApp: "+ "Target Api Run");
 
         Calendar calendar = Calendar.getInstance();
         month = new SimpleDateFormat("MMM", Locale.getDefault()).format(calendar.getTime());
         year = new SimpleDateFormat("yyyy", Locale.getDefault()).format(calendar.getTime());
 
-        Log.d("TAG_bundle", "MyApp: "+"Target Date "+month+year);
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<TargetResponseModel> call = apiInterface.getTarget(GlobalClass.Token,GlobalClass.dbname,GlobalClass.Id, String.valueOf(month), String.valueOf(year));
-        Log.d("TAG", "getTargetApi: " + GlobalClass.Token+" "+GlobalClass.dbname+" "+GlobalClass.Id+" "+ String.valueOf(month)+" "+ String.valueOf(year));
         call.enqueue(new Callback<TargetResponseModel>() {
             @Override
             public void onResponse(Call<TargetResponseModel> call, Response<TargetResponseModel> response) {
-                Log.d("TAG", "onResponse:Error "+response.body());
                 if (response.body().getMessage().equals("No Record Found!!")) {
                     stTarget_Popup = "000000";
                     RangeCategoriesApi();
 
                 } else if (response.isSuccessful() && response.body() != null && response.body().getResponseModels().size() > 0) {
-                    Log.d("TAG", "MyApp: "+ "Target Api successful");
                     List<ResponseModel> responseModel = response.body().getResponseModels();
 
                     stTarget_Popup = responseModel.get(0).getTargetCommAmt().toString();
-                    Log.d("TAG", "MyApp: "+ "Target = " +stTarget_Popup);
+
 
                     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -674,7 +669,6 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
         });
     }
     private void ImageAPI() {
-        Log.d("TAG", "MyApp: "+ "Image Api Run");
 
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<ImageDataModel> call = apiInterface.getTopImage(GlobalClass.Token,GlobalClass.dbname,"D");
@@ -682,13 +676,11 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
             @Override
             public void onResponse(Call<ImageDataModel> call, Response<ImageDataModel> response) {
 
-                Log.d("TAG", "onResponseIMAGE: " + response.body());
                 if(response.isSuccessful() && response.body() != null){
                 if (response.body().getMessage().equals("No Record Found")) {
                     getTargetApi();
                     image = "null";
                 } else {
-                    Log.d("TAG", "MyApp: " + "Image Api Successful");
 
                     ImageDataModel imageDataModel = response.body();
                     Gson gson = new Gson();

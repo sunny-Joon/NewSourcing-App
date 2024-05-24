@@ -162,12 +162,10 @@ public class GuarantorsFragment extends Fragment {
 
                 }
 
-
                 List<RangeCategoryDataClass> gender_DataList = databaseClass.dao().getAllRCDataListby_catKey("gender");
                 for (RangeCategoryDataClass data : gender_DataList) {
                     String descriptionEn = data.getDescriptionEn();
                     gender_List.add(descriptionEn);
-
                 }
                 ArrayAdapter<String> adapter1 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, gender_List);
                 spin_gender.setAdapter(adapter1);
@@ -188,8 +186,6 @@ public class GuarantorsFragment extends Fragment {
                 }
                 ArrayAdapter<String> adapter3 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, relationwithborr_List);
                 spin_relationwithborr.setAdapter(adapter3);
-
-
 
                 if (allDataAFDataModel != null) {
                     fiCode = allDataAFDataModel.getCode().toString();
