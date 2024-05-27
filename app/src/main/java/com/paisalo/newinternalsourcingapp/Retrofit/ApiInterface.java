@@ -8,6 +8,7 @@ import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDa
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.HouseVisitModels.HVBorrowerModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.HouseVisitModels.HVGetModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.HouseVisitModels.HouseVisitSaveModel;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.IdVerificationModels.AccountVerificationModels.AccountVerificationModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.IdVerificationModels.PANerificationModels.PanVerificationModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.IdVerificationModels.DLVerificationModels.DLVerificationModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.IdVerificationModels.VoterIdVerificationModels.VoterIdVerificationModel;
@@ -44,6 +45,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiInterface {
@@ -102,6 +104,9 @@ public interface ApiInterface {
 
     @POST("OCR/GetIdentityVerfication")
     Call<VoterIdVerificationModel> getvoterIDVerified(@Header("Authorization") String token, @Header("dbname") String dbname, @Body JsonObject object);
+
+    @POST("OCR/GetIdentityVerfication")
+    Call<AccountVerificationModel> getAccVerified(@Header("Authorization") String token, @Header("dbname") String dbname, @Body JsonObject object);
 
     @GET("LiveTrack/CheckLoanByAadhar")
     Call<JsonObject> CheckLoanByAadhar(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("Aadharno") String Aadharno);
@@ -193,4 +198,9 @@ public interface ApiInterface {
 
     @POST("UserMobile/SearchCkycNo")
     Call<CkycNoMODEL> getCkycNo(@Header("Authorization") String token, @Header("dbname") String dbName,@Query("FiCode") String FiCode, @Query("Creator") String Creator);
+
+    @GET("{fullUrl}")
+    Call<JsonObject> razorpayIfsc(@Path(value = "fullUrl", encoded = true) String fullUrl);
+
+
 }

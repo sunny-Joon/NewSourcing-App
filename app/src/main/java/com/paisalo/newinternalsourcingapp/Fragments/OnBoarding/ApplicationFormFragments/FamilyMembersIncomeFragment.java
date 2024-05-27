@@ -57,6 +57,7 @@ public class FamilyMembersIncomeFragment extends Fragment {
     List<String> schoolType_List = new ArrayList<>();
     List<String> businessType_List = new ArrayList<>();
     List<String> incomeType_List = new ArrayList<>();
+    List<FiFamMem> list;
 
     String fiCode,creator,tag,famMemName,relationship,age,gender,health,education,schoolType,business,businessType,income,incomeType;
 
@@ -84,8 +85,9 @@ public class FamilyMembersIncomeFragment extends Fragment {
         DatabaseClass databaseClass = DatabaseClass.getInstance(getContext());
         memberincomelist= new ArrayList<>();
 
-       List<FiFamMem> list = allDataAFDataModel.getFiFamMems();
-
+        if(allDataAFDataModel != null) {
+            list = allDataAFDataModel.getFiFamMems();
+        }
        recyclerView = view.findViewById(R.id.memberincome);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         FMIncomeButton = view.findViewById(R.id.addButton);
