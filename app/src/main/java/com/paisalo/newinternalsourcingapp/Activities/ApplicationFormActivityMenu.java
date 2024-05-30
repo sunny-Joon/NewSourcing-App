@@ -45,6 +45,12 @@ public class ApplicationFormActivityMenu extends AppCompatActivity {
     String fiCode,creator;
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        getFiEditDataFromServer();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_application_form_menu);
@@ -56,7 +62,7 @@ public class ApplicationFormActivityMenu extends AppCompatActivity {
             creator = intent.getStringExtra("creator");
 
             Log.d("Tag", "fiCode: " + fiCode);
-            Log.d("Tag", "fiCode: " + creator);
+            Log.d("Tag", "creator: " + creator);
         }
 
         aadhaar = findViewById(R.id.aadhaar);
@@ -90,79 +96,7 @@ public class ApplicationFormActivityMenu extends AppCompatActivity {
         kycScanningCheckBox.setChecked(false);
         kycScanningCheckBox.setClickable(false);
 
-        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<AllDataAFModel> call= apiInterface.getAllAFData(GlobalClass.Token,GlobalClass.dbname,fiCode,creator);
-
-        call.enqueue(new Callback<AllDataAFModel>() {
-            @Override
-            public void onResponse(Call<AllDataAFModel> call, Response<AllDataAFModel> response) {
-                Log.d("TAG", "getAllData: " + response.body());
-                if(response.isSuccessful()){
-                    AllDataAFModel allDataAFModel = response.body();
-                    if (allDataAFModel != null) {
-                        allDataAFDataModel = allDataAFModel.getData();
-
-                        if (allDataAFDataModel != null) {
-                            
-                          /*  fiExtra = allDataAFDataModel.getFiExtra();
-
-                            fiExtraBankBo = allDataAFDataModel.getFiExtraBankBo();
-                            fiFamExpenses = allDataAFDataModel.getFiFamExpenses();
-                            fiFamLoan = allDataAFDataModel.getFiFamLoans();
-                            fiFamMem = allDataAFDataModel.getFiFamMems();
-                            fiGuarantor = allDataAFDataModel.getFiGuarantors();
-                            uploadedFiDocs = allDataAFDataModel.getUploadedFiDocsList();*/
-
-                            if(allDataAFDataModel.getoAdd1() == null){
-                                aadhaarCheckBox.setChecked(false);
-                            } else{
-                                aadhaarCheckBox.setChecked(true);
-                            }
-
-                            if (allDataAFDataModel.getFiExtra() != null &&  allDataAFDataModel.getFiExtra().getEmaiLID() != null){
-                                personaldetailCheckBox.setChecked(true);
-                            }else {
-                                personaldetailCheckBox.setChecked(false);
-                            }
-                            if (allDataAFDataModel.getBankAcNo() != null){
-                                financialInfoCheckBox.setChecked(true);
-                            }else {
-                                financialInfoCheckBox.setChecked(false);
-                            }
-                            if(allDataAFDataModel.getFiFamMems() !=null && allDataAFDataModel.getFiFamMems().size() >0 && allDataAFDataModel.getFiFamMems().get(0).getMemName() !=null){
-                                familyIncomeCheckBox.setChecked(true);
-                            }else{
-                                familyIncomeCheckBox.setChecked(false);
-                            }
-                            if(allDataAFDataModel.getFiFamLoans() != null && allDataAFDataModel.getFiFamLoans().size() >0 && allDataAFDataModel.getFiFamLoans().get(0).getLenderName() !=null){
-                                borrowingsCheckBox.setChecked(true);
-                            }else{
-                                borrowingsCheckBox.setChecked(false);
-                            }
-                            if(allDataAFDataModel.getFiGuarantors() != null && allDataAFDataModel.getFiGuarantors().size() >0 && allDataAFDataModel.getFiGuarantors().get(0).getName() !=null){
-                                guarantorCheckBox.setChecked(true);
-                            }else{
-                                guarantorCheckBox.setChecked(false);
-                            }
-
-                        } else {
-
-                        }
-                    } else {
-
-                    }
-
-                }else {
-                    Log.d("TAG", "getAllData: " + response.code());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<AllDataAFModel> call, Throwable t) {
-                Log.d("TAG", "getAllData: " + "failure");
-
-            }
-        });
+        getFiEditDataFromServer();
 
         aadhaar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -267,5 +201,91 @@ public class ApplicationFormActivityMenu extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void getFiEditDataFromServer() {
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<AllDataAFModel> call= apiInterface.getAllAFData(GlobalClass.Token,GlobalClass.dbname,fiCode,creator);
+        Log.d("TAG", "getAllData: " + GlobalClass.Token+GlobalClass.dbname+fiCode+creator);
+
+        call.enqueue(new Callback<AllDataAFModel>() {
+            @Override
+            public void onResponse(Call<AllDataAFModel> call, Response<AllDataAFModel> response) {
+                Log.d("TAG", "getAllData: " + response.body());
+                if(response.isSuccessful()){
+                    Log.d("TAG", "getAllData: " + "response.body()");
+
+                    AllDataAFModel allDataAFModel = response.body();
+                    if (allDataAFModel != null) {
+                        allDataAFDataModel = allDataAFModel.getData();
+
+                        if (allDataAFDataModel != null) {
+
+                          /*  fiExtra = allDataAFDataModel.getFiExtra();
+
+                            fiExtraBankBo = allDataAFDataModel.getFiExtraBankBo();
+                            fiFamExpenses = allDataAFDataModel.getFiFamExpenses();
+                            fiFamLoan = allDataAFDataModel.getFiFamLoans();
+                            fiFamMem = allDataAFDataModel.getFiFamMems();
+                            fiGuarantor = allDataAFDataModel.getFiGuarantors();
+                            uploadedFiDocs = allDataAFDataModel.getUploadedFiDocsList();*/
+
+                            if(allDataAFDataModel.getoAdd1() == null){
+                                aadhaarCheckBox.setChecked(false);
+                            } else{
+                                aadhaarCheckBox.setChecked(true);
+                            }
+
+                            if (allDataAFDataModel.getFiExtra() != null &&  allDataAFDataModel.getFiExtra().getEmaiLID() != null){
+                                personaldetailCheckBox.setChecked(true);
+                            }else {
+                                personaldetailCheckBox.setChecked(false);
+                            }
+                            if (allDataAFDataModel.getBankAcNo() != null){
+                                financialInfoCheckBox.setChecked(true);
+                            }else {
+                                financialInfoCheckBox.setChecked(false);
+                            }
+                            if(allDataAFDataModel.getFiFamMems() !=null && allDataAFDataModel.getFiFamMems().size() >0 && allDataAFDataModel.getFiFamMems().get(0).getMemName() !=null){
+                                familyIncomeCheckBox.setChecked(true);
+                            }else{
+                                familyIncomeCheckBox.setChecked(false);
+                            }
+                            if(allDataAFDataModel.getFiFamLoans() != null && allDataAFDataModel.getFiFamLoans().size() >0 && allDataAFDataModel.getFiFamLoans().get(0).getLenderName() !=null){
+                                borrowingsCheckBox.setChecked(true);
+                            }else{
+                                borrowingsCheckBox.setChecked(false);
+                            }
+                            if(allDataAFDataModel.getFiGuarantors() != null && allDataAFDataModel.getFiGuarantors().size() >0 && allDataAFDataModel.getFiGuarantors().get(0).getName() !=null){
+                                Log.d("TAG", "onResponsesuny: " + allDataAFDataModel.getFiGuarantors().get(0).getName());
+                                guarantorCheckBox.setChecked(true);
+                            }else{
+                                Log.d("TAG", "onResponsesunyn: " + allDataAFDataModel.getFiGuarantors().size());
+
+                                guarantorCheckBox.setChecked(false);
+                            }
+
+                        } else {
+                            SubmitAlert(ApplicationFormActivityMenu.this, "Error", "Data Not Found in allDataAFDataModel");
+
+                        }
+                    } else {
+                        SubmitAlert(ApplicationFormActivityMenu.this, "Error", "Data Not Found in  response.body()");
+
+                    }
+
+                }else {
+                    SubmitAlert(ApplicationFormActivityMenu.this, "Error", "Data Not Found");
+                    Log.d("TAG", "getAllData: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AllDataAFModel> call, Throwable t) {
+                SubmitAlert(ApplicationFormActivityMenu.this, "Error", "Data Not Found");
+                Log.d("TAG", "getAllData: " + "failure"+t.getMessage());
+
+            }
+        });
     }
 }

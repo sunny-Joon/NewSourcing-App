@@ -22,7 +22,8 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:hint="Lender Name"
-            android:inputType="textCapWords|textFilter"
+            android:inputType="textCapCharacters
+"
             android:padding="10dp" />
     </androidx.cardview.widget.CardView>
 
@@ -109,7 +110,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="number"
-                android:maxLength="2"
                 android:padding="10dp" />
 
         </LinearLayout>

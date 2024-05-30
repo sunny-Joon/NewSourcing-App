@@ -459,6 +459,18 @@ public class AllDataAFDataModel implements Serializable {
     @Expose
     private Object lastModDate;
 
+    public String getProfilePic() {
+        return profilePic;
+    }
+
+    public void setProfilePic(String profilePic) {
+        this.profilePic = profilePic;
+    }
+
+    @SerializedName("profilePic")
+    @Expose
+    private String profilePic;
+
     public Integer getCode() {
         return code;
     }

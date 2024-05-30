@@ -1,9 +1,11 @@
 package com.paisalo.newinternalsourcingapp.Adapters;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,10 +22,11 @@ public class GurrantorListAdapter extends RecyclerView.Adapter<GurrantorListAdap
     private Context context;
     ArrayList<FiGuarantor> gurrantorList;
 
+
+
     public GurrantorListAdapter(Context context, ArrayList<FiGuarantor> gurrantorList) {
         this.context = context;
         this.gurrantorList = gurrantorList;
-
     }
     @NonNull
     @Override
@@ -43,6 +46,9 @@ public class GurrantorListAdapter extends RecyclerView.Adapter<GurrantorListAdap
         holder.addressTV.setText(gurrantor.getOffAdd1()+gurrantor.getOffAdd2()+gurrantor.getOffAdd3());
         holder.mobileTV.setText(gurrantor.getPerMob1());
         holder.fatherOrSpouseTV.setText(gurrantor.getGurName());
+        holder.profilePicGur.setImageBitmap(BitmapFactory.decodeFile(gurrantor.getGurImage().getAbsolutePath()));
+
+
     }
 
     @Override
@@ -50,13 +56,17 @@ public class GurrantorListAdapter extends RecyclerView.Adapter<GurrantorListAdap
         return gurrantorList.size();
     }
 
+
+
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
         TextView addressTV,GRTV,id,mobileTV,adhaaridTV,fatherOrSpouseTV,userNameTV;
+        ImageView profilePicGur;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             addressTV = itemView.findViewById(R.id.addressTV);
+            profilePicGur = itemView.findViewById(R.id.profilePicGur);
             GRTV = itemView.findViewById(R.id.GRTV);
             id = itemView.findViewById(R.id.id);
             mobileTV = itemView.findViewById(R.id.mobileTV);

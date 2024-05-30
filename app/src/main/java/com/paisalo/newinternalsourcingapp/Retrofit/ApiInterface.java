@@ -122,7 +122,7 @@ public interface ApiInterface {
 
     @Multipart
     @POST("DDLHelper/ProfilePicUpload")
-    Call<ProfilePicModel> updateprofilePic(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("fi") String fi, @Query("cr") String cr, @Query("tag") String tag, @Part MultipartBody.Part FileName);
+    Call<ProfilePicModel> updateprofilePic(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("fi") String fi, @Query("cr") String cr, @Query("tag") String tag, @Part MultipartBody.Part FileName,@Query("GrNo") int GrNo);
 
 
     @Multipart
@@ -150,7 +150,7 @@ public interface ApiInterface {
     @POST("POSFI/UpdateFIGaurantors")
     Call<KycUpdateModel> updateGaurantors(@Header("Authorization") String token, @Header("dbname") String dbname, @Body JsonObject object);
 
-    @POST("Miscellaneous/CreateHomeVisit")
+    @POST("Miscellaneous/CreateUpdateHomeVisit")
     Call<HouseVisitSaveModel> SaveHouseVisit(@Header("Authorization") String token, @Header("dbname") String dbname, @Body RequestBody file);
 
     @GET("Miscellaneous/GetHomeVisitBorrowerData")

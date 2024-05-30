@@ -9,6 +9,8 @@ import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidName;
 import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidPan;
 import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidSAddr;
 
+import static cz.msebera.android.httpclient.client.utils.DateUtils.formatDate;
+
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -511,11 +513,21 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             @Override
             public void onClick(View view) {
                 dl_Checkbox.setChecked(false);
-                if(!editTextDob.getText().toString().isEmpty()) {
-                    dlVerification("drivinglicense", editTextdrivingLicense.getText().toString(), editTextDob.getText().toString());
-                }else{
-                    editTextdrivingLicense.setError("set DOB");
+                if (editTextDob.getText().toString().trim().length() > 9) {
+
+                    if (editTextdrivingLicense.getText().toString().trim().length() < 5 || editTextdrivingLicense.length()>15) {
+                       // tilDL_Name.setVisibility(View.GONE);
+                        editTextdrivingLicense.setError(" Driving License  Should be between 5 to 15 digits");
+
+                    } else {
+                        dlVerification("drivinglicense", editTextdrivingLicense.getText().toString(), editTextDob.getText().toString());
+
+                    }
+
+                } else {
+                    Toast.makeText(KYCActivity.this, "Please enter Date of Birth", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
         pan_Checkbox.setOnClickListener(new View.OnClickListener() {
@@ -953,7 +965,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d("TAG", "onActivityResult: " + data + "" + requestCode);
+        Log.d("TAG", "onActivityResult: " + data + " // " + requestCode);
         if (requestCode == IntentIntegrator.REQUEST_CODE) {
             IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
             if (scanningResult != null) {
@@ -1365,6 +1377,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         String state = decodedData.get(13 - inc);
         Log.d("TAG", "decodeData:state "+state);
 
+
         int castePos3=-1;
         for (int j=0;j<rangeCategoryAdapter.getCount();j++){
             if (rangeCategoryAdapter.getItem(j).code.equals(databaseClass.dao().getStateByCode("state",allDataAFDataModel.getpState()).code)){
@@ -1372,7 +1385,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                 break;
             }
         }
-
         Log.d("TAG", "onCreateView: "+castePos3);
         acspAadharState.setSelection(castePos3);
 
