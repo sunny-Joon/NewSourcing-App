@@ -24,7 +24,7 @@ public class GlobalClass extends Application {
     public static String DevId = "";
     public static String dbname = "yfMerfC6mRvfr0AOoHmOJ8Et9Q9MPwNEKzFdLsfEs1A=";
 
-
+    public static String DATABASE_NAME = "";
     public static void SubmitAlert(final Activity activity, String title, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setTitle(title);

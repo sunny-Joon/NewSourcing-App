@@ -290,6 +290,7 @@
             android:id="@+id/acspRelationship"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
             android:inputType="textCapCharacters
 "
             android:padding="10dp"/>

@@ -1250,11 +1250,14 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             inc = 1;
         }
 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-        Log.d("TAG", "decodeData: " + decodedData.get(4 - inc));
+        String dob = decodedData.get(4 - inc);
+        editTextDob.setText(dob);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        Log.d("TAG", "decodeData:dob " + dob);
+
         try {
-            Date dateOfBirth = formatter.parse(decodedData.get(4 - inc));
-            Log.d("TAG", "decodeData: " + dateOfBirth);
+            Date dateOfBirth = formatter.parse(dob);
+            Log.d("TAG", "Parsed date of birth: " + dateOfBirth);
             Calendar dobCalendar = Calendar.getInstance();
             dobCalendar.setTime(dateOfBirth);
             Calendar todayCalendar = Calendar.getInstance();
@@ -1263,16 +1266,14 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                     (todayCalendar.get(Calendar.MONTH) == dobCalendar.get(Calendar.MONTH) &&
                             todayCalendar.get(Calendar.DAY_OF_MONTH) < dobCalendar.get(Calendar.DAY_OF_MONTH))) {
                 age--;
-
-                // allDataAFDataModel.setAge(l); =  age;
             }
-            Log.d("TAG", "decodeData: age " + age);
-            //  editTextAge.setText(jsonData);
+            Log.d("TAG", "Calculated age: " + age);
+            editTextAge.setText(String.valueOf(age));
             isAadharVerified = "Q";
-
         } catch (ParseException e) {
-            e.printStackTrace();
+            Log.e("TAG", "Error parsing date: " + e.getMessage(), e);
         }
+
 
 
 
@@ -1376,24 +1377,30 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
         String state = decodedData.get(13 - inc);
         Log.d("TAG", "decodeData:state "+state);
-
-
-        int castePos3=-1;
-        for (int j=0;j<rangeCategoryAdapter.getCount();j++){
-            if (rangeCategoryAdapter.getItem(j).code.equals(databaseClass.dao().getStateByCode("state",allDataAFDataModel.getpState()).code)){
-                castePos3=j;
-                break;
+        int statePosition=0;
+        for (int statePos=0;statePos<stateDataList.size();statePos++){
+            if (stateDataList.get(statePos).descriptionEn.equals(state)){
+                statePosition=statePos;
             }
+
         }
-        Log.d("TAG", "onCreateView: "+castePos3);
-        acspAadharState.setSelection(castePos3);
+        acspAadharState.setSelection(statePosition);
 
 
+        String relation = decodedData.get(6 - inc);
+        Log.d("TAG", "decodeData:acspRelationship "+relation);
 
-//        if (state.equals("")||state.equals(null)){
-//        }else{
-//            acspAadharState.setText(AadharUtils.getStateCode(decodedData.get(13-inc)));
-//        }
+        if (relation.startsWith("S/O:") ||relation.startsWith("S/O ") || relation.startsWith("D/O:")) {
+            Utils.setSpinnerPosition1(acspRelationship, "Father", false);
+            acspRelationship.setEnabled(false);
+
+        } else if (relation.startsWith("W/O:")) {
+            Utils.setSpinnerPosition1(acspRelationship, "Husband", false);
+            acspRelationship.setEnabled(false);
+
+        }
+
+
 
         if (decodedData.get(6 - inc).equals("") || decodedData.get(6 - inc).equals(null)) {
 
@@ -1463,7 +1470,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             if (decodedData.get(6 - inc).startsWith("S/O") || decodedData.get(6 - inc).startsWith("D/O")) {
                 Utils.setSpinnerPosition(acspRelationship, "Father", false);
                 acspRelationship.setEnabled(false);
-                String[] fatherNames = decodedData.get(6 - inc).contains(":") ? decodedData.get(6 - inc).split(":") : decodedData.get(6 - inc).split("/O");
+                String[] fatherNames = decodedData.get(6 - inc).contains(":") ? decodedData.get(6 - inc).split(": ") : decodedData.get(6 - inc).split("/O");
                 String[] newFatherName = fatherNames[1].split(" ");
                 if (newFatherName.length > 2) {
                     String fatherFirstName = "";

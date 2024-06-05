@@ -42,7 +42,8 @@ public interface DaoClass {
     @Query("SELECT * FROM RANGECATEGORY_DATABASE WHERE cat_key = :catKey")
     List<RangeCategoryDataClass> getAllRCDataListby_catKey(String catKey);
 
-
+    @Query("Select * FROM RANGECATEGORY_DATABASE where descriptionEn=:desc  and cat_key=:cat_key")
+    RangeCategoryDataClass getRangeObj(String desc,String cat_key);
     @Query("SELECT *  FROM ManagerListDataBase")
     List<ManagerListDataClass> getAllManagerDataList();
 

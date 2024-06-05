@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <resources>
-        <string-array name="residing_with">
-            <item>@string/family</item>
-            <item>@string/separately</item>
+<resources>
+    <string-array name="residing_with">
+        <item>@string/family</item>
+        <item>@string/separately</item>
 
-        </string-array>
+    </string-array>
 
     <string-array name="residing_type">
         <item>@string/pucca</item>
@@ -116,27 +116,33 @@
     <array name="specialAbility">
         <item>--Select--</item>
         <item>YES</item>
-    <item>No</item>
+        <item>No</item>
     </array>
 
- <array name="specialSocialCategory">
-     <item>--Select--</item>
-     <item>YES</item>
-    <item>NO</item>
+    <array name="specialSocialCategory">
+        <item>--Select--</item>
+        <item>YES</item>
+        <item>NO</item>
+    </array>
+
+    <array name="selectDatabase">
+        <item>--Select--</item>
+        <item>SBI COLENDING</item>
+        <item>PDL OW</item>
+        <item>GROUP FINANCE</item>
+    </array>
 
 
-    </array><array name="bankactype">
-     <item>--Select--</item>
-     <item>sa</item>
+    <array name="bankactype">
+        <item>--Select--</item>
+        <item>sa</item>
     </array>
 
     <array name="isBorrowerBlind">
         <item>--Select--</item>
         <item>YES</item>
-    <item>NO</item>
+        <item>NO</item>
     </array>
-
-
 
 
 </resources>
