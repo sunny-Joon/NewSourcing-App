@@ -1,5 +1,6 @@
 package com.paisalo.newinternalsourcingapp.Entities.ScanAadhaar;
 
+import android.content.Context;
 import android.util.Log;
 
 import androidx.room.Room;
@@ -15,7 +16,6 @@ import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -373,6 +373,7 @@ public class AadharUtils {
         return addressMap;
     }
 
+
     public static AadharData getAadhar(JSONObject aadharJson) {
 
         AadharData aadharData = null;
@@ -530,19 +531,18 @@ public class AadharUtils {
 
 
 
-//    public static String getStateCode(String stateName) {
-//        String stateCode = "";
-//        database = Room.databaseBuilder(context, DatabaseClass.class, "app-database")
-//                .build();
-//
-//        // Query the RangeCategory table for a specific stateName
-//        RangeCategoryDataClass rangeCategory = database.dao().getAllRCDataListby_catKey("state");
-//
-//        // If a matching RangeCategory is found, retrieve its RangeCode
-//        if (rangeCategory != null) {
-//            stateCode = rangeCategory.getRangeCode();
-//        }
-//
-//        return stateCode;
-//    }
+    public static String getStateCode(String stateName) {
+        String stateCode = "";
+        Context context = null;
+        database = Room.databaseBuilder(context, DatabaseClass.class, "app-database")
+                .build();
+        // Query the RangeCategory table for a specific stateName
+        RangeCategoryDataClass rangeCategory = (RangeCategoryDataClass) database.dao().getAllRCDataListby_catKey("state");
+        // If a matching RangeCategory is found, retrieve its RangeCode
+        if (rangeCategory != null) {
+            stateCode = rangeCategory.getCode();
+        }
+
+        return stateCode;
+    }
 }

@@ -83,7 +83,7 @@ public class FamilyBorrowingsFragment extends Fragment {
     EditText etLenderName, etLoanamount, etEmiamount, etbalanceamount;
 
     String lenderName, reasonForLoan, fiCode, creator, tag, lenderType, loanUsed, loanAmount, emiAmount, balanceAmount, ismfi;
-
+    List<FiFamLoan> list;
     Spinner lenderTypespin, spinnerLoanUsed, spinnerReasonforloan, spinnerisMFI;
     FloatingActionButton addBorrower;
 
@@ -100,17 +100,15 @@ public class FamilyBorrowingsFragment extends Fragment {
 
         DatabaseClass databaseClass = DatabaseClass.getInstance(getContext());
         borrowerListdata = new ArrayList<>();
-        List<FiFamLoan> list = allDataAFDataModel.getFiFamLoans();
+
+
 
         View view = inflater.inflate(R.layout.fragment_family_borrowings, container, false);
 
         recyclerView = view.findViewById(R.id.borrowerList);
         submitborrowerList = view.findViewById(R.id.submitborrowerList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-
         addBorrower = view.findViewById(R.id.FMIncome);
-
         addBorrower.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -172,59 +170,62 @@ public class FamilyBorrowingsFragment extends Fragment {
 
 
                 if (allDataAFDataModel != null) {
-                    fiCode = allDataAFDataModel.getCode().toString();
-                    creator = allDataAFDataModel.getCreator().toString();
-                    tag = allDataAFDataModel.getTag().toString();
-                    Log.d("TAG", "onCreateView222: " + fiCode + tag + creator);
-                    try {
+                    list = allDataAFDataModel.getFiFamLoans();
+                    if (!list.isEmpty() && list != null) {
+                        fiCode = allDataAFDataModel.getCode().toString();
+                        creator = allDataAFDataModel.getCreator().toString();
+                        tag = allDataAFDataModel.getTag().toString();
+                        Log.d("TAG", "onCreateView222: " + fiCode + tag + creator);
+                        try {
 
-                        Log.d("TAG", "onClick:1 "+list.get(0).getLenderName());
-                        if (!list.isEmpty() && list.get(0).getLenderName() != null) {
-                            etLenderName.setText(list.get(0).getLenderName());
+                            Log.d("TAG", "onClick:1 " + list.get(0).getLenderName());
+                            if (!list.isEmpty() && list.get(0).getLenderName() != null) {
+                                etLenderName.setText(list.get(0).getLenderName());
+                            }
+
+                            Log.d("TAG", "onClick:2 " + list.get(0).getLoanAmount());
+                            if (!list.isEmpty() && list.get(0).getLoanAmount() != 0) {
+                                etLoanamount.setText(list.get(0).getLoanAmount());
+                            }
+
+                            Log.d("TAG", "onClick:3 " + list.get(0).getLoanEMIAmount());
+                            if (!list.isEmpty() && list.get(0).getLoanEMIAmount() != 0) {
+                                etEmiamount.setText(list.get(0).getLoanEMIAmount());
+                            }
+
+                            Log.d("TAG", "onClick:4 " + list.get(0).getLoanBalanceAmount());
+                            if (!list.isEmpty() && list.get(0).getLoanBalanceAmount() != 0) {
+                                etbalanceamount.setText(list.get(0).getLoanBalanceAmount());
+                            }
+
+                            Log.d("TAG", "onClick:4 " + list.get(0).getLoanReason());
+                            if (!list.isEmpty() && list.get(0).getLoanReason() != null) {
+                                int Reasonforloan = adapter2.getPosition(list.get(0).getLoanReason());
+                                spinnerReasonforloan.setSelection(Reasonforloan);
+                            }
+
+                            Log.d("TAG", "onClick:5 " + list.get(0).getLenderType());
+                            if (!list.isEmpty() && list.get(0).getLenderType() != null) {
+                                int Reasonforloan = adapter3.getPosition(list.get(0).getLenderType());
+                                lenderTypespin.setSelection(Reasonforloan);
+                            }
+
+                            Log.d("TAG", "onClick:6 " + list.get(0).getIsMFI());
+                            if (!list.isEmpty() && list.get(0).getIsMFI() != null) {
+                                int Reasonforloan = adapter4.getPosition(list.get(0).getIsMFI());
+                                spinnerisMFI.setSelection(Reasonforloan);
+                            }
+
+                            Log.d("TAG", "onClick:7 " + allDataAFDataModel.getRelationWBorrower());
+                            if (allDataAFDataModel.getRelationWBorrower() != null) {
+                                int LoanUsed = adapter1.getPosition(allDataAFDataModel.getRelationWBorrower());
+                                spinnerLoanUsed.setSelection(LoanUsed);
+
+                            }
+
+                        } catch (Exception exception) {
+                            Toast.makeText(getContext(), "fifamloans is null here", Toast.LENGTH_SHORT).show();
                         }
-
-                        Log.d("TAG", "onClick:2 "+list.get(0).getLoanAmount());
-                        if (!list.isEmpty() && list.get(0).getLoanAmount() != 0) {
-                            etLoanamount.setText(list.get(0).getLoanAmount());
-                        }
-
-                        Log.d("TAG", "onClick:3 "+list.get(0).getLoanEMIAmount());
-                        if (!list.isEmpty() && list.get(0).getLoanEMIAmount() != 0) {
-                            etEmiamount.setText(list.get(0).getLoanEMIAmount());
-                        }
-
-                        Log.d("TAG", "onClick:4 "+list.get(0).getLoanBalanceAmount());
-                        if (!list.isEmpty() && list.get(0).getLoanBalanceAmount() != 0) {
-                            etbalanceamount.setText(list.get(0).getLoanBalanceAmount());
-                        }
-
-                        Log.d("TAG", "onClick:4 "+list.get(0).getLoanReason());
-                        if (!list.isEmpty() && list.get(0).getLoanReason() != null) {
-                            int Reasonforloan = adapter2.getPosition(list.get(0).getLoanReason());
-                            spinnerReasonforloan.setSelection(Reasonforloan);
-                        }
-
-                        Log.d("TAG", "onClick:5 "+list.get(0).getLenderType());
-                        if (!list.isEmpty() && list.get(0).getLenderType() != null) {
-                            int Reasonforloan = adapter3.getPosition(list.get(0).getLenderType());
-                            lenderTypespin.setSelection(Reasonforloan);
-                        }
-
-                        Log.d("TAG", "onClick:6 "+list.get(0).getIsMFI());
-                        if (!list.isEmpty() && list.get(0).getIsMFI() != null) {
-                            int Reasonforloan = adapter4.getPosition(list.get(0).getIsMFI());
-                            spinnerisMFI.setSelection(Reasonforloan);
-                        }
-
-                        Log.d("TAG", "onClick:7 "+allDataAFDataModel.getRelationWBorrower());
-                        if (allDataAFDataModel.getRelationWBorrower() != null) {
-                            int LoanUsed = adapter1.getPosition(allDataAFDataModel.getRelationWBorrower());
-                            spinnerLoanUsed.setSelection(LoanUsed);
-
-                        }
-
-                    } catch (Exception exception) {
-                        Toast.makeText(getContext(), "fifamloans is null here", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -325,13 +326,13 @@ public class FamilyBorrowingsFragment extends Fragment {
         });
 
 
-
                 submitborrowerList.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         for (FiFamLoan fiFamLoan : borrowerListdata) {
                             JsonObject jsonborr = borrowingsJson(fiFamLoan);
 
+                            borrowerListdata.add(fiFamLoan);
                             ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
                             Call<KycUpdateModel> call = apiInterface.updateFamLoans(GlobalClass.Token, GlobalClass.dbname, jsonborr);
                             Log.d("TAG", "onResponseAdhaarUpdate: " + GlobalClass.Token + " " + GlobalClass.dbname + " " + jsonborr);
@@ -344,16 +345,8 @@ public class FamilyBorrowingsFragment extends Fragment {
                                         Log.d("TAG", "onResponseAadhaarUpdate121: " + response.body());
                                         Log.d("TAG", "onResponseAadhaarUpdatemsg121: " + response.body().getMessage().toString());
 
-                                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                                        builder.setMessage("Data submitted successfully.")
-                                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                                    public void onClick(DialogInterface dialog, int id) {
-                                                        Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
-                                                        startActivity(intent);
-                                                        getActivity().finish();
-                                                    }
-                                                });
-                                        builder.create().show();
+                                        SubmitAlert(getActivity(), "Successful", "Data Saved Successfully");
+
                                     } else {
                                         SubmitAlert(getActivity(), "Error", "Unsuccessful");
 

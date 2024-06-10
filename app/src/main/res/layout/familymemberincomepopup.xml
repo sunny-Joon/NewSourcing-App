@@ -23,7 +23,8 @@
                 <EditText
                     android:id="@+id/faimlMemberName"
                     android:layout_width="match_parent"
-                    android:inputType="textCapWords|textFilter"
+                    android:inputType="textCapCharacters
+"
                     android:layout_height="match_parent"
                     android:hint="Faimly Member Name" />
 
@@ -188,7 +189,7 @@
             <EditText
                 android:id="@+id/Business"
                 android:layout_width="match_parent"
-                android:inputType="textCapWords"
+                android:inputType="textCapCharacters"
                 android:layout_height="40dp" />
     </androidx.cardview.widget.CardView>
 

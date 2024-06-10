@@ -3,6 +3,7 @@ package com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormD
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.File;
 import java.io.Serializable;
 
 public class FiGuarantor implements Serializable {
@@ -177,7 +178,7 @@ public class FiGuarantor implements Serializable {
     private String incomeTax;
     @SerializedName("minor")
     @Expose
-    private Integer minor;
+    private Boolean minor;
     @SerializedName("creator")
     @Expose
     private String creator;
@@ -259,6 +260,18 @@ public class FiGuarantor implements Serializable {
     @SerializedName("eSignUUID")
     @Expose
     private String eSignUUID;
+
+    public File getGurImage() {
+        return gurImage;
+    }
+
+    public void setGurImage(File gurImage) {
+        this.gurImage = gurImage;
+    }
+
+    @SerializedName("gurImage")
+    @Expose
+    private File gurImage;
 
     public String getCode() {
         return code;
@@ -708,11 +721,11 @@ public class FiGuarantor implements Serializable {
         this.incomeTax = incomeTax;
     }
 
-    public Integer getMinor() {
+    public Boolean getMinor() {
         return minor;
     }
 
-    public void setMinor(Integer minor) {
+    public void setMinor(Boolean minor) {
         this.minor = minor;
     }
 

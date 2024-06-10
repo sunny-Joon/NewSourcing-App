@@ -28,7 +28,6 @@ public class ProfileFragment extends Fragment {
         View root=binding.getRoot();
 
 
-        // Inflate the layout for this fragment
         return root;
     }
 }

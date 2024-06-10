@@ -9,6 +9,8 @@ import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidName;
 import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidPan;
 import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidSAddr;
 
+import static cz.msebera.android.httpclient.client.utils.DateUtils.formatDate;
+
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -511,11 +513,21 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             @Override
             public void onClick(View view) {
                 dl_Checkbox.setChecked(false);
-                if(!editTextDob.getText().toString().isEmpty()) {
-                    dlVerification("drivinglicense", editTextdrivingLicense.getText().toString(), editTextDob.getText().toString());
-                }else{
-                    editTextdrivingLicense.setError("set DOB");
+                if (editTextDob.getText().toString().trim().length() > 9) {
+
+                    if (editTextdrivingLicense.getText().toString().trim().length() < 5 || editTextdrivingLicense.length()>15) {
+                       // tilDL_Name.setVisibility(View.GONE);
+                        editTextdrivingLicense.setError(" Driving License  Should be between 5 to 15 digits");
+
+                    } else {
+                        dlVerification("drivinglicense", editTextdrivingLicense.getText().toString(), editTextDob.getText().toString());
+
+                    }
+
+                } else {
+                    Toast.makeText(KYCActivity.this, "Please enter Date of Birth", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
         pan_Checkbox.setOnClickListener(new View.OnClickListener() {
@@ -953,7 +965,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d("TAG", "onActivityResult: " + data + "" + requestCode);
+        Log.d("TAG", "onActivityResult: " + data + " // " + requestCode);
         if (requestCode == IntentIntegrator.REQUEST_CODE) {
             IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
             if (scanningResult != null) {
@@ -1238,11 +1250,14 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             inc = 1;
         }
 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-        Log.d("TAG", "decodeData: " + decodedData.get(4 - inc));
+        String dob = decodedData.get(4 - inc);
+        editTextDob.setText(dob);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        Log.d("TAG", "decodeData:dob " + dob);
+
         try {
-            Date dateOfBirth = formatter.parse(decodedData.get(4 - inc));
-            Log.d("TAG", "decodeData: " + dateOfBirth);
+            Date dateOfBirth = formatter.parse(dob);
+            Log.d("TAG", "Parsed date of birth: " + dateOfBirth);
             Calendar dobCalendar = Calendar.getInstance();
             dobCalendar.setTime(dateOfBirth);
             Calendar todayCalendar = Calendar.getInstance();
@@ -1251,16 +1266,14 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                     (todayCalendar.get(Calendar.MONTH) == dobCalendar.get(Calendar.MONTH) &&
                             todayCalendar.get(Calendar.DAY_OF_MONTH) < dobCalendar.get(Calendar.DAY_OF_MONTH))) {
                 age--;
-
-                // allDataAFDataModel.setAge(l); =  age;
             }
-            Log.d("TAG", "decodeData: age " + age);
-            //  editTextAge.setText(jsonData);
+            Log.d("TAG", "Calculated age: " + age);
+            editTextAge.setText(String.valueOf(age));
             isAadharVerified = "Q";
-
         } catch (ParseException e) {
-            e.printStackTrace();
+            Log.e("TAG", "Error parsing date: " + e.getMessage(), e);
         }
+
 
 
 
@@ -1364,24 +1377,30 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
         String state = decodedData.get(13 - inc);
         Log.d("TAG", "decodeData:state "+state);
-
-        int castePos3=-1;
-        for (int j=0;j<rangeCategoryAdapter.getCount();j++){
-            if (rangeCategoryAdapter.getItem(j).code.equals(databaseClass.dao().getStateByCode("state",allDataAFDataModel.getpState()).code)){
-                castePos3=j;
-                break;
+        int statePosition=0;
+        for (int statePos=0;statePos<stateDataList.size();statePos++){
+            if (stateDataList.get(statePos).descriptionEn.equals(state)){
+                statePosition=statePos;
             }
+
+        }
+        acspAadharState.setSelection(statePosition);
+
+
+        String relation = decodedData.get(6 - inc);
+        Log.d("TAG", "decodeData:acspRelationship "+relation);
+
+        if (relation.startsWith("S/O:") ||relation.startsWith("S/O ") || relation.startsWith("D/O:")) {
+            Utils.setSpinnerPosition1(acspRelationship, "Father", false);
+            acspRelationship.setEnabled(false);
+
+        } else if (relation.startsWith("W/O:")) {
+            Utils.setSpinnerPosition1(acspRelationship, "Husband", false);
+            acspRelationship.setEnabled(false);
+
         }
 
-        Log.d("TAG", "onCreateView: "+castePos3);
-        acspAadharState.setSelection(castePos3);
 
-
-
-//        if (state.equals("")||state.equals(null)){
-//        }else{
-//            acspAadharState.setText(AadharUtils.getStateCode(decodedData.get(13-inc)));
-//        }
 
         if (decodedData.get(6 - inc).equals("") || decodedData.get(6 - inc).equals(null)) {
 
@@ -1451,7 +1470,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             if (decodedData.get(6 - inc).startsWith("S/O") || decodedData.get(6 - inc).startsWith("D/O")) {
                 Utils.setSpinnerPosition(acspRelationship, "Father", false);
                 acspRelationship.setEnabled(false);
-                String[] fatherNames = decodedData.get(6 - inc).contains(":") ? decodedData.get(6 - inc).split(":") : decodedData.get(6 - inc).split("/O");
+                String[] fatherNames = decodedData.get(6 - inc).contains(":") ? decodedData.get(6 - inc).split(": ") : decodedData.get(6 - inc).split("/O");
                 String[] newFatherName = fatherNames[1].split(" ");
                 if (newFatherName.length > 2) {
                     String fatherFirstName = "";
