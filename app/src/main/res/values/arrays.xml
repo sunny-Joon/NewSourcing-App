@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <resources>
-        <string-array name="residing_with">
-            <item>@string/family</item>
-            <item>@string/separately</item>
+<resources>
+    <string-array name="residing_with">
+        <item>@string/family</item>
+        <item>@string/separately</item>
 
-        </string-array>
+    </string-array>
 
     <string-array name="residing_type">
         <item>@string/pucca</item>
@@ -102,38 +102,46 @@
 
     <string-array name="landHold">
         <item>--Select--</item>
-        <item>0 Acres</item>
-        <item>1 Acres</item>
-        <item>2 Acres</item>
-        <item>3 Acres</item>
-        <item>4 Acres</item>
-        <item>5 Acres</item>
-        <item>6 Acres</item>
-        <item>7 Acres</item>
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
 
     </string-array>
 
     <array name="specialAbility">
         <item>--Select--</item>
         <item>YES</item>
-    <item>No</item>
+        <item>No</item>
     </array>
 
- <array name="specialSocialCategory">
-     <item>--Select--</item>
-     <item>YES</item>
-    <item>NO</item>
+    <array name="specialSocialCategory">
+        <item>--Select--</item>
+        <item>YES</item>
+        <item>NO</item>
+    </array>
+
+    <array name="selectDatabase">
+        <item>--Select--</item>
+        <item>SBI COLENDING</item>
+        <item>PDL OW</item>
+        <item>GROUP FINANCE</item>
+    </array>
 
 
-    </array><array name="bankactype">
-     <item>--Select--</item>
-     <item>sa</item>
+    <array name="bankactype">
+        <item>--Select--</item>
+        <item>sa</item>
     </array>
 
     <array name="isBorrowerBlind">
         <item>--Select--</item>
         <item>YES</item>
-    <item>NO</item>
+        <item>NO</item>
     </array>
 
     <string-array name="recovery_type">
@@ -155,6 +163,5 @@
         <item>Choose from Gallery</item>
         <item>Take a Photo</item>
     </string-array>
-
 
 </resources>

@@ -3,10 +3,8 @@ package com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.ApplicationFormF
 import static com.paisalo.newinternalsourcingapp.GlobalClass.SubmitAlert;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -24,7 +22,6 @@ import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivityMenu;
-import com.paisalo.newinternalsourcingapp.Adapters.CustomArrayAdapter;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFDataModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.UpdateFiModels.KycUpdateModel;
@@ -50,11 +47,7 @@ public class PersonalDetailsFragment extends Fragment {
     List<String> CasteList = new ArrayList<>();
     List<String> religionList = new ArrayList<>();
     List<String> presentHouseOwnerList = new ArrayList<>();
-    /*List<String> residingForList = new ArrayList<>();
-    List<Integer> noOfFamilyMembersList = new ArrayList<>();
-    List<Double> landHoldList = new ArrayList<>();
-    List<String> specialAbilityList = new ArrayList<>();
-    List<String> specialSocialCategoryList = new ArrayList<>();*/
+
     List<String> educationalCodeList = new ArrayList<>();
     ArrayAdapter<String> adapter1,adapter2,adapter3,adapter4;
 
@@ -153,11 +146,14 @@ public class PersonalDetailsFragment extends Fragment {
         noOfFamilyMembersSpinner.setAdapter(adapter6);
 
 
-        String[] landHoldArray = getResources().getStringArray(R.array.landHold);
-        CustomArrayAdapter adapter7 = new CustomArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, landHoldArray);
+//        String[] landHoldArray = getResources().getStringArray(R.array.landHold);
+//        CustomArrayAdapter adapter7 = new CustomArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, landHoldArray);
+//        adapter7.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        landHoldSpinner.setAdapter(adapter7);
+
+        ArrayAdapter<CharSequence> adapter7 = ArrayAdapter.createFromResource(getActivity(), R.array.landHold, android.R.layout.simple_spinner_item);
         adapter7.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         landHoldSpinner.setAdapter(adapter7);
-
 
 
         ArrayAdapter<CharSequence> adapter8 = ArrayAdapter.createFromResource(getActivity(), R.array.specialAbility, android.R.layout.simple_spinner_item);
@@ -177,6 +173,8 @@ public class PersonalDetailsFragment extends Fragment {
         isBorrowerBlindSpinner.setAdapter(adapter11);
 
 
+
+        
         if (allDataAFDataModel != null) {
             fiCode = allDataAFDataModel.getCode().toString();
             creator = allDataAFDataModel.getCreator().toString();
@@ -225,11 +223,17 @@ public class PersonalDetailsFragment extends Fragment {
                         noOfFamilyMembersSpinner.setSelection(spinnerPosition2);
                     }
 
-                    Log.d("TAG", "onCreateView:is "+allDataAFDataModel.getLandHolding());
+//                    if (allDataAFDataModel.getLandHolding() != null) {
+//                        String landHolding = allDataAFDataModel.getLandHolding();
+//                        int spinnerPosition3 = adapter7.getPosition(landHolding);
+//                        landHoldSpinner.setSelection(spinnerPosition3);
+//                    }
+
                     if (allDataAFDataModel.getLandHolding() != null) {
-                        int spinnerPosition3 = adapter7.getPosition(allDataAFDataModel.getLandHolding() + " Acres");
+                        int spinnerPosition3 = adapter7.getPosition(allDataAFDataModel.getLandHolding());
                         landHoldSpinner.setSelection(spinnerPosition3);
                     }
+
 
                     Log.d("TAG", "onCreateView:is "+allDataAFDataModel.getFiExtra().getIsBorrowerHandicap());
 

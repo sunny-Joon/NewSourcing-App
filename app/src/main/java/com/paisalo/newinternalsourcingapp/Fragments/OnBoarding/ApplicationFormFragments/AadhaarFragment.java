@@ -9,9 +9,13 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +25,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFDataModel;
@@ -28,14 +34,19 @@ import com.paisalo.newinternalsourcingapp.ModelsRetrofit.UpdateFiModels.KycUpdat
 import com.paisalo.newinternalsourcingapp.R;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiClient;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiInterface;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
 import android.widget.Spinner;
+
 import com.paisalo.newinternalsourcingapp.Adapters.RangeCategoryAdapter;
 import com.paisalo.newinternalsourcingapp.RoomDatabase.DatabaseClass;
 import com.paisalo.newinternalsourcingapp.RoomDatabase.RangeCategoryDataClass;
 import com.paisalo.newinternalsourcingapp.Utils.CustomProgressDialog;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,9 +57,9 @@ public class AadhaarFragment extends Fragment {
     CardView currentAddress;
     CheckBox addressCheckBox;
     AllDataAFDataModel allDataAFDataModel;
-    TextView aadhaarName,aadhaarid,aadhaarAge,aadhaarGendre,aadhaarDOB,aadhaarGuardian,aadhaarmobile,aadhaarPAN,aadhaarDrivingLicense,  aadhaarAddress,aadhaarPincode,aadhaarCity,aadhaarState,loanAmount;
-    EditText address1ET,address2ET,address3ET,cityET,pinCodeET;
-    String address1,address2,address3,state,city;
+    TextView aadhaarName, aadhaarid, aadhaarAge, aadhaarGendre, aadhaarDOB, aadhaarGuardian, aadhaarmobile, aadhaarPAN, aadhaarDrivingLicense, aadhaarAddress, aadhaarPincode, aadhaarCity, aadhaarState, loanAmount;
+    EditText address1ET, address2ET, address3ET, cityET, pinCodeET;
+    String address1, address2, address3, state, city;
 
     CustomProgressDialog customProgressDialog;
 
@@ -56,7 +67,7 @@ public class AadhaarFragment extends Fragment {
     Spinner spin_aadhaarState;
 
     public AadhaarFragment(AllDataAFDataModel allDataAFDataModel) {
-        this.allDataAFDataModel=allDataAFDataModel;
+        this.allDataAFDataModel = allDataAFDataModel;
     }
 
     public AadhaarFragment() {
@@ -71,7 +82,7 @@ public class AadhaarFragment extends Fragment {
         DatabaseClass databaseClass = DatabaseClass.getInstance(getActivity());
         customProgressDialog = new CustomProgressDialog(getActivity());
 
-        adhaarImage= view.findViewById(R.id.adhaarImage);
+        adhaarImage = view.findViewById(R.id.adhaarImage);
         aadhaarName = view.findViewById(R.id.aadhaarName);
         aadhaarid = view.findViewById(R.id.aadhaarid);
         aadhaarAge = view.findViewById(R.id.aadhaarAge);
@@ -88,7 +99,7 @@ public class AadhaarFragment extends Fragment {
 
         currentAddress = view.findViewById(R.id.currentAddress);
         addressCheckBox = view.findViewById(R.id.addressCheckBox);
-     //   currentAddress.setVisibility(View.GONE);
+        //   currentAddress.setVisibility(View.GONE);
         address1ET = view.findViewById(R.id.Address1);
         address2ET = view.findViewById(R.id.Address2);
         address3ET = view.findViewById(R.id.Address3);
@@ -105,18 +116,13 @@ public class AadhaarFragment extends Fragment {
         //currentAddress.setVisibility(View.GONE);
 
 
-        adhaarImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
         addressCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             //currentAddress.setVisibility(isChecked ? View.VISIBLE : View.GONE);
             // Assume allDataAFDataModel is the object and address1ET, address2ET, etc. are the EditText widgets
 
             if (allDataAFDataModel != null) {
+
+
                 if (allDataAFDataModel.getpAdd1() != null) {
                     address1ET.setText(allDataAFDataModel.getpAdd1());
                 } else {
@@ -151,31 +157,44 @@ public class AadhaarFragment extends Fragment {
         });
 
 
-                List<RangeCategoryDataClass> stateDataList = new ArrayList<>();
-                RangeCategoryDataClass rangeCategoryDataClass = new RangeCategoryDataClass("--Select--","--Select--","--Select--","--Select--","--Select--",0,"99");
-                stateDataList.add(rangeCategoryDataClass);
-                stateDataList.addAll(databaseClass.dao().getAllRCDataListby_catKey("state"));
-                rangeCategoryAdapter = new RangeCategoryAdapter(getActivity(),stateDataList );
-                spin_aadhaarState.setAdapter(rangeCategoryAdapter);
+        List<RangeCategoryDataClass> stateDataList = new ArrayList<>();
+        RangeCategoryDataClass rangeCategoryDataClass = new RangeCategoryDataClass("--Select--", "--Select--", "--Select--", "--Select--", "--Select--", 0, "99");
+        stateDataList.add(rangeCategoryDataClass);
+        stateDataList.addAll(databaseClass.dao().getAllRCDataListby_catKey("state"));
+        rangeCategoryAdapter = new RangeCategoryAdapter(getActivity(), stateDataList);
+        spin_aadhaarState.setAdapter(rangeCategoryAdapter);
 
-       if (allDataAFDataModel.getpState() != null) {
-            int castePos3=-1;
-           for (int i=0;i<rangeCategoryAdapter.getCount();i++){
-               if (rangeCategoryAdapter.getItem(i).code.equals(databaseClass.dao().getStateByCode("state",allDataAFDataModel.getpState()).code)){
-                   castePos3=i;
-                   break;
-               }
-           }
+        if (allDataAFDataModel.getpState() != null) {
+            int castePos3 = -1;
+            for (int i = 0; i < rangeCategoryAdapter.getCount(); i++) {
+                if (rangeCategoryAdapter.getItem(i).code.equals(databaseClass.dao().getStateByCode("state", allDataAFDataModel.getpState()).code)) {
+                    castePos3 = i;
+                    break;
+                }
+            }
 
-           Log.d("TAG", "onCreateView: "+castePos3);
+            Log.d("TAG", "onCreateView: " + castePos3);
             spin_aadhaarState.setSelection(castePos3);
-      }
+        }
 
-        Log.d("TAG", "onCreateViewadhaar: "+"check data");
-        if (allDataAFDataModel!=null) {
-            Log.d("TAG", "onCreateViewadhaar: "+"confirm data");
+        Log.d("TAG", "onCreateViewadhaar: " + "check data");
+        if (allDataAFDataModel != null) {
+            Log.d("TAG", "onCreateViewadhaar: " + "confirm data");
+
+            String profilePicPath = allDataAFDataModel.getProfilePic().toString();
+            Log.d("TAG", "onCreateView:1212121 " + profilePicPath);
+
+//            File imgFile = new File(profilePicPath);
+//            if (imgFile.exists()) {
+//                Glide.with(this)
+//                        .load(imgFile)
+//                        .into(adhaarImage);
+//            } else {
+//                adhaarImage.setImageDrawable(null);
+//            }
 
             aadhaarName.setText(allDataAFDataModel.getFname() + " " + allDataAFDataModel.getLname());
+
             aadhaarid.setText(allDataAFDataModel.getAadharID());
             aadhaarAge.setText(allDataAFDataModel.getAge().toString());
             aadhaarGendre.setText(allDataAFDataModel.getGender());
@@ -196,75 +215,75 @@ public class AadhaarFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                  boolean allConditionsSatisfied = true;
+                boolean allConditionsSatisfied = true;
 
-                if(!isValidAddr(address1ET.getText().toString().isEmpty() ? "" : address1ET.getText().toString())){
+                if (!isValidAddr(address1ET.getText().toString().isEmpty() ? "" : address1ET.getText().toString())) {
                     address1ET.setError("Invalid Address");
                     allConditionsSatisfied = false;
-                }else{
+                } else {
                     address1 = address1ET.getText().toString();
                 }
 
-                if(!isValidAddr(address2ET.getText().toString().isEmpty() ? "" : address2ET.getText().toString())){
+                if (!isValidAddr(address2ET.getText().toString().isEmpty() ? "" : address2ET.getText().toString())) {
                     address2ET.setError("Invalid Address");
                     allConditionsSatisfied = false;
-                }else{
+                } else {
                     address2 = address2ET.getText().toString();
                 }
 
-                if(!isValidAddr(address3ET.getText().toString().isEmpty() ? "" : address3ET.getText().toString())){
+                if (!isValidAddr(address3ET.getText().toString().isEmpty() ? "" : address3ET.getText().toString())) {
                     address3ET.setError("Invalid Address");
                     allConditionsSatisfied = false;
-                }else{
+                } else {
                     address3 = address3ET.getText().toString();
                 }
 
                 if (spin_aadhaarState.getSelectedItem().toString().contains("-Select-")) {
                     ((TextView) spin_aadhaarState.getSelectedView()).setError("Please select a state");
                     allConditionsSatisfied = false;
-                }else{
-                    state = ((RangeCategoryDataClass)spin_aadhaarState.getSelectedItem()).getCode();
+                } else {
+                    state = ((RangeCategoryDataClass) spin_aadhaarState.getSelectedItem()).getCode();
                 }
 
-                if(!isValidName(cityET.getText().toString().isEmpty() ?" ": cityET.getText().toString())){
+                if (!isValidName(cityET.getText().toString().isEmpty() ? " " : cityET.getText().toString())) {
                     cityET.setError("Invalid City");
                     allConditionsSatisfied = false;
-                }else{
+                } else {
                     city = cityET.getText().toString();
                 }
 
-             if (allConditionsSatisfied) {
+                if (allConditionsSatisfied) {
 
 
-                 ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-                 Call<KycUpdateModel> call = apiInterface.updateAddress(GlobalClass.Token, GlobalClass.dbname, addressJson());
-                 Log.d("TAG", "onResponseAdhaarUpdate: " + GlobalClass.Token + " " + GlobalClass.dbname + " " + addressJson());
+                    ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+                    Call<KycUpdateModel> call = apiInterface.updateAddress(GlobalClass.Token, GlobalClass.dbname, addressJson());
+                    Log.d("TAG", "onResponseAdhaarUpdate: " + GlobalClass.Token + " " + GlobalClass.dbname + " " + addressJson());
 
-                 call.enqueue(new Callback<KycUpdateModel>() {
-                     @Override
-                     public void onResponse(Call<KycUpdateModel> call, Response<KycUpdateModel> response) {
-                         Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
-                         if (response.isSuccessful()) {
-                             Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
-                             Log.d("TAG", "onResponseAdhaarUpdatemsg: " + response.body().getMessage().toString());
-                             SubmitAlert(getActivity(), "success", "Data set Successfully");
+                    call.enqueue(new Callback<KycUpdateModel>() {
+                        @Override
+                        public void onResponse(Call<KycUpdateModel> call, Response<KycUpdateModel> response) {
+                            Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
+                            if (response.isSuccessful()) {
+                                Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
+                                Log.d("TAG", "onResponseAdhaarUpdatemsg: " + response.body().getMessage().toString());
+                                SubmitAlert(getActivity(), "success", "Data set Successfully");
 
 
-                         } else {
-                             Log.d("TAG", "onResponseAdhaarUpdate: " + response.code());
-                             SubmitAlert(getActivity(), "unsuccessful", "Check Your Internet Connection");
+                            } else {
+                                Log.d("TAG", "onResponseAdhaarUpdate: " + response.code());
+                                SubmitAlert(getActivity(), "unsuccessful", "Check Your Internet Connection");
 
-                         }
-                     }
+                            }
+                        }
 
-                     @Override
-                     public void onFailure(Call<KycUpdateModel> call, Throwable t) {
-                         Log.d("TAG", "onResponseAdhaarUpdate: " + "failure");
-                         SubmitAlert(getActivity(), "Network Error", "Check Your Internet Connection");
+                        @Override
+                        public void onFailure(Call<KycUpdateModel> call, Throwable t) {
+                            Log.d("TAG", "onResponseAdhaarUpdate: " + "failure");
+                            SubmitAlert(getActivity(), "Network Error", "Check Your Internet Connection");
 
-                     }
-                 });
-             }
+                        }
+                    });
+                }
 
             }
         });
@@ -276,7 +295,7 @@ public class AadhaarFragment extends Fragment {
         jsonAddress.addProperty("fiCode", allDataAFDataModel.getCode().toString());
         jsonAddress.addProperty("creator", allDataAFDataModel.getCreator().toString());
         jsonAddress.addProperty("tag", allDataAFDataModel.getTag().toString());
-        jsonAddress.addProperty("o_Add1",address1 );
+        jsonAddress.addProperty("o_Add1", address1);
         jsonAddress.addProperty("o_Add2", address2);
         jsonAddress.addProperty("o_Add3", address3);
         jsonAddress.addProperty("o_State", state);

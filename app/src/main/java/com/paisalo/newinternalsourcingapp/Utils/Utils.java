@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -221,6 +222,16 @@ public class Utils {
         return index1;
     }
 
+    public static void setSpinnerPosition1(Spinner spinner, String value, boolean enabled) {
+        ArrayAdapter<String> adapter = (ArrayAdapter<String>) spinner.getAdapter();
+        if (adapter != null) {
+            int position = adapter.getPosition(value);
+            if (position >= 0) {
+                spinner.setSelection(position);
+                spinner.setEnabled(enabled);
+            }
+        }
+    }
     public static <T extends Object, E> T getSpinnerValue(Spinner spinner, Class<E> tClass) {
         //Log.d("getSpinnerValue", "Type name=" + tClass.getSimpleName());
         T retValue = null;

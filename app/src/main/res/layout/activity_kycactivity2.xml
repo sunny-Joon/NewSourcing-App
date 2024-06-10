@@ -313,6 +313,15 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/textViewTotalAnnualIncome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/subheading"/>
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Loan Amount *"

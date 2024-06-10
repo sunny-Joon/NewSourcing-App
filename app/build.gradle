@@ -63,6 +63,7 @@ dependencies {
 
     // For Room Database
     implementation "androidx.room:room-runtime:2.4.0"
+    implementation 'androidx.activity:activity:1.8.0'
     annotationProcessor "androidx.room:room-compiler:2.4.0"
 
     //For Location GPS
@@ -108,6 +109,7 @@ dependencies {
     implementation "androidx.camera:camera-view:1.1.0"
     implementation "androidx.camera:camera-extensions:1.1.0"
     implementation("com.vanniktech:android-image-cropper:4.5.0")
+
 
 
 

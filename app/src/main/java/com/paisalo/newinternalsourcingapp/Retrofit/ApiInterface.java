@@ -135,7 +135,6 @@ public interface ApiInterface {
     @POST("DDLHelper/ProfilePicUpload")
     Call<ProfilePicModel> updateprofilePic(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("fi") String fi, @Query("cr") String cr, @Query("tag") String tag, @Part MultipartBody.Part file);
 
-
     @Multipart
     @POST("OCR/DocVerifyforSpaceOCR")
     Call<AdharDataResponse> getAdharDataByOCR(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("imgType") String imgData, @Part MultipartBody.Part file);

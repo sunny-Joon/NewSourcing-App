@@ -345,10 +345,12 @@ public class HouseVisitActivity2 extends AppCompatActivity {
                     call.enqueue(new Callback<HouseVisitSaveModel>() {
                         @Override
                         public void onResponse(Call<HouseVisitSaveModel> call, Response<HouseVisitSaveModel> response) {
+                            Log.d("TAG", "onResponse:home0 "+call +" \\// "+response);
                             if(response.isSuccessful()){
                                 assert response.body() != null;
                                 Log.d("TAG", "onResponse:home "+response.body().getMessage());
                                 if(response.body().getMessage().contains("Record Insert Successfully")) {
+                                    Log.d("TAG", "onResponse:home2 "+response.body().getMessage());
                                     progressDialog.dismiss();
                                     SubmitAlert(HouseVisitActivity2.this, "Successful", "House Visit Form Submit Successfully");
                                     finish();

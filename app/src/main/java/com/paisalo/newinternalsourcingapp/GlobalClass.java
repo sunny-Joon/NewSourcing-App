@@ -61,12 +61,12 @@ public class GlobalClass extends Application {
     private static ImageCapture imageCapture;
     private static Uri capturedImageUri;
 
-
     private static ArrayList<DueData> dueDataList = new ArrayList<>();
     private static ArrayList<PosInstRcv> settlementDataList = new ArrayList<>();
     private static AdapterCollectionFragmentPager fragmentPagerAdapter;
     private static AbsCollectionFragment fragSettlement = null;
     private static ArrayList<AbsCollectionFragment> absFragments;
+
 
     public static void SubmitAlert(final Activity activity, String title, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
@@ -78,7 +78,7 @@ public class GlobalClass extends Application {
                 activity.finish();
             }
         });
-        builder.setCancelable(false);
+        builder.setCancelable(true);
         builder.show();
     }
     public static boolean isValidFullName(String name) {

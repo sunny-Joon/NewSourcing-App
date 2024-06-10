@@ -29,6 +29,8 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -85,15 +87,18 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity implements onListCReatorInteraction {
     DaoClass daoClass ;
+    TextView versionset,btnTermCondition;
+    Spinner selectDatabase;
     ActivityLoginBinding binding;
     String username, password,month = "";String year = "",stTarget_Popup="",image="" ,deviceId,choosedCreator;
     DatabaseClass database;
     Dialog dialogSearch;
     CreatorListAdapter adapter;
+    String selectDatabase1;
     onListCReatorInteraction listCReatorInteraction;
 
     List<CreatorListModelData> list=new ArrayList<>();
-
+    public static final String DATABASE_NAME = BuildConfig.APPLICATION_ID + ".DBNAME";
     private long deviceImei;
 
     String devid = "2234514145687247",imei = "868368051227919";
@@ -110,15 +115,49 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        versionset= findViewById(R.id.versionset);
+        versionset.setText(BuildConfig.VERSION_NAME);
+        selectDatabase= findViewById(R.id.selectDatabase);
+        btnTermCondition= findViewById(R.id.btnTermCondition);
+
         if (!checkPermissions()) {
             requestPermissions();
         } else {
             GpsTracker gpsTracker=new GpsTracker(getApplicationContext());
         }
+
+        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(LoginActivity.this, R.array.selectDatabase, android.R.layout.simple_spinner_item);
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        selectDatabase.setAdapter(adapter1);
+
+
+
         listCReatorInteraction=LoginActivity.this;
 
         database = DatabaseClass.getInstance(LoginActivity.this);
         daoClass=database.dao();
+
+        btnTermCondition.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this,ActivityTermAndCondition.class);
+                startActivity(intent);
+            }
+        });
+        selectDatabase.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                CharSequence selectedItem = (CharSequence) adapterView.getSelectedItem();
+                Log.d("TAG", "onItemSelected: " + selectedItem);
+                selectDatabase1 = selectedItem.toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         binding.LoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -126,14 +165,18 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                 password = binding.etLoginPassword.getText().toString();
                 GlobalClass.Id = username;
 
-
-                if (isValidUsername(username) && isValidPassword(password)) {
+                // Check if a database is selected before validating credentials
+                if (selectDatabase1.equalsIgnoreCase("--Select--")) {
+                    Toast.makeText(LoginActivity.this, "Select Database Name", Toast.LENGTH_SHORT).show();
+                } else if (isValidUsername(username) && isValidPassword(password)) {
                     LoginAPi(devid, BuildConfig.dbname, imei);
                 } else {
                     Toast.makeText(LoginActivity.this, "Invalid credentials", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
+
 
 
         //binding.btnLoginShareDeviceId.setEnabled(false);
@@ -600,6 +643,12 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                         GlobalClass.Creator = foModel.get(0).getCreator().toString();
                         GlobalClass.AreaCode = foModel.get(0).getAreaCd().toString();
                         GlobalClass.Tag = foModel.get(0).getTag().toString();
+
+                        GlobalClass.DATABASE_NAME= foModel.get(0).getDataBase().toString();
+                        Log.d("TAG", "MyAppCreator: "+ foModel.get(0).getImeino().toString());
+
+                        Log.d("TAG", "MyApp: "+ foModel.get(0).getCreator().toString());
+
 
                         ImageAPI();
 

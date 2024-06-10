@@ -86,21 +86,35 @@
             android:textColor="@color/red"
             android:textSize="@dimen/heading" />
 
-        <androidx.cardview.widget.CardView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_margin="2dp"
-            app:cardElevation="2dp">
-            
-        <EditText
-            android:id="@+id/editTextName"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="textCapWords"
-            android:hint="Name" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-        </androidx.cardview.widget.CardView>
-        
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_margin="2dp"
+                android:layout_weight="1"
+                android:elevation="2dp">
+                <EditText
+                    android:id="@+id/editTextName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapCharacters"
+                    android:padding="10dp"/>
+            </androidx.cardview.widget.CardView>
+
+            <ImageView
+                android:id="@+id/gurprofilePic"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="25dp"
+                android:layout_weight="3"
+                app:srcCompat="@drawable/profileimage"/>
+
+
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -216,7 +230,7 @@
         <EditText
             android:id="@+id/editTextGuardian"
             android:layout_width="match_parent"
-            android:inputType="textCapWords|textFilter"
+            android:inputType="textCapCharacters|textFilter"
             android:layout_height="match_parent"
             android:hint="Guardian"
             android:padding="10dp" />
@@ -242,7 +256,7 @@
             android:id="@+id/editTextAddress1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="textCapWords"
+            android:inputType="textCapCharacters"
             android:hint="Address1"
             android:padding="10dp" />
 
@@ -266,7 +280,7 @@
             android:id="@+id/editTextAddress2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="textCapWords"
+            android:inputType="textCapCharacters"
             android:hint="Address2"
             android:padding="10dp" />
             
@@ -293,7 +307,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="Address3"
-                android:inputType="textCapWords"
+                android:inputType="textCapCharacters"
                 android:padding="10dp" />
 
         </androidx.cardview.widget.CardView>
@@ -327,7 +341,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="City"
-                    android:inputType="textCapWords|textFilter"
+                    android:inputType="textCapCharacters|textFilter"
                     android:padding="10dp" />
                     
                 </androidx.cardview.widget.CardView>
@@ -432,10 +446,9 @@
             android:id="@+id/editTextvoterid"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:drawableRight="@drawable/circlecheck"
             android:hint="Voter Id"
             android:maxLength="10"
-            android:inputType="textCapWords"
+            android:inputType="textCapCharacters"
             android:padding="10dp" />
 
         </androidx.cardview.widget.CardView>
@@ -458,9 +471,8 @@
             android:id="@+id/editTextPAN"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:drawableRight="@drawable/circlecheck"
             android:hint="PAN Number"
-            android:inputType="textCapWords"
+            android:inputType="textCapCharacters"
             android:maxLength="10"
             android:padding="10dp" />
 
@@ -484,10 +496,9 @@
             android:id="@+id/drivingLicense"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:drawableRight="@drawable/circlecheck"
             android:hint="DL Number"
             android:maxLength="16"
-            android:inputType="textCapWords"
+            android:inputType="textCapCharacters"
             android:padding="10dp" />
 
         </androidx.cardview.widget.CardView>

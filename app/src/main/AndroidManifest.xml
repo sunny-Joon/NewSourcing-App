@@ -25,6 +25,7 @@
         android:theme="@style/Theme.NewInternalSourcingApp"
         tools:targetApi="31">
         <activity
+
             android:name=".Activities.ActivityCollection"
             android:exported="false" />
         <activity
@@ -53,6 +54,9 @@
             android:exported="false" />
         <activity
             android:name=".Activities.CollectionReportActivity"
+
+            android:name=".Activities.ActivityTermAndCondition"
+
             android:exported="false" />
         <activity
             android:name=".Fragments.home.IncentiveAnimatedActivity"
