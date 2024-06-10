@@ -1,6 +1,5 @@
     package com.paisalo.newinternalsourcingapp.Activities;
 
-    import android.content.Context;
     import android.content.DialogInterface;
     import android.content.Intent;
     import android.content.SharedPreferences;
@@ -27,10 +26,8 @@
     import com.google.gson.Gson;
     import com.google.gson.JsonObject;
     import com.paisalo.newinternalsourcingapp.Adapters.ViewPagerAdapter;
-    import com.paisalo.newinternalsourcingapp.BuildConfig;
     import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.OnBoardFragment;
     import com.paisalo.newinternalsourcingapp.Fragments.Profile.ProfileFragment;
-    import com.paisalo.newinternalsourcingapp.Fragments.collection.CollectionFragment;
     import com.paisalo.newinternalsourcingapp.Fragments.home.HomeFragment;
     import com.paisalo.newinternalsourcingapp.Fragments.leaderboard.LeaderBoardFragment;
     import com.paisalo.newinternalsourcingapp.Fragments.leaderboard.LeaderboardEntry;
@@ -61,9 +58,6 @@
         ActivityMainBinding binding;
         List<LeaderboardEntry> leaderboardEntries = new ArrayList<>();
         String Id="-1",position="-1",progressEnd;
-
-
-
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -121,8 +115,11 @@
                         openFragment(new LeaderBoardFragment());
                         break;
                     case R.id.navigation_collection:
-                        binding.onboard.setImageResource(R.drawable.addbutton_ic);
-                        openFragment(new CollectionFragment());
+                       /* binding.onboard.setImageResource(R.drawable.addbutton_ic);
+                        openFragment(new CollectionFragment());*/
+                        Intent intent = new Intent(HomePageActivity.this, ManagerList.class);
+                        intent.putExtra("keyName", "Collection");
+                        startActivity(intent);
                         break;
                     case R.id.navigation_profile:
                         binding.onboard.setImageResource(R.drawable.addbutton_ic);
@@ -204,13 +201,8 @@
         public void showSettingsAlert(){
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(HomePageActivity.this);
 
-            // Setting Dialog Title
             alertDialog.setTitle("GPS is settings");
-
-            // Setting Dialog Message
             alertDialog.setMessage("GPS is not enabled. Do you want to go to settings menu?");
-
-            // On pressing Settings button
             alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog,int which) {
                     Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
@@ -218,7 +210,6 @@
                 }
             });
 
-            // on pressing cancel button
             alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     finish();
@@ -248,10 +239,10 @@
 
         private JsonObject getdatalocation(String login, String address) {
             JsonObject jsonObject=new JsonObject();
-            jsonObject.addProperty("userId", "??");
-            jsonObject.addProperty("deviceId", "??");
-            jsonObject.addProperty("Creator","??");
-            jsonObject.addProperty("trackAppVersion", BuildConfig.VERSION_NAME);
+            jsonObject.addProperty("userId", GlobalClass.Id);
+            jsonObject.addProperty("deviceId", GlobalClass.DevId);
+            jsonObject.addProperty("Creator",GlobalClass.Creator);
+            jsonObject.addProperty("trackAppVersion","AppVersion");
             jsonObject.addProperty("latitude",gpsTracker.getLatitude()+"");
             jsonObject.addProperty("longitude", gpsTracker.getLongitude()+"");
             jsonObject.addProperty("appInBackground",login);
@@ -275,7 +266,6 @@
                         Log.e("tag", addrerss);
                     }
                 } catch (IOException e) {
-                    //  Log.e("tag", e.getMessage());
                 }
             }
             return addrerss;

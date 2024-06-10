@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -27,11 +28,14 @@ public class ManagerList extends AppCompatActivity {
     DaoClass daoClass;
     List<ManagerListDataClass> listDataClasses;
 
+    String moduleName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manager_list);
         Context context;
+        moduleName=getIntent().getStringExtra("keyName");
 
         recyclerView = findViewById(R.id.managerListRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -44,7 +48,7 @@ public class ManagerList extends AppCompatActivity {
             public void run() {
                 listDataClasses = daoClass.getAllManagerDataList();
                 Log.d("TAG", "onCreate: " + listDataClasses.size());
-                adapter = new ManagerListAdapter(ManagerList.this, listDataClasses);
+                adapter = new ManagerListAdapter(ManagerList.this, listDataClasses,moduleName);
                 recyclerView.setAdapter(adapter);
             }
         });

@@ -1,5 +1,6 @@
 package com.paisalo.newinternalsourcingapp.Adapters;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -15,8 +16,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.paisalo.newinternalsourcingapp.Activities.ActivityCollection;
 import com.paisalo.newinternalsourcingapp.Activities.BorrowerListActivity;
-import com.paisalo.newinternalsourcingapp.Activities.CustomerListActivity;
 import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.KYCActivity;
 import com.paisalo.newinternalsourcingapp.R;
 import com.paisalo.newinternalsourcingapp.RoomDatabase.ManagerListDataClass;
@@ -25,12 +27,15 @@ import java.util.List;
 
 public class ManagerListAdapter extends RecyclerView.Adapter<ManagerListAdapter.MyViewHolder> {
     private List<ManagerListDataClass> dataList;
+    ManagerListDataClass data;
     private Context context;
-    String foCode,areaCode,creator;
+    String foCode,areaCode,creator,id;
 
-    public ManagerListAdapter(Context context, List<ManagerListDataClass> dataList) {
+
+    public ManagerListAdapter(Context context, List<ManagerListDataClass> dataList,String moduleName) {
         this.context = context;
         this.dataList = dataList;
+        this.id=moduleName;
     }
 
     @NonNull
@@ -42,12 +47,27 @@ public class ManagerListAdapter extends RecyclerView.Adapter<ManagerListAdapter.
 
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        ManagerListDataClass data = dataList.get(position);
+    public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
+        data = dataList.get(position);
 
         holder.nameTextView.setText(data.getFoName());
         holder.placeGroupCodeTextView.setText(data.getAreaName()+"/"+data.getAreaCd());
         holder.branchCreatorTextView.setText(data.getFoCode()+"/"+data.getCreator());
+
+        holder.managerCardView.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (position != RecyclerView.NO_POSITION) {
+                    ManagerListDataClass dataModel = dataList.get(position);
+
+                    foCode = dataModel.getFoCode();
+                    creator = dataModel.getCreator();
+                    areaCode = dataModel.getAreaCd();
+                    openActivity(id,foCode,creator,areaCode);
+                }
+            }
+        });
 
         if (position % 2 == 1) {
             holder.managerCardView.setBackgroundResource(R.drawable.managerlist_gradientgrey);
@@ -55,7 +75,88 @@ public class ManagerListAdapter extends RecyclerView.Adapter<ManagerListAdapter.
             holder.managerCardView.setBackgroundResource(R.drawable.managerlist_gradient);
         }
     }
+    private void openActivity(String id,String foCode,String creator,String areaCode) {
+        if (id.equals("KYC")) {
+            Log.d("Kyc","kkk"+id);
+            Intent intent = new Intent(context, KYCActivity.class);
+            intent.putExtra("foCode", foCode);
+            intent.putExtra("creator", creator);
+            intent.putExtra("areaCode", areaCode);
+            context.startActivity(intent);
+        }else if (id.equals("Application")) {
+            Log.d("Application", "kkk" + id);
+            Intent intent = new Intent(context, BorrowerListActivity.class);
+            intent.putExtra("keyName", "Application");
+            intent.putExtra("foCode", foCode);
+            intent.putExtra("creator", creator);
+            intent.putExtra("areaCode", areaCode);
+            context.startActivity(intent);
+        }
+        else if (id.equals("Esign")) {
+            showPopup();
 
+        }else if (id.equals("HVisit")) {
+            Log.d("Hvisit","kkk"+id);
+            Intent intent = new Intent(context, BorrowerListActivity.class);
+            intent.putExtra("keyName", "HVisit");
+            intent.putExtra("foCode", foCode);
+            intent.putExtra("creator", creator);
+            intent.putExtra("areaCode", areaCode);
+            context.startActivity(intent);
+        }else if (id.equals("Collection")) {
+            Log.d("Collection","kkk"+id);
+            Intent intent = new Intent(context, ActivityCollection.class);
+            intent.putExtra("foCode", foCode);
+            intent.putExtra("creator", creator);
+            intent.putExtra("areaCode", areaCode);
+            context.startActivity(intent);
+        }
+
+    }
+    public void showPopup() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setView(R.layout.loanpopup);
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+        //   alertDialog.getWindow().setLayout(600, 600);
+
+        alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+            }
+        });
+
+        CardView application = alertDialog.findViewById(R.id.loanApplication);
+        application.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, BorrowerListActivity.class);
+                intent.putExtra("keyName", "FEsign");
+                intent.putExtra("foCode", foCode);
+                intent.putExtra("creator", creator);
+                intent.putExtra("areaCode", areaCode);
+                context.startActivity(intent);
+                alertDialog.dismiss();
+            }
+        });
+
+        CardView documentation = alertDialog.findViewById(R.id.loanDocumentation);
+        documentation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //   Intent intent = new Intent(itemView.getContext(), SecondEsignActivity.class);
+                Intent intent = new Intent(context, BorrowerListActivity.class);
+                intent.putExtra("keyName", "SEsign");
+                intent.putExtra("foCode", foCode);
+                intent.putExtra("creator", creator);
+                intent.putExtra("areaCode", areaCode);
+                context.startActivity(intent);
+                alertDialog.dismiss();
+            }
+        });
+    }
     @Override
     public int getItemCount() {
         return dataList.size();
@@ -73,105 +174,10 @@ public class ManagerListAdapter extends RecyclerView.Adapter<ManagerListAdapter.
             nameTextView = itemView.findViewById(R.id.nameTextView);
             placeGroupCodeTextView = itemView.findViewById(R.id.placeGroupCode1TextView);
             branchCreatorTextView = itemView.findViewById(R.id.BranchCreator);
-
-            managerCardView.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION) {
-                        ManagerListDataClass dataModel = dataList.get(position);
-                        Intent intent = ((Activity) itemView.getContext()).getIntent();
-                        String id = intent.getStringExtra("keyName");
-                        foCode = dataModel.getFoCode();
-                        creator = dataModel.getCreator();
-                        areaCode = dataModel.getAreaCd();
-                        openActivity(id,foCode,creator,areaCode);
-                    }
-                }
-            });
         }
 
-        private void openActivity(String id,String foCode,String creator,String areaCode) {
-            if (id.equals("KYC")) {
-                Log.d("Kyc","kkk"+id);
-                Intent intent = new Intent(itemView.getContext(), KYCActivity.class);
-                intent.putExtra("foCode", foCode);
-                intent.putExtra("creator", creator);
-                intent.putExtra("areaCode", areaCode);
-                itemView.getContext().startActivity(intent);
-            }else if (id.equals("Application")) {
-                Log.d("Application", "kkk" + id);
-                Intent intent = new Intent(itemView.getContext(), BorrowerListActivity.class);
-                intent.putExtra("keyName", "Application");
-                intent.putExtra("foCode", foCode);
-                intent.putExtra("creator", creator);
-                intent.putExtra("areaCode", areaCode);
-                itemView.getContext().startActivity(intent);
-            }
-            else if (id.equals("Esign")) {
-                showPopup();
 
-            }else if (id.equals("HVisit")) {
-                Log.d("Hvisit","kkk"+id);
-                Intent intent = new Intent(itemView.getContext(), BorrowerListActivity.class);
-                intent.putExtra("keyName", "HVisit");
-                intent.putExtra("foCode", foCode);
-                intent.putExtra("creator", creator);
-                intent.putExtra("areaCode", areaCode);
-                itemView.getContext().startActivity(intent);
-            }else if (id.equals("Collection")) {
-                Log.d("Collection","kkk"+id);
-                Intent intent = new Intent(itemView.getContext(), CustomerListActivity.class);
-                itemView.getContext().startActivity(intent);
-            }
 
-        }
-        public void showPopup() {
-            AlertDialog.Builder builder = new AlertDialog.Builder(itemView.getContext());
-            builder.setView(R.layout.loanpopup);
-
-            AlertDialog alertDialog = builder.create();
-            alertDialog.show();
-
-            //   alertDialog.getWindow().setLayout(600, 600);
-
-            alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-                }
-            });
-
-            CardView application = alertDialog.findViewById(R.id.loanApplication);
-            application.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(itemView.getContext(), BorrowerListActivity.class);
-                    intent.putExtra("keyName", "FEsign");
-                    intent.putExtra("foCode", foCode);
-                    intent.putExtra("creator", creator);
-                    intent.putExtra("areaCode", areaCode);
-                    itemView.getContext().startActivity(intent);
-                    alertDialog.dismiss();
-                }
-            });
-
-            CardView documentation = alertDialog.findViewById(R.id.loanDocumentation);
-            documentation.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                 //   Intent intent = new Intent(itemView.getContext(), SecondEsignActivity.class);
-                    Intent intent = new Intent(itemView.getContext(), BorrowerListActivity.class);
-                    intent.putExtra("keyName", "SEsign");
-                    intent.putExtra("foCode", foCode);
-                    intent.putExtra("creator", creator);
-                    intent.putExtra("areaCode", areaCode);
-                    itemView.getContext().startActivity(intent);
-                    itemView.getContext().startActivity(intent);
-                    alertDialog.dismiss();
-                }
-            });
-        }
 
     }
 }

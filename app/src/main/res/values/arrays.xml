@@ -144,5 +144,24 @@
         <item>NO</item>
     </array>
 
+    <string-array name="recovery_type">
+        <item>Recovery</item>
+        <item>Audit</item>
+    </string-array>
+
+    <array name="emiReasons">
+        <item>"Medical Issue"</item>
+        <item>"Door Closed"</item>
+        <item>"Family Expense"</item>
+        <item>"Pay Tomorrow"</item>
+        <item>"Call not Received"</item>
+        <item>"Don't have money"</item>
+        <item>"Others"</item>
+    </array>
+
+    <string-array name="choice_array">
+        <item>Choose from Gallery</item>
+        <item>Take a Photo</item>
+    </string-array>
 
 </resources>

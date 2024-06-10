@@ -8,17 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivityMenu;
 import com.paisalo.newinternalsourcingapp.Activities.FirstEsignActivity;
 import com.paisalo.newinternalsourcingapp.Activities.SecondEsignActivity;
 import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.HouseVisitActivity1;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.BorrowerListModels.BorrowerListDataModel;
 import com.paisalo.newinternalsourcingapp.R;
-
 import java.util.List;
 
 public class BorrowerListAdapter extends RecyclerView.Adapter<BorrowerListAdapter.ViewHolder> {
@@ -91,19 +88,19 @@ public class BorrowerListAdapter extends RecyclerView.Adapter<BorrowerListAdapte
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
                         BorrowerListDataModel dataModel = borrowerListDataModel.get(position);
-                        Intent intent = ((Activity) itemView.getContext()).getIntent();
+                        Intent intent = ((Activity) context).getIntent();
                         String id = intent.getStringExtra("keyName");
                         String fiCode = dataModel.getCode();
                         String creator = dataModel.getCreator();
                         if (id != null) {
-                            openActivity(id, fiCode, creator);
+                            openActivity(id, fiCode, creator, borrowerListDataModel,position);
                         }
                     }
                 }
             });
         }
 
-        public void openActivity(String id, String fiCode, String creator) {
+        public void openActivity(String id, String fiCode, String creator,List<BorrowerListDataModel> borrowerListDataModel ,int position) {
             Intent intent = null;
             switch (id) {
                 case "FEsign":

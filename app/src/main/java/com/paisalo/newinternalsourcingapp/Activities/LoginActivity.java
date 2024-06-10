@@ -643,10 +643,12 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                         GlobalClass.Creator = foModel.get(0).getCreator().toString();
                         GlobalClass.AreaCode = foModel.get(0).getAreaCd().toString();
                         GlobalClass.Tag = foModel.get(0).getTag().toString();
+
                         GlobalClass.DATABASE_NAME= foModel.get(0).getDataBase().toString();
                         Log.d("TAG", "MyAppCreator: "+ foModel.get(0).getImeino().toString());
 
                         Log.d("TAG", "MyApp: "+ foModel.get(0).getCreator().toString());
+
 
                         ImageAPI();
 
@@ -869,6 +871,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
             }
         });
     }
+/*
     private void saveDataToDatabase(List<FoModel> foModel, FoImeiModel foImeiModel, TokenDetailsModel tokenDetailsModel) {
         DatabaseClass database = DatabaseClass.getInstance(LoginActivity.this);
         loginDataClass entity = new loginDataClass();
@@ -917,6 +920,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
 
 
     }
+*/
 
     private JsonObject getJsonOfUserIdPassword() {
         JsonObject jsonObject = new JsonObject();

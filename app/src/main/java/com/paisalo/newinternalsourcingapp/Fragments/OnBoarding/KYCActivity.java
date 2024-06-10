@@ -46,6 +46,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -53,10 +54,14 @@ import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.canhub.cropper.CropImageContract;
+import com.canhub.cropper.CropImageContractOptions;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.paisalo.newinternalsourcingapp.Activities.CameraActivity;
 import com.paisalo.newinternalsourcingapp.Adapters.CityListAdapter;
 import com.paisalo.newinternalsourcingapp.Adapters.DistrictListAdapter;
 import com.paisalo.newinternalsourcingapp.Adapters.RangeCategoryAdapter;
@@ -444,9 +449,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         RangeCategoryAdapter rangeCategoryAdapter = new RangeCategoryAdapter(KYCActivity.this, stateDataList);
         acspAadharState.setAdapter(rangeCategoryAdapter);
 
-
-
-
                 relatnshipList = databaseClass.dao().getAllRCDataListby_catKey("relationship");
                 for (RangeCategoryDataClass data : relatnshipList) {
                     String descriptionEn = data.getDescriptionEn();
@@ -462,7 +464,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                     ArrayAdapter<String> adapter4 = new ArrayAdapter<>(KYCActivity.this, android.R.layout.simple_spinner_item, MaritalStatusList);
                     isMarriedSpinner.setAdapter(adapter4);
                 }
-
 
         txtCityName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -679,8 +680,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         });
 
     }//On Create Close
-
-
     public void openAlertDialog() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
@@ -704,10 +703,14 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         adhaarFront.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+                Intent intent = new Intent(KYCActivity.this, CameraActivity.class);
+                startActivityForResult(intent, REQUEST_ADHAARFRONT_CAPTURE);
+
+               /* Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
                     startActivityForResult(takePictureIntent, REQUEST_ADHAARFRONT_CAPTURE);
-                }
+                }*/
             }
         });
 
@@ -724,8 +727,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         alertDialog = alertDialogBuilder.create(); // Create AlertDialog
         alertDialog.show(); // Show AlertDialog
     }
-
-
     private void setDataOfAdhar(File croppedImage, String imageData) {
         ProgressDialog progressBar = new ProgressDialog(this);
         progressBar.setCancelable(true);
@@ -750,6 +751,11 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                 AdharDataResponse adharDataResponse = response.body();
                 if (response.isSuccessful()) {
                     progressBar.dismiss();
+
+                    if (alertDialog != null && alertDialog.isShowing()) {
+                        alertDialog.dismiss();
+                    }
+
                     if (adharDataResponse != null) {
                         AdharDataModel adharDataModel = adharDataResponse.getData();
                         if (adharDataModel != null) {
@@ -764,29 +770,33 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                                     Log.d("TAG", "onResponse:dob " + dob);
                                     editTextDob.setText(dob);
                                     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-                                    try {
-                                        Date dateOfBirth = sdf.parse(dob);
-                                        Calendar dobCalendar = Calendar.getInstance();
-                                        dobCalendar.setTime(dateOfBirth);
-                                        Calendar todayCalendar = Calendar.getInstance();
-                                        int age = todayCalendar.get(Calendar.YEAR) - dobCalendar.get(Calendar.YEAR);
-                                        if (todayCalendar.get(Calendar.MONTH) < dobCalendar.get(Calendar.MONTH) ||
-                                                (todayCalendar.get(Calendar.MONTH) == dobCalendar.get(Calendar.MONTH) &&
-                                                        todayCalendar.get(Calendar.DAY_OF_MONTH) < dobCalendar.get(Calendar.DAY_OF_MONTH))) {
-                                            age--;
+                                    if(dob!= null){
+                                        try {
+                                            Date dateOfBirth = sdf.parse(dob);
+                                            Calendar dobCalendar = Calendar.getInstance();
+                                            dobCalendar.setTime(dateOfBirth);
+                                            Calendar todayCalendar = Calendar.getInstance();
+                                            int age = todayCalendar.get(Calendar.YEAR) - dobCalendar.get(Calendar.YEAR);
+                                            if (todayCalendar.get(Calendar.MONTH) < dobCalendar.get(Calendar.MONTH) ||
+                                                    (todayCalendar.get(Calendar.MONTH) == dobCalendar.get(Calendar.MONTH) &&
+                                                            todayCalendar.get(Calendar.DAY_OF_MONTH) < dobCalendar.get(Calendar.DAY_OF_MONTH))) {
+                                                age--;
+                                            }
+                                            editTextAge.setText(String.valueOf(age));
+                                        } catch (ParseException e) {
+                                            e.printStackTrace();
                                         }
-                                        editTextDob.setText(String.valueOf(age));
-                                    } catch (ParseException e) {
-                                        e.printStackTrace();
                                     }
                                     String gender = (String) adharDataModel.getGender();
 
-                                    if (gender.equalsIgnoreCase("Male")) {
-                                        acspGender.setSelection(2);
-                                    } else if (gender.equalsIgnoreCase("Female")) {
-                                        acspGender.setSelection(1);
-                                    } else {
-                                        acspGender.setSelection(3);
+                                    if(gender != null) {
+                                        if (gender.equalsIgnoreCase("Male")) {
+                                            acspGender.setSelection(2);
+                                        } else if (gender.equalsIgnoreCase("Female")) {
+                                            acspGender.setSelection(1);
+                                        } else {
+                                            acspGender.setSelection(3);
+                                        }
                                     }
                                     // borrower.isAadharVerified = "O";
 
@@ -962,7 +972,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             }
         });
     }
-
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.d("TAG", "onActivityResult: " + data + " // " + requestCode);
@@ -996,7 +1005,14 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                 profileImageFile = bitmapToFile(bitmap);
                 setprofileImage(profileImageFile);
             }
-        } else if (requestCode == REQUEST_ADHAARFRONT_CAPTURE && resultCode == RESULT_OK) {
+        } else if (requestCode == REQUEST_ADHAARFRONT_CAPTURE && resultCode == RESULT_OK){
+                if (data != null && data.hasExtra("croppedImagePath")) {
+                    String croppedImagePath = data.getStringExtra("croppedImagePath");
+                    adhaarFrontFile = new File(croppedImagePath);
+                    setDataOfAdhar(adhaarFrontFile, "aadharfront");
+                }
+        }
+        /*else if (requestCode == REQUEST_ADHAARFRONT_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             cropImage(imageBitmap);
@@ -1008,7 +1024,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                 adhaarFrontFile = bitmapToFile(bitmap);
                 setDataOfAdhar(adhaarFrontFile, "aadharfront");
             }
-        } else if (requestCode == REQUEST_ADHAARBACK_CAPTURE && resultCode == RESULT_OK) {
+        } */else if (requestCode == REQUEST_ADHAARBACK_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             cropImage(imageBitmap);
@@ -1034,13 +1050,11 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             }
         }
     }
-
     private void setprofileImage(File profileImageFile) {
         Bitmap bitmap = BitmapFactory.decodeFile(profileImageFile.getAbsolutePath());
         Drawable drawable = new BitmapDrawable(getResources(), bitmap);
         profilePic.setImageDrawable(drawable);
     }
-
     public File bitmapToFile(Bitmap bitmap) {
         File directory = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "profile_pictures");
 
@@ -1069,20 +1083,18 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         }
         return file;
     }
-
     private void cropImage(Bitmap bitmap) {
         Intent cropIntent = new Intent("com.android.camera.action.CROP");
         cropIntent.setDataAndType(getImageUri(bitmap), "image/*");
         cropIntent.putExtra("crop", "true");
-        /*cropIntent.putExtra("aspectX", 1);
-        cropIntent.putExtra("aspectY", 1);*/
-        cropIntent.putExtra("scale", true); // Add this line to prevent rotation
+        cropIntent.putExtra("aspectX", 1);
+        cropIntent.putExtra("aspectY", 1);
+        cropIntent.putExtra("scale", true);
         cropIntent.putExtra("outputX", 256);
         cropIntent.putExtra("outputY", 256);
         cropIntent.putExtra("return-data", true);
         startActivityForResult(cropIntent, REQUEST_IMAGE_CROP);
     }
-
     private Uri getImageUri(Bitmap bitmap) {
         String path = MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "JPEG_" + timeStamp + "_", null);
         if (path != null) {
@@ -1092,7 +1104,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             return null;
         }
     }
-
     private void setAadharContent(String aadharDataString) throws Exception {
 
         if (aadharDataString.toUpperCase().contains("XML")) {
@@ -1142,7 +1153,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             aadharNumberentry = true;
         }
     }
-
     protected void decodeMobileEmail(byte[] decompressedData) {
         int mobileStartIndex = 0, mobileEndIndex = 0, emailStartIndex = 0, emailEndIndex = 0;
         switch (emailMobilePresent) {
@@ -1191,7 +1201,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         Log.e("email mobile======> ", "Data=====>" + email + "   " + mobile);
 
     }
-
     public static String bytesToHex(byte[] bytes) {
         final char[] hexArray = "0123456789ABCDEF".toCharArray();
 
@@ -1203,7 +1212,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         }
         return new String(hexChars);
     }
-
     protected void decodeSignature(byte[] decompressedData) {
         // extract 256 bytes from the end of the byte array
         int startIndex = decompressedData.length - 257,
@@ -1217,7 +1225,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         }
 
     }
-
     protected void decodeData(List<byte[]> encodedData) throws ParseException {
         Iterator<byte[]> i = encodedData.iterator();
         decodedData = new ArrayList<String>();
@@ -1526,7 +1533,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         }
 
     }
-
     private String concatenateStrings(String[] strings, int startIndex, int endIndex) {
         StringBuilder result = new StringBuilder();
         for (int i = startIndex; i < endIndex; i++) {
@@ -1537,7 +1543,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         }
         return result.toString();
     }
-
     private void appendIfNotNullOrEmpty(StringBuilder stringBuilder, String str) {
         if (str != null && !str.isEmpty()) {
             if (stringBuilder.length() > 0) {
@@ -1546,7 +1551,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             stringBuilder.append(str);
         }
     }
-
     protected byte[] decompressData(byte[] byteScanData) {
         ByteArrayOutputStream bos = new ByteArrayOutputStream(byteScanData.length);
         ByteArrayInputStream bin = new ByteArrayInputStream(byteScanData);
@@ -1583,7 +1587,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
         return bos.toByteArray();
     }
-
     protected List<byte[]> separateData(byte[] source) {
         List<byte[]> separatedParts = new LinkedList<>();
         int begin = 0;
@@ -1602,7 +1605,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         }
         return separatedParts;
     }
-
     private void dlVerification(String ID, String IDno, String dob) {
 
             ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
@@ -1644,9 +1646,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             });
 
         }
-
-
-
     private void panVerification(String ID, String IDno, String dob) {
 
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
@@ -1685,7 +1684,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         });
 
     }
-
     private void voterIdVerification(String ID, String IDno, String dob) {
 
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
@@ -1725,7 +1723,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         });
 
     }
-
     private JsonObject createJson(String id, String iDno, String dob) {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("type", id);
@@ -1735,8 +1732,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         jsonObject.addProperty("key", "1");
         return jsonObject;
     }
-
-
     private void createJsonObject() {
 
 
@@ -2167,7 +2162,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
 
     }
-
     private void showDatePickerDialog() {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
@@ -2185,7 +2179,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
         datePickerDialog.show();
     }
-
     private void calculateAge(int selectedYear, int selectedMonth, int selectedDay) {
         Calendar dobCalendar = Calendar.getInstance();
         dobCalendar.set(selectedYear, selectedMonth, selectedDay);
@@ -2201,8 +2194,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         EditText ageEditText = findViewById(R.id.editTextAgeKYC);
         ageEditText.setText(String.valueOf(age));
     }
-
-
     public void filterCity(String s) {
         Log.d("TAG", "filter: " + s);
         List<CityData> cityData1 = new ArrayList<>();
@@ -2216,7 +2207,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         cityListAdapter.filterList(cityData1);
         cityListAdapter.notifyDataSetChanged();
     }
-
     public void filterDistrict(String s) {
         Log.d("TAG", "filter: " + s);
         List<DistrictData> districtDataModel = new ArrayList<>();
@@ -2230,7 +2220,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         districtListAdapter.filterList(districtDataModel);
         districtListAdapter.notifyDataSetChanged();
     }
-
     public void filterSubDistrict(String s) {
         Log.d("TAG", "filter: " + s);
         List<SubDistrictData> subDistrictDataModel = new ArrayList<>();
@@ -2244,7 +2233,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         subDistrictListAdapter.filterList(subDistrictDataModel);
         subDistrictListAdapter.notifyDataSetChanged();
     }
-
     public void filterVillage(String s) {
         Log.d("TAG", "filter: " + s);
         List<VillageData> villageDataModel = new ArrayList<>();
@@ -2258,7 +2246,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         villageListAdapter.filterList(villageDataModel);
         villageListAdapter.notifyDataSetChanged();
     }
-
     private void showCityDialog(TextView txtCityName, String stateCode) {
         customProgressDialog.show();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
@@ -2323,7 +2310,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         });
 
     }
-
     private void showDistrictDialog(TextView txtVVillageName, String districtCode) {
         customProgressDialog.show();
 
@@ -2394,7 +2380,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             }
         });
     }
-
     private void showSubDistrictDialog(TextView txtVVillageName, String districtCode) {
         customProgressDialog.show();
 
@@ -2470,7 +2455,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             }
         });
     }
-
     private void showVillageDialog(TextView txtVDistrictName, String stateCode, String disTCODE, String suBDISTCODE) {
 
         customProgressDialog.show();
@@ -2546,22 +2530,18 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         });
 
     }
-
     @Override
     public void DistrictChooseListner(DistrictData districtDatas) {
         districtDat = districtDatas;
     }
-
     @Override
     public void VillageChooseListner(VillageData villageDatas) {
         villageData = villageDatas;
     }
-
     @Override
     public void CityChooseListner(CityData cityDatas) {
         cityData = cityDatas;
     }
-
     @Override
     public void SubDistChooseListner(SubDistrictData subDistrictDatas) {
         subDistrictData = subDistrictDatas;

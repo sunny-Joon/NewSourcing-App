@@ -1,4 +1,4 @@
-package com.paisalo.newinternalsourcingapp.Modelclasses;
+package com.paisalo.newinternalsourcingapp.Modelclasses.EmiCollectionModels;
 
 public class EmiModel {
     private String date;

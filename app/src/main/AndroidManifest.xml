@@ -25,7 +25,38 @@
         android:theme="@style/Theme.NewInternalSourcingApp"
         tools:targetApi="31">
         <activity
+
+            android:name=".Activities.ActivityCollection"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.CollectionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.Upload_Payslip_page"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.OnlinePaymentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.GetRewardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.HowtoReferActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.ReferAndEanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.InsertVisitReport"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.QrPayments"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.CollectionReportActivity"
+
             android:name=".Activities.ActivityTermAndCondition"
+
             android:exported="false" />
         <activity
             android:name=".Fragments.home.IncentiveAnimatedActivity"
@@ -46,14 +77,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".Activities.CollectionActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".Activities.CustomerListActivity"
+            android:name=".Activities.CameraActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

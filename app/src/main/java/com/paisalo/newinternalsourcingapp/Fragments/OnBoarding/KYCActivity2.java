@@ -405,12 +405,15 @@ public class KYCActivity2 extends AppCompatActivity {
                                             RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), file);
                                             MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
 
-                                            Call<ProfilePicModel> call3 = apiInterface.updateprofilePic(GlobalClass.Token, GlobalClass.dbname, Message1.trim(), GlobalClass.Creator, "CLAR", body,0);
+
+                                            Call<ProfilePicModel> call3 = apiInterface.updateprofilePic(GlobalClass.Token, GlobalClass.dbname, Message1.trim(), GlobalClass.Creator, GlobalClass.Tag, body);
+
                                             call3.enqueue(new Callback<ProfilePicModel>() {
                                                 @Override
                                                 public void onResponse(Call<ProfilePicModel> call3, Response<ProfilePicModel> response3) {
                                                     if (response3.isSuccessful()) {
-                                                            Call<CkycNoMODEL> call = apiInterface.getCkycNo(GlobalClass.Token, GlobalClass.dbname,Message1, GlobalClass.Creator );
+                                                        if(response3.body().getMessage().equals("Record Create Successfully!!")) {
+                                                            Call<CkycNoMODEL> call = apiInterface.getCkycNo(GlobalClass.Token, GlobalClass.dbname, Message1, GlobalClass.Creator);
                                                             call.enqueue(new Callback<CkycNoMODEL>() {
                                                                 @Override
                                                                 public void onResponse(Call<CkycNoMODEL> call, Response<CkycNoMODEL> response) {
@@ -423,28 +426,27 @@ public class KYCActivity2 extends AppCompatActivity {
                                                                             fiCPopup.show(getSupportFragmentManager(), "CustomDialog");
                                                                         } else {
                                                                             Toast.makeText(KYCActivity2.this, "Failed", Toast.LENGTH_SHORT).show();
-                                                                            Log.d("TAG", "onResponse1:ckyc2 Response body is null"+response.body());
+                                                                            Log.d("TAG", "onResponse1:ckyc2 Response body is null" + response.body());
                                                                         }
                                                                     } else {
                                                                         Toast.makeText(KYCActivity2.this, "Failed", Toast.LENGTH_SHORT).show();
                                                                         Log.d("TAG", "onResponse3:ckyc3 " + response.code());
                                                                     }
                                                                 }
+
                                                                 @Override
                                                                 public void onFailure(Call<CkycNoMODEL> call, Throwable t) {
                                                                     Log.d("TAG", "onFailure3: " + t.getMessage());
                                                                 }
                                                             });
-
-
-
+                                                        }else{
+                                                            Toast.makeText(KYCActivity2.this, "Failed", Toast.LENGTH_SHORT).show();
+                                                        }
                                                     } else {
                                                         customProgressDialog.dismiss();
                                                         Toast.makeText(KYCActivity2.this, "Failed", Toast.LENGTH_SHORT).show();
-
                                                     }
                                                 }
-
                                                 @Override
                                                 public void onFailure(Call<ProfilePicModel> call3, Throwable t) {
                                                     customProgressDialog.dismiss();
