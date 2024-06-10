@@ -202,7 +202,7 @@
                 android:background="#F6F6F6" />
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/collection"
+                android:id="@+id/visitReport"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
@@ -217,7 +217,7 @@
                         android:layout_height="70dp"
                         android:gravity="center_vertical"
                         android:paddingStart="40dp"
-                        android:text="COLLECTION"
+                        android:text="Visit Report"
                         android:fontFamily="@font/visbycfbold"
                         android:textSize="@dimen/subheading"
                         android:layout_weight=".5"/>

@@ -2,6 +2,12 @@ package com.paisalo.newinternalsourcingapp.Retrofit;
 
 import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.Entities.CkycNoMODEL;
+import com.paisalo.newinternalsourcingapp.Modelclasses.DueData;
+import com.paisalo.newinternalsourcingapp.Modelclasses.EmiCollectionModels.CollectionReportModel;
+import com.paisalo.newinternalsourcingapp.Modelclasses.PosInstRcv;
+import com.paisalo.newinternalsourcingapp.Modelclasses.PosInstRcvNew;
+import com.paisalo.newinternalsourcingapp.Modelclasses.QRCollStatus;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.AccountDetails_Model;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.BorrowerListModels.BorrowerListModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.CreatorListModels.CreatorListModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFModel;
@@ -16,6 +22,8 @@ import com.paisalo.newinternalsourcingapp.ModelsRetrofit.ImeiMappingModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.KycScanningModels.KycScanningModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.OCRScanModels.AdharDataResponse;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.ProfilePicModel;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.QrUrlData;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.ReferralCodeModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.SaveFiModels.SaveFiModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.SaveVerifiedInfo;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.StateDistDataModels.CityModelList;
@@ -32,8 +40,11 @@ import com.paisalo.newinternalsourcingapp.ModelsRetrofit.TargetSetModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.TopAdImageModels.ImageDataModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.StateDistDataModels.VillageListModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.UpdateFiModels.KycUpdateModel;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.Visitreportmodel;
 
 import org.json.JSONObject;
+
+import java.util.List;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -122,7 +133,7 @@ public interface ApiInterface {
 
     @Multipart
     @POST("DDLHelper/ProfilePicUpload")
-    Call<ProfilePicModel> updateprofilePic(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("fi") String fi, @Query("cr") String cr, @Query("tag") String tag, @Part MultipartBody.Part FileName);
+    Call<ProfilePicModel> updateprofilePic(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("fi") String fi, @Query("cr") String cr, @Query("tag") String tag, @Part MultipartBody.Part file);
 
 
     @Multipart
@@ -150,7 +161,7 @@ public interface ApiInterface {
     @POST("POSFI/UpdateFIGaurantors")
     Call<KycUpdateModel> updateGaurantors(@Header("Authorization") String token, @Header("dbname") String dbname, @Body JsonObject object);
 
-    @POST("Miscellaneous/CreateHomeVisit")
+    @POST("Miscellaneous/CreateUpdateHomeVisit")
     Call<HouseVisitSaveModel> SaveHouseVisit(@Header("Authorization") String token, @Header("dbname") String dbname, @Body RequestBody file);
 
     @GET("Miscellaneous/GetHomeVisitBorrowerData")
@@ -169,7 +180,7 @@ public interface ApiInterface {
     Call<BorrowerListModel> PendingSEsign(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("IMEINO") String IMEINO, @Query("FOCode") String FOCode, @Query("AreaCd") String AreaCd, @Query("Creator") String Creator);
 
     @GET("InstCollection/getDueInstallments")
-    Call<BorrowerListModel> PendingCollection(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("IMEINO") String IMEINO, @Query("FOCode") String FOCode, @Query("AreaCd") String AreaCd, @Query("Creator") String Creator);
+    Call<BorrowerListModel> PendingCollection(@Header("Authorization") String token, @Header("dbname") String dbname, @Header("imeino") String imeino, @Header("userid") String userid, @Query("gdate") String gdate, @Query("CityCode") String CityCode);
 
     @GET("DocSignIn/GetXMLDoc")
     Call<ResponseBody> getXMLforESign();
@@ -202,5 +213,89 @@ public interface ApiInterface {
     @GET("{fullUrl}")
     Call<JsonObject> razorpayIfsc(@Path(value = "fullUrl", encoded = true) String fullUrl);
 
+
+    //------------------------------------------------------------------------------------------------------------------------
+    @GET("LiveTrack/CollectionStatus")
+    Call<CollectionReportModel> getCollectionReprt(@Header("Authorization") String token,@Header("dbname") String dbName,@Query("Smcode") String Smcode);
+
+    @GET("InstCollection/GetQrPaymentsBySmcode")
+    Call<AccountDetails_Model> getQrPaymentsBySmcode(
+            @Header("Authorization") String token,
+            @Header("dbname") String dbName,
+            @Query("SmCode") String smCode,
+            @Query("userid") String userId,
+            @Query("type") String type
+    );
+    @Multipart
+    @POST("LiveTrack/InsertVisitReports")
+    Call<Visitreportmodel> getvisit(
+            @Header("Authorization") String token,
+            @Header("dbname") String dbName,
+            @Part("VisitType") RequestBody VisitType,
+            @Part("SmCode") RequestBody SmCode,
+            @Part("Amount") RequestBody Amount,
+            @Part("Lat") RequestBody Lat,
+            @Part("Long") RequestBody Long,
+            @Part("userId") RequestBody userId,
+            @Part MultipartBody.Part file
+
+    );
+    @Multipart
+    @POST("InstCollection/QrPaymentSettlement")
+    Call<JsonObject> saveReciptOnpayment(
+            @Header("Authorization") String token,
+            @Header("dbname") String dbName,
+            @Part MultipartBody.Part FileName,
+            @Part("SmCode") RequestBody SmCode);
+
+    @GET("LiveTrack/GetCSOReferralCode")
+    Call<ReferralCodeModel> getReferralCode(@Header("Authorization") String token, @Header("dbname") String dbName,@Query("username") String username);
+
+    @POST("IMEIMapping/RcPromiseToPay")
+    Call<JsonObject> insertRcPromiseToPay(@Header("Authorization") String token, @Header("dbname") String dbName,@Body JsonObject jsonObject);
+
+    @GET("InstCollection/CheckQrCode")
+    Call<QrUrlData> getCheckQrCode(@Query("smcode") String SmCode);
+
+    @POST("IMEIMapping/InsertRcDistribution")
+    Call<JsonObject> insertRcDistribution( @Header("Authorization") String token,
+                                           @Header("dbname") String dbName,
+                                           @Body JsonObject jsonObject);
+    @POST("InstCollection/SaveReceipt")
+    Call<JsonObject> insertRcDistributionNew(@Body PosInstRcvNew jsonObject,
+                                             @Header("Authorization") String token,
+                                             @Header("dbname") String dbName,
+                                             @Header("userid") String userid);
+
+    @POST("InstCollection/UpdateQrRcCollection")
+    Call<JsonObject> insertQRPayment(@Body QRCollStatus jsonObject,
+                                     @Header("Authorization") String token,
+                                     @Header("dbname") String dbName,
+                                     @Header("userid") String userid);
+
+    @GET("InstCollection/getDueInstallments")
+    Call<List<DueData>> dueInstallments(@Header("Authorization") String token,
+                                        @Header("Imei") String Imei,
+                                        @Header("dbname") String dbName,
+                                        @Header("userid") String userid,
+                                        @Query("gdate") String gdate,
+                                        @Query("CityCode") String CityCode);
+
+    @GET("InstCollection/getFMSettlementData")
+    Call<List<PosInstRcv>> getFMSettlementData(@Header("Authorization") String token,
+                                         @Header("Imei") String Imei,
+                                         @Header("dbname") String dbName,
+                                         @Query("FoCode") String FoCode,
+                                         @Query("Creator") String Creator);
+
+    @GET("InstCollection/getFMSettlementData")
+    Call<Void> updateUUID(@Header("Authorization") String token,
+                                @Header("dbname") String dbName,
+                                @Body JsonObject jsonObject);
+
+    @GET("InstCollection/SaveReceipt")
+    Call<Void> saveDeposit(@Header("Authorization") String token,
+                                @Header("dbname") String dbName,
+                                @Body JsonObject jsonObject);
 
 }

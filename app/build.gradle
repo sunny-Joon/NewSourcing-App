@@ -52,6 +52,8 @@ android {
 
 dependencies {
 
+    implementation fileTree(dir: 'D:\\Modified-Paisalo-Loan-App\\app\\libs', include: ['*.aar', '*.jar'], exclude: [])
+
     //API Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
@@ -94,16 +96,19 @@ dependencies {
     // Optionally, add this dependency for Room Database testing support
     testImplementation "androidx.room:room-testing:2.6.1"
 
-
-//    //DocumentStore
-//    implementation "com.github.raizlabs.dbflow:dbflow-core:3.1.1"
-//    implementation "com.github.raizlabs.dbflow:dbflow:3.1.1"
-//    annotationProcessor "com.github.raizlabs.dbflow:dbflow-processor:3.1.1"
-//    implementation "com.github.raizlabs.dbflow:dbflow-sqlcipher:3.1.1"
-
-
     implementation 'com.loopj.android:android-async-http:1.4.9'
 
   /*  implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.+'*/
+
+    implementation files('libs/isgpaymediatorbank-release.aar')
+
+    implementation "androidx.camera:camera-core:1.1.0"
+    implementation "androidx.camera:camera-camera2:1.1.0"
+    implementation "androidx.camera:camera-lifecycle:1.1.0"
+    implementation "androidx.camera:camera-view:1.1.0"
+    implementation "androidx.camera:camera-extensions:1.1.0"
+    implementation("com.vanniktech:android-image-cropper:4.5.0")
+
+
 
 }

@@ -743,7 +743,10 @@ Contact Email <i>DELHI@PAISALO.IN</i>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="pre_close_case">Case Pre-Closure</string>
 
-
+    <string name="lump_sum_amount">Lump Sum Amount</string>
+    <string name="hindiconfirmation">क्या आप निश्चित रूप से उधारकर्ता से नीचे दी गई राशि वसूल रहे हैं?</string>
+    <string name="hindiqr">दिए गए QR कोड को स्कैन करें और ग्राहक द्वारा किए गए भुगतान के बाद स्थिति(Status) प्राप्त करें।</string>
+    <string name="imageupload">यदि क्यूआर कोड पर भुगतान सफल हो गया है लेकिन स्थिति नहीं मिल रही है तो लेनदेन आईडी के साथ स्क्रीनशॉट अपलोड करें।</string>
     <string name="name">NAME</string>
 
 

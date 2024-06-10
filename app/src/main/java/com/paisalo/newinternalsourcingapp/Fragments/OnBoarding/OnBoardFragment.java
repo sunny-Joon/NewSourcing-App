@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.paisalo.newinternalsourcingapp.Activities.InsertVisitReport;
 import com.paisalo.newinternalsourcingapp.Activities.ManagerList;
 import com.paisalo.newinternalsourcingapp.databinding.FragmentOnBoardBinding;
 
@@ -62,11 +64,10 @@ public class OnBoardFragment extends Fragment {
             }
         });
 
-        binding.collection.setOnClickListener(new View.OnClickListener() {
+        binding.visitReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(requireActivity(), ManagerList.class);
-                intent.putExtra("keyName", "Collection");
+                Intent intent = new Intent(getActivity(), InsertVisitReport.class);
                 startActivity(intent);
             }
         });

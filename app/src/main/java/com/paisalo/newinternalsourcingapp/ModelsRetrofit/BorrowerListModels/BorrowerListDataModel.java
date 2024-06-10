@@ -16,7 +16,7 @@ public class BorrowerListDataModel {
     private Double sanctionedAmt;
     @SerializedName("remarks")
     @Expose
-    private Object remarks;
+    private String remarks;
     @SerializedName("dt_Fin")
     @Expose
     private String dtFin;
@@ -25,7 +25,7 @@ public class BorrowerListDataModel {
     private String dtStart;
     @SerializedName("schCode")
     @Expose
-    private Object schCode;
+    private String schCode;
     @SerializedName("fname")
     @Expose
     private String fname;
@@ -46,10 +46,10 @@ public class BorrowerListDataModel {
     private String fLname;
     @SerializedName("description")
     @Expose
-    private Object description;
+    private String description;
     @SerializedName("period")
     @Expose
-    private Object period;
+    private String period;
     @SerializedName("rate")
     @Expose
     private double rate;
@@ -70,13 +70,13 @@ public class BorrowerListDataModel {
     private String cityCode;
     @SerializedName("borrLoanAppSignStatus")
     @Expose
-    private Object borrLoanAppSignStatus;
+    private String borrLoanAppSignStatus;
     @SerializedName("approved")
     @Expose
-    private Object approved;
+    private String approved;
     @SerializedName("sel")
     @Expose
-    private Object sel;
+    private String sel;
     public String getCode() {
         return code;
     }
@@ -101,11 +101,11 @@ public class BorrowerListDataModel {
         this.sanctionedAmt = sanctionedAmt;
     }
 
-    public Object getRemarks() {
+    public String getRemarks() {
         return remarks;
     }
 
-    public void setRemarks(Object remarks) {
+    public void setRemarks(String remarks) {
         this.remarks = remarks;
     }
 
@@ -125,11 +125,11 @@ public class BorrowerListDataModel {
         this.dtStart = dtStart;
     }
 
-    public Object getSchCode() {
+    public String getSchCode() {
         return schCode;
     }
 
-    public void setSchCode(Object schCode) {
+    public void setSchCode(String schCode) {
         this.schCode = schCode;
     }
 
@@ -181,19 +181,19 @@ public class BorrowerListDataModel {
         this.fLname = fLname;
     }
 
-    public Object getDescription() {
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(Object description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
-    public Object getPeriod() {
+    public String getPeriod() {
         return period;
     }
 
-    public void setPeriod(Object period) {
+    public void setPeriod(String period) {
         this.period = period;
     }
 
@@ -245,27 +245,27 @@ public class BorrowerListDataModel {
         this.cityCode = cityCode;
     }
 
-    public Object getBorrLoanAppSignStatus() {
+    public String getBorrLoanAppSignStatus() {
         return borrLoanAppSignStatus;
     }
 
-    public void setBorrLoanAppSignStatus(Object borrLoanAppSignStatus) {
+    public void setBorrLoanAppSignStatus(String borrLoanAppSignStatus) {
         this.borrLoanAppSignStatus = borrLoanAppSignStatus;
     }
 
-    public Object getApproved() {
+    public String getApproved() {
         return approved;
     }
 
-    public void setApproved(Object approved) {
+    public void setApproved(String approved) {
         this.approved = approved;
     }
 
-    public Object getSel() {
+    public String getSel() {
         return sel;
     }
 
-    public void setSel(Object sel) {
+    public void setSel(String sel) {
         this.sel = sel;
     }
 
