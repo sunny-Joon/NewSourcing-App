@@ -29,6 +29,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -103,9 +104,11 @@ import com.paisalo.newinternalsourcingapp.RoomDatabase.RangeCategoryDataClass;
 import com.paisalo.newinternalsourcingapp.Utils.CustomProgressDialog;
 import com.paisalo.newinternalsourcingapp.Utils.Utils;
 
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -128,6 +131,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
+import java.util.jar.Attributes;
 import java.util.zip.GZIPInputStream;
 
 import okhttp3.MediaType;
@@ -168,8 +172,8 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
     int P_Pin;
     Button submitButton, qrScan, adhaarBack, adhaarFront, panOcr;
     private static final int REQUEST_IMAGE_CAPTURE = 1001;
-    private static final int REQUEST_ADHAARFRONT_CAPTURE = 1002;
-    private static final int REQUEST_ADHAARBACK_CAPTURE = 1003;
+    public static final int REQUEST_ADHAARFRONT_CAPTURE = 1002;
+    public static final int REQUEST_ADHAARBACK_CAPTURE = 1003;
     private static final int REQUEST_PAN_CAPTURE = 1004;
     private static final int REQUEST_IMAGE_CROP = 101;
     private static final int REQUEST_ADHAARFRONT_CROP = 102;
@@ -219,6 +223,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
     protected ArrayList<String> decodedData;
     FiExtra fiExtra;
     FiJsonObject jsonData;
+
     String foCode,creator,areaCode;
 
     @Override
@@ -286,9 +291,11 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
         panOcr = findViewById(R.id.panOcr);
 
-        spouseCardView =findViewById(R.id.spouseCardView);
+        spouseCardView = findViewById(R.id.spouseCardView);
 
-        // Sample data
+
+
+       //  Sample data
         editTextAadhar.setText("123456789012");
         editTextName.setText("John Doe");
         editTextAge.setText("30");
@@ -350,13 +357,111 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             }
         });
 
+
+     /*   uidDataUid = getIntent().getStringExtra("uidDataUid") != null ? getIntent().getStringExtra("uidDataUid") : "";
+        poiName = getIntent().getStringExtra("poiName") != null ? getIntent().getStringExtra("poiName") : "";
+        poiDob = getIntent().getStringExtra("poiDob") != null ? getIntent().getStringExtra("poiDob") : "";
+        poiGender = getIntent().getStringExtra("poiGender") != null ? getIntent().getStringExtra("poiGender") : "";
+        poaCo = getIntent().getStringExtra("poaCo") != null ? getIntent().getStringExtra("poaCo") : "";
+        PoaLoc = getIntent().getStringExtra("PoaLoc") != null ? getIntent().getStringExtra("PoaLoc") : "";
+        // String poaCountry = getIntent().getStringExtra("poaCountry") != null ? getIntent().getStringExtra("poaCountry") : "";
+        poaDist = getIntent().getStringExtra("poaDist") != null ? getIntent().getStringExtra("poaDist") : "";
+        poaHouse = getIntent().getStringExtra("poaHouse") != null ? getIntent().getStringExtra("poaHouse") : "";
+        poaPc = getIntent().getStringExtra("poaPc") != null ? getIntent().getStringExtra("poaPc") : "";
+        poaState = getIntent().getStringExtra("poaState") != null ? getIntent().getStringExtra("poaState") : "";
+        poaStreet = getIntent().getStringExtra("poaStreet") != null ? getIntent().getStringExtra("poaStreet") : "";
+        poaVtc = getIntent().getStringExtra("poaVtc") != null ? getIntent().getStringExtra("poaVtc") : "";
+        uidDataPht = getIntent().getStringExtra("uidDataPht") != null ? getIntent().getStringExtra("uidDataPht") : "";
+
+
+        Log.d("TAG", "jsondata:121 "+uidDataUid+" // "+poiName +" // "+poiDob+" // "+poiGender+" // "+poaCo+" // "+PoaLoc+" // "+poaDist+" // "+poaHouse+" // "+poaPc+" // "+poaState+" // "+poaStreet+" // "+poaVtc+" // "+uidDataPht);
+        String pattern = "S/O:|W/O:|D/O:|C/O:|S/O|W/O|D/O|C/O";
+        poaCo = poaCo.replaceAll(pattern, "").trim();
+
+        String[] parts = poaCo.split(" ");
+        String firstName = "";
+        String secondName ="";
+        String thirdName = "";
+
+        if (parts.length == 1) {
+            firstName = parts[0];
+        } else if (parts.length == 2) {
+            firstName = parts[0];
+            thirdName = parts[1];
+        } else if (parts.length >= 3) {
+            firstName = parts[0];
+            secondName = parts[1];
+            thirdName = parts[2];
+        }
+
+        byte[] decodedBytes = Base64.decode(uidDataPht, Base64.DEFAULT);
+        File file = new File(getFilesDir(), "decoded_image.jpg");
+        try {
+            FileOutputStream outputStream = new FileOutputStream(file);
+            outputStream.write(decodedBytes);
+            outputStream.close();
+            Log.d("TAG", "File saved to: " + file.getAbsolutePath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+        Log.d("TAG", "onCreate:bitmap "+bitmap);
+        if (bitmap != null) {
+            profilePic.setImageBitmap(bitmap);
+        }else {
+            Toast.makeText(this, "bitmat null", Toast.LENGTH_SHORT).show();
+        }
+        editTextAadhar.setText(uidDataUid);
+        editTextName.setText(poiName);
+        editTextDob.setText(poiDob);
+        if(poiGender != null) {
+            if (poiGender.equalsIgnoreCase("Male")) {
+                acspGender.setSelection(2);
+            } else if (poiGender.equalsIgnoreCase("Female")) {
+                acspGender.setSelection(1);
+            } else {
+                acspGender.setSelection(3);
+            }
+        }
+      //  editTextfatherlastname.setText(firstName);
+        editTextfathermiddlename.setText(secondName);
+        editTextfatherlastname.setText(thirdName);
+        editTextAddress1.setText(poaHouse+poaStreet);
+        editTextAddress2.setText(PoaLoc+poaVtc);
+        editTextAddress3.setText(poaDist);
+        // countey.setText(poaCountry);
+        editTextCity.setText(poaDist);
+        editTextPincode.setText(poaPc);
+
+        if (stateDataList == null) {
+            stateDataList = new ArrayList<>();
+        }
+
+        if (acspAadharState != null) {
+            int statePosition = 0;
+            for (int statePos = 0; statePos < stateDataList.size(); statePos++) {
+                if (stateDataList.get(statePos).descriptionEn.equals(poaState)) {
+                    statePosition = statePos;
+                    break;
+                }
+            }
+            acspAadharState.setSelection(statePosition);
+        } else {
+            Log.e("StateSelectionError", "acspAadharState is null.");
+        }*/
+
         panOcr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+                Intent intent = new Intent(KYCActivity.this, CameraActivity.class);
+                startActivityForResult(intent, REQUEST_PAN_CAPTURE);
+
+               /* Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
                     startActivityForResult(takePictureIntent, REQUEST_PAN_CAPTURE);
-                }
+                }*/
             }
         });
 
@@ -380,7 +485,10 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         profilePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+                Intent intent = new Intent(KYCActivity.this, CameraActivity.class);
+                startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+               /* Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
                     File photoFile = null;
                     try {
@@ -395,7 +503,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                         startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
                     }
-                }
+                }*/
             }
             private File createImageFile() throws IOException {
                  timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -690,6 +798,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         adhaarBack = dialogView.findViewById(R.id.adhaarBack);
         qrScan = dialogView.findViewById(R.id.scanQrCode);
 
+
         qrScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -717,12 +826,30 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         adhaarBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                Intent intent = new Intent(KYCActivity.this, CameraActivity.class);
+                startActivityForResult(intent, REQUEST_ADHAARBACK_CAPTURE);
+
+
+             /*   Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
                     startActivityForResult(takePictureIntent, REQUEST_ADHAARBACK_CAPTURE);
-                }
+                }*/
             }
         });
+
+    /*    rdservice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(KYCActivity.this, RdServiceActivity.class);
+                startActivity(intent);
+
+               *//* Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivityForResult(takePictureIntent, REQUEST_ADHAARFRONT_CAPTURE);
+                }*//*
+            }
+        });*/
 
         alertDialog = alertDialogBuilder.create(); // Create AlertDialog
         alertDialog.show(); // Show AlertDialog
@@ -846,29 +973,30 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                                     editTextPincode.setText(Pincode);
 
                                     String StateName = adharDataModel.getStateName();
-                                    for (int i = 0; i < acspAadharState.getAdapter().getCount(); i++) {
-                                        RangeCategoryDataModel rangeCategory = (RangeCategoryDataModel) acspAadharState.getAdapter().getItem(i);
-                                        if (rangeCategory.getDescriptionEn().equals(StateName)) {
-                                            acspAadharState.setSelection(i);
-                                            break;
+                                    int statePosition=0;
+                                    for (int statePos=0;statePos<stateDataList.size();statePos++){
+                                        if (stateDataList.get(statePos).descriptionEn.equals(StateName)){
+                                            statePosition=statePos;
                                         }
-                                    }
-                                    String Relation = adharDataModel.getRelation();
-                                    for (int i = 0; i < acspRelationship.getAdapter().getCount(); i++) {
-                                        RangeCategoryDataModel rangeCategory = (RangeCategoryDataModel) acspRelationship.getAdapter().getItem(i);
 
+                                    }
+                                    acspAadharState.setSelection(statePosition);
+
+                                    String Relation = adharDataModel.getRelation();
+                                 /*   for (int i = 0; i < acspRelationship.getAdapter().getCount(); i++) {
+                                        RangeCategoryDataModel rangeCategory = (RangeCategoryDataModel) acspRelationship.getAdapter().getItem(i);
                                         if (rangeCategory.getDescriptionEn().equals(Relation)) {
                                             acspRelationship.setSelection(i);
                                             break;
                                         }
-                                    }
-//                                             if(Relation.equalsIgnoreCase("Husband")){
-//                                                 acspRelationship.setSelection(3);
-//                                             } else if (Relation.equalsIgnoreCase("Father")) {
-//                                                 acspRelationship.setSelection(2);
-//                                             }else {
-//                                                 acspRelationship.setSelection(1);
-//                                             }
+                                    }*/
+                                             if(Relation.equalsIgnoreCase("Husband")){
+                                                 acspRelationship.setSelection(3);
+                                             } else if (Relation.equalsIgnoreCase("Father")) {
+                                                 acspRelationship.setSelection(2);
+                                             }else {
+                                                 acspRelationship.setSelection(1);
+                                             }
                                     Log.d("TAG", "onResponse(relation): " + Relation);
                                     String Relation1 =  adharDataModel.getRelation();
                                     if (Relation1 != null) {
@@ -989,7 +1117,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                     }
                 }
             }
-        } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+        } /*else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
 
             File imgFile = new File(currentPhotoPathBefWork);
             if (imgFile.exists()) {
@@ -997,7 +1125,17 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                 cropImage(myBitmap);
             }
 
-        } else if (requestCode == REQUEST_IMAGE_CROP && resultCode == RESULT_OK) {
+        }*/
+
+        else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            if (data != null && data.hasExtra("croppedImagePath")) {
+                String croppedImagePath = data.getStringExtra("croppedImagePath");
+                profileImageFile = new File(croppedImagePath);
+                setprofileImage(profileImageFile);
+            }
+        }
+
+       /* else if (requestCode == REQUEST_IMAGE_CROP && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             if (extras != null) {
                 Bitmap croppedBitmap = extras.getParcelable("data");
@@ -1005,13 +1143,28 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                 profileImageFile = bitmapToFile(bitmap);
                 setprofileImage(profileImageFile);
             }
-        } else if (requestCode == REQUEST_ADHAARFRONT_CAPTURE && resultCode == RESULT_OK){
+        }*/
+            else if (requestCode == REQUEST_ADHAARFRONT_CAPTURE && resultCode == RESULT_OK) {
                 if (data != null && data.hasExtra("croppedImagePath")) {
                     String croppedImagePath = data.getStringExtra("croppedImagePath");
                     adhaarFrontFile = new File(croppedImagePath);
                     setDataOfAdhar(adhaarFrontFile, "aadharfront");
                 }
-        }
+            } else if (requestCode == REQUEST_ADHAARBACK_CAPTURE && resultCode == RESULT_OK) {
+                if (data != null && data.hasExtra("croppedImagePath")) {
+                    String croppedImagePath = data.getStringExtra("croppedImagePath");
+                    adhaarBackFile = new File(croppedImagePath);
+                    setDataOfAdhar(adhaarBackFile, "aadharback");
+                }
+            } else if (requestCode == REQUEST_PAN_CAPTURE && resultCode == RESULT_OK) {
+                if (data != null && data.hasExtra("croppedImagePath")) {
+                    String croppedImagePath = data.getStringExtra("croppedImagePath");
+                    panFile = new File(croppedImagePath);
+                    setDataOfAdhar(panFile, "pan");
+                }
+            }
+
+
         /*else if (requestCode == REQUEST_ADHAARFRONT_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
@@ -1024,7 +1177,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                 adhaarFrontFile = bitmapToFile(bitmap);
                 setDataOfAdhar(adhaarFrontFile, "aadharfront");
             }
-        } */else if (requestCode == REQUEST_ADHAARBACK_CAPTURE && resultCode == RESULT_OK) {
+        } *//*else if (requestCode == REQUEST_ADHAARBACK_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             cropImage(imageBitmap);
@@ -1036,11 +1189,13 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                 adhaarBackFile = bitmapToFile(bitmap);
                 setDataOfAdhar(adhaarBackFile, "aadharback");
             }
-        } else if (requestCode == REQUEST_PAN_CAPTURE && resultCode == RESULT_OK) {
+        } */
+       /* else if (requestCode == REQUEST_PAN_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             cropImage(imageBitmap);
-        } else if (requestCode == REQUEST_PAN_CROP && resultCode == RESULT_OK) {
+        }
+        else if (requestCode == REQUEST_PAN_CROP && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             if (extras != null) {
                 Bitmap croppedBitmap = extras.getParcelable("data");
@@ -1048,14 +1203,15 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                 panFile = bitmapToFile(bitmap);
                 setDataOfAdhar(panFile, "pan");
             }
-        }
+        }*/
+
     }
     private void setprofileImage(File profileImageFile) {
         Bitmap bitmap = BitmapFactory.decodeFile(profileImageFile.getAbsolutePath());
         Drawable drawable = new BitmapDrawable(getResources(), bitmap);
         profilePic.setImageDrawable(drawable);
     }
-    public File bitmapToFile(Bitmap bitmap) {
+   /* public File bitmapToFile(Bitmap bitmap) {
         File directory = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "profile_pictures");
 
         if (!directory.exists()) {
@@ -1082,8 +1238,8 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             }
         }
         return file;
-    }
-    private void cropImage(Bitmap bitmap) {
+    }*/
+  /*  private void cropImage(Bitmap bitmap) {
         Intent cropIntent = new Intent("com.android.camera.action.CROP");
         cropIntent.setDataAndType(getImageUri(bitmap), "image/*");
         cropIntent.putExtra("crop", "true");
@@ -1094,8 +1250,8 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         cropIntent.putExtra("outputY", 256);
         cropIntent.putExtra("return-data", true);
         startActivityForResult(cropIntent, REQUEST_IMAGE_CROP);
-    }
-    private Uri getImageUri(Bitmap bitmap) {
+    }*/
+   /* private Uri getImageUri(Bitmap bitmap) {
         String path = MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "JPEG_" + timeStamp + "_", null);
         if (path != null) {
             return Uri.parse(path);
@@ -1103,7 +1259,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
             return null;
         }
-    }
+    }*/
     private void setAadharContent(String aadharDataString) throws Exception {
 
         if (aadharDataString.toUpperCase().contains("XML")) {

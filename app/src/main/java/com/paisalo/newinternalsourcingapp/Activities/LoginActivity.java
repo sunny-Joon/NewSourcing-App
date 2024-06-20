@@ -132,8 +132,6 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         selectDatabase.setAdapter(adapter1);
 
-
-
         listCReatorInteraction=LoginActivity.this;
 
         database = DatabaseClass.getInstance(LoginActivity.this);
@@ -177,9 +175,6 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                 }
             }
         });
-
-
-
 
         //binding.btnLoginShareDeviceId.setEnabled(false);
         binding.btnLoginShareDeviceId.setOnClickListener(new View.OnClickListener() {
@@ -768,7 +763,11 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
 
                 if(response.isSuccessful() && response.body() != null){
                 if (response.body().getMessage().equals("No Record Found")) {
+
                   //  getTargetApi();
+
+                    RangeCategoriesApi();
+
                     image = "null";
                 } else {
 
@@ -784,8 +783,10 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                     editor.putString("image", image);
                     editor.apply();
 
+
                     //getTargetApi();
                     RangeCategoriesApi();
+
                 }
             }else {
                     Log.d("TAG", "MyApp: " + "Image Api Unsuccessful");
