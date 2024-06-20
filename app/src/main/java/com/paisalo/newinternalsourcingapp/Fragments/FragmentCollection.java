@@ -1,5 +1,7 @@
 package com.paisalo.newinternalsourcingapp.Fragments;
 
+import static com.paisalo.newinternalsourcingapp.GlobalClass.SubmitAlert;
+
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -31,7 +33,10 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.bumptech.glide.Glide;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
@@ -51,6 +56,7 @@ import com.paisalo.newinternalsourcingapp.Modelclasses.PosInstRcv;
 import com.paisalo.newinternalsourcingapp.Modelclasses.PosInstRcvNew;
 import com.paisalo.newinternalsourcingapp.Modelclasses.QRCollStatus;
 import com.paisalo.newinternalsourcingapp.Modelclasses.SmCode_DateModel;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.Collection.CustomerListDataModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.QrUrlData;
 import com.paisalo.newinternalsourcingapp.R;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiClient;
@@ -98,6 +104,7 @@ public class FragmentCollection extends AbsCollectionFragment {
     ImageView  righticon;
     private ProgressDialog progressDialog;
     ArrayList<InstallmentTemp> insttemplist;
+    FloatingActionButton refresh;
     public FragmentCollection() {
     }
 
@@ -131,13 +138,24 @@ public class FragmentCollection extends AbsCollectionFragment {
         dialogConfirm = new Dialog(getContext());
         dialogQrcode = new Dialog(getContext());
         dialogQrcodePayment = new Dialog(getContext());
+        refresh=  view.findViewById(R.id.refresh);
+
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.detach(FragmentCollection.this);
+                fragmentTransaction.attach(FragmentCollection.this);
+                fragmentTransaction.commit();
+            }
+        });
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 int checked=0;
                 AdapterDueData adapterDueData = (AdapterDueData) parent.getAdapter();
-                final DueData dueData = (DueData) adapterDueData.getItem(position);
+                final CustomerListDataModel dueData = (CustomerListDataModel) adapterDueData.getItem(position);
                 List<SmCode_DateModel> list=GlobalClass.getList(getActivity());
 
                 if (list!=null){
@@ -199,14 +217,14 @@ public class FragmentCollection extends AbsCollectionFragment {
     }
     public  void DialogForEMINotPaying(Context context,AdapterView<?> parent,int position) {
         AdapterDueData adapterDueData = (AdapterDueData) parent.getAdapter();
-        final DueData dueData = (DueData) adapterDueData.getItem(position);
+        final CustomerListDataModel dueData = (CustomerListDataModel) adapterDueData.getItem(position);
         // Create a dialog view by inflating the layout XML
         View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_layout_notpay_emi, null);
 
         // Initialize views from the layout
         Spinner spinEMIReasons=dialogView.findViewById(R.id.spinEMIReasons);
         ImageView imgViewCal = dialogView.findViewById(R.id.imgViewCal);
-        TextInputEditText tietPromisingDate = dialogView.findViewById(R.id.tietPromisingDate);
+        EditText tietPromisingDate = dialogView.findViewById(R.id.tietPromisingDate);
         Button saveDataForEMINOTPAY=dialogView.findViewById(R.id.saveDataForEMINOTPAY);
 
         final DatePicker datePicker = dialogView.findViewById(R.id.datePicker);
@@ -314,7 +332,7 @@ public class FragmentCollection extends AbsCollectionFragment {
     private void showPaymentDialog(AdapterView<?> parent,int position) {
 
         AdapterDueData adapterDueData = (AdapterDueData) parent.getAdapter();
-        final DueData dueData = (DueData) adapterDueData.getItem(position);
+        final CustomerListDataModel dueData = (CustomerListDataModel) adapterDueData.getItem(position);
         Log.d("DueData",dueData.toString());
         Log.d("DueDataSchmCode",dueData.getSchmCode());
         insttemplist=new ArrayList<>();
@@ -418,9 +436,8 @@ public class FragmentCollection extends AbsCollectionFragment {
 
                 dialogQrcode.show();
                 progressDialog = ProgressDialog.show(getContext(), "", "Loading...", true, false);
-                ApiInterface apiInterface= getClientNew("https://erpservice.paisalo.in:980/PDL.USERSERvice.API/api/").create(ApiInterface.class);
-                // Log.d("TAG", "checkCrifScore: "+getdatalocation(login, login));
-                Call<QrUrlData> call=apiInterface.getCheckQrCode(SMCode);
+                ApiInterface apiInterface= ApiClient.getClient().create(ApiInterface.class);
+                Call<QrUrlData> call=apiInterface.getCheckQrCode(GlobalClass.Token,GlobalClass.dbname,SMCode);
                 call.enqueue(new Callback<QrUrlData>() {
                     @Override
                     public void onResponse(Call<QrUrlData> call, Response<QrUrlData> response) {
@@ -695,7 +712,7 @@ public class FragmentCollection extends AbsCollectionFragment {
     }
 
 
-    private  void qrCodePaymentConfirmAPI(DueData dueData){
+    private  void qrCodePaymentConfirmAPI(CustomerListDataModel dueData){
         Date currentDate = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         String dateString = dateFormat.format(currentDate);
@@ -709,6 +726,8 @@ public class FragmentCollection extends AbsCollectionFragment {
         instRcv.setPayFlag("E");
         instRcv.setCollPoint("FIELD");
         instRcv.setPaymentMode("QR");
+
+        Log.d("TAG", "qrCodePaymentConfirmAPI: "+ dueData.getCaseCode()+ " "+dueData.getCreator()+ " "+dateString+ " "+dueData.getFoCode()+ " "+dueData.getCustName()+ " "+dueData.getCustName()+ " "+dueData.getPartyCd());
         dialogQrcodePayment.setContentView(R.layout.dialogqrpayment_layout);
         dialogQrcodePayment.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialogQrcodePayment.setCancelable(false);
@@ -777,7 +796,7 @@ public class FragmentCollection extends AbsCollectionFragment {
 
     }
 
-    private void failAlert(DueData dueData){
+    private void failAlert(CustomerListDataModel dueData){
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         // Set the dialog title and message
         builder.setTitle("Payment not received")
@@ -807,7 +826,7 @@ public class FragmentCollection extends AbsCollectionFragment {
         alertDialog.show();
     }
 
-    private void saveRecipetNewAmount(String schmCode, DueData dueData, int totCollectAmt, int latePmtIntAmt, String s) {
+    private void saveRecipetNewAmount(String schmCode, CustomerListDataModel dueData, int totCollectAmt, int latePmtIntAmt, String s) {
         ProgressDialog progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false); // This will prevent users from cancelling the dialog by tapping outside
@@ -828,13 +847,15 @@ public class FragmentCollection extends AbsCollectionFragment {
         instRcv.setPaymentMode("CASH");
         instRcv.setCollBranchCode("");
 
+        Log.d("TAG", "saveRecipetNewAmount: " +dueData.getCaseCode() + " "+ dueData.getCreator()+ " "+dueData.getDb()+ " "+GlobalClass.Imei +(totCollectAmt - latePmtIntAmt) +
+                " "+ new Date()+ " "+dueData.getFoCode()+ " "+dueData.getCustName()+ " "+dueData.getPartyCd()+ " "+latePmtIntAmt+ " "+"E");
+
         ApiInterface apiInterface=ApiClient.getClient().create(ApiInterface.class);
         Call<JsonObject> call=apiInterface.insertRcDistributionNew(instRcv,GlobalClass.Token,GlobalClass.dbname,GlobalClass.Id);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 Log.d("TAG", "insertRcDistributionNew: "+response.body());
-                //  Toast.makeText(getContext(), "Data is valid. Saving...", Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
                 if (response.body()!=null){
                     if (response.body().get("statusCode").getAsInt()==200){
@@ -850,8 +871,6 @@ public class FragmentCollection extends AbsCollectionFragment {
                 Log.d("TAG", "onFailure: "+t.getMessage());
                 progressDialog.dismiss();
                 Utils.alert(getContext(),t.getMessage());
-
-
             }
         });
     }
@@ -861,25 +880,32 @@ public class FragmentCollection extends AbsCollectionFragment {
 
         ApiInterface apiInterface=ApiClient.getClient().create(ApiInterface.class);
         Call<JsonObject> call=apiInterface.insertRcDistribution(GlobalClass.Token,GlobalClass.dbname,getJsonOfRcDist(creator,custName,caseCode,mobile,totCollectAmt,EmiAmt,pfAmt,otherAmt));
+
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                Log.d("TAG", "onResponse: "+response.body());
+                Log.d("TAG", "saveDepositeWithPFAndEmiAmount: "+response.body());
                 Toast.makeText(getContext(), "Data is valid. Saving...", Toast.LENGTH_SHORT).show();
 
+                if(response.isSuccessful()){
                 if (response.body()!=null){
                     if (response.body().get("statusCode").getAsInt()==200){
-                        Utils.alert(getContext(),response.body().get("message").getAsString());
+                        Log.d("TAG", "saveDepositeWithPFAndEmiAmount: "+response.body());
+
+                        SubmitAlert(getActivity(), "Successful", response.body().get("message").getAsString());
+                      //  Utils.alert(getContext(),response.body().get("message").getAsString());
                         ((ActivityCollection) getActivity()).refreshData(FragmentCollection.this);
                         getLoginLocation("Collection","");
-
                     }
+                }
+                }else{
+                    SubmitAlert(getActivity(), "Error", "Unsuccessful");
                 }
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.d("TAG", "onFailure: "+t.getMessage());
+                Log.d("TAG", "saveDepositeWithPFAndEmiAmount: "+t.getMessage());
 
             }
         });
@@ -931,6 +957,8 @@ public class FragmentCollection extends AbsCollectionFragment {
         jsonObject.addProperty("pf", String.valueOf(pfAmt));
         jsonObject.addProperty("others", String.valueOf(otherAmt));
         jsonObject.addProperty("createdBy", GlobalClass.Id);
+        Log.d("TAG", "saveDepositeWithPFAndEmiAmount: "+"0" + " "+creator+ " "+""+ " "+caseCode+ " "+custName+ " "+mobile+ " "+String.valueOf( totCollectAmt)+ " "+GlobalClass.Id+ " "+String.valueOf(emiAmt)+ " "+String.valueOf(pfAmt)+ " "+String.valueOf(otherAmt)+ " "+ GlobalClass.Id);
+
         return  jsonObject;
     }
 
@@ -945,7 +973,7 @@ public class FragmentCollection extends AbsCollectionFragment {
         //collect.setEnabled(latePaymentInterest > 0);
     }
 
-    private void saveDeposit(String SchmCode, DueData dueData, int collectedAmount, int latePmtAmount, String depBy) {
+    private void saveDeposit(String SchmCode, CustomerListDataModel dueData, int collectedAmount, int latePmtAmount, String depBy) {
         PosInstRcv instRcv = new PosInstRcv();
         instRcv.setCaseCode(dueData.getCaseCode());
         instRcv.setCreator(dueData.getCreator());

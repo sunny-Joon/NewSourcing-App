@@ -34,56 +34,28 @@
         <LinearLayout
             android:layout_marginTop="5dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                android:layout_weight="1">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:padding="4dp"
-                    android:layout_margin="5dp"
-                    app:boxBackgroundColor="#FFF"
-                    android:background="@drawable/spinner_bg"
-                    app:boxStrokeColor="#FFF"
-                    app:boxStrokeWidth="0dp"
-                    app:boxStrokeWidthFocused="0dp"
-                    app:layout_constraintHorizontal_chainStyle="spread"
-                    app:layout_constraintHorizontal_weight="1"
-                    app:layout_constraintStart_toEndOf="@+id/tilUidAge">
-
-                    <com.google.android.material.textfield.TextInputEditText
+                    <EditText
                         android:id="@+id/tietPromisingDate"
                         android:enabled="false"
                         android:hint="Promising Date"
                         android:textColor="@color/black"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:background="@color/white"
+                        android:layout_weight="1"
                         android:paddingStart="8dp"
                         android:textSize="15dp" />
 
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center">
-
                 <ImageView
                     android:id="@+id/imgViewCal"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
                     android:src="@drawable/calender"
                     app:layout_constraintEnd_toEndOf="parent" />
-            </LinearLayout>
 
         </LinearLayout>
 

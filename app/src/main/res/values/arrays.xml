@@ -126,7 +126,6 @@
     </array>
 
     <array name="selectDatabase">
-        <item>--Select--</item>
         <item>SBI COLENDING</item>
         <item>PDL OW</item>
         <item>GROUP FINANCE</item>

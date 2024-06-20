@@ -16,20 +16,21 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.paisalo.newinternalsourcingapp.Modelclasses.DueData;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.Collection.CustomerListDataModel;
 import com.paisalo.newinternalsourcingapp.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdapterDueData extends ArrayAdapter<DueData> implements Filterable {
+public class AdapterDueData extends ArrayAdapter<CustomerListDataModel> implements Filterable {
     Context context;
     int resourecId;
-    List<DueData> originalData;
-    List<DueData> filteredData = null;
+    List<CustomerListDataModel> originalData;
+    List<CustomerListDataModel> filteredData = null;
     ValueFilter filter = new ValueFilter();
 
 
-    public AdapterDueData(Context context, @LayoutRes int resource, @NonNull List<DueData> dueDataList) {
+    public AdapterDueData(Context context, @LayoutRes int resource, @NonNull List<CustomerListDataModel> dueDataList) {
         super(context, resource, dueDataList);
         this.context = context;
         this.resourecId = resource;
@@ -41,7 +42,7 @@ public class AdapterDueData extends ArrayAdapter<DueData> implements Filterable 
         return filteredData.size();
     }
 
-    public DueData getItem(int position) {
+    public CustomerListDataModel getItem(int position) {
         return filteredData.get(position);
     }
 
@@ -60,7 +61,7 @@ public class AdapterDueData extends ArrayAdapter<DueData> implements Filterable 
         View v = convertView;
         BorrowerViewHolder holder;
         Drawable bgColor = null;
-        final DueData dueData = this.filteredData.get(position);
+        final CustomerListDataModel dueData = this.filteredData.get(position);
         if (v == null) {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             v = inflater.inflate(resourecId, parent, false);
@@ -79,7 +80,7 @@ public class AdapterDueData extends ArrayAdapter<DueData> implements Filterable 
             holder = (BorrowerViewHolder) v.getTag();
         }
         holder.tvName.setText(dueData.getCustName());
-        holder.tvGurName.setText(dueData.getFHName());
+        holder.tvGurName.setText(dueData.getFhName());
         holder.tvMobile.setText(dueData.getMobile());
         holder.tvCreator.setText(dueData.getCaseCode() + " / " + dueData.getCreator());
         holder.tvAddress.setText(dueData.getAddress());
@@ -116,10 +117,10 @@ public class AdapterDueData extends ArrayAdapter<DueData> implements Filterable 
             FilterResults results = new FilterResults();
             String filterString = constraint.toString().toUpperCase();
 
-            final List<DueData> list = originalData;
+            final List<CustomerListDataModel> list = originalData;
             if (constraint != null && constraint.length() > 0) {
-                List<DueData> filterList = new ArrayList<>();
-                for (DueData dueData : list) {
+                List<CustomerListDataModel> filterList = new ArrayList<>();
+                for (CustomerListDataModel dueData : list) {
                     if (dueData.getCustName().toUpperCase().contains(filterString)
                             || dueData.getCaseCode().toUpperCase().contains(filterString)) {
                         filterList.add(dueData);
@@ -137,7 +138,7 @@ public class AdapterDueData extends ArrayAdapter<DueData> implements Filterable 
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            filteredData = (ArrayList<DueData>) results.values;
+            filteredData = (ArrayList<CustomerListDataModel>) results.values;
             notifyDataSetChanged();
         }
 

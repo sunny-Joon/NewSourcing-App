@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,27 +12,29 @@ import android.widget.Toast;
 
 import com.paisalo.newinternalsourcingapp.Adapters.BorrowerListAdapter;
 import com.paisalo.newinternalsourcingapp.BuildConfig;
+import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.HouseVisitActivity1;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.BorrowerListModels.BorrowerListDataModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.BorrowerListModels.BorrowerListModel;
-import com.paisalo.newinternalsourcingapp.ModelsRetrofit.ManagerListModels.ManagerListModel;
 import com.paisalo.newinternalsourcingapp.R;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiClient;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiInterface;
 
+import java.io.Serializable;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BorrowerListActivity extends AppCompatActivity {
+public class BorrowerListActivity extends AppCompatActivity implements BorrowerListAdapter.OnItemClickListener {
 
     private RecyclerView recyclerView;
     private BorrowerListAdapter borrowerListAdapter;
-    List<BorrowerListDataModel> borrowerListDataModel;
-    String id,foCode,creator,areaCode;
+    private List<BorrowerListDataModel> borrowerListDataModel;
+    private String id, foCode, creator, areaCode;
 
+    BorrowerListDataModel adapterItem;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,128 +50,84 @@ public class BorrowerListActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.esignRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        fetchBorrowerList();
+    }
 
-        if(id.equals("FEsign")){
-            ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-            Call<BorrowerListModel> call = apiInterface.PendingFEsign(GlobalClass.Token, BuildConfig.dbname,GlobalClass.Imei,foCode,areaCode,creator);
+    private void fetchBorrowerList() {
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<BorrowerListModel> call = null;
+
+        switch (id) {
+            case "FEsign":
+                call = apiInterface.PendingFEsign(GlobalClass.Token, BuildConfig.dbname, GlobalClass.Imei, foCode, areaCode, creator);
+                break;
+            case "SEsign":
+                call = apiInterface.PendingSEsign(GlobalClass.Token, BuildConfig.dbname, GlobalClass.Imei, foCode, areaCode, creator);
+                break;
+            case "HVisit":
+            case "Application":
+                call = apiInterface.PendingApplicationForms(GlobalClass.Token, BuildConfig.dbname, GlobalClass.Imei, foCode, areaCode, creator);
+                break;
+            case "collection":
+                call = apiInterface.PendingCollection(GlobalClass.Token, BuildConfig.dbname, GlobalClass.Imei, foCode, areaCode, creator);
+                break;
+        }
+
+        if (call != null) {
             call.enqueue(new Callback<BorrowerListModel>() {
                 @Override
                 public void onResponse(Call<BorrowerListModel> call, Response<BorrowerListModel> response) {
-                    //  Log.d("TAG", "onResponseFoList: "+ response.body());
-                    if(response.isSuccessful()){
-                        Log.d("TAG", "onResponseFoList: "+ response.body());
-                        BorrowerListModel borrowerListModel = response.body();
-                        borrowerListDataModel = borrowerListModel.getData();
-                        if(borrowerListDataModel != null && borrowerListDataModel.size()>0) {
-                            Log.d("TAG", "onResponseFoList1: "+ response.body());
-                            borrowerListAdapter = new BorrowerListAdapter(BorrowerListActivity.this, borrowerListDataModel);
+                    if (response.isSuccessful() && response.body() != null) {
+                        borrowerListDataModel = response.body().getData();
+                        if (borrowerListDataModel != null && !borrowerListDataModel.isEmpty()) {
+                            borrowerListAdapter = new BorrowerListAdapter((Context) BorrowerListActivity.this, borrowerListDataModel, (BorrowerListAdapter.OnItemClickListener) BorrowerListActivity.this);
                             recyclerView.setAdapter(borrowerListAdapter);
                         }
-                    }else{
-                        Log.d("TAG", "onResponseFoList: "+ response.code());
-
+                    } else {
+                        Log.d("BorrowerListActivity", "Response Code: " + response.code());
                     }
                 }
 
                 @Override
                 public void onFailure(Call<BorrowerListModel> call, Throwable t) {
-                    Log.d("TAG", "onResponseFoList: "+ t.getMessage());
-
-
-                }
-            });
-        } else if (id.equals("SEsign")) {
-            ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-            Call<BorrowerListModel> call = apiInterface.PendingSEsign(GlobalClass.Token, BuildConfig.dbname,GlobalClass.Imei,foCode,areaCode,creator);
-            call.enqueue(new Callback<BorrowerListModel>() {
-                @Override
-                public void onResponse(Call<BorrowerListModel> call, Response<BorrowerListModel> response) {
-                    //  Log.d("TAG", "onResponseFoList: "+ response.body());
-                    if(response.isSuccessful()){
-                        Log.d("TAG", "onResponseFoList: "+ response.body());
-                        BorrowerListModel borrowerListModel = response.body();
-                        borrowerListDataModel = borrowerListModel.getData();
-                        Log.d("TAG", "onResponseFoList: " + borrowerListDataModel.get(0).getAadharid());
-                        if(borrowerListDataModel.size()>0) {
-                            Log.d("TAG", "onResponseFoList1: "+ response.body());
-                            borrowerListAdapter = new BorrowerListAdapter(BorrowerListActivity.this, borrowerListDataModel);
-                            recyclerView.setAdapter(borrowerListAdapter);
-                        }
-                    }else{
-                        Log.d("TAG", "onResponseFoList: "+ response.code());
-
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<BorrowerListModel> call, Throwable t) {
-                    Log.d("TAG", "onResponseFoList: "+ t.getMessage());
-
-
-                }
-            });
-
-        } else if (id.equals("HVisit") ||id.equals("Application")) {
-            ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-            Call<BorrowerListModel> call = apiInterface.PendingApplicationForms(GlobalClass.Token, BuildConfig.dbname,GlobalClass.Imei,foCode,areaCode,creator);
-            call.enqueue(new Callback<BorrowerListModel>() {
-                @Override
-                public void onResponse(Call<BorrowerListModel> call, Response<BorrowerListModel> response) {
-                    //  Log.d("TAG", "onResponseFoList: "+ response.body());
-                    if(response.isSuccessful()){
-                        Log.d("TAG", "onResponseFoList: "+ response.body());
-                        BorrowerListModel borrowerListModel = response.body();
-                        borrowerListDataModel = borrowerListModel.getData();
-                        Log.d("TAG", "onResponseFoList: " + borrowerListDataModel.get(0).getAadharid());
-                        if(borrowerListDataModel.size()>0) {
-                            Log.d("TAG", "onResponseFoList1: "+ response.body());
-                            borrowerListAdapter = new BorrowerListAdapter(BorrowerListActivity.this, borrowerListDataModel);
-                            recyclerView.setAdapter(borrowerListAdapter);
-                        }
-                    }else{
-                        Log.d("TAG", "onResponseFoList: "+ response.code());
-
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<BorrowerListModel> call, Throwable t) {
-                    Log.d("TAG", "onResponseFoList: "+ t.getMessage());
-
-
-                }
-            });
-        } else if (id.equals("collection")) {
-            ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-            Call<BorrowerListModel> call = apiInterface.PendingCollection(GlobalClass.Token, BuildConfig.dbname,GlobalClass.Imei,foCode,areaCode,creator);
-            call.enqueue(new Callback<BorrowerListModel>() {
-                @Override
-                public void onResponse(Call<BorrowerListModel> call, Response<BorrowerListModel> response) {
-                    //  Log.d("TAG", "onResponseFoList: "+ response.body());
-                    if(response.isSuccessful()){
-                        Log.d("TAG", "onResponseFoList: "+ response.body());
-                        BorrowerListModel borrowerListModel = response.body();
-                        borrowerListDataModel = borrowerListModel.getData();
-                        Log.d("TAG", "onResponseFoList: " + borrowerListDataModel.get(0).getAadharid());
-                        if(borrowerListDataModel.size()>0) {
-                            Log.d("TAG", "onResponseFoList1: "+ response.body());
-                            borrowerListAdapter = new BorrowerListAdapter(BorrowerListActivity.this, borrowerListDataModel);
-                            recyclerView.setAdapter(borrowerListAdapter);
-                        }
-                    }else{
-                        Log.d("TAG", "onResponseFoList: "+ response.code());
-
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<BorrowerListModel> call, Throwable t) {
-                    Log.d("TAG", "onResponseFoList: "+ t.getMessage());
-
+                    Log.d("BorrowerListActivity", "Error: " + t.getMessage());
                 }
             });
         }
+    }
 
+    public void onItemClick(BorrowerListDataModel adapterItem) {
+       this.adapterItem= adapterItem;
+        openActivity(adapterItem);
+    }
 
+    private void openActivity(BorrowerListDataModel adapterItem) {
+        Intent intent = null;
+        switch (id) {
+            case "FEsign":
+                intent = new Intent(this, FirstEsignActivity.class);
+                intent.putExtra(GlobalClass.ESIGN_TYPE_TAG, 1);
+                intent.putExtra(GlobalClass.ESIGN_BORROWER,adapterItem);
+                break;
+            case "SEsign":
+                intent = new Intent(this, SecondEsignActivity.class);
+                break;
+            case "Application":
+                intent = new Intent(this, ApplicationFormActivityMenu.class);
+                intent.putExtra("fiCode", adapterItem.getCode());
+                intent.putExtra("creator", adapterItem.getCreator());
+                break;
+            case "HVisit":
+                intent = new Intent(this, HouseVisitActivity1.class);
+                intent.putExtra("fiCode", adapterItem.getCode());
+                intent.putExtra("creator", adapterItem.getCreator());
+                break;
+        }
+
+        if (intent != null) {
+            startActivity(intent);
+        } else {
+            Log.e("BorrowerListActivity", "Invalid id received: " + id);
+        }
     }
 }

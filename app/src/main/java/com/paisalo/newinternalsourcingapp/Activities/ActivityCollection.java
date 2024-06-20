@@ -8,6 +8,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
@@ -21,6 +23,8 @@ import com.paisalo.newinternalsourcingapp.GlobalClass;
 import com.paisalo.newinternalsourcingapp.Modelclasses.DueData;
 import com.paisalo.newinternalsourcingapp.Modelclasses.PosInstRcv;
 import com.paisalo.newinternalsourcingapp.Modelclasses.SmCode_DateModel;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.Collection.CustomerListDataModel;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.Collection.CustomerListModel;
 import com.paisalo.newinternalsourcingapp.R;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiClient;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiInterface;
@@ -47,7 +51,7 @@ public class ActivityCollection extends AppCompatActivity {
 
     private static AdapterCollectionFragmentPager fragmentPagerAdapter;
     private ViewPager fragContainer;
-    private static ArrayList<DueData> dueDataList = new ArrayList<>();
+    private static ArrayList<CustomerListDataModel> dueDataList = new ArrayList<>();
     private static ArrayList<PosInstRcv> settlementDataList = new ArrayList<>();
     private static String foCode;
     private static String creator;
@@ -74,9 +78,10 @@ public class ActivityCollection extends AppCompatActivity {
             areaCode = intent.getStringExtra("areaCode");
         }
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolBar);
-        setSupportActionBar(toolbar);
+       /* Toolbar toolbar = (Toolbar) findViewById(R.id.toolBar);
+        setSupportActionBar(toolbar);*/
         TabLayout tabLayout  = findViewById(R.id.tablayout);
+
         tabLayout.setVisibility(View.GONE);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -123,30 +128,26 @@ public class ActivityCollection extends AppCompatActivity {
 
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
 
-        Call<List<DueData>> call = apiInterface.dueInstallments(GlobalClass.Token,GlobalClass.Imei,GlobalClass.dbname,GlobalClass.Id,gdate, cityCode);
+        //Call<List<DueData>> call = apiInterface.dueInstallments(GlobalClass.Token,GlobalClass.Imei,GlobalClass.dbname,GlobalClass.Id,gdate, cityCode);
+        Call<CustomerListModel> call = apiInterface.dueInstallments(GlobalClass.Token,"353587955003255",GlobalClass.dbname,"GRST002632","10-06-2024", "0166");
+        Log.d("TAG", "refreshData: " + GlobalClass.Token + GlobalClass.Imei + GlobalClass.dbname + GlobalClass.Id + gdate + cityCode);
 
-        call.enqueue(new Callback<List<DueData>>() {
+        call.enqueue(new Callback<CustomerListModel>() {
             @Override
-            public void onResponse(Call<List<DueData>> call, Response<List<DueData>> response) {
+            public void onResponse(Call<CustomerListModel> call, Response<CustomerListModel> response) {
+                Log.d("TAG", "refreshData1: " + "run");
                 if (response.isSuccessful()) {
-                    List<DueData> dueDataList = response.body();
-                    if (dueDataList != null) {
-                        String queryDB = BuildConfig.APPLICATION_ID.equals("com.softeksol.paisalo.jlgsourcing") ? "POSDATA" : GlobalClass.DATABASE_NAME + "";
+                    Log.d("TAG", "refreshData2: " + "success");
+                    CustomerListModel dueData = response.body();
+                    if (dueData != null) {
+                        Log.d("TAG", "refreshData3: " + "success1");
 
-                        String jsonString = response.body().toString()
-                                .replace("\"[", "[")
-                                .replace("]\"", "]")
-                                .replace("\\\"", "\"");
-                        Log.d("DueData_jsonString", jsonString);
+                        List<CustomerListDataModel> dueDataList1 = dueData.getData();
+                        Log.d("refreshData4", dueDataList1.size() + "");
+                        Log.d("TAG","refreshData6" + dueDataList1.toString() );
+                        dueDataList.addAll(getDueDataByDbName(dueDataList1, "003", "BALIA"));
 
-                        Type listType = new TypeToken<List<DueData>>() {
-                        }.getType();
-                        List<DueData> dueData = GlobalClass.convertToObjectArray(jsonString, listType);
-                        Log.d("DueData_LIST", dueData.toString());
 
-                        dueDataList.clear();
-                        dueDataList.addAll(getDueDataByDbName(dueData, foCode, creator));
-                        Log.d("checking", dueDataList.size() + "");
 
                         populateFragments();
                         refreshSettlement();
@@ -154,12 +155,14 @@ public class ActivityCollection extends AppCompatActivity {
                             fragmentCollection.refreshData();
                     }
                 } else {
+                    Log.d("TAG", "refreshData: " + "else");
                     Log.d("DueData Error", "Response code: " + response.code());
                 }
             }
 
             @Override
-            public void onFailure(Call<List<DueData>> call, Throwable t) {
+            public void onFailure(Call<CustomerListModel> call, Throwable t) {
+                Log.d("TAG", "failure: " + "run");
                 Log.d("DueData Error", t.getMessage());
             }
         });
@@ -258,15 +261,15 @@ public class ActivityCollection extends AppCompatActivity {
 
     private static Map<String, String> getDatabases() {
         Map<String, String> dbs = new HashMap<>();
-        for (DueData dueData : dueDataList) {
+        for (CustomerListDataModel dueData : dueDataList) {
             dbs.put(dueData.getDb(), dueData.getDbName());
         }
         return dbs;
     }
 
-    public List<DueData> getDueDataByDbName(String dbName) {
-        List<DueData> dueDataSubList = new ArrayList<>();
-        for (DueData dueData : dueDataList) {
+    public List<CustomerListDataModel> getDueDataByDbName(String dbName) {
+        List<CustomerListDataModel> dueDataSubList = new ArrayList<>();
+        for (CustomerListDataModel dueData : dueDataList) {
             if (dueData.getDb().equals(dbName))
                 dueDataSubList.add(dueData);
         }
@@ -277,13 +280,13 @@ public class ActivityCollection extends AppCompatActivity {
         return new ArrayList<>(settlementDataList);
     }
 
-    public static ArrayList<DueData> getDueDataByDbName(List<DueData> dueDataList, String foCode, String creator) {
-        ArrayList<DueData> dueDataSubList = new ArrayList<>();
-        for (DueData dueData : dueDataList) {
+    public static ArrayList<CustomerListDataModel> getDueDataByDbName(List<CustomerListDataModel> dueDataList, String foCode, String creator) {
+        ArrayList<CustomerListDataModel> dueDataSubList = new ArrayList<>();
+        for (CustomerListDataModel dueData : dueDataList) {
             if (dueData.getFoCode().equals(foCode) && dueData.getCreator().equals(creator))
                 dueDataSubList.add(dueData);
         }
-        Collections.sort(dueDataSubList, DueData.DueDataNachName);
+        Collections.sort(dueDataSubList, CustomerListDataModel.DueDataNachName);
         return dueDataSubList;
     }
 

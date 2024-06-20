@@ -20,21 +20,19 @@
             android:background="@color/darkred"
             android:orientation="vertical">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_aadhar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColorHint="@color/white"
-                android:hint="@string/aadharid">
+          <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:textSize="25dp"
+                    android:text="Adhaar Id"/>
 
-                <com.google.android.material.textfield.TextInputEditText
+            <TextView
                     android:id="@+id/tiet_aadhar"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:maxLines="1" />
-            </com.google.android.material.textfield.TextInputLayout>
-
+                    android:layout_height="45dp"
+                    android:background="@color/white"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
