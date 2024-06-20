@@ -2,14 +2,16 @@ package com.paisalo.newinternalsourcingapp.Retrofit;
 
 import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.Entities.CkycNoMODEL;
-import com.paisalo.newinternalsourcingapp.Modelclasses.DueData;
 import com.paisalo.newinternalsourcingapp.Modelclasses.EmiCollectionModels.CollectionReportModel;
 import com.paisalo.newinternalsourcingapp.Modelclasses.PosInstRcv;
 import com.paisalo.newinternalsourcingapp.Modelclasses.PosInstRcvNew;
 import com.paisalo.newinternalsourcingapp.Modelclasses.QRCollStatus;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.AccountDetails_Model;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.BorrowerListModels.BorrowerListModel;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.BreResponseModels.BREResponse;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.Collection.CustomerListModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.CreatorListModels.CreatorListModel;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.DownloadEsignXml;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.HouseVisitModels.HVBorrowerModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.HouseVisitModels.HVGetModel;
@@ -20,6 +22,7 @@ import com.paisalo.newinternalsourcingapp.ModelsRetrofit.IdVerificationModels.DL
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.IdVerificationModels.VoterIdVerificationModels.VoterIdVerificationModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.ImeiMappingModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.KycScanningModels.KycScanningModel;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.LiveToken;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.OCRScanModels.AdharDataResponse;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.ProfilePicModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.QrUrlData;
@@ -28,7 +31,6 @@ import com.paisalo.newinternalsourcingapp.ModelsRetrofit.SaveFiModels.SaveFiMode
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.SaveVerifiedInfo;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.StateDistDataModels.CityModelList;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.StateDistDataModels.DistrictListModel;
-import com.paisalo.newinternalsourcingapp.ModelsRetrofit.KycSubmitModels.KycSubmitModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.LeaderBoardModels.LeaderboardModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.LoginModels.LoginModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.ManagerListModels.ManagerListModel;
@@ -42,8 +44,6 @@ import com.paisalo.newinternalsourcingapp.ModelsRetrofit.StateDistDataModels.Vil
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.UpdateFiModels.KycUpdateModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.Visitreportmodel;
 
-import org.json.JSONObject;
-
 import java.util.List;
 
 import okhttp3.MultipartBody;
@@ -51,6 +51,8 @@ import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
@@ -63,7 +65,7 @@ public interface ApiInterface {
 
 
     @POST("Account/GetToken")
-    Call<LoginModel> LoginApi(@Header("devid") String devid, @Header("dbname") String dbname, @Header("imeino") String imeino, @Body JsonObject object);
+    Call<LoginModel> LoginApi(@retrofit2.http.Header("devid") String devid, @retrofit2.http.Header("dbname") String dbname, @retrofit2.http.Header("imeino") String imeino, @Body JsonObject object);
 
     @GET("Master/GetRangeCategories")
     Call<RangeCategoryModel> RangeCategory(@Header("Authorization") String token, @Header("dbname") String dbName);
@@ -179,25 +181,33 @@ public interface ApiInterface {
     Call<BorrowerListModel> PendingSEsign(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("IMEINO") String IMEINO, @Query("FOCode") String FOCode, @Query("AreaCd") String AreaCd, @Query("Creator") String Creator);
 
     @GET("InstCollection/getDueInstallments")
-    Call<BorrowerListModel> PendingCollection(@Header("Authorization") String token, @Header("dbname") String dbname, @Header("imeino") String imeino, @Header("userid") String userid, @Query("gdate") String gdate, @Query("CityCode") String CityCode);
+    Call<BorrowerListModel> PendingCollection(@Header("Authorization") String token, @Header("dbname") String dbname, @retrofit2.http.Header("imeino") String imeino, @retrofit2.http.Header("userid") String userid, @Query("gdate") String gdate, @Query("CityCode") String CityCode);
 
-    @GET("DocSignIn/GetXMLDoc")
-    Call<ResponseBody> getXMLforESign();
+    @POST("api/DocESignLoanApplication/signdoc")
+    Call<DownloadEsignXml> getXMLforESign(@Header("Authorization") String token,
+                                          @Header("Content-Encoding") String Encoding,
+                                          @Header("devid") String devid,
+                                          @Header("dbname") String dbname,
+                                          @Header("imeino") String imeino,
+                                          @Header("access") String access,
+                                          @Header("content-type") String content,
+                                          @Header("Accept") String Accept,
+                                          @Body JsonObject jsonObject);
 
     @Multipart
     @POST("UploadDocs/SaveFiDocsJson")
     Call<JsonObject> saveDocKyc(@Header("Authorization") String token, @Header("dbname") String dbname,
-                                      @Part MultipartBody.Part Document,
-                                      @Part("ficode") RequestBody ficode,
-                                      @Part("DbName") RequestBody DbName,
-                                      @Part("Creator") RequestBody Creator,
-                                      @Part("FiTag") RequestBody FiTag,
-                                      @Part("CheckListId") RequestBody CheckListId,
-                                      @Part("Remarks") RequestBody Remarks,
-                                      @Part("UserId") RequestBody UserId,
-                                      @Part("GrNo") RequestBody GrNo,
-                                      @Part("fileName") RequestBody fileName,
-                                      @Part("imageTag") RequestBody imageTag);
+                                @Part MultipartBody.Part Document,
+                                @Part("ficode") RequestBody ficode,
+                                @Part("DbName") RequestBody DbName,
+                                @Part("Creator") RequestBody Creator,
+                                @Part("FiTag") RequestBody FiTag,
+                                @Part("CheckListId") RequestBody CheckListId,
+                                @Part("Remarks") RequestBody Remarks,
+                                @Part("UserId") RequestBody UserId,
+                                @Part("GrNo") RequestBody GrNo,
+                                @Part("fileName") RequestBody fileName,
+                                @Part("imageTag") RequestBody imageTag);
 
     @Multipart
     @POST("OCR/DocVerifyforOSVSpaceOCR")
@@ -207,7 +217,7 @@ public interface ApiInterface {
     Call<TargetSetModel> checkHVForm(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("FiCode") String FiCode, @Query("Creator") String Creator);
 
     @POST("UserMobile/SearchCkycNo")
-    Call<CkycNoMODEL> getCkycNo(@Header("Authorization") String token, @Header("dbname") String dbName,@Query("FiCode") String FiCode, @Query("Creator") String Creator);
+    Call<CkycNoMODEL> getCkycNo(@Header("Authorization") String token, @Header("dbname") String dbName, @Query("FiCode") String FiCode, @Query("Creator") String Creator);
 
     @GET("{fullUrl}")
     Call<JsonObject> razorpayIfsc(@Path(value = "fullUrl", encoded = true) String fullUrl);
@@ -215,12 +225,12 @@ public interface ApiInterface {
 
     //------------------------------------------------------------------------------------------------------------------------
     @GET("LiveTrack/CollectionStatus")
-    Call<CollectionReportModel> getCollectionReprt(@Header("Authorization") String token,@Header("dbname") String dbName,@Query("Smcode") String Smcode);
+    Call<CollectionReportModel> getCollectionReprt(@Header("Authorization") String token, @Header("dbname") String dbName, @Query("Smcode") String Smcode);
 
     @GET("InstCollection/GetQrPaymentsBySmcode")
     Call<AccountDetails_Model> getQrPaymentsBySmcode(
-            @Header("Authorization") String token,
-            @Header("dbname") String dbName,
+            @retrofit2.http.Header("Authorization") String token,
+            @retrofit2.http.Header("dbname") String dbName,
             @Query("SmCode") String smCode,
             @Query("userid") String userId,
             @Query("type") String type
@@ -228,8 +238,8 @@ public interface ApiInterface {
     @Multipart
     @POST("LiveTrack/InsertVisitReports")
     Call<Visitreportmodel> getvisit(
-            @Header("Authorization") String token,
-            @Header("dbname") String dbName,
+            @retrofit2.http.Header("Authorization") String token,
+            @retrofit2.http.Header("dbname") String dbName,
             @Part("VisitType") RequestBody VisitType,
             @Part("SmCode") RequestBody SmCode,
             @Part("Amount") RequestBody Amount,
@@ -242,59 +252,99 @@ public interface ApiInterface {
     @Multipart
     @POST("InstCollection/QrPaymentSettlement")
     Call<JsonObject> saveReciptOnpayment(
-            @Header("Authorization") String token,
-            @Header("dbname") String dbName,
+            @retrofit2.http.Header("Authorization") String token,
+            @retrofit2.http.Header("dbname") String dbName,
             @Part MultipartBody.Part FileName,
             @Part("SmCode") RequestBody SmCode);
 
     @GET("LiveTrack/GetCSOReferralCode")
-    Call<ReferralCodeModel> getReferralCode(@Header("Authorization") String token, @Header("dbname") String dbName,@Query("username") String username);
+    Call<ReferralCodeModel> getReferralCode(@Header("Authorization") String token, @Header("dbname") String dbName, @Query("username") String username);
 
-    @POST("IMEIMapping/RcPromiseToPay")
-    Call<JsonObject> insertRcPromiseToPay(@Header("Authorization") String token, @Header("dbname") String dbName,@Body JsonObject jsonObject);
+    @POST("IMEIMapping/RcPromiseToPay")//Working
+    Call<JsonObject> insertRcPromiseToPay(@Header("Authorization") String token, @Header("dbname") String dbName, @Body JsonObject jsonObject);
 
-    @GET("InstCollection/CheckQrCode")
-    Call<QrUrlData> getCheckQrCode(@Query("smcode") String SmCode);
+    @GET("InstCollection/CheckQrCode")//working
+    Call<QrUrlData> getCheckQrCode(@Header("Authorization") String token, @Header("dbname") String dbName, @Query("smcode") String SmCode);
 
     @POST("IMEIMapping/InsertRcDistribution")
-    Call<JsonObject> insertRcDistribution( @Header("Authorization") String token,
-                                           @Header("dbname") String dbName,
+    Call<JsonObject> insertRcDistribution( @retrofit2.http.Header("Authorization") String token,
+                                           @retrofit2.http.Header("dbname") String dbName,
                                            @Body JsonObject jsonObject);
-    @POST("InstCollection/SaveReceipt")
+    @POST("InstCollection/SaveReceipt")//working
     Call<JsonObject> insertRcDistributionNew(@Body PosInstRcvNew jsonObject,
-                                             @Header("Authorization") String token,
-                                             @Header("dbname") String dbName,
-                                             @Header("userid") String userid);
+                                             @retrofit2.http.Header("Authorization") String token,
+                                             @retrofit2.http.Header("dbname") String dbName,
+                                             @retrofit2.http.Header("userid") String userid);
 
-    @POST("InstCollection/UpdateQrRcCollection")
+    @POST("InstCollection/UpdateQrRcCollection")//working
     Call<JsonObject> insertQRPayment(@Body QRCollStatus jsonObject,
-                                     @Header("Authorization") String token,
-                                     @Header("dbname") String dbName,
-                                     @Header("userid") String userid);
+                                     @retrofit2.http.Header("Authorization") String token,
+                                     @retrofit2.http.Header("dbname") String dbName,
+                                     @retrofit2.http.Header("userid") String userid);
 
-    @GET("InstCollection/getDueInstallments")
-    Call<List<DueData>> dueInstallments(@Header("Authorization") String token,
-                                        @Header("Imei") String Imei,
-                                        @Header("dbname") String dbName,
-                                        @Header("userid") String userid,
-                                        @Query("gdate") String gdate,
-                                        @Query("CityCode") String CityCode);
+    @GET("InstCollection/getDueInstallments")//working
+    Call<CustomerListModel> dueInstallments(@retrofit2.http.Header("Authorization") String token,
+                                                  @retrofit2.http.Header("imeino") String Imei,
+                                                  @retrofit2.http.Header("dbname") String dbName,
+                                                  @retrofit2.http.Header("userid") String userid,
+                                                  @Query("gdate") String gdate,
+                                                  @Query("CityCode") String CityCode);
 
     @GET("InstCollection/getFMSettlementData")
-    Call<List<PosInstRcv>> getFMSettlementData(@Header("Authorization") String token,
-                                         @Header("Imei") String Imei,
-                                         @Header("dbname") String dbName,
+    Call<List<PosInstRcv>> getFMSettlementData(@retrofit2.http.Header("Authorization") String token,
+                                         @retrofit2.http.Header("Imei") String Imei,
+                                         @retrofit2.http.Header("dbname") String dbName,
                                          @Query("FoCode") String FoCode,
                                          @Query("Creator") String Creator);
 
     @GET("InstCollection/getFMSettlementData")
-    Call<Void> updateUUID(@Header("Authorization") String token,
-                                @Header("dbname") String dbName,
+    Call<Void> updateUUID(@retrofit2.http.Header("Authorization") String token,
+                                @retrofit2.http.Header("dbname") String dbName,
                                 @Body JsonObject jsonObject);
 
     @GET("InstCollection/SaveReceipt")
-    Call<Void> saveDeposit(@Header("Authorization") String token,
-                                @Header("dbname") String dbName,
+    Call<Void> saveDeposit(@retrofit2.http.Header("Authorization") String token,
+                                @retrofit2.http.Header("dbname") String dbName,
                                 @Body JsonObject jsonObject);
+
+    @POST("DocESignLoanApplication/DownloadUnSignedDoc")
+    Call<ResponseBody> DownloadDocFirstEsign(@Header("Authorization") String token,
+                                       @Header("dbname") String dbName,
+                                       @Body JsonObject jsonObject);
+
+    @FormUrlEncoded
+    @POST("token")
+    Call<LiveToken> liveToken(@Header("Authorization") String token,
+                              @Header("devid") String devid,
+                              @Header("dbname") String dbname,
+                              @Header("imeino") String imeino,
+                              @Header("access") String access,
+                              @Header("content-type") String content,
+                              @Header("Accept") String Accept,
+                              @Field("grant_type") String grant_type,
+                              @Field("username") String username,
+                              @Field("password") String password);
+
+    @FormUrlEncoded
+    @POST("{subUrl}") // CallBack APi
+    Call<ResponseBody> postEntityEsign(@Field("msg") String msg, @Field("obj") String obj,@Path("subUrl")String subUrl);
+
+
+    @POST("api/docsESignPvn/AcceptESign") // Replace with your actual endpoint
+    Call<ResponseBody> postEntityESignSubmit(@Body RequestBody body);
+
+    @POST("LiveTrack/UpdateFiStatus")
+    Call<JsonObject> restrictBorrower(@Query("ficode") String ficode,@Query("creator") String creator,@Query("Approved") String Approved);
+
+    @POST("LiveTrack/SourcingStatus")
+    Call<JsonObject> updateStatus(@Query("ficode") String Ficode, @Query("creator") String Creator);
+
+    @POST("Crif/InitilizeCrif")
+    Call<JsonObject> generateCrifForVehicle(@Body JsonObject jsonObject);
+    @POST("PDL.Mobile.API/api/Crif/GetBREDetails")
+    Call<BREResponse> getBREStatus(@Query("creator") String creator, @Query("ficode") String ficode);
+
+    @POST("BreEligibility/SaveBreEligibility")
+    Call<Void> saveBreEligibility(@Body RequestBody body);
 
 }

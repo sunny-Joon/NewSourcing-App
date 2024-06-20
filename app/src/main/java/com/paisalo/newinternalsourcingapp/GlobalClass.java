@@ -48,6 +48,7 @@ public class GlobalClass extends Application {
     public static String AreaCode = "";
     public static String UserName = "";
     public static String Token = "";
+    public static String LiveToken = "";
     public static String Tag = "";
     public static String Imei = "";
     public static String DATABASE_NAME = "";
@@ -56,6 +57,11 @@ public class GlobalClass extends Application {
     public static String dbname = "yfMerfC6mRvfr0AOoHmOJ8Et9Q9MPwNEKzFdLsfEs1A=";
     public static final String MANAGER_TAG = "MANAGERD";
     public static final int EKYC_REQUEST_CODE = 403;
+
+    public static final String ESIGNER_TAG = "ESIGNER";
+    public static final String ESIGN_TYPE_TAG = "ESIGN_TYPE";
+    public static final String ESIGN_BORROWER = "ESIGN_BORROWER";
+
 
     static String currentFileName;
     private static ImageCapture imageCapture;

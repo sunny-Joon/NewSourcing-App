@@ -259,29 +259,29 @@ public class DueData implements Serializable {
         return "DueData{" +
                 "db='" + db + '\'' +
                 ", creator='" + creator + '\'' +
-                ", FoCode='" + FoCode + '\'' +
-                ", CityCode='" + CityCode + '\'' +
-                ", CaseCode='" + CaseCode + '\'' +
-                ", PartyCd='" + PartyCd + '\'' +
-                ", CustName='" + CustName + '\'' +
-                ", FHName='" + FHName + '\'' +
-                ", Address='" + Address + '\'' +
-                ", Mobile='" + Mobile + '\'' +
-                ", FirstInstDate=" + FirstInstDate +
-                ", NofInstDue=" + NofInstDue +
-                ", InstsAmtDue=" + InstsAmtDue +
-                ", InstDueAsOn=" + InstDueAsOn +
-                ", ToBeDueAmt=" + ToBeDueAmt +
-                ", ToBeDueDate=" + ToBeDueDate +
-                ", DataAsOn=" + DataAsOn +
-                ", InstData=" + InstData +
-                ", dbName='" + dbName + '\'' +
-                ", aadhar='" + aadhar + '\'' +
-                ", isNachReg='" + isNachReg + '\'' +
-                ", InterestAmt=" + InterestAmt +
-                ", SchmCode='" + SchmCode + '\'' +
-                '}';
-    }
+                    ", FoCode='" + FoCode + '\'' +
+                    ", CityCode='" + CityCode + '\'' +
+                    ", CaseCode='" + CaseCode + '\'' +
+                    ", PartyCd='" + PartyCd + '\'' +
+                    ", CustName='" + CustName + '\'' +
+                    ", FHName='" + FHName + '\'' +
+                    ", Address='" + Address + '\'' +
+                    ", Mobile='" + Mobile + '\'' +
+                    ", FirstInstDate=" + FirstInstDate +
+                    ", NofInstDue=" + NofInstDue +
+                    ", InstsAmtDue=" + InstsAmtDue +
+                    ", InstDueAsOn=" + InstDueAsOn +
+                    ", ToBeDueAmt=" + ToBeDueAmt +
+                    ", ToBeDueDate=" + ToBeDueDate +
+                    ", DataAsOn=" + DataAsOn +
+                    ", InstData=" + InstData +
+                    ", dbName='" + dbName + '\'' +
+                    ", aadhar='" + aadhar + '\'' +
+                    ", isNachReg='" + isNachReg + '\'' +
+                    ", InterestAmt=" + InterestAmt +
+                    ", SchmCode='" + SchmCode + '\'' +
+                    '}';
+        }
 
     public static int getSelectedCount(List<Installment> installments) {
         int tot = 0;

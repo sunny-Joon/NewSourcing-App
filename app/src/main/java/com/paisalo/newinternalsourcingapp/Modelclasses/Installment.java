@@ -40,6 +40,14 @@ public class Installment {
     public Installment() {
     }
 
+    public int getAmountAsInt() {
+        try {
+            return Integer.parseInt(String.valueOf(Amount));
+        } catch (NumberFormatException e) {
+            return 0;
+        }
+    }
+
     public Installment(Installment installment) {
         this.DueDate = installment.DueDate;
         this.Amount = installment.Amount;

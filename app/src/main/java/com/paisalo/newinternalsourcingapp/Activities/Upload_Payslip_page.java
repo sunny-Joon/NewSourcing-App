@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.gson.JsonObject;
+import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.KYCActivity;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.ImeiMappingModel;
 import com.paisalo.newinternalsourcingapp.R;
@@ -60,8 +61,8 @@ public class Upload_Payslip_page extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_payslip_page);
-        getSupportActionBar().show();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+       /* getSupportActionBar().show();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
         Intent intent=getIntent();
         smcode=intent.getStringExtra("SMCODE");
         editTextProductName=findViewById(R.id.editTextProductName);
@@ -98,6 +99,7 @@ public class Upload_Payslip_page extends AppCompatActivity {
 
         final RequestBody smcoderequest = RequestBody.create(MediaType.parse("text/plain"), smCode);
         Call<JsonObject> call=apiInterface.saveReciptOnpayment(GlobalClass.Token,GlobalClass.dbname,ImagesParts,smcoderequest);
+        Log.d("TAG", "saveReciept: " +ImagesParts+" "+ smcoderequest);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -164,11 +166,8 @@ public class Upload_Payslip_page extends AppCompatActivity {
     }
 
     private void takePhoto() {
-
-
-       /* ImagePicker.with(this)
-                .cameraOnly()
-                .start(REQUEST_TAKE_PHOTO);*/
+        Intent intent = new Intent(Upload_Payslip_page.this, CameraActivity.class);
+        startActivityForResult(intent, 1212);
     }
 
     private void openGallery() {
@@ -228,60 +227,16 @@ public class Upload_Payslip_page extends AppCompatActivity {
 
                 pickedFile=new File(getRealPathFromURI(selectedImageUri));
             }
-        }/* else if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
-
-            if (data != null) {
-                selectedImageUri = data.getData();
-                CropImage.activity(selectedImageUri)
-                        .setGuidelines(CropImageView.Guidelines.ON)
-                        .setMultiTouchEnabled(true)
-                        .start(this);
-            } else {
-                Log.e("ImageData", "Null");
-                Toast.makeText(Upload_Payslip_page.this, "Image Data Null", Toast.LENGTH_SHORT).show();
-            }
-
-        }
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            Exception error = null;
-            if (data != null) {
-                Uri imageUri = CameraUtils.finaliseImageCropUri(resultCode, data, 300, error, false);
-                //Toast.makeText(activity, imageUri.toString(), Toast.LENGTH_SHORT).show();
-                File tempCroppedImage = new File(imageUri.getPath());
+        }else if(requestCode == 1212 && resultCode == RESULT_OK){
+            if (data != null && data.hasExtra("croppedImagePath")) {
+                String croppedImagePath = data.getStringExtra("croppedImagePath");
+                File tempCroppedImage = new File(croppedImagePath);
                 Log.e("tempCroppedImage", tempCroppedImage.getPath() + "");
-
-
-                if (error == null) {
-
-                    if (imageUri != null) {
-
-                        if (tempCroppedImage.length() > 100) {
-                            (new File(selectedImageUri.getPath())).delete();
-                            try {
-
-                                File croppedImage = CameraUtils.moveCachedImage2Storage(this, tempCroppedImage, true, 1);
-
-                                setImagepath(croppedImage);
-
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-
-                        } else {
-                            Toast.makeText(this, "CroppedImage FIle Length:" + tempCroppedImage.length() + "", Toast.LENGTH_SHORT).show();
-                        }
-                    } else {
-                        Toast.makeText(this, imageUri.toString() + "", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(this, error.toString() + "", Toast.LENGTH_SHORT).show();
+                setImagepath(tempCroppedImage);
+            } else{
+                    Toast.makeText(this, "CroppedImage FIle Length:", Toast.LENGTH_SHORT).show();
                 }
-            } else {
-                Toast.makeText(this, "CropImage data: NULL", Toast.LENGTH_SHORT).show();
             }
-            }
-*/
-
     }
 
 

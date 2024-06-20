@@ -44,7 +44,9 @@ import com.paisalo.newinternalsourcingapp.Entities.onListCReatorInteraction;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.CreatorListModels.CreatorListModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.CreatorListModels.CreatorListModelData;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.DownloadEsignXml;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.ImeiMappingModel;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.LiveToken;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.LoginModels.DataModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.LoginModels.FoImeiModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.LoginModels.FoModel;
@@ -266,6 +268,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                     jsonObject.addProperty( "latitude", String.valueOf(gpsTracker.getLatitude()));
                     jsonObject.addProperty( "longitude", String.valueOf(gpsTracker.getLongitude()));
                     Log.d("TAG", "onClick: "+jsonObject);
+
 
                     ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
                     Call<ImeiMappingModel> call=apiInterface.getImeiMappingReq(GlobalClass.Token,GlobalClass.dbname,jsonObject);
@@ -651,6 +654,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
 
 
                         ImageAPI();
+                        LiveTokenApi();
 
 
                        /* if (foModel != null && foImeiModel != null && tokenDetailsModel != null) {
@@ -675,6 +679,35 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
             }
         });
     }
+
+    private void LiveTokenApi() {
+        ApiInterface apiInterface1 = ApiClient.getClient2().create(ApiInterface.class);
+        Call<LiveToken> tokenCall=apiInterface1.liveToken(GlobalClass.LiveToken,GlobalClass.DevId,"SBIPDLCOL",
+                GlobalClass.Imei,"application/json","application/x-www-form-urlencoded","application/json","password",username,password);
+
+        tokenCall.enqueue(new Callback<LiveToken>() {
+            @Override
+            public void onResponse(Call<LiveToken> call, Response<LiveToken> response) {
+                Log.d("TAG", "LiveToken: "+  "Start");
+
+                if (response.isSuccessful()){
+                    Log.d("TAG", "LiveToken: "+  "Successful");
+
+                    LiveToken liveToken = response.body();
+                    if(liveToken != null){
+                        GlobalClass.LiveToken = "Bearer "+liveToken.getAccessToken();
+                        Log.d("TAG", "LiveToken: "+  liveToken.getAccessToken().toString());
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<LiveToken> call, Throwable t) {
+                Log.d("TAG", "LiveToken: "+ t.getMessage());
+
+            }
+        });
+    }
+
     private void getTargetApi() {
 
         Calendar calendar = Calendar.getInstance();
@@ -683,34 +716,44 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
 
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<TargetResponseModel> call = apiInterface.getTarget(GlobalClass.Token,GlobalClass.dbname,GlobalClass.Id, String.valueOf(month), String.valueOf(year));
+        Log.d("TAG", "getTargetApi: " +GlobalClass.Token+" "+GlobalClass.dbname+" "+GlobalClass.Id+" "+ String.valueOf(month)+" "+ String.valueOf(year) );
         call.enqueue(new Callback<TargetResponseModel>() {
             @Override
             public void onResponse(Call<TargetResponseModel> call, Response<TargetResponseModel> response) {
-                if (response.body().getMessage().equals("No Record Found!!")) {
-                    stTarget_Popup = "000000";
-                    RangeCategoriesApi();
+                Log.d("TAG", "getTargetApi: " +"start" );
 
-                } else if (response.isSuccessful() && response.body() != null && response.body().getResponseModels().size() > 0) {
-                    List<ResponseModel> responseModel = response.body().getResponseModels();
+                if(response.isSuccessful()) {
+                    Log.d("TAG", "getTargetApi: " +"not null" );
 
-                    stTarget_Popup = responseModel.get(0).getTargetCommAmt().toString();
+                    if (response.body().getMessage().equals("No Record Found!!")) {
+                        stTarget_Popup = "000000";
+                        RangeCategoriesApi();
+
+                    } else if (response.isSuccessful() && response.body() != null && response.body().getResponseModels().size() > 0) {
+                        List<ResponseModel> responseModel = response.body().getResponseModels();
+
+                        stTarget_Popup = responseModel.get(0).getTargetCommAmt().toString();
 
 
-                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("stTarget_Popup", stTarget_Popup);
-                    editor.apply();
-                    RangeCategoriesApi();
+                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("stTarget_Popup", stTarget_Popup);
+                        editor.apply();
+                        RangeCategoriesApi();
 
+                    } else {
+                        Log.d("TAG", "getTargetApi: " + "Get Target Api Unsuccessful");
+                        Toast.makeText(LoginActivity.this, "1002", Toast.LENGTH_SHORT).show();
+                    }
                 }else{
-                    Log.d("TAG", "MyApp: "+ "Get Target Api Unsuccessful");
-                    Toast.makeText(LoginActivity.this, "1002", Toast.LENGTH_SHORT).show();
+                    Log.d("TAG", "getTargetApi: " +"unsuccessful" );
+
                 }
             }
 
             @Override
             public void onFailure(Call<TargetResponseModel> call, Throwable t) {
-                Log.d("TAG", "MyApp: "+ "Target Api Failure");
+                Log.d("TAG", "getTargetApi: "+ "Target Api Failure");
                 Toast.makeText(LoginActivity.this, "1002", Toast.LENGTH_SHORT).show();
             }
         });
@@ -725,7 +768,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
 
                 if(response.isSuccessful() && response.body() != null){
                 if (response.body().getMessage().equals("No Record Found")) {
-                    getTargetApi();
+                  //  getTargetApi();
                     image = "null";
                 } else {
 
@@ -741,8 +784,8 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                     editor.putString("image", image);
                     editor.apply();
 
-                    getTargetApi();
-
+                    //getTargetApi();
+                    RangeCategoriesApi();
                 }
             }else {
                     Log.d("TAG", "MyApp: " + "Image Api Unsuccessful");

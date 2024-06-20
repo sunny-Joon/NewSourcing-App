@@ -1,19 +1,12 @@
 package com.paisalo.newinternalsourcingapp.Adapters;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivityMenu;
-import com.paisalo.newinternalsourcingapp.Activities.FirstEsignActivity;
-import com.paisalo.newinternalsourcingapp.Activities.SecondEsignActivity;
-import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.HouseVisitActivity1;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.BorrowerListModels.BorrowerListDataModel;
 import com.paisalo.newinternalsourcingapp.R;
 import java.util.List;
@@ -22,10 +15,12 @@ public class BorrowerListAdapter extends RecyclerView.Adapter<BorrowerListAdapte
 
     private Context context;
     private List<BorrowerListDataModel> borrowerListDataModel;
+    private OnItemClickListener listener;
 
-    public BorrowerListAdapter(Context context, List<BorrowerListDataModel> borrowerListDataModel) {
+    public BorrowerListAdapter(Context context, List<BorrowerListDataModel> borrowerListDataModel, OnItemClickListener listener) {
         this.context = context;
         this.borrowerListDataModel = borrowerListDataModel;
+        this.listener = listener;
     }
 
     @Override
@@ -53,11 +48,8 @@ public class BorrowerListAdapter extends RecyclerView.Adapter<BorrowerListAdapte
         } else {
             holder.fatherOrSpouseTextView.setText(dataModel.getfFname() + " " + dataModel.getfMname() + " " + dataModel.getfLname());
         }
-        if(dataModel.getCode() != null){
-            holder.fiCodeTextView.setText(dataModel.getCode());
-        }else{
-            holder.fiCodeTextView.setText(dataModel.getCode());
-        }
+
+        holder.fiCodeTextView.setText(String.valueOf(dataModel.getCode()) != null ? String.valueOf(dataModel.getCode()) : "N/A");
         holder.mobileTextView.setText(dataModel.getpPh3());
         holder.creatorTextView.setText(dataModel.getCreator());
         holder.addressTextView.setText(dataModel.getAddr());
@@ -66,6 +58,10 @@ public class BorrowerListAdapter extends RecyclerView.Adapter<BorrowerListAdapte
     @Override
     public int getItemCount() {
         return borrowerListDataModel.size();
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(BorrowerListDataModel adapterItem);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -88,44 +84,10 @@ public class BorrowerListAdapter extends RecyclerView.Adapter<BorrowerListAdapte
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
                         BorrowerListDataModel dataModel = borrowerListDataModel.get(position);
-                        Intent intent = ((Activity) context).getIntent();
-                        String id = intent.getStringExtra("keyName");
-                        String fiCode = dataModel.getCode();
-                        String creator = dataModel.getCreator();
-                        if (id != null) {
-                            openActivity(id, fiCode, creator, borrowerListDataModel,position);
-                        }
+                        listener.onItemClick(dataModel);
                     }
                 }
             });
-        }
-
-        public void openActivity(String id, String fiCode, String creator,List<BorrowerListDataModel> borrowerListDataModel ,int position) {
-            Intent intent = null;
-            switch (id) {
-                case "FEsign":
-                    intent = new Intent(context, FirstEsignActivity.class);
-                    break;
-                case "SEsign":
-                    intent = new Intent(context, SecondEsignActivity.class);
-                    break;
-                case "Application":
-                    intent = new Intent(context, ApplicationFormActivityMenu.class);
-                    intent.putExtra("fiCode", fiCode); // Pass fiCode to the intent
-                    intent.putExtra("creator", creator); // Pass creator to the intent
-                    break;
-                case "HVisit":
-                    intent = new Intent(context, HouseVisitActivity1.class);
-                    intent.putExtra("fiCode", fiCode); // Pass fiCode to the intent
-                    intent.putExtra("creator", creator); // Pass creator to the intent
-                    break;
-            }
-
-            if (intent != null) {
-                context.startActivity(intent);
-            } else {
-                Log.e("ViewHolder", "Invalid id received: " + id);
-            }
         }
     }
 }

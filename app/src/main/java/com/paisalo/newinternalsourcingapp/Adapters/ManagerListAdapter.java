@@ -115,48 +115,59 @@ public class ManagerListAdapter extends RecyclerView.Adapter<ManagerListAdapter.
     }
     public void showPopup() {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setView(R.layout.loanpopup);
-
+        View alertView = LayoutInflater.from(context).inflate(R.layout.loanpopup, null);
+        builder.setView(alertView);
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
 
-        //   alertDialog.getWindow().setLayout(600, 600);
+        // Optionally, set the size of the alert dialog window
+        // alertDialog.getWindow().setLayout(600, 600);
 
         alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
+                // Handle dialog dismiss if needed
             }
         });
 
-        CardView application = alertDialog.findViewById(R.id.loanApplication);
-        application.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, BorrowerListActivity.class);
-                intent.putExtra("keyName", "FEsign");
-                intent.putExtra("foCode", foCode);
-                intent.putExtra("creator", creator);
-                intent.putExtra("areaCode", areaCode);
-                context.startActivity(intent);
-                alertDialog.dismiss();
-            }
-        });
+        // Use alertView to find the CardView
+        CardView application = alertView.findViewById(R.id.loanApplication);
+      //  if (application != null) {
+            application.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, BorrowerListActivity.class);
+                    intent.putExtra("keyName", "FEsign");
+                    intent.putExtra("foCode", foCode);
+                    intent.putExtra("creator", creator);
+                    intent.putExtra("areaCode", areaCode);
+                    context.startActivity(intent);
+                    alertDialog.dismiss();
+                }
+            });
+        /*} else {
+            Log.e("ManagerListAdapter", "CardView loanApplication not found");
+        }*/
 
-        CardView documentation = alertDialog.findViewById(R.id.loanDocumentation);
-        documentation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //   Intent intent = new Intent(itemView.getContext(), SecondEsignActivity.class);
-                Intent intent = new Intent(context, BorrowerListActivity.class);
-                intent.putExtra("keyName", "SEsign");
-                intent.putExtra("foCode", foCode);
-                intent.putExtra("creator", creator);
-                intent.putExtra("areaCode", areaCode);
-                context.startActivity(intent);
-                alertDialog.dismiss();
-            }
-        });
+        CardView documentation = alertView.findViewById(R.id.loanDocumentation);
+        if (documentation != null) {
+            documentation.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, BorrowerListActivity.class);
+                    intent.putExtra("keyName", "SEsign");
+                    intent.putExtra("foCode", foCode);
+                    intent.putExtra("creator", creator);
+                    intent.putExtra("areaCode", areaCode);
+                    context.startActivity(intent);
+                    alertDialog.dismiss();
+                }
+            });
+        } else {
+            Log.e("ManagerListAdapter", "CardView loanDocumentation not found");
+        }
     }
+
     @Override
     public int getItemCount() {
         return dataList.size();

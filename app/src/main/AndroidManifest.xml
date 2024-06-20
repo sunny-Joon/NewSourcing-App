@@ -54,9 +54,9 @@
             android:exported="false" />
         <activity
             android:name=".Activities.CollectionReportActivity"
-
+            android:exported="false" />
+        <activity
             android:name=".Activities.ActivityTermAndCondition"
-
             android:exported="false" />
         <activity
             android:name=".Fragments.home.IncentiveAnimatedActivity"

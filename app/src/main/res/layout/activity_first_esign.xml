@@ -6,13 +6,11 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <WebView
-        android:id="@+id/pdfview"
-        android:layout_alignParentTop="true"
+    <ImageView
+        android:id="@+id/pdfView"
         android:layout_width="match_parent"
-        android:layout_margin="6dp"
         android:layout_height="match_parent"
-        android:layout_above="@+id/fragDetailESign"/>
+        android:contentDescription="PDF View" />
 
     <LinearLayout
         android:id="@+id/fragDetailESign"
