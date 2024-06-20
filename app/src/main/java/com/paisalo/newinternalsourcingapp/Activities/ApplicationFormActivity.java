@@ -53,7 +53,7 @@ public class ApplicationFormActivity extends AppCompatActivity {
             }
         }
 
-        setSupportActionBar(toolbar);
+//        setSupportActionBar(toolbar);
 
         String fragmentId = intent.getStringExtra("Id");
 
