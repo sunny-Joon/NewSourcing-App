@@ -371,6 +371,7 @@ public class KYCActivity2 extends AppCompatActivity {
                         public void onResponse(Call<SaveFiModel> call1, Response<SaveFiModel> response1) {
                             Log.d("TAG", "rrrrrrrrrrSaveFiRun: " + response1.body());
                             if (response1.isSuccessful()) {
+                                customProgressDialog.dismiss();
                                 Log.d("TAG", "rrrrrrrrrrSaveFisuccessful: " + response1.body().getMessage());
 
                                 SaveFiModel saveFiModel = response1.body();
@@ -400,20 +401,26 @@ public class KYCActivity2 extends AppCompatActivity {
                                     @Override
                                     public void onResponse(Call<SaveVerifiedInfo> call2, Response<SaveVerifiedInfo> responses2) {
                                         if (responses2.isSuccessful()) {
+                                            customProgressDialog.dismiss();
                                             SaveVerifiedInfo saveVerifiedInfo = responses2.body();
 
                                             RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), file);
                                             MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
 
 
-                                            Call<ProfilePicModel> call3 = apiInterface.updateprofilePic(GlobalClass.Token, GlobalClass.dbname, Message1.trim(), GlobalClass.Creator, GlobalClass.Tag, body);
+
+                                            Log.d("TAG", "onResponse:apiclient "+ApiClient.getClient4().create(ApiInterface.class));
+                                            Call<ProfilePicModel> call3 = apiInterface.updateprofilePic(GlobalClass.Token, GlobalClass.dbname, Message1.trim(), GlobalClass.Creator, GlobalClass.Tag,"0", body);
 
                                             call3.enqueue(new Callback<ProfilePicModel>() {
                                                 @Override
                                                 public void onResponse(Call<ProfilePicModel> call3, Response<ProfilePicModel> response3) {
                                                     if (response3.isSuccessful()) {
                                                         if(response3.body().getMessage().equals("Record Create Successfully!!")) {
-                                                            Call<CkycNoMODEL> call = apiInterface.getCkycNo(GlobalClass.Token, GlobalClass.dbname, Message1, GlobalClass.Creator);
+                                                            ApiInterface apiInterface4 = ApiClient.getClient4().create(ApiInterface.class);
+
+                                                            Call<CkycNoMODEL> call = apiInterface4.getCkycNo(GlobalClass.Token, GlobalClass.dbname, Message1, GlobalClass.Creator);
+                                                            Log.d("TAG", "onResponse:call "+call);
                                                             call.enqueue(new Callback<CkycNoMODEL>() {
                                                                 @Override
                                                                 public void onResponse(Call<CkycNoMODEL> call, Response<CkycNoMODEL> response) {
@@ -423,6 +430,7 @@ public class KYCActivity2 extends AppCompatActivity {
                                                                             Log.d("TAG", "onResponse1:ckyc1 " + result.getData());
                                                                             customProgressDialog.dismiss();
                                                                             FiCPopup fiCPopup = new FiCPopup("Your Ficode is Here", Message1);
+
                                                                             fiCPopup.show(getSupportFragmentManager(), "CustomDialog");
                                                                         } else {
                                                                             Toast.makeText(KYCActivity2.this, "Failed", Toast.LENGTH_SHORT).show();

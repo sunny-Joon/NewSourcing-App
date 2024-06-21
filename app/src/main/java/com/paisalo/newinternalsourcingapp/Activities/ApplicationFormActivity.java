@@ -20,7 +20,6 @@ import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.ApplicationFormFr
 import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.ApplicationFormFragments.GuarantorsFragment;
 import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.ApplicationFormFragments.KycScanningFragment;
 import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.ApplicationFormFragments.PersonalDetailsFragment;
-import com.paisalo.newinternalsourcingapp.Modelclasses.FiJsonObject;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFDataModel;
 import com.paisalo.newinternalsourcingapp.R;
 
