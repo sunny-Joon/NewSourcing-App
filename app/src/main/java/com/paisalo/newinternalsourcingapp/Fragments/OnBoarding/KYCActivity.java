@@ -164,7 +164,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
     TextView txtVDistrictName, txtCityName, txtVillageName, txtSubDistictName;
 
-    String AadharID, isAadharVerified, name, Fname, Lname, Age, DOB, guardian,gender, guardianRelatnWithBorrower, P_Add1, P_Add2, P_Add3, P_City,
+    String AadharID, isAadharVerified, name, Fname,Mname, Lname, Age, DOB, guardian,gender, guardianRelatnWithBorrower, P_Add1, P_Add2, P_Add3, P_City,
             P_State, P_Ph3, PanNO, DrivingLic, voterId, motherName, motherMiddleName, motherLastName, fatherName, fatherMiddleName, fatherLastName,
             F_Fname, F_Mname, F_Lname, isMarried, spouseFirstName, spouseMiddleName, spouseLastName, verifiedPanName = "", verifiedLicensename = "",
             verifiedVotername = "", villageCode, subDistCode, distCode, cityCode, stateCode,currentPhotoPathBefWork;
@@ -1920,15 +1920,25 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             allConditionsSatisfied = false;
         } else {
             name = editTextName.getText().toString().isEmpty() ? "" : editTextName.getText().toString();
-            String[] parts1 = name.split(" ");
-            if (parts1.length == 1) {
-                Fname = parts1[0];
-            } else if (parts1.length == 2) {
-                Fname = parts1[0];
-                Lname = parts1[1];
+            String[] parts = name.split(" ");
+            if (parts.length == 1) {
+                Fname = parts[0];
+            } else if (parts.length == 2) {
+                Fname = parts[0];
+                Lname = parts[1];
+            } else if (parts.length > 2) {
+                Fname = parts[0];
+                Mname = parts[1];
+                StringBuilder restBuilder = new StringBuilder();
+                for (int i = 2; i < parts.length; i++) {
+                    restBuilder.append(parts[i]);
+                    if (i < parts.length - 1) {
+                        restBuilder.append(" ");
+                    }
+                }
+                Lname = restBuilder.toString();
             }
         }
-        Log.d("TAG", "onClickTAG1: " + allConditionsSatisfied);
 
         if (editTextDob.getText().toString().isEmpty()) {
             editTextDob.setError("Select Date");
@@ -2235,6 +2245,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             jsonData.setAadharID(AadharID);
             jsonData.setAge(Age);
             jsonData.setFname(Fname);
+            jsonData.setFname(Mname);
             jsonData.setLname(Lname);
             jsonData.setDob(DOB);
             jsonData.setPAdd1(P_Add1);

@@ -406,7 +406,7 @@ public class KYCActivity2 extends AppCompatActivity {
                                             MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
 
 
-                                            Call<ProfilePicModel> call3 = apiInterface.updateprofilePic(GlobalClass.Token, GlobalClass.dbname, Message1.trim(), GlobalClass.Creator, GlobalClass.Tag, body);
+                                            Call<ProfilePicModel> call3 = apiInterface.updateprofilePic(GlobalClass.Token, GlobalClass.dbname, Message1.trim(), GlobalClass.Creator, GlobalClass.Tag,"0", body);
 
                                             call3.enqueue(new Callback<ProfilePicModel>() {
                                                 @Override
