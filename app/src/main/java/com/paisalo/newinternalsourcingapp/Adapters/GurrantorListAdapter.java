@@ -1,5 +1,6 @@
 package com.paisalo.newinternalsourcingapp.Adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
@@ -16,15 +17,14 @@ import com.paisalo.newinternalsourcingapp.R;
 import com.paisalo.newinternalsourcingapp.RoomDatabase.ManagerListDataClass;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GurrantorListAdapter extends RecyclerView.Adapter<GurrantorListAdapter.MyViewHolder> {
 
     private Context context;
-    ArrayList<FiGuarantor> gurrantorList;
+    List<FiGuarantor> gurrantorList;
 
-
-
-    public GurrantorListAdapter(Context context, ArrayList<FiGuarantor> gurrantorList) {
+    public GurrantorListAdapter(Context context, List<FiGuarantor> gurrantorList) {
         this.context = context;
         this.gurrantorList = gurrantorList;
     }
@@ -35,6 +35,7 @@ public class GurrantorListAdapter extends RecyclerView.Adapter<GurrantorListAdap
         return new GurrantorListAdapter.MyViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull GurrantorListAdapter.MyViewHolder holder, int position) {
         FiGuarantor gurrantor = gurrantorList.get(position);
@@ -43,12 +44,10 @@ public class GurrantorListAdapter extends RecyclerView.Adapter<GurrantorListAdap
         holder.id.setText(gurrantor.getIdentityNo());
         holder.adhaaridTV.setText(gurrantor.getAadharID());
         holder.userNameTV.setText(gurrantor.getName());
-        holder.addressTV.setText(gurrantor.getOffAdd1()+gurrantor.getOffAdd2()+gurrantor.getOffAdd3());
+        holder.addressTV.setText(gurrantor.getOffAdd1()+","+gurrantor.getOffAdd2()+","+gurrantor.getOffAdd3());
         holder.mobileTV.setText(gurrantor.getPerMob1());
         holder.fatherOrSpouseTV.setText(gurrantor.getGurName());
-        holder.profilePicGur.setImageBitmap(BitmapFactory.decodeFile(gurrantor.getGurImage().getAbsolutePath()));
-
-
+       // holder.profilePicGur.setImageBitmap(BitmapFactory.decodeFile(gurrantor.getGurImage().getAbsolutePath()));
     }
 
     @Override
@@ -59,12 +58,10 @@ public class GurrantorListAdapter extends RecyclerView.Adapter<GurrantorListAdap
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-
         TextView addressTV,GRTV,id,mobileTV,adhaaridTV,fatherOrSpouseTV,userNameTV;
         ImageView profilePicGur;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-
             addressTV = itemView.findViewById(R.id.addressTV);
             profilePicGur = itemView.findViewById(R.id.profilePicGur);
             GRTV = itemView.findViewById(R.id.GRTV);

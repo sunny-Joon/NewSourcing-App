@@ -25,6 +25,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivityMenu;
 import com.paisalo.newinternalsourcingapp.Adapters.FaimlyMemberIncomeAdapter;
+import com.paisalo.newinternalsourcingapp.Adapters.FamilyBorrowingsAdapter;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFDataModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.FiFamMem;
@@ -46,7 +47,7 @@ import java.util.List;
 public class FamilyMembersIncomeFragment extends Fragment {
 
     FaimlyMemberIncomeAdapter adapter;
-    ArrayList<FiFamMem> memberincomelist;
+    List<FiFamMem> memberincomelist;
     RecyclerView recyclerView;
     Button  addBtn,delBtn,canBtn,addmemberincome;
     EditText faimlMemberName,etage,etBusiness,etTextincome;
@@ -85,13 +86,26 @@ public class FamilyMembersIncomeFragment extends Fragment {
         DatabaseClass databaseClass = DatabaseClass.getInstance(getContext());
         memberincomelist= new ArrayList<>();
 
-        if(allDataAFDataModel != null) {
-            list = allDataAFDataModel.getFiFamMems();
-        }
-       recyclerView = view.findViewById(R.id.memberincome);
+        recyclerView = view.findViewById(R.id.memberincome);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         FMIncomeButton = view.findViewById(R.id.addButton);
         addmemberincome = view.findViewById(R.id.addmemberincome);
+
+        if (allDataAFDataModel != null) {
+            if (allDataAFDataModel.getFiFamMems().size()>0) {
+                Log.d("TAG", "allDataAFDataModel: " + " list.size()");
+
+                list = allDataAFDataModel.getFiFamMems();
+                Log.d("TAG", "allDataAFDataModel: " + list.size());
+
+                adapter = new FaimlyMemberIncomeAdapter(getActivity(), list);
+                recyclerView.setAdapter(adapter);
+
+                addmemberincome.setVisibility(View.GONE);
+                FMIncomeButton.setVisibility(View.GONE);
+            }
+        }
+
         FMIncomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

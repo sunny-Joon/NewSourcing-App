@@ -23,6 +23,9 @@ public class FiJsonObject implements Serializable {
     @SerializedName("Fname")
     @Expose
     private String fname;
+    @SerializedName("Mname")
+    @Expose
+    private String mname;
     @SerializedName("Lname")
     @Expose
     private String lname;
@@ -472,7 +475,125 @@ public class FiJsonObject implements Serializable {
     public void setFiExtra(FiExtra fiExtra) {
         this.fiExtra = fiExtra;
     }
+    public String getGroupCode() {
+        return groupCode;
+    }
 
+    public void setGroupCode(String groupCode) {
+        this.groupCode = groupCode;
+    }
+
+    public String getMname() {
+        return mname;
+    }
+
+    public void setMname(String mname) {
+        this.mname = mname;
+    }
+
+    public String getpAdd1() {
+        return pAdd1;
+    }
+
+    public void setpAdd1(String pAdd1) {
+        this.pAdd1 = pAdd1;
+    }
+
+    public String getpAdd2() {
+        return pAdd2;
+    }
+
+    public void setpAdd2(String pAdd2) {
+        this.pAdd2 = pAdd2;
+    }
+
+    public String getpAdd3() {
+        return pAdd3;
+    }
+
+    public void setpAdd3(String pAdd3) {
+        this.pAdd3 = pAdd3;
+    }
+
+    public String getpCity() {
+        return pCity;
+    }
+
+    public void setpCity(String pCity) {
+        this.pCity = pCity;
+    }
+
+    public Integer getpPin() {
+        return pPin;
+    }
+
+    public void setpPin(Integer pPin) {
+        this.pPin = pPin;
+    }
+
+    public String getpPh3() {
+        return pPh3;
+    }
+
+    public void setpPh3(String pPh3) {
+        this.pPh3 = pPh3;
+    }
+
+    public String getfFname() {
+        return fFname;
+    }
+
+    public void setfFname(String fFname) {
+        this.fFname = fFname;
+    }
+
+    public String getfMname() {
+        return fMname;
+    }
+
+    public void setfMname(String fMname) {
+        this.fMname = fMname;
+    }
+
+    public String getfLname() {
+        return fLname;
+    }
+
+    public void setfLname(String fLname) {
+        this.fLname = fLname;
+    }
+
+    public String getpState() {
+        return pState;
+    }
+
+    public void setpState(String pState) {
+        this.pState = pState;
+    }
+
+    public String gettPh3() {
+        return tPh3;
+    }
+
+    public void settPh3(String tPh3) {
+        this.tPh3 = tPh3;
+    }
+
+    public int getfAmilyMember() {
+        return fAmilyMember;
+    }
+
+    public void setfAmilyMember(int fAmilyMember) {
+        this.fAmilyMember = fAmilyMember;
+    }
+
+    public Integer gettPin() {
+        return tPin;
+    }
+
+    public void settPin(Integer tPin) {
+        this.tPin = tPin;
+    }
 
     @Override
     public String toString() {

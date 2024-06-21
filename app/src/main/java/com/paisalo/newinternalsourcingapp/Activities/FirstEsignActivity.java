@@ -62,7 +62,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class FirstEsignActivity extends AppCompatActivity {
 
     private ImageView pdfView;
-int whichButton;
+    int whichButton;
     private PdfRenderer pdfRenderer;
     private PdfRenderer.Page currentPage;
     DialogInterface dlg;
@@ -82,6 +82,7 @@ int whichButton;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_esign);
 
+        pdfView = findViewById(R.id.pdfView);
         Intent intent = getIntent();
         if (intent != null) {
             borrower = (BorrowerListDataModel) intent.getSerializableExtra(GlobalClass.ESIGN_BORROWER);
@@ -118,7 +119,10 @@ int whichButton;
                          if(response.isSuccessful()){
                              Log.d("TAG", "onResponse2: " + response.body().contentLength());
                              boolean written = writeResponseBodyToDisk(response.body());
+
                              if (written) {
+                                 Log.d("TAG", "displayPdf1: "+ "display Pdf" );
+
                                  displayPdf(new File(getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "downloaded.pdf"));
                              } else {
                                  Toast.makeText(FirstEsignActivity.this, "Failed to write PDF", Toast.LENGTH_SHORT).show();
@@ -261,6 +265,8 @@ int whichButton;
     }
 
     private boolean writeResponseBodyToDisk(ResponseBody body) {
+        Log.d("TAG", "displayPdf1: "+ "display Pdf" );
+
         try {
             // Define the path where the file will be saved
             File pdfFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "downloaded.pdf");
@@ -308,9 +314,12 @@ int whichButton;
     }
 
     private void displayPdf(File file) {
+        Log.d("TAG", "displayPdf2: "+ "display Pdf" );
         try {
             parcelFileDescriptor = ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY);
             pdfRenderer = new PdfRenderer(parcelFileDescriptor);
+            Log.d("TAG", "displayPdf3: "+ "display Pdf" );
+
             openPage(0);
         } catch (IOException e) {
             e.printStackTrace();
@@ -318,6 +327,8 @@ int whichButton;
     }
 
     private void openPage(int index) {
+        Log.d("TAG", "displayPdf4: "+ "display Pdf" );
+
         if (pdfRenderer.getPageCount() <= index) {
             return;
         }
