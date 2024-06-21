@@ -111,10 +111,13 @@ public class BorrowerListActivity extends AppCompatActivity implements BorrowerL
                 break;
             case "SEsign":
                 intent = new Intent(this, SecondEsignActivity.class);
+                intent.putExtra(GlobalClass.ESIGN_TYPE_TAG, 0);
+                intent.putExtra(GlobalClass.ESIGN_BORROWER,adapterItem);
                 break;
             case "Application":
                 intent = new Intent(this, ApplicationFormActivityMenu.class);
-                intent.putExtra("fiCode", adapterItem.getCode());
+                intent.putExtra("fiCode", String.valueOf(adapterItem.getCode()));
+                Log.d("TAG", "openActivity: "+adapterItem.getCode() );
                 intent.putExtra("creator", adapterItem.getCreator());
                 break;
             case "HVisit":

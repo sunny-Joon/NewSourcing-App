@@ -407,9 +407,8 @@ public class KYCActivity2 extends AppCompatActivity {
                                             RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), file);
                                             MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
 
-
-
                                             Log.d("TAG", "onResponse:apiclient "+ApiClient.getClient4().create(ApiInterface.class));
+
                                             Call<ProfilePicModel> call3 = apiInterface.updateprofilePic(GlobalClass.Token, GlobalClass.dbname, Message1.trim(), GlobalClass.Creator, GlobalClass.Tag,"0", body);
 
                                             call3.enqueue(new Callback<ProfilePicModel>() {

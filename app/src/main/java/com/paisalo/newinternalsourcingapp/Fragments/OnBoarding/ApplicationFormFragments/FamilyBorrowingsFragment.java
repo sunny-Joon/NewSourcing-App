@@ -90,6 +90,23 @@ public class FamilyBorrowingsFragment extends Fragment {
         submitborrowerList = view.findViewById(R.id.submitborrowerList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         addBorrower = view.findViewById(R.id.FMIncome);
+
+        submitborrowerList.setVisibility(View.VISIBLE);
+        addBorrower.setVisibility(View.VISIBLE);
+        if (allDataAFDataModel != null) {
+            if (allDataAFDataModel.getFiFamLoans().size()>0) {
+                Log.d("TAG", "allDataAFDataModel: " + " list.size()");
+
+                list = allDataAFDataModel.getFiFamLoans();
+                Log.d("TAG", "allDataAFDataModel: " + list.size());
+
+                familyBorrowingsAdapter = new FamilyBorrowingsAdapter(getActivity(), list);
+                recyclerView.setAdapter(familyBorrowingsAdapter);
+
+                submitborrowerList.setVisibility(View.GONE);
+                addBorrower.setVisibility(View.GONE);
+            }
+        }
         addBorrower.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -123,6 +140,8 @@ public class FamilyBorrowingsFragment extends Fragment {
                 String selectOption = "--Select--";
                 ReasonforloanList.add(selectOption);
                 LoanUsedList.add(selectOption);
+
+
 
                 List<RangeCategoryDataClass> LoanUsed_DataList = databaseClass.dao().getAllRCDataListby_catKey("loan_purpose");
                 for (RangeCategoryDataClass data : LoanUsed_DataList) {

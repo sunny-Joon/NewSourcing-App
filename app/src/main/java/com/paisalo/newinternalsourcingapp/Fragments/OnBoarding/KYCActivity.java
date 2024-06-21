@@ -135,6 +135,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
     TextView txtVDistrictName, txtCityName, txtVillageName, txtSubDistictName;
 
+
     String AadharID, isAadharVerified, name, Fname,Mname, Lname, Age, DOB, guardian, gender, guardianRelatnWithBorrower, P_Add1, P_Add2, P_Add3, P_City,
             P_State, P_Ph3, PanNO, DrivingLic, voterId, motherName, motherMiddleName, motherLastName, fatherName, fatherMiddleName, fatherLastName,
             F_Fname, F_Mname, F_Lname, isMarried, spouseFirstName, spouseMiddleName, spouseLastName, verifiedPanName = "", verifiedLicensename = "",
@@ -1947,7 +1948,9 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             }
         }
 
+
         Log.d("TAG", "onClickTAG1: " + allConditionsSatisfied);
+
 
         if (editTextDob.getText().toString().isEmpty()) {
             editTextDob.setError("Select Date");
@@ -2263,6 +2266,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             Log.d("TAG", "createJsonObject:F_Fname "+Fname);
             jsonData.setMname(Mname);
             Log.d("TAG", "createJsonObject:F_Fname "+Mname);
+
             jsonData.setLname(Lname);
             Log.d("TAG", "createJsonObject:F_Fname "+Lname);
             String dob="";

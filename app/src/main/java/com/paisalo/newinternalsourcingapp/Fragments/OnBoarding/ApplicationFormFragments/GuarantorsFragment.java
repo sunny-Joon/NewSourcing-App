@@ -150,7 +150,7 @@ public class GuarantorsFragment extends Fragment {
     EditText etTextAadhar, etTextName, etTextAge, etTextDob, etTextGuardian, etTextAddress1, etTextAddress2, etTextAddress3, etTextCity, etTextPincode, etTextMobile, etTextvoterid, etTextPAN, etdrivingLicense;
     Spinner spin_gender, spin_state, spin_relationwithborr;
     String creator, tag, fiCode, aadharID, name, age, dob, gender, gurName, perAdd1, perAdd2, perAdd3, perCity, p_Pin, p_StateID, perMob1, voterID, panno, drivingLic, relationwithborr;
-
+    int GrNo;
     Bitmap bitmap;
     String timeStamp, currentPhotoPathBefWork;
 
@@ -175,20 +175,53 @@ public class GuarantorsFragment extends Fragment {
 
         gurrantorList = new ArrayList<>();
 
-
-
         DatabaseClass databaseClass = DatabaseClass.getInstance(getContext());
 
+        Log.d("TAG", "allDataAFDataModel: "+" list.size()");
+
+        if (allDataAFDataModel != null) {
+            Log.d("TAG", "allDataAFDataModel: "+" list.size()");
+
+            list =allDataAFDataModel.getFiGuarantors();
+            Log.d("TAG", "allDataAFDataModel: "+list.size());
+
+            allDataAFDataModel.getFiGuarantors();
+            adapter = new GurrantorListAdapter(getActivity(), list);
+            recyclerView.setAdapter(adapter);
+
+                  /*  Log.d("TAG", "allDataAFDataModel: "+ list.size());
+
+                    if (!list.isEmpty() && list != null) {
+                        Log.d("TAG", "allDataAFDataModel: "+list.get(0).getGrNo());
+                        etTextAadhar.setText(list.get(0).getAadharID());
+                        etTextName.setText(list.get(0).getName());
+                        etTextAge.setText(list.get(0).getAge());
+                        etTextDob.setText(list.get(0).getDob());
+                        etTextGuardian.setText(list.get(0).getGurName());
+                        etTextAddress1.setText(list.get(0).getPerAdd1());
+                        etTextAddress2.setText(list.get(0).getPerAdd2());
+                        etTextAddress3.setText(list.get(0).getPerAdd3());
+                        etTextCity.setText(list.get(0).getPerCity());
+                        etTextPincode.setText(list.get(0).getpPin());
+                        etTextMobile.setText(list.get(0).getPerMob1());
+                        etTextvoterid.setText(list.get(0).getVoterID());
+                        etTextPAN.setText(list.get(0).getPanNo());
+                        etdrivingLicense.setText(list.get(0).getDrivingLic());
+                    }*/
+        }
         gurrantorFormButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                GrNo = gurrantorList.size()+1;
                 LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View popupView = inflater.inflate(R.layout.guarantorspopup, null);
 
                 int width = LinearLayout.LayoutParams.WRAP_CONTENT;
                 int height = LinearLayout.LayoutParams.WRAP_CONTENT;
                 boolean focusable = true;
+
+
 
                 final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
 
@@ -212,6 +245,7 @@ public class GuarantorsFragment extends Fragment {
                 etTextPAN = popupView.findViewById(R.id.editTextPAN);
                 etdrivingLicense = popupView.findViewById(R.id.drivingLicense);
 
+
                 spin_gender = popupView.findViewById(R.id.spinnerOptions1);
                 spin_state = popupView.findViewById(R.id.spinnerOptions2);
                 spin_relationwithborr = popupView.findViewById(R.id.spinnerOptions);
@@ -221,26 +255,7 @@ public class GuarantorsFragment extends Fragment {
                 state_List.add(selectOption);
                 relationwithborr_List.add(selectOption);
 
-                if (allDataAFDataModel != null) {
-                    list = allDataAFDataModel.getFiGuarantors();
-                    if (!list.isEmpty() && list != null) {
-                        etTextAadhar.setText(list.get(0).getAadharID());
-                        etTextName.setText(list.get(0).getName());
-                        etTextAge.setText(list.get(0).getAge());
-                        etTextDob.setText(list.get(0).getDob());
-                        etTextGuardian.setText(list.get(0).getGurName());
-                        etTextAddress1.setText(list.get(0).getPerAdd1());
-                        etTextAddress2.setText(list.get(0).getPerAdd2());
-                        etTextAddress3.setText(list.get(0).getPerAdd3());
-                        etTextCity.setText(list.get(0).getPerCity());
-                        etTextPincode.setText(list.get(0).getpPin());
-                        etTextMobile.setText(list.get(0).getPerMob1());
-                        etTextvoterid.setText(list.get(0).getVoterID());
-                        etTextPAN.setText(list.get(0).getPanNo());
-                        etdrivingLicense.setText(list.get(0).getDrivingLic());
 
-                    }
-                }
 
                 List<RangeCategoryDataClass> gender_DataList = databaseClass.dao().getAllRCDataListby_catKey("gender");
                 for (RangeCategoryDataClass data : gender_DataList) {
@@ -369,7 +384,9 @@ public class GuarantorsFragment extends Fragment {
                 gurProfilePic.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        Intent intent = new Intent(getActivity(), CameraActivity.class);
+                        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+                        /*Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                         if (takePictureIntent.resolveActivity(getContext().getPackageManager()) != null) {
                             File photoFile = null;
                             try {
@@ -384,7 +401,7 @@ public class GuarantorsFragment extends Fragment {
                                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
                             }
-                        }
+                        }*/
                     }
 
                     private File createImageFile() throws IOException {
@@ -658,10 +675,10 @@ public class GuarantorsFragment extends Fragment {
                                 Log.d("TAG", "GurrantorLog: " + response.body().getMessage().toString());
                                 SubmitAlert(getActivity(), "success", "Data set Successfully");
                                 // profilepiapi
-                             /*   RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), file);
-                                MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+                                RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), profileImageFile);
+                                MultipartBody.Part body = MultipartBody.Part.createFormData("file", profileImageFile.getName(), requestFile);
 
-                                Call<ProfilePicModel> call3 = apiInterface.updateprofilePic(GlobalClass.Token, GlobalClass.dbname, fiCode.trim(), GlobalClass.Creator, "CLAR", body);
+                                Call<ProfilePicModel> call3 = apiInterface.updateprofilePic(GlobalClass.Token, GlobalClass.dbname, fiCode.trim(), GlobalClass.Creator, "CLAR","1", body);
 
                                 call3.enqueue(new Callback<ProfilePicModel>() {
                                     @Override
@@ -686,7 +703,7 @@ public class GuarantorsFragment extends Fragment {
                                         // Optionally log the error
                                         Log.e("ProfilePicUpdate", "Error updating profile picture");
                                     }
-                                });*/
+                                });
 
                             } else {
                                 Log.d("TAG", "GurrantorLog: " + response.code());
@@ -1646,7 +1663,7 @@ public class GuarantorsFragment extends Fragment {
         jsonGuarantor.addProperty("drivingLic", guarantor.getDrivingLic());
         jsonGuarantor.addProperty("relation", guarantor.getRelation());
 
-        jsonGuarantor.addProperty("grNo", 0);
+        jsonGuarantor.addProperty("grNo", GrNo);
         jsonGuarantor.addProperty("gurInitials", "");
         jsonGuarantor.addProperty("corrAddr", 0);
         jsonGuarantor.addProperty("firmName", "");
