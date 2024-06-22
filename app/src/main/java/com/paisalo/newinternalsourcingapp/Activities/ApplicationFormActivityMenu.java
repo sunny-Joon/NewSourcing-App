@@ -103,6 +103,8 @@ public class ApplicationFormActivityMenu extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), ApplicationFormActivity.class);
                 intent.putExtra("Id","aadhaar" );
+                intent.putExtra("fiCode",fiCode );
+                intent.putExtra("creator",creator );
                 intent.putExtra("allDataAFDataModel",allDataAFDataModel);
                 startActivity(intent);
             }
@@ -113,6 +115,8 @@ public class ApplicationFormActivityMenu extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), ApplicationFormActivity.class);
                 intent.putExtra("Id","personalDetails" );
+                intent.putExtra("fiCode",fiCode );
+                intent.putExtra("creator",creator );
                 intent.putExtra("allDataAFDataModel",allDataAFDataModel);
                 startActivity(intent);
             }
@@ -123,6 +127,8 @@ public class ApplicationFormActivityMenu extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), ApplicationFormActivity.class);
                 intent.putExtra("Id","borrowings" );
+                intent.putExtra("fiCode",fiCode );
+                intent.putExtra("creator",creator );
                 intent.putExtra("allDataAFDataModel",allDataAFDataModel);
                 startActivity(intent);
             }
@@ -133,6 +139,8 @@ public class ApplicationFormActivityMenu extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), ApplicationFormActivity.class);
                 intent.putExtra("Id","guarantors" );
+                intent.putExtra("fiCode",fiCode );
+                intent.putExtra("creator",creator );
                 intent.putExtra("allDataAFDataModel",allDataAFDataModel);
                 startActivity(intent);
             }
@@ -142,14 +150,18 @@ public class ApplicationFormActivityMenu extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                ApiInterface apiInterface1 = ApiClient.getClient().create(ApiInterface.class);
+                Intent intent = new Intent(view.getContext(), ApplicationFormActivity.class);
+                intent.putExtra("Id","kycScanning" );
+                intent.putExtra("allDataAFDataModel",allDataAFDataModel);
+                startActivity(intent);
+                /*ApiInterface apiInterface1 = ApiClient.getClient().create(ApiInterface.class);
                 Call<TargetSetModel> call1 = apiInterface1.checkHVForm(GlobalClass.Token,GlobalClass.dbname,fiCode,creator);
 
                 call1.enqueue(new Callback<TargetSetModel>() {
                     @Override
                     public void onResponse(Call<TargetSetModel> call, Response<TargetSetModel> response) {
                         if(response.isSuccessful()){
-                         /*   if(response.body() !=null){
+                         *//*   if(response.body() !=null){
                                 if(response.body().getMessage().equals("Record Not Found !!")){
                                     SubmitAlert(ApplicationFormActivityMenu.this, "Note", "Please Fill House Visit Form First ");
                                 }else if (!aadhaarCheckBox.isChecked() || !personaldetailCheckBox.isChecked() ||
@@ -157,15 +169,15 @@ public class ApplicationFormActivityMenu extends AppCompatActivity {
                                         !borrowingsCheckBox.isChecked() || !guarantorCheckBox.isChecked()) {
                                     SubmitAlert(ApplicationFormActivityMenu.this, "Note", "Please Fill Above Forms First ");
 
-                                }else{*/
+                                }else{*//*
                                     Intent intent = new Intent(view.getContext(), ApplicationFormActivity.class);
                                     intent.putExtra("Id","kycScanning" );
                                     intent.putExtra("allDataAFDataModel",allDataAFDataModel);
                                     startActivity(intent);
-                            /*      }
+                            *//*      }
                           }else{
                                 SubmitAlert(ApplicationFormActivityMenu.this, "Note", "Unable To Open ");
-                            }*/
+                            }*//*
                         }else{
                             SubmitAlert(ApplicationFormActivityMenu.this, "Note", "Unable To Open ");
                         }
@@ -176,7 +188,7 @@ public class ApplicationFormActivityMenu extends AppCompatActivity {
                         SubmitAlert(ApplicationFormActivityMenu.this, "Error", "Network Error ");
 
                     }
-                });
+                });*/
 
             }
         });

@@ -3,6 +3,7 @@ package com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.ApplicationFormF
 import static android.app.Activity.RESULT_OK;
 import static com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.KYCActivity.REQUEST_ADHAARBACK_CAPTURE;
 import static com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.KYCActivity.REQUEST_ADHAARFRONT_CAPTURE;
+import static com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.KYCActivity.formatDate;
 import static com.paisalo.newinternalsourcingapp.GlobalClass.SubmitAlert;
 import static com.paisalo.newinternalsourcingapp.GlobalClass.isNumber;
 import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidAddr;
@@ -545,12 +546,12 @@ public class GuarantorsFragment extends Fragment {
                                 perAdd2 = etTextAddress2.getText().toString();
                             }
 
-                            if (!isValidAddr(etTextAddress3.getText().toString().isEmpty() ? "" : etTextAddress3.getText().toString())) {
-                                etTextAddress3.setError("Invalid Address");
-                                allConditionsSatisfied = false;
-                            } else {
+//                            if (!isValidAddr(etTextAddress3.getText().toString().isEmpty() ? "" : etTextAddress3.getText().toString())) {
+//                                etTextAddress3.setError("Invalid Address");
+//                                allConditionsSatisfied = false;
+//                            } else {
                                 perAdd3 = etTextAddress3.getText().toString();
-                            }
+                          //  }
 
                             if (!isValidName(etTextCity.getText().toString().isEmpty() ? " " : etTextCity.getText().toString())) {
                                 etTextCity.setError("Invalid City");
@@ -580,26 +581,26 @@ public class GuarantorsFragment extends Fragment {
                                 perMob1 = etTextMobile.getText().toString();
                             }
 
-                            if (etTextvoterid.getText().toString().isEmpty()) {
-                                etTextvoterid.setError("Empty Voter id");
-                                allConditionsSatisfied = false;
-                            } else {
+//                            if (etTextvoterid.getText().toString().isEmpty()) {
+//                                etTextvoterid.setError("Empty Voter id");
+//                                allConditionsSatisfied = false;
+//                            } else {
                                 voterID = etTextvoterid.getText().toString();
-                            }
+                          //  }
 
-                            if (!isValidPan(etTextPAN.getText().toString())) {
-                                etTextPAN.setError("Invalid Pan");
-                                allConditionsSatisfied = false;
-                            } else {
+//                            if (!isValidPan(etTextPAN.getText().toString())) {
+//                                etTextPAN.setError("Invalid Pan");
+//                                allConditionsSatisfied = false;
+//                            } else {
                                 panno = etTextPAN.getText().toString();
-                            }
+                           // }
 
-                            if (etdrivingLicense.getText().toString().isEmpty()) {
-                                etdrivingLicense.setError("Empty License");
-                                allConditionsSatisfied = false;
-                            } else {
+//                            if (etdrivingLicense.getText().toString().isEmpty()) {
+//                                etdrivingLicense.setError("Empty License");
+//                                allConditionsSatisfied = false;
+//                            } else {
                                 drivingLic = etdrivingLicense.getText().toString();
-                            }
+                          //  }
 
                             if (spin_relationwithborr.getSelectedItem().toString().contains("-Select-")) {
                                 ((TextView) spin_relationwithborr.getSelectedView()).setError("Please select a relationwithborr");
@@ -674,6 +675,8 @@ public class GuarantorsFragment extends Fragment {
                                 Log.d("TAG", "GurrantorLog: " + response.body());
                                 Log.d("TAG", "GurrantorLog: " + response.body().getMessage().toString());
                                 SubmitAlert(getActivity(), "success", "Data set Successfully");
+                                gurrantorList.add(guarantor);
+                                adapter.notifyDataSetChanged();
                                 // profilepiapi
                                 RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), profileImageFile);
                                 MultipartBody.Part body = MultipartBody.Part.createFormData("file", profileImageFile.getName(), requestFile);
@@ -767,11 +770,19 @@ public class GuarantorsFragment extends Fragment {
 
                                     String dob = (String) adharDataModel.getDob();
                                     Log.d("TAG", "onResponse:dob " + dob);
+
+                                    try {
+                                        dob=formatDate(dob, "dd/MM/yyyy", "dd-MMM-YYYY");
+                                    } catch (ParseException e) {
+                                        throw new RuntimeException(e);
+                                    }
+
+
                                     etTextDob.setText(dob);
                                     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-                                    if(dob!= null){
+                                    if(adharDataModel.getDob()!= null){
                                         try {
-                                            Date dateOfBirth = sdf.parse(dob);
+                                            Date dateOfBirth = sdf.parse((String) adharDataModel.getDob());
                                             Calendar dobCalendar = Calendar.getInstance();
                                             dobCalendar.setTime(dateOfBirth);
                                             Calendar todayCalendar = Calendar.getInstance();
@@ -1648,7 +1659,10 @@ public class GuarantorsFragment extends Fragment {
         jsonGuarantor.addProperty("aadharID", guarantor.getAadharID());
         jsonGuarantor.addProperty("name", guarantor.getName());
         jsonGuarantor.addProperty("age", guarantor.getAge());
-        jsonGuarantor.addProperty("dob", guarantor.getDob());
+
+
+
+        jsonGuarantor.addProperty("dob",guarantor.getDob());
         jsonGuarantor.addProperty("gender", guarantor.getGender());
         jsonGuarantor.addProperty("gurName", guarantor.getGurName());
         jsonGuarantor.addProperty("perAdd1", guarantor.getPerAdd1());

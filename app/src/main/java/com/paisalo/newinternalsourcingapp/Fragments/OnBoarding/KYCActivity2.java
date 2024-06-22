@@ -428,7 +428,7 @@ public class KYCActivity2 extends AppCompatActivity {
                                                                         if (result != null) {
                                                                             Log.d("TAG", "onResponse1:ckyc1 " + result.getData());
                                                                             customProgressDialog.dismiss();
-                                                                            FiCPopup fiCPopup = new FiCPopup("Your Ficode is Here", Message1);
+                                                                            FiCPopup fiCPopup = new FiCPopup("Your Ficode & Creator is Here", Message1 + " & "+ GlobalClass.Creator);
 
                                                                             fiCPopup.show(getSupportFragmentManager(), "CustomDialog");
                                                                         } else {

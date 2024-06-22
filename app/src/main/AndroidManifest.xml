@@ -14,12 +14,10 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission
         android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"
         tools:ignore="ProtectedPermissions" />
-
 
     <application
         android:allowBackup="true"
@@ -31,7 +29,9 @@
         android:theme="@style/Theme.NewInternalSourcingApp"
         tools:replace="android:theme"
         tools:targetApi="31">
-
+        <activity
+            android:name=".Fragments.OnBoarding.ApplicationFormFragments.GuarantorActivity"
+            android:exported="false" />
         <activity
             android:name=".Activities.ActivityCollection"
             android:exported="false" />

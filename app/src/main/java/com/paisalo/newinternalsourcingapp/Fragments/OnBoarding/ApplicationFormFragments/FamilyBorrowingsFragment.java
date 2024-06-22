@@ -5,6 +5,7 @@ import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidName;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -53,6 +54,7 @@ import java.util.List;
 public class FamilyBorrowingsFragment extends Fragment {
 
     RecyclerView recyclerView;
+
     ArrayList<FiFamLoan> borrowerListdata;
     FamilyBorrowingsAdapter familyBorrowingsAdapter;
     List<String> ReasonforloanList = new ArrayList<>();
@@ -63,7 +65,8 @@ public class FamilyBorrowingsFragment extends Fragment {
     private ApplicationFormActivityMenu activity;
     EditText etLenderName, etLoanamount, etEmiamount, etbalanceamount;
 
-    String lenderName, reasonForLoan, fiCode, creator, tag, lenderType, loanUsed, loanAmount, emiAmount, balanceAmount, ismfi;
+    String lenderName, reasonForLoan,  creator, tag, lenderType, loanUsed, loanAmount, emiAmount, balanceAmount, ismfi;
+    int fiCode;
     List<FiFamLoan> list;
     Spinner lenderTypespin, spinnerLoanUsed, spinnerReasonforloan, spinnerisMFI;
     FloatingActionButton addBorrower;
@@ -172,7 +175,7 @@ public class FamilyBorrowingsFragment extends Fragment {
                 if (allDataAFDataModel != null) {
                     list = allDataAFDataModel.getFiFamLoans();
                     if (!list.isEmpty() && list != null) {
-                        fiCode = allDataAFDataModel.getCode().toString();
+                        fiCode = Integer.parseInt(allDataAFDataModel.getCode().toString());
                         creator = allDataAFDataModel.getCreator().toString();
                         tag = allDataAFDataModel.getTag().toString();
                         Log.d("TAG", "onCreateView222: " + fiCode + tag + creator);
@@ -297,7 +300,7 @@ public class FamilyBorrowingsFragment extends Fragment {
                             FiFamLoan fiFamLoan=new FiFamLoan();
                             fiFamLoan.setCreator(creator);
                             fiFamLoan.setLenderName(lenderName);
-                            fiFamLoan.setCode(Integer.parseInt(fiCode));
+                            fiFamLoan.setCode(Integer.parseInt(String.valueOf(fiCode)));
                             fiFamLoan.setLenderType(lenderType);
                             fiFamLoan.setLoanReason(reasonForLoan);
                             fiFamLoan.setIsMFI(ismfi);
@@ -331,6 +334,7 @@ public class FamilyBorrowingsFragment extends Fragment {
                     public void onClick(View view) {
                         for (FiFamLoan fiFamLoan : borrowerListdata) {
                             JsonObject jsonborr = borrowingsJson(fiFamLoan);
+                            Log.d("TAG", "onClick:jsonborr "+jsonborr);
 
                             borrowerListdata.add(fiFamLoan);
                             ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
@@ -371,8 +375,9 @@ public class FamilyBorrowingsFragment extends Fragment {
 
     private JsonObject borrowingsJson(FiFamLoan fiFamLoan) {
         JsonObject jsonBorrowings = new JsonObject();
-        jsonBorrowings.addProperty("fiCode", fiFamLoan.getCode());
-        jsonBorrowings.addProperty("creator", fiFamLoan.getCreator());
+        jsonBorrowings.addProperty("fiCode",allDataAFDataModel.getCode() );
+        
+        jsonBorrowings.addProperty("creator", GlobalClass.Creator);
         jsonBorrowings.addProperty("tag", "RTAG");
         jsonBorrowings.addProperty("lenderName", fiFamLoan.getLenderName());
         jsonBorrowings.addProperty("lenderType", fiFamLoan.getLenderType());

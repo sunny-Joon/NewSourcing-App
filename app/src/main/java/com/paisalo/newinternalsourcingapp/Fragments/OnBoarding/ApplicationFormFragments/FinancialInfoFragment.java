@@ -11,6 +11,8 @@ import android.os.Bundle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -91,6 +93,11 @@ public class FinancialInfoFragment extends Fragment {
 
         DatabaseClass databaseClass = DatabaseClass.getInstance(getContext());
 
+
+        tvBankName = view.findViewById(R.id.tvLoanAppFinanceBankName);
+        tvBankBranch =view.findViewById(R.id.tvLoanAppFinanceBankBranch);
+
+        tilBankAccountName = view.findViewById(R.id.tilBankAccountName);
         bankAccountNumber = view.findViewById(R.id.bankAccountNumber);
         etaccount_date = view.findViewById(R.id.account_date);
         bankIFSCCode = view.findViewById(R.id.bankIFSCCode);
@@ -143,6 +150,27 @@ public class FinancialInfoFragment extends Fragment {
                 }
             }
         });
+
+        bankAccountNumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                accountVerification.setEnabled(true);
+                accountVerification.setChecked(false);
+                tilBankAccountName.setText("");
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
 
         List<RangeCategoryDataClass> houseType_DataList = databaseClass.dao().getAllRCDataListby_catKey("house-type");
         for (RangeCategoryDataClass data : houseType_DataList) {
@@ -301,7 +329,7 @@ public class FinancialInfoFragment extends Fragment {
 
                 boolean allConditionsSatisfied = true;
 
-                if (bankAccountNumber.getText().toString().isEmpty() || bankAccNumber==null) {
+                if (bankAccountNumber.getText().toString().isEmpty() ) {
                     bankAccountNumber.setError("Invalid bankAccount");
                     allConditionsSatisfied = false;
                 } else {
@@ -571,8 +599,7 @@ public class FinancialInfoFragment extends Fragment {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 Log.d("TAG", "onResponse: "+response.body());
-                tvBankName = (TextView) getView().findViewById(R.id.tvLoanAppFinanceBankName);
-                tvBankBranch = (TextView) getView().findViewById(R.id.tvLoanAppFinanceBankBranch);
+
                 if(response.body() != null){
                     try {
                   //      boolean bankNotAllowed=false;
