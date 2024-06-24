@@ -52,6 +52,8 @@ public class GlobalClass extends Application {
     public static String Tag = "";
     public static String Imei = "";
     public static String DATABASE_NAME = "";
+    public static Double Longitude;
+    public static Double Latitude;
 
     public static String DevId = "";
     public static String dbname = "yfMerfC6mRvfr0AOoHmOJ8Et9Q9MPwNEKzFdLsfEs1A=";
