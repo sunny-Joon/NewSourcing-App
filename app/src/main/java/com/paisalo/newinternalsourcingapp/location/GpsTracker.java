@@ -28,6 +28,7 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.paisalo.newinternalsourcingapp.GlobalClass;
 
 public class GpsTracker extends Service implements LocationListener {
     private final Context mContext;
@@ -196,6 +197,7 @@ public class GpsTracker extends Service implements LocationListener {
         //onNewLocation();
         if(location != null){
             latitude = location.getLatitude();
+            GlobalClass.Latitude = latitude;
         }
 
         // return latitude
@@ -207,6 +209,7 @@ public class GpsTracker extends Service implements LocationListener {
        // onNewLocation();
         if(location != null){
             longitude = location.getLongitude();
+            GlobalClass.Longitude = longitude;
         }
         // return longitude
         return longitude;

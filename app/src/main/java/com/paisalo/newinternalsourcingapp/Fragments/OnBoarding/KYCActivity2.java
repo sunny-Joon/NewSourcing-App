@@ -35,6 +35,7 @@ import com.paisalo.newinternalsourcingapp.location.GpsTracker;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -329,15 +330,17 @@ public class KYCActivity2 extends AppCompatActivity {
                     firstPageObject.setTPh3(selectedBank);
                     firstPageObject.setLoanReason(loanPurpose);
                     firstPageObject.setAreaOfHouse(0);
-                    firstPageObject.setBankName(selectedBank);
+                    if(selectbank.equals("Sbi")||selectbank.equals("SBI")){
+                        firstPageObject.setBankName("STATE BANK OF INDIA");
+                    }else{
+                        firstPageObject.setBankName(selectedBank);
+                    }
                     firstPageObject.setCast("");
                     firstPageObject.setCode(0);
                     firstPageObject.setFAmilyMember(0);
                     firstPageObject.setLoanEMi(12);
-               /* FirstPageObject.addProperty("Latitude" );
-                FirstPageObject.addProperty("Longitude" */
-                    firstPageObject.setLatitude(123.45);
-                    firstPageObject.setLongitude(123.45);
+                    firstPageObject.setLatitude(GlobalClass.Latitude);
+                    firstPageObject.setLongitude(GlobalClass.Longitude);
                     firstPageObject.setTPin(0);
                     firstPageObject.setTag(GlobalClass.Tag);
                     firstPageObject.setUserID(GlobalClass.Id);
@@ -437,7 +440,7 @@ public class KYCActivity2 extends AppCompatActivity {
                                                                         }
                                                                     } else {
                                                                         Toast.makeText(KYCActivity2.this, "Failed", Toast.LENGTH_SHORT).show();
-                                                                        Log.d("TAG", "onResponse3:ckyc3 " + response.code());
+                                                                        Log.d("TAG", "onResponse2:ckyc3 " + response.code());
                                                                     }
                                                                 }
 
@@ -448,10 +451,14 @@ public class KYCActivity2 extends AppCompatActivity {
                                                             });
                                                         }else{
                                                             Toast.makeText(KYCActivity2.this, "Failed", Toast.LENGTH_SHORT).show();
+                                                            Log.d("TAG", "onResponse3:ckyc2 Response body is null" );
+
                                                         }
                                                     } else {
                                                         customProgressDialog.dismiss();
                                                         Toast.makeText(KYCActivity2.this, "Failed", Toast.LENGTH_SHORT).show();
+                                                        Log.d("TAG", "onResponse4:ckyc2 Response body is null" );
+
                                                     }
                                                 }
                                                 @Override
@@ -465,6 +472,8 @@ public class KYCActivity2 extends AppCompatActivity {
                                         } else {
                                             customProgressDialog.dismiss();
                                             Toast.makeText(KYCActivity2.this, "Failed", Toast.LENGTH_SHORT).show();
+                                            Log.d("TAG", "onResponse5:ckyc2 Response body is null" );
+
                                         }
                                     }
 
@@ -477,6 +486,8 @@ public class KYCActivity2 extends AppCompatActivity {
                             } else {
                                 customProgressDialog.dismiss();
                                 Toast.makeText(KYCActivity2.this, "Failed", Toast.LENGTH_SHORT).show();
+                                Log.d("TAG", "onResponse6:ckyc6 Response body is null" );
+
 
                             }
                         }
@@ -501,7 +512,7 @@ public class KYCActivity2 extends AppCompatActivity {
             maxLoanAmt=1000000;
             maxLoanAmtStr="Ten lacks";
         }
-        if(selectedBank =="SBI" && Integer.parseInt(monthlyincome.getText().toString())>25000){
+        if(Objects.equals(selectedBank, "SBI") && Integer.parseInt(monthlyincome.getText().toString())>25000){
             Utils.showSnakbar(findViewById(android.R.id.content),"Income is more for SBI");
             A=false;
         } else if(Integer.parseInt(loanAmount.getText().toString().trim())>maxLoanAmt ||Integer.parseInt(loanAmount.getText().toString().trim())<5000){
