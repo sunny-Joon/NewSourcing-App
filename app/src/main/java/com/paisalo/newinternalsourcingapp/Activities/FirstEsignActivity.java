@@ -21,6 +21,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -181,6 +182,7 @@ public class FirstEsignActivity extends AppCompatActivity {
         Button can = popupView.findViewById(R.id.can);
         Button proceed = popupView.findViewById(R.id.proceed);
         TextView  adhaarId= popupView.findViewById(R.id.tiet_aadhar);
+        CheckBox chkAadharConsent= popupView.findViewById(R.id.chkAadharConsent);
 
         adhaarId.setText(borrower.getAadharid());
 
@@ -202,6 +204,7 @@ public class FirstEsignActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Log.d("TAG", "openpopup: " + "Button Clicked");
 
+                if(chkAadharConsent.isChecked()){
                 JsonObject jsonObject= new JsonObject();
                 jsonObject.addProperty("Creator", borrower.getCreator());
                 jsonObject.addProperty("FICode", "250084");
@@ -259,6 +262,7 @@ public class FirstEsignActivity extends AppCompatActivity {
                 });
 
             }
+        }
         });
 
         popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);

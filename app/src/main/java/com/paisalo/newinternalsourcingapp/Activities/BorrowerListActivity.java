@@ -122,7 +122,8 @@ public class BorrowerListActivity extends AppCompatActivity implements BorrowerL
                 break;
             case "HVisit":
                 intent = new Intent(this, HouseVisitActivity1.class);
-                intent.putExtra("fiCode", adapterItem.getCode());
+                intent.putExtra("fiCode", String.valueOf(adapterItem.getCode()));
+                Log.d("TAG", "Received send: " + adapterItem.getCode());
                 intent.putExtra("creator", adapterItem.getCreator());
                 break;
         }

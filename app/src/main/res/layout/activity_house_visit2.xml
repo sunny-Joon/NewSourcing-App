@@ -531,8 +531,6 @@
                     <EditText
                         android:id="@+id/approxMonthlySales"
                         android:layout_width="match_parent"
-                        
-
                         android:layout_height="40dp"
                         android:inputType="number"
                         android:textSize="15dp" />
@@ -570,8 +568,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:inputType="number"
-                        
-
                         android:layout_weight="1"
                         android:textSize="15dp" />
 

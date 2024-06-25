@@ -32,8 +32,10 @@ import com.paisalo.newinternalsourcingapp.Modelclasses.SmCode_DateModel;
 
 import java.io.File;
 import java.lang.reflect.Type;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -65,6 +67,13 @@ public class GlobalClass extends Application {
     public static final String ESIGN_BORROWER = "ESIGN_BORROWER";
 
 
+    private static final String[] INPUT_DATE_FORMATS = {
+            "dd-MM-yyyy",
+            "yyyy-MM-dd",
+            "dd/MM/yyyy",
+            "yyyy/MM/dd",
+            // Add more formats as needed
+    };
     static String currentFileName;
     private static ImageCapture imageCapture;
     private static Uri capturedImageUri;
@@ -264,5 +273,58 @@ public class GlobalClass extends Application {
         editor.apply();
     }
 
+    public static String formatDateString(String inputDateString) {
+        for (String format : INPUT_DATE_FORMATS) {
+            try {
+                SimpleDateFormat inputFormat = new SimpleDateFormat(format, Locale.getDefault());
+                Date date = inputFormat.parse(inputDateString);
+                if (date != null) {
+                    SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                    return outputFormat.format(date);
+                }
+            } catch (ParseException e) {
+                // Continue to the next format
+            }
+        }
+        return null;
+    }
+    public static String formatDateString2(String inputDateString) {
+        for (String format : INPUT_DATE_FORMATS) {
+            try {
+                SimpleDateFormat inputFormat = new SimpleDateFormat(format, Locale.getDefault());
+                Date date = inputFormat.parse(inputDateString);
+                if (date != null) {
+                    SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
+                    return outputFormat.format(date);
+                }
+            } catch (ParseException e) {
+                // Continue to the next format
+            }
+        }
+        return null;
+    }
 
+    public static int calculateAge(String birthDateString) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        try {
+            Date birthDate = sdf.parse(birthDateString);
+            if (birthDate == null) return -1;
+
+            Calendar birthCalendar = Calendar.getInstance();
+            birthCalendar.setTime(birthDate);
+
+            Calendar todayCalendar = Calendar.getInstance();
+
+            int age = todayCalendar.get(Calendar.YEAR) - birthCalendar.get(Calendar.YEAR);
+
+            if (todayCalendar.get(Calendar.DAY_OF_YEAR) < birthCalendar.get(Calendar.DAY_OF_YEAR)) {
+                age--;
+            }
+
+            return age;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return -1; // Error case
+        }
+    }
 }
