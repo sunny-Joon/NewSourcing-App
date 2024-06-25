@@ -265,9 +265,29 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
         spouseCardView = findViewById(R.id.spouseCardView);
 
+        editTextDob.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Do nothing before text is changed
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Do nothing while text is being changed
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String input = s.toString();
+                if (!input.isEmpty()) {
+                    editTextAge.setText(String.valueOf(GlobalClass.calculateAge(input)));
+                }
+            }
+        });
+
 
         //  Sample data
-        editTextAadhar.setText("123456789012");
+        /*editTextAadhar.setText("123456789012");
         editTextName.setText("John Doe");
         editTextAge.setText("30");
         editTextDob.setText("1999-05-23");
@@ -288,7 +308,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         editTextfathermiddlename.setText("James");
         editTextfatherlastname.setText("Doe");
         isMarriedSpinner.setSelection(1);
-
+*/
 
         GenderList.add("--Select--");
         RelationWithBorrowerList.add("--Select--");
@@ -443,60 +463,12 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             }
         });
 
-    /*    profilePic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-                }
-            }
-        });*/
         profilePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 Intent intent = new Intent(KYCActivity.this, CameraActivity.class);
                 startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
-               /* Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                    File photoFile = null;
-                    try {
-                        photoFile = createImageFile();
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
-                    if (photoFile != null) {
-                        Uri photoURI = FileProvider.getUriForFile(KYCActivity.this,
-                                "com.paisalo.newinternalsourcingapp.provider",
-                                photoFile);
-                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                        startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-                    }
-                }*/
-            }
-
-            private File createImageFile() throws IOException {
-                timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-                String imageFileName = "JPEG_" + timeStamp + "_";
-                File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-                File image = File.createTempFile(
-                        imageFileName,  /* prefix */
-                        ".jpeg",         /* suffix */
-                        storageDir      /* directory */
-                );
-                Bitmap bitmap = Bitmap.createBitmap(256, 256, Bitmap.Config.ARGB_8888);
-
-                FileOutputStream fos = new FileOutputStream(image);
-
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-
-                fos.close();
-
-                bitmap.recycle();
-
-                currentPhotoPathBefWork = image.getAbsolutePath();
-                return image;
             }
         });
 
@@ -599,7 +571,11 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                         editTextdrivingLicense.setError(" Driving License  Should be between 5 to 15 digits");
 
                     } else {
-                        dlVerification("drivinglicense", editTextdrivingLicense.getText().toString(), editTextDob.getText().toString());
+                        String dateOB = GlobalClass.formatDateString2(editTextDob.getText().toString());
+                        Log.d("TAG", "drivinglicenseDOB: "+ editTextDob.getText().toString());
+                        Log.d("TAG", "drivinglicenseDOB: "+ dateOB);
+
+                        dlVerification("drivinglicense", editTextdrivingLicense.getText().toString(),dateOB );
 
                     }
 
@@ -786,11 +762,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
                 Intent intent = new Intent(KYCActivity.this, CameraActivity.class);
                 startActivityForResult(intent, REQUEST_ADHAARFRONT_CAPTURE);
-
-               /* Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                    startActivityForResult(takePictureIntent, REQUEST_ADHAARFRONT_CAPTURE);
-                }*/
             }
         });
 
@@ -799,12 +770,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             public void onClick(View view) {
                 Intent intent = new Intent(KYCActivity.this, CameraActivity.class);
                 startActivityForResult(intent, REQUEST_ADHAARBACK_CAPTURE);
-
-
-             /*   Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                    startActivityForResult(takePictureIntent, REQUEST_ADHAARBACK_CAPTURE);
-                }*/
             }
         });
 
@@ -867,25 +832,17 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
                                     String dob = (String) adharDataModel.getDob();
                                     Log.d("TAG", "onResponse:dob " + dob);
-                                    editTextDob.setText(dob);
-                                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
-                                    if (dob != null) {
-                                        try {
-                                            Date dateOfBirth = sdf.parse(dob);
-                                            Calendar dobCalendar = Calendar.getInstance();
-                                            dobCalendar.setTime(dateOfBirth);
-                                            Calendar todayCalendar = Calendar.getInstance();
-                                            int age = todayCalendar.get(Calendar.YEAR) - dobCalendar.get(Calendar.YEAR);
-                                            if (todayCalendar.get(Calendar.MONTH) < dobCalendar.get(Calendar.MONTH) ||
-                                                    (todayCalendar.get(Calendar.MONTH) == dobCalendar.get(Calendar.MONTH) &&
-                                                            todayCalendar.get(Calendar.DAY_OF_MONTH) < dobCalendar.get(Calendar.DAY_OF_MONTH))) {
-                                                age--;
-                                            }
-                                            editTextAge.setText(String.valueOf(age));
-                                        } catch (ParseException e) {
-                                            e.printStackTrace();
+
+
+                                    String formattedDate = GlobalClass.formatDateString(dob);
+                                    if (formattedDate != null) {
+                                        editTextDob.setText(formattedDate);
+                                        } else {
+                                        editTextDob.setText(""); // Or handle the error case as needed
                                         }
-                                    }
+
+                                  //  editTextDob.setText(dob);
+
                                     String gender = (String) adharDataModel.getGender();
 
                                     if (gender != null) {
@@ -1094,15 +1051,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                     }
                 }
             }
-        } /*else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-
-            File imgFile = new File(currentPhotoPathBefWork);
-            if (imgFile.exists()) {
-                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                cropImage(myBitmap);
-            }
-
-        }*/ else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+        } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             if (data != null && data.hasExtra("croppedImagePath")) {
                 String croppedImagePath = data.getStringExtra("croppedImagePath");
                 profileImageFile = new File(croppedImagePath);
@@ -1110,15 +1059,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             }
         }
 
-       /* else if (requestCode == REQUEST_IMAGE_CROP && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            if (extras != null) {
-                Bitmap croppedBitmap = extras.getParcelable("data");
-                bitmap = croppedBitmap;
-                profileImageFile = bitmapToFile(bitmap);
-                setprofileImage(profileImageFile);
-            }
-        }*/
         else if (requestCode == REQUEST_ADHAARFRONT_CAPTURE && resultCode == RESULT_OK) {
             if (data != null && data.hasExtra("croppedImagePath")) {
                 String croppedImagePath = data.getStringExtra("croppedImagePath");
@@ -1139,47 +1079,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             }
         }
 
-
-        /*else if (requestCode == REQUEST_ADHAARFRONT_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            cropImage(imageBitmap);
-        } else if (requestCode == REQUEST_ADHAARFRONT_CROP && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            if (extras != null) {
-                Bitmap croppedBitmap = extras.getParcelable("data");
-                bitmap = croppedBitmap;
-                adhaarFrontFile = bitmapToFile(bitmap);
-                setDataOfAdhar(adhaarFrontFile, "aadharfront");
-            }
-        } *//*else if (requestCode == REQUEST_ADHAARBACK_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            cropImage(imageBitmap);
-        } else if (requestCode == REQUEST_ADHAARBACK_CROP && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            if (extras != null) {
-                Bitmap croppedBitmap = extras.getParcelable("data");
-                bitmap = croppedBitmap;
-                adhaarBackFile = bitmapToFile(bitmap);
-                setDataOfAdhar(adhaarBackFile, "aadharback");
-            }
-        } */
-       /* else if (requestCode == REQUEST_PAN_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            cropImage(imageBitmap);
-        }
-        else if (requestCode == REQUEST_PAN_CROP && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            if (extras != null) {
-                Bitmap croppedBitmap = extras.getParcelable("data");
-                bitmap = croppedBitmap;
-                panFile = bitmapToFile(bitmap);
-                setDataOfAdhar(panFile, "pan");
-            }
-        }*/
-
     }
 
     private void setprofileImage(File profileImageFile) {
@@ -1188,55 +1087,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         profilePic.setImageDrawable(drawable);
     }
 
-    /* public File bitmapToFile(Bitmap bitmap) {
-         File directory = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "profile_pictures");
-
-         if (!directory.exists()) {
-             directory.mkdirs();
-         }
-
-         String fileName = "profile_picture.png";
-         File file = new File(directory, fileName);
-         this.file = file;
-         FileOutputStream fos = null;
-         try {
-             fos = new FileOutputStream(file);
-             bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
-             fos.flush();
-         } catch (IOException e) {
-             e.printStackTrace();
-         } finally {
-             if (fos != null) {
-                 try {
-                     fos.close();
-                 } catch (IOException e) {
-                     e.printStackTrace();
-                 }
-             }
-         }
-         return file;
-     }*/
-  /*  private void cropImage(Bitmap bitmap) {
-        Intent cropIntent = new Intent("com.android.camera.action.CROP");
-        cropIntent.setDataAndType(getImageUri(bitmap), "image/*");
-        cropIntent.putExtra("crop", "true");
-        cropIntent.putExtra("aspectX", 1);
-        cropIntent.putExtra("aspectY", 1);
-        cropIntent.putExtra("scale", true);
-        cropIntent.putExtra("outputX", 256);
-        cropIntent.putExtra("outputY", 256);
-        cropIntent.putExtra("return-data", true);
-        startActivityForResult(cropIntent, REQUEST_IMAGE_CROP);
-    }*/
-   /* private Uri getImageUri(Bitmap bitmap) {
-        String path = MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "JPEG_" + timeStamp + "_", null);
-        if (path != null) {
-            return Uri.parse(path);
-        } else {
-
-            return null;
-        }
-    }*/
     private void setAadharContent(String aadharDataString) throws Exception {
 
         if (aadharDataString.toUpperCase().contains("XML")) {
@@ -1395,34 +1245,14 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         }
 
         String dob = decodedData.get(4 - inc);
-        editTextDob.setText(dob);
-        SimpleDateFormat formatter = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            formatter = new SimpleDateFormat("dd-MM-YYYY", Locale.getDefault());
-        }
-        Log.d("TAG", "decodeData:dob " + dob);
 
-        try {
-            Date dateOfBirth = formatter.parse(dob);
-            Log.d("TAG", "Parsed date of birth: " + dateOfBirth);
-            Calendar dobCalendar = Calendar.getInstance();
-            dobCalendar.setTime(dateOfBirth);
-            Calendar todayCalendar = Calendar.getInstance();
-            int age = todayCalendar.get(Calendar.YEAR) - dobCalendar.get(Calendar.YEAR);
-            if (todayCalendar.get(Calendar.MONTH) < dobCalendar.get(Calendar.MONTH) ||
-                    (todayCalendar.get(Calendar.MONTH) == dobCalendar.get(Calendar.MONTH) &&
-                            todayCalendar.get(Calendar.DAY_OF_MONTH) < dobCalendar.get(Calendar.DAY_OF_MONTH))) {
-                age--;
+
+        String formattedDate = GlobalClass.formatDateString(dob);
+            if (formattedDate != null) {
+                editTextDob.setText(formattedDate);
+            } else {
+                editTextDob.setText(""); // Or handle the error case as needed
             }
-            Log.d("TAG", "Calculated age: " + age);
-            editTextAge.setText(String.valueOf(age));
-            isAadharVerified = "Q";
-        } catch (ParseException e) {
-            Log.e("TAG", "Error parsing date: " + e.getMessage(), e);
-        }
-
-
-
 
 /*
         editTextAadhar.setText(decodedData.get(2 - inc));
@@ -1438,7 +1268,13 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             editTextDob.setEnabled(true);
             Log.d("TAG", "Parts======dobnull=====>  " + editTextDob.getText().toString());
         } else {
-            editTextDob.setText(decodedData.get(4 - inc));
+                String formattedDate3 = GlobalClass.formatDateString(decodedData.get(4 - inc));
+                if (formattedDate != null) {
+                    editTextDob.setText(formattedDate);
+                } else {
+                    editTextDob.setText(""); // Or handle the error case as needed
+                }
+        //    editTextDob.setText(decodedData.get(4 - inc));
             Log.d("TAG", "Parts======dob=====>  " + editTextDob.getText().toString());
         }
 
@@ -2004,14 +1840,16 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
             allConditionsSatisfied = false;
         } else {
-            DOB = editTextDob.getText().toString();
-//            try {
-//                DOB = formatDate(DOB, "dd-MM-yyyy", "yyyy-MM-dd");
-//            } catch (ParseException e) {
-//                throw new RuntimeException(e);
-//            }
+            String temp = editTextDob.getText().toString();
+            String formattedDate = GlobalClass.formatDateString2(temp);
+            if (formattedDate != null) {
+                DOB = formattedDate;
+
+                Log.d("TAG", "drivinglicenseDOBjson: "+ DOB);
+                Log.d("TAG", "drivinglicenseDOBjson: "+ formattedDate);
+            }
         }
-        //  DOB = editTextDob.getText().toString();
+
 
         Log.d("TAG", "onClickTAG1: " + allConditionsSatisfied);
 
@@ -2316,15 +2154,8 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             jsonData.setLname(Lname);
             Log.d("TAG", "createJsonObject:F_Fname " + Lname);
 
-           /* String dob = "";
-            try {
-                dob = formatDate(DOB, "dd-MM-yyyy", "yyyy-MM-dd");
-            } catch (ParseException e) {
-                throw new RuntimeException(e);
-            }*/
+
             jsonData.setDob(DOB);
-        /*    Log.d("TAG", "createJsonObject11: "+dob);
-            Log.d("TAG", "createJsonObject111: "+DOB);*/
             jsonData.setPAdd1(P_Add1);
             jsonData.setPAdd2(P_Add2);
             jsonData.setPAdd3(P_Add3);
@@ -2416,9 +2247,10 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         DatePickerDialog datePickerDialog = new DatePickerDialog(KYCActivity.this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(android.widget.DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
-                String selectedDate = String.format("%04d-%02d-%02d", selectedYear, selectedMonth + 1, selectedDay);
+             //   String selectedDate = String.format("%04d-%02d-%02d", selectedYear, selectedMonth + 1, selectedDay);
+                String selectedDate = String.format("%02d/%02d/%04d", selectedDay, selectedMonth + 1, selectedYear);
                 editTextDob.setText(selectedDate);
-                calculateAge(selectedYear, selectedMonth, selectedDay);
+              //  calculateAge(selectedYear, selectedMonth, selectedDay);
                 progressBar.incrementProgressBy(1);
             }
         }, year, month, day);
@@ -2426,7 +2258,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         datePickerDialog.show();
     }
 
-    private void calculateAge(int selectedYear, int selectedMonth, int selectedDay) {
+ /*   private void calculateAge(int selectedYear, int selectedMonth, int selectedDay) {
         Calendar dobCalendar = Calendar.getInstance();
         dobCalendar.set(selectedYear, selectedMonth, selectedDay);
 
@@ -2440,7 +2272,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
         EditText ageEditText = findViewById(R.id.editTextAgeKYC);
         ageEditText.setText(String.valueOf(age));
-    }
+    }*/
 
     public void filterCity(String s) {
         Log.d("TAG", "filter: " + s);

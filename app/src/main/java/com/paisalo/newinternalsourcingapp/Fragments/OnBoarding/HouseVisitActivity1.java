@@ -34,8 +34,15 @@ public class HouseVisitActivity1 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_house_visit1);
 
-        fiCode = getIntent().getStringExtra("fiCode");
-        creator = getIntent().getStringExtra("creator");
+        Intent intent = getIntent();
+        if (intent != null) {
+            fiCode = intent.getStringExtra("fiCode");
+            creator = intent.getStringExtra("creator");
+
+            Log.d("TAG", "Received fiCode: " + fiCode);
+            Log.d("TAG", "Received creator: " + creator);
+
+        }
 
         applicantNameTV = findViewById(R.id.applicantName);
         maritalStatusTV = findViewById(R.id.maritalStatus);
@@ -55,12 +62,14 @@ public class HouseVisitActivity1 extends AppCompatActivity {
 
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<HVBorrowerModel> call = apiInterface.HouseVisitBorrowerData(GlobalClass.Token,GlobalClass.dbname,fiCode,creator);
+        Log.d("TAG", "HouseVisitBorrowerData: "+ fiCode+creator);
+
         call.enqueue(new Callback<HVBorrowerModel>() {
             @Override
             public void onResponse(Call<HVBorrowerModel> call, Response<HVBorrowerModel> response) {
-                Log.d("TAG", "onResponse: "+ response.body());
+                Log.d("TAG", "HouseVisitBorrowerData: "+ response.body());
                 if(response.isSuccessful()){
-                    Log.d("TAG", "onResponse: "+ response.body());
+                    Log.d("TAG", "HouseVisitBorrowerData: "+ response.body());
                     if(response.body() != null){
                         HVBorrowerModel hvBorrowerModel = response.body();
                         HVBorrowerDataModel hvBorrowerDataModel = hvBorrowerModel.getData();
@@ -83,14 +92,15 @@ public class HouseVisitActivity1 extends AppCompatActivity {
                     }
 
                 }else {
-                    Log.d("TAG", "onResponse: "+ response.code());
+                    Log.d("TAG", "HouseVisitBorrowerData: "+ response.code());
+                    Log.d("TAG", "HouseVisitBorrowerData: "+ response.message());
 
                 }
             }
 
             @Override
             public void onFailure(Call<HVBorrowerModel> call, Throwable t) {
-                Log.d("TAG", "onResponse: "+ "failure");
+                Log.d("TAG", "HouseVisitBorrowerData: "+ "failure");
 
             }
         });

@@ -11,6 +11,7 @@ import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidFullName;
 import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidName;
 import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidPan;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
@@ -221,8 +222,6 @@ public class GuarantorsFragment extends Fragment {
                 int width = LinearLayout.LayoutParams.WRAP_CONTENT;
                 int height = LinearLayout.LayoutParams.WRAP_CONTENT;
                 boolean focusable = true;
-
-
 
                 final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
 
@@ -541,7 +540,7 @@ public class GuarantorsFragment extends Fragment {
 
                             if (!isValidAddr(etTextAddress2.getText().toString().isEmpty() ? "" : etTextAddress2.getText().toString())) {
                                 etTextAddress2.setError("Invalid Address");
-                                allConditionsSatisfied = false;
+                             //   allConditionsSatisfied = false;
                             } else {
                                 perAdd2 = etTextAddress2.getText().toString();
                             }
@@ -588,12 +587,12 @@ public class GuarantorsFragment extends Fragment {
                                 voterID = etTextvoterid.getText().toString();
                           //  }
 
-//                            if (!isValidPan(etTextPAN.getText().toString())) {
-//                                etTextPAN.setError("Invalid Pan");
-//                                allConditionsSatisfied = false;
-//                            } else {
+                            if (!isValidPan(etTextPAN.getText().toString())) {
+                                etTextPAN.setError("Invalid Pan");
+                                allConditionsSatisfied = false;
+                            } else {
                                 panno = etTextPAN.getText().toString();
-                           // }
+                            }
 
 //                            if (etdrivingLicense.getText().toString().isEmpty()) {
 //                                etdrivingLicense.setError("Empty License");
@@ -632,12 +631,22 @@ public class GuarantorsFragment extends Fragment {
                             guarantor.setPerMob1(perMob1);
                             guarantor.setVoterID(voterID);
                             guarantor.setPanNo(panno);
+                            guarantor.setGrNo(GrNo);
                             guarantor.setDrivingLic(drivingLic);
                             guarantor.setRelation(relationwithborr);
                             guarantor.setGurImage(profileImageFile);
+                            Log.d("TAG", "onBindViewHolder: "+perAdd1+","+perAdd2+","+perAdd3);
+
                             gurrantorList.add(guarantor);
+
+                            Log.d("TAG", "onBindViewHolder: "+gurrantorList.size()+","+gurrantorList.indexOf(guarantor));
+                            Log.d("TAG", "onBindViewHolder: "+gurrantorList.get(0).getPerAdd1());
+                            Log.d("TAG", "onBindViewHolder: "+gurrantorList.get(0).getPerAdd1());
+                            Log.d("TAG", "onBindViewHolder: "+gurrantorList.get(gurrantorList.indexOf(guarantor)).getPerAdd1());
+
                             adapter = new GurrantorListAdapter(getActivity(), gurrantorList);
                             recyclerView.setAdapter(adapter);
+
                             popupWindow.dismiss();
                         }
                     }
@@ -674,9 +683,9 @@ public class GuarantorsFragment extends Fragment {
                             if (response.isSuccessful()) {
                                 Log.d("TAG", "GurrantorLog: " + response.body());
                                 Log.d("TAG", "GurrantorLog: " + response.body().getMessage().toString());
-                                SubmitAlert(getActivity(), "success", "Data set Successfully");
-                                gurrantorList.add(guarantor);
-                                adapter.notifyDataSetChanged();
+                              //  SubmitAlert(getActivity(), "success", "Data set Successfully");
+                                /*gurrantorList.add(guarantor);
+                                adapter.notifyDataSetChanged();*/
                                 // profilepiapi
                                 RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), profileImageFile);
                                 MultipartBody.Part body = MultipartBody.Part.createFormData("file", profileImageFile.getName(), requestFile);
@@ -686,22 +695,18 @@ public class GuarantorsFragment extends Fragment {
                                 call3.enqueue(new Callback<ProfilePicModel>() {
                                     @Override
                                     public void onResponse(Call<ProfilePicModel> call3, Response<ProfilePicModel> response3) {
-                                        customProgressDialog.dismiss();
                                         if (response3.isSuccessful()) {
                                             ProfilePicModel profilePicModel = response3.body();
-
                                             Toast.makeText(getActivity(), "Profile picture updated successfully!", Toast.LENGTH_SHORT).show();
                                             SubmitAlert(getActivity(), "success", "Data set Successfully");
-
+                                            getActivity().finish();
                                         } else {
-
                                             Toast.makeText(getActivity(), "Failed to update profile picture.", Toast.LENGTH_SHORT).show();
                                         }
                                     }
 
                                     @Override
                                     public void onFailure(Call<ProfilePicModel> call3, Throwable t) {
-                                        customProgressDialog.dismiss();
                                         Toast.makeText(getActivity(), "Network Issue", Toast.LENGTH_SHORT).show();
                                         // Optionally log the error
                                         Log.e("ProfilePicUpdate", "Error updating profile picture");
@@ -711,7 +716,6 @@ public class GuarantorsFragment extends Fragment {
                             } else {
                                 Log.d("TAG", "GurrantorLog: " + response.code());
                                 SubmitAlert(getActivity(), "unsuccessful", "Check Your Internet Connection");
-
                             }
                         }
 
@@ -719,7 +723,6 @@ public class GuarantorsFragment extends Fragment {
                         public void onFailure(Call<KycUpdateModel> call, Throwable t) {
                             Log.d("TAG", "GurrantorLog: " + "failure");
                             SubmitAlert(getActivity(), "Network Error", "Check Your Internet Connection");
-
                         }
                     });
                 }
@@ -1000,7 +1003,8 @@ public class GuarantorsFragment extends Fragment {
                     }
                 }
             }
-        } /*else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+        }
+        /*else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
 
             File imgFile = new File(currentPhotoPathBefWork);
             if (imgFile.exists()) {
@@ -1088,7 +1092,6 @@ public class GuarantorsFragment extends Fragment {
                 setDataOfAdhar(panFile, "pan");
             }
         }*/
-
     }
 
     private void setAadharContent(String aadharDataString) throws Exception {
@@ -1140,7 +1143,6 @@ public class GuarantorsFragment extends Fragment {
             aadharNumberentry = true;
         }
     }
-
     protected void decodeMobileEmail(byte[] decompressedData) {
         int mobileStartIndex = 0, mobileEndIndex = 0, emailStartIndex = 0, emailEndIndex = 0;
         switch (emailMobilePresent) {
@@ -1593,7 +1595,6 @@ public class GuarantorsFragment extends Fragment {
         }
         return separatedParts;
     }
-
     private void setprofileImage(File profileImageFile) {
         Bitmap bitmap = BitmapFactory.decodeFile(profileImageFile.getAbsolutePath());
         Drawable drawable = new BitmapDrawable(getResources(), bitmap);
@@ -1632,8 +1633,10 @@ public class GuarantorsFragment extends Fragment {
         Intent cropIntent = new Intent("com.android.camera.action.CROP");
         cropIntent.setDataAndType(getImageUri(bitmap), "image/*");
         cropIntent.putExtra("crop", "true");
-        *//*cropIntent.putExtra("aspectX", 1);
-        cropIntent.putExtra("aspectY", 1);*//*
+        */
+  /*cropIntent.putExtra("aspectX", 1);
+        cropIntent.putExtra("aspectY", 1);*/
+  /*
         cropIntent.putExtra("scale", true); // Add this line to prevent rotation
         cropIntent.putExtra("outputX", 256);
         cropIntent.putExtra("outputY", 256);
@@ -1659,9 +1662,6 @@ public class GuarantorsFragment extends Fragment {
         jsonGuarantor.addProperty("aadharID", guarantor.getAadharID());
         jsonGuarantor.addProperty("name", guarantor.getName());
         jsonGuarantor.addProperty("age", guarantor.getAge());
-
-
-
         jsonGuarantor.addProperty("dob",guarantor.getDob());
         jsonGuarantor.addProperty("gender", guarantor.getGender());
         jsonGuarantor.addProperty("gurName", guarantor.getGurName());
@@ -1676,8 +1676,7 @@ public class GuarantorsFragment extends Fragment {
         jsonGuarantor.addProperty("panNo", guarantor.getPanNo());
         jsonGuarantor.addProperty("drivingLic", guarantor.getDrivingLic());
         jsonGuarantor.addProperty("relation", guarantor.getRelation());
-
-        jsonGuarantor.addProperty("grNo", GrNo);
+        jsonGuarantor.addProperty("grNo", guarantor.getGrNo());
         jsonGuarantor.addProperty("gurInitials", "");
         jsonGuarantor.addProperty("corrAddr", 0);
         jsonGuarantor.addProperty("firmName", "");
@@ -1738,7 +1737,6 @@ public class GuarantorsFragment extends Fragment {
         jsonGuarantor.addProperty("concent", "");
         jsonGuarantor.addProperty("eSignUUID", "");
         jsonGuarantor.addProperty("initials", "");
-
 
         return jsonGuarantor;
     }

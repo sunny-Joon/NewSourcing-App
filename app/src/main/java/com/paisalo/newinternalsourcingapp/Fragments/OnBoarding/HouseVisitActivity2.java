@@ -37,6 +37,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import com.google.gson.JsonObject;
+import com.paisalo.newinternalsourcingapp.Activities.CameraActivity;
 import com.paisalo.newinternalsourcingapp.BuildConfig;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.HouseVisitModels.HVGetDataModel;
@@ -69,6 +70,7 @@ import androidx.core.content.FileProvider;
 public class HouseVisitActivity2 extends AppCompatActivity {
 
     public static final String CAMERA_PREF = "camera_pref";
+    private static final int REQUEST_HOUSE_CAPTURE = 101;
     private static final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
     private static final String ALLOW_KEY = "ALLOWED";
     HVGetDataModel hvGetDataModel;
@@ -99,7 +101,7 @@ public class HouseVisitActivity2 extends AppCompatActivity {
     String Sresidence_type = "",SresidingWith = "",Sresidental_stability = "",SbusinessExperience = "",Sneighbourhood_verification = "",SintervieweeRelation = "",SrelationWithApplicant = "";
     String fiNo,rentOfHouse,groupCode,cityCode,latitude,longitude,creator,empCode;
 
-    static File photoFile = null;
+    static File housePic = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -261,8 +263,8 @@ public class HouseVisitActivity2 extends AppCompatActivity {
 //                    progressDialog.show();
 
                     MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-                    RequestBody surveyBody = RequestBody.create(MediaType.parse("*/*"), photoFile);
-                    builder.addFormDataPart("Image", photoFile.getName(), surveyBody);
+                    RequestBody surveyBody = RequestBody.create(MediaType.parse("*/*"), housePic);
+                    builder.addFormDataPart("Image", housePic.getName(), surveyBody);
                     builder.addFormDataPart("HouseType", buildType_value == null ? "" : buildType_value);
                     builder.addFormDataPart("IsvalidLocation", approvedLocation_value == null ? "" : approvedLocation_value);
                     builder.addFormDataPart("CPFlifeStyle", cpfCriteria_value == null ? "" : cpfCriteria_value);
@@ -389,7 +391,9 @@ public class HouseVisitActivity2 extends AppCompatActivity {
                         }
                     }
                 } else {
-                    openCamera();
+                    /*openCamera();*/
+                    Intent intent = new Intent(HouseVisitActivity2.this, CameraActivity.class);
+                    startActivityForResult(intent, REQUEST_HOUSE_CAPTURE);
                 }
             }
         });
@@ -1112,21 +1116,21 @@ public class HouseVisitActivity2 extends AppCompatActivity {
         context.startActivity(i);
     }
 
-    private void openCamera() {
+   /* private void openCamera() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             try {
-                photoFile = createImageFile();
+                housePic = createImageFile();
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
 
-            if (photoFile != null) {
+            if (housePic != null) {
                 Uri photoURI = FileProvider.getUriForFile(
                         this,
                         getApplicationContext().getPackageName() + ".provider",
-                        photoFile
+                        housePic
                 );
 
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
@@ -1145,23 +1149,29 @@ public class HouseVisitActivity2 extends AppCompatActivity {
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".png",         /* suffix */
-                storageDir      /* directory */
+                imageFileName,  *//* prefix *//*
+                ".png",         *//* suffix *//*
+                storageDir      *//* directory *//*
         );
 
         // Save a file: path for use with ACTION_VIEW intents
         currentPhotoPath = image.getAbsolutePath();
         return image;
     }
-
+*/
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == MY_PERMISSIONS_REQUEST_CAMERA && resultCode == RESULT_OK) {
+        if (requestCode == REQUEST_HOUSE_CAPTURE && resultCode == RESULT_OK) {
+            if (data != null && data.hasExtra("croppedImagePath")) {
+                String croppedImagePath = data.getStringExtra("croppedImagePath");
+                housePic = new File(croppedImagePath);
+                imageUri = Uri.fromFile(new File(housePic.getAbsolutePath()));
+            }
+        }
+        /*if (requestCode == REQUEST_HOUSE_CAPTURE && resultCode == RESULT_OK) {
             // Display the captured image in the ImageView
             imageUri = Uri.fromFile(new File(currentPhotoPath));
-        }
+        }*/
     }
 }

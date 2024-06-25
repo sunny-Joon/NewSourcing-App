@@ -99,7 +99,7 @@
                         android:id="@+id/imgViewKycItemLayout"
                         android:layout_width="match_parent"
                         android:scaleType="centerInside"
-                        android:layout_height="match_parent"
+                        android:layout_height="100dp"
                         android:layout_alignParentEnd="true"
                         android:src="@drawable/take_photograph" />
 

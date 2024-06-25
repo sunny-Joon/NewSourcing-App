@@ -3,6 +3,7 @@ package com.paisalo.newinternalsourcingapp.Adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +45,8 @@ public class GurrantorListAdapter extends RecyclerView.Adapter<GurrantorListAdap
         holder.id.setText(gurrantor.getIdentityNo());
         holder.adhaaridTV.setText(gurrantor.getAadharID());
         holder.userNameTV.setText(gurrantor.getName());
-        holder.addressTV.setText(gurrantor.getOffAdd1()+","+gurrantor.getOffAdd2()+","+gurrantor.getOffAdd3());
+        Log.d("TAG", "onBindViewHolder: "+gurrantor.getPerAdd1()+","+gurrantor.getPerAdd2()+","+gurrantor.getPerAdd3());
+        holder.addressTV.setText(gurrantor.getPerAdd1()+","+gurrantor.getPerAdd2()+","+gurrantor.getPerAdd3());
         holder.mobileTV.setText(gurrantor.getPerMob1());
         holder.fatherOrSpouseTV.setText(gurrantor.getGurName());
        // holder.profilePicGur.setImageBitmap(BitmapFactory.decodeFile(gurrantor.getGurImage().getAbsolutePath()));

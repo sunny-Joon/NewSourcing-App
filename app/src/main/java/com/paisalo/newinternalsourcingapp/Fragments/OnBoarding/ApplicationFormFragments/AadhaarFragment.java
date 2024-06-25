@@ -164,17 +164,22 @@ public class AadhaarFragment extends Fragment {
         rangeCategoryAdapter = new RangeCategoryAdapter(getActivity(), stateDataList);
         spin_aadhaarState.setAdapter(rangeCategoryAdapter);
 
-        if (allDataAFDataModel.getpState() != null) {
-            int castePos3 = -1;
-            for (int i = 0; i < rangeCategoryAdapter.getCount(); i++) {
-                if (rangeCategoryAdapter.getItem(i).code.equals(databaseClass.dao().getStateByCode("state", allDataAFDataModel.getpState()).code)) {
-                    castePos3 = i;
-                    break;
+        if(allDataAFDataModel!=null) {
+            if (allDataAFDataModel.getpState() != null) {
+                int castePos3 = -1;
+                for (int i = 0; i < rangeCategoryAdapter.getCount(); i++) {
+                    if (rangeCategoryAdapter.getItem(i).code.equals(databaseClass.dao().getStateByCode("state", allDataAFDataModel.getpState()).code)) {
+                        castePos3 = i;
+                        break;
+                    }
                 }
-            }
 
-            Log.d("TAG", "onCreateView: " + castePos3);
-            spin_aadhaarState.setSelection(castePos3);
+                Log.d("TAG", "onCreateView: " + castePos3);
+                spin_aadhaarState.setSelection(castePos3);
+            }
+        }else{
+            Log.d("TAG", "onCreateView: " + "Object Is Null");
+
         }
 
         Log.d("TAG", "onCreateViewadhaar: " + "check data");

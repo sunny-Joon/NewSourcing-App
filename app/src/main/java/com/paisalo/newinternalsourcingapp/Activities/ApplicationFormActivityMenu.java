@@ -152,6 +152,8 @@ public class ApplicationFormActivityMenu extends AppCompatActivity {
 
                 Intent intent = new Intent(view.getContext(), ApplicationFormActivity.class);
                 intent.putExtra("Id","kycScanning" );
+                intent.putExtra("fiCode",fiCode );
+                intent.putExtra("creator",creator );
                 intent.putExtra("allDataAFDataModel",allDataAFDataModel);
                 startActivity(intent);
                 /*ApiInterface apiInterface1 = ApiClient.getClient().create(ApiInterface.class);

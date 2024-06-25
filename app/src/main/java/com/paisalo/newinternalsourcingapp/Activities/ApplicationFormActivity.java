@@ -29,6 +29,7 @@ public class ApplicationFormActivity extends AppCompatActivity {
 
     private ViewPager2 viewPager;
     private MaterialToolbar toolbar;
+    String fiCode,creator;
     static AllDataAFDataModel allDataAFDataModel;
 
     @Override
@@ -40,6 +41,13 @@ public class ApplicationFormActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
 
         Intent intent = getIntent();
+        if (intent != null) {
+            fiCode = intent.getStringExtra("fiCode");
+            creator = intent.getStringExtra("creator");
+            Log.d("TAG", "Received fiCode: " + fiCode);
+            Log.d("TAG", "Received creator: " + creator);
+
+        }
 
         Serializable afDataObject = intent.getSerializableExtra("allDataAFDataModel");
 
@@ -84,7 +92,7 @@ public class ApplicationFormActivity extends AppCompatActivity {
             case "guarantors":
                 return new GuarantorsFragment(allDataAFDataModel);
             case "kycScanning":
-                return new KycScanningFragment(allDataAFDataModel);
+                return new KycScanningFragment(allDataAFDataModel,fiCode,creator);
             default:
                 return new AadhaarFragment(allDataAFDataModel);
         }
