@@ -212,27 +212,6 @@ public class KycScanningFragment extends Fragment implements KycRecyclerViewAdap
                 OSV(item,ImageFile,position);
             }
         }
-        /*if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            File imgFile = new File(currentPhotoPathBefWork);
-            if (imgFile.exists()) {
-                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                cropImage(myBitmap);
-            }
-        } else if (requestCode == REQUEST_IMAGE_CROP && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            if (extras != null) {
-                Bitmap croppedBitmap = extras.getParcelable("data");
-                myBitmap = croppedBitmap;
-                ImageFile = bitmapToFile(myBitmap);
-                Log.d("TAG", "onnnResponse: " + ImageFile.getAbsolutePath());
-                int pos = kycScanningList.indexOf(item);
-
-                kycScanningList.get(pos).setFile(ImageFile);
-                kycRecyclerViewAdapter.notifyDataSetChanged();
-                Log.d("TAG", "onResponse: " + position);
-                OSV(item,ImageFile,position);
-            }
-        }*/
     }
 
     private void OSV(KYCScanningModel item, File imageFile,int position) {
