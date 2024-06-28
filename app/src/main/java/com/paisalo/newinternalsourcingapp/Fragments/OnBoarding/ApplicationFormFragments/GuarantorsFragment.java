@@ -51,6 +51,7 @@ import com.google.zxing.integration.android.IntentResult;
 import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivityMenu;
 import com.paisalo.newinternalsourcingapp.Activities.CameraActivity;
 import com.paisalo.newinternalsourcingapp.Activities.ManagerList;
+import com.paisalo.newinternalsourcingapp.Adapters.CustomSpinnerAdapter;
 import com.paisalo.newinternalsourcingapp.Adapters.GurrantorListAdapter;
 import com.paisalo.newinternalsourcingapp.Adapters.ManagerListAdapter;
 import com.paisalo.newinternalsourcingapp.Adapters.RangeCategoryAdapter;
@@ -262,14 +263,14 @@ public class GuarantorsFragment extends Fragment {
                     String descriptionEn = data.getDescriptionEn();
                     gender_List.add(descriptionEn);
                 }
-                ArrayAdapter<String> adapter1 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, gender_List);
+                CustomSpinnerAdapter adapter1 = new CustomSpinnerAdapter(getActivity(), android.R.layout.simple_spinner_dropdown_item, gender_List);
                 spin_gender.setAdapter(adapter1);
 
                 stateDataList = new ArrayList<>();
                 RangeCategoryDataClass rangeCategoryDataClass = new RangeCategoryDataClass("--Select--", "--Select--", "--Select--", "--Select--", "--Select--", 0, "99");
                 stateDataList.add(rangeCategoryDataClass);
                 stateDataList.addAll(databaseClass.dao().getAllRCDataListby_catKey("state"));
-                RangeCategoryAdapter rangeCategoryAdapter = new RangeCategoryAdapter(getActivity(), stateDataList);
+                RangeCategoryAdapter rangeCategoryAdapter = new RangeCategoryAdapter(getActivity(), android.R.layout.simple_spinner_dropdown_item,stateDataList);
                 spin_state.setAdapter(rangeCategoryAdapter);
 
 
@@ -279,7 +280,7 @@ public class GuarantorsFragment extends Fragment {
                     relationwithborr_List.add(descriptionEn);
 
                 }
-                ArrayAdapter<String> adapter3 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, relationwithborr_List);
+                CustomSpinnerAdapter adapter3 = new CustomSpinnerAdapter(getActivity(), android.R.layout.simple_spinner_dropdown_item, relationwithborr_List);
                 spin_relationwithborr.setAdapter(adapter3);
 
 

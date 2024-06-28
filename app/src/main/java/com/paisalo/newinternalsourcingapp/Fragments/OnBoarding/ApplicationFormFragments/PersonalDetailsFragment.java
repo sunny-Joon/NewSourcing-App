@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivityMenu;
+import com.paisalo.newinternalsourcingapp.Adapters.CustomSpinnerAdapter;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFDataModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.UpdateFiModels.KycUpdateModel;
@@ -49,7 +50,7 @@ public class PersonalDetailsFragment extends Fragment {
     List<String> presentHouseOwnerList = new ArrayList<>();
 
     List<String> educationalCodeList = new ArrayList<>();
-    ArrayAdapter<String> adapter1,adapter2,adapter3,adapter4;
+    CustomSpinnerAdapter adapter1,adapter2,adapter3,adapter4;
 
     List<RangeCategoryDataClass> casteDataList,religionDataList,presentHouseOwnerDataList,educationDataList;
     String fiCode, creator, tag, EmailId, caste, religion, PlaceOfBirth, presentHouseOwner, residingFor, numOfFamMember,
@@ -98,7 +99,7 @@ public class PersonalDetailsFragment extends Fragment {
             String descriptionEn = data.getDescriptionEn();
             CasteList.add(descriptionEn);
         }
-        adapter1 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, CasteList);
+        adapter1 = new CustomSpinnerAdapter(getActivity(), android.R.layout.simple_spinner_dropdown_item, CasteList);
         casteSpinner.setAdapter(adapter1);
         adapter1.notifyDataSetChanged();
 
@@ -109,7 +110,7 @@ public class PersonalDetailsFragment extends Fragment {
             Log.d("TAG", "onCreateView: "+descriptionEn);
             religionList.add(descriptionEn);
         }
-        adapter2 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, religionList);
+        adapter2 = new CustomSpinnerAdapter(getActivity(), android.R.layout.simple_spinner_dropdown_item, religionList);
         religionSpinner.setAdapter(adapter2);
         adapter2.notifyDataSetChanged();
 
@@ -120,7 +121,7 @@ public class PersonalDetailsFragment extends Fragment {
             presentHouseOwnerList.add(descriptionEn);
 
         }
-        adapter3 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, presentHouseOwnerList);
+        adapter3 = new CustomSpinnerAdapter(getActivity(), android.R.layout.simple_spinner_dropdown_item, presentHouseOwnerList);
         houseOwnerSpinner.setAdapter(adapter3);
         adapter3.notifyDataSetChanged();
 
@@ -131,7 +132,7 @@ public class PersonalDetailsFragment extends Fragment {
             Log.d("TAG", "onCreateView: "+descriptionEn);
             educationalCodeList.add(descriptionEn);
         }
-        adapter4 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, educationalCodeList);
+        adapter4 = new CustomSpinnerAdapter(getActivity(), android.R.layout.simple_spinner_dropdown_item, educationalCodeList);
         educationalCodeSpinner.setAdapter(adapter4);
         adapter4.notifyDataSetChanged();
 

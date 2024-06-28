@@ -68,6 +68,7 @@ import com.paisalo.newinternalsourcingapp.RoomDatabase.DatabaseClass;
 import com.paisalo.newinternalsourcingapp.RoomDatabase.ManagerListDataClass;
 import com.paisalo.newinternalsourcingapp.RoomDatabase.RangeCategoryDataClass;
 import com.paisalo.newinternalsourcingapp.RoomDatabase.loginDataClass;
+import com.paisalo.newinternalsourcingapp.Utils.CustomProgressDialog;
 import com.paisalo.newinternalsourcingapp.Utils.Utils;
 import com.paisalo.newinternalsourcingapp.databinding.ActivityLoginBinding;
 import com.paisalo.newinternalsourcingapp.location.GpsTracker;
@@ -90,6 +91,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LoginActivity extends AppCompatActivity implements onListCReatorInteraction {
     DaoClass daoClass ;
     TextView versionset,btnTermCondition;
+
+    CustomProgressDialog customProgressDialog;
     Spinner selectDatabase;
     ActivityLoginBinding binding;
     String username, password,month = "";String year = "",stTarget_Popup="",image="" ,deviceId,choosedCreator;
@@ -122,6 +125,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
         selectDatabase= findViewById(R.id.selectDatabase);
         btnTermCondition= findViewById(R.id.btnTermCondition);
 
+        customProgressDialog = new CustomProgressDialog(LoginActivity.this);
         if (!checkPermissions()) {
             requestPermissions();
         } else {
@@ -170,6 +174,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                     Toast.makeText(LoginActivity.this, "Select Database Name", Toast.LENGTH_SHORT).show();
                 } else if (isValidUsername(username) && isValidPassword(password)) {
                     LoginAPi(devid, BuildConfig.dbname, imei);
+                    customProgressDialog.show();
                 } else {
                     Toast.makeText(LoginActivity.this, "Invalid credentials", Toast.LENGTH_SHORT).show();
                 }
@@ -230,6 +235,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
             @Override
             public void onClick(View v) {
                 showCreatorSearchDialog(creators);
+                customProgressDialog.show();
             }
         });
 
@@ -238,6 +244,8 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                customProgressDialog.show();
                 GpsTracker gpsTracker=new GpsTracker(LoginActivity.this);
                 String Name = name.getText().toString();
                 String Mobile = mobile.getText().toString();
@@ -275,6 +283,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                             Log.d("TAG", "onResponseimei: "+response.body());
 
                             if (response.isSuccessful()){
+                                customProgressDialog.dismiss();
                                 Log.d("TAG", "onResponseimei: "+response.body().getMessage().toString());
                                 ImeiMappingModel imeiMappingModel = response.body();
                                 if(imeiMappingModel.getMessage().contains("Data inserted Successfully")) {
@@ -372,6 +381,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
             public void onResponse(Call<CreatorListModel> call, Response<CreatorListModel> response) {
 
                 if(response.isSuccessful()){
+                    customProgressDialog.dismiss();
                     CreatorListModel creatorListModel = response.body();
                     List<CreatorListModelData> creatorListModelData = creatorListModel.getData();
                     list.addAll(creatorListModelData);
@@ -620,13 +630,19 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
     private void LoginAPi(String devid, String dbname, String imeino) {
         Log.d("TAG", "MyApp: "+ "Login Api Run");
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+
         Call<LoginModel> call = apiInterface.LoginApi(devid, dbname, imeino, getJsonOfUserIdPassword());
+
         call.enqueue(new Callback<LoginModel>() {
+
             @Override
             public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
+
+
                 if (response.isSuccessful()) {
                     Log.d("TAG", "MyApp: "+ "Login Api Successful");
 
+                    customProgressDialog.dismiss();
                     LoginModel responseData = response.body();
                     if (responseData.getMessage().contains("Successfully")) {
 
@@ -668,8 +684,8 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
 
             @Override
             public void onFailure(Call<LoginModel> call, Throwable t) {
-                Log.d("TAG", "MyApp: "+ "Login Api Failure");
-                Toast.makeText(LoginActivity.this, "Network Issue", Toast.LENGTH_SHORT).show();
+                Log.d("TAG", "MyApp: "+ "Login Api Failure = > "+ t.getMessage());
+                Toast.makeText(LoginActivity.this, "Network Issue1", Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
             }
         });

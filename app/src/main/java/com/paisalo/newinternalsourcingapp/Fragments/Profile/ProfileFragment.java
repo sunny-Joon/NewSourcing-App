@@ -74,7 +74,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        referAndEarn.setOnClickListener(new View.OnClickListener() {
+        buttonprofile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ReferAndEanActivity.class);

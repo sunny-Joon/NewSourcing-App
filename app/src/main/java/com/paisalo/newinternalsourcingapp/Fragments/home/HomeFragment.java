@@ -28,6 +28,7 @@ import com.paisalo.newinternalsourcingapp.ModelsRetrofit.TargetSetModel;
 import com.paisalo.newinternalsourcingapp.R;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiClient;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiInterface;
+import com.paisalo.newinternalsourcingapp.Utils.CustomProgressDialog;
 import com.paisalo.newinternalsourcingapp.Utils.GlobalClass;
 import com.paisalo.newinternalsourcingapp.databinding.FragmentHomeBinding;
 
@@ -50,6 +51,8 @@ public class HomeFragment extends Fragment {
     boolean flag=false;
     AlertDialog dialog;
 
+    CustomProgressDialog customProgressDialog;
+
 
 
     public static Fragment newInstance(int position) {
@@ -63,6 +66,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
+        customProgressDialog = new CustomProgressDialog(getContext());
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         binding.backgroundImageView.setVisibility(View.GONE);
@@ -89,6 +93,7 @@ public class HomeFragment extends Fragment {
         }else{
             binding.monthlyDisbursmentTarget.setText(stTarget_Popup);
             targetCountApi();
+          //  customProgressDialog.show();
         }
 
         binding.txtCalcIncentive.setOnClickListener(new View.OnClickListener() {
@@ -131,6 +136,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void targetCountApi() {
+        customProgressDialog.show();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<TargetCountModel> call = apiInterface.getTargetCount( com.paisalo.newinternalsourcingapp.GlobalClass.Token, com.paisalo.newinternalsourcingapp.GlobalClass.dbname,"GRST000223");
         call.enqueue(new Callback<TargetCountModel>() {
@@ -138,6 +144,7 @@ public class HomeFragment extends Fragment {
             public void onResponse(Call<TargetCountModel> call, Response<TargetCountModel> response) {
 
                 if (response.isSuccessful()) {
+                    customProgressDialog.dismiss();
                     TargetCountModel targetCountModel = response.body();
                     Log.d("TAG_A", "onResponse:123456789 " + targetCountModel);
                     if (targetCountModel.getData() == -1) {
@@ -146,8 +153,13 @@ public class HomeFragment extends Fragment {
                         binding.targetCount.setText(targetCountModel.getData().toString() + " people will earn more incentive than you");
                     }
                 }
-                else
+
+                else{
                     Log.d("TAG_A", "onResponse:123456789 " + "else"+response.code());
+                }
+
+
+                customProgressDialog.dismiss();
             }
 
             @Override
@@ -218,7 +230,7 @@ public class HomeFragment extends Fragment {
         return jsonObject;
     }
     private void settargetAPI(String target) {
-
+        customProgressDialog.show();
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("stTarget_Popup", target);
@@ -234,6 +246,7 @@ public class HomeFragment extends Fragment {
                 Log.d("TAG", "settargetAPIII:22 "+response.body());
 
                 if(response.isSuccessful()){
+                    customProgressDialog.dismiss();
                     Log.d("TAG", "onResponse: "+"success");
                     Log.d("TAG", "onResponsemessage:33 "+response.body());
                     String message = response.body().getMessage();

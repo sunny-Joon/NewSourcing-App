@@ -65,7 +65,7 @@ public interface ApiInterface {
 
 
     @POST("Account/GetToken")
-    Call<LoginModel> LoginApi(@retrofit2.http.Header("devid") String devid, @retrofit2.http.Header("dbname") String dbname, @retrofit2.http.Header("imeino") String imeino, @Body JsonObject object);
+    Call<LoginModel> LoginApi(@Header("devid") String devid, @Header("dbname") String dbname, @Header("imeino") String imeino, @Body JsonObject object);
 
     @GET("Master/GetRangeCategories")
     Call<RangeCategoryModel> RangeCategory(@Header("Authorization") String token, @Header("dbname") String dbName);
