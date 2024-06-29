@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.paisalo.newinternalsourcingapp.Adapters.CustomSpinnerAdapter;
 import com.paisalo.newinternalsourcingapp.Entities.CkycNoMODEL;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
 import com.paisalo.newinternalsourcingapp.Modelclasses.FiExtra;
@@ -34,6 +35,7 @@ import com.paisalo.newinternalsourcingapp.Utils.Utils;
 import com.paisalo.newinternalsourcingapp.location.GpsTracker;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -173,14 +175,14 @@ public class KYCActivity2 extends AppCompatActivity {
                 for (RangeCategoryDataClass data : bankData) {
                     String descriptionEn = data.getDescriptionEn();
                     BankList.add(descriptionEn);
-                    ArrayAdapter<String> adapter1 = new ArrayAdapter<>(KYCActivity2.this, android.R.layout.simple_spinner_item, BankList);
+                    CustomSpinnerAdapter adapter1 = new CustomSpinnerAdapter(KYCActivity2.this, android.R.layout.simple_spinner_dropdown_item, BankList);
                     selectbank.setAdapter(adapter1);
                 }
                 List<RangeCategoryDataClass> business_typeData = databaseClass.dao().getAllRCDataListby_catKey("business-type");
                 for (RangeCategoryDataClass data : business_typeData) {
                     String descriptionEn = data.getDescriptionEn();
                     BusinessTypeList.add(descriptionEn);
-                    ArrayAdapter<String> adapter2 = new ArrayAdapter<>(KYCActivity2.this, android.R.layout.simple_spinner_item, BusinessTypeList);
+                    CustomSpinnerAdapter adapter2 = new CustomSpinnerAdapter(KYCActivity2.this, android.R.layout.simple_spinner_dropdown_item, BusinessTypeList);
                     businessdetail.setAdapter(adapter2);
 
                 }
@@ -188,21 +190,21 @@ public class KYCActivity2 extends AppCompatActivity {
                 for (RangeCategoryDataClass data : earningmembertypeData) {
                     String descriptionEn = data.getDescriptionEn();
                     earningmembertypeList.add(descriptionEn);
-                    ArrayAdapter<String> adapter3 = new ArrayAdapter<>(KYCActivity2.this, android.R.layout.simple_spinner_item, earningmembertypeList);
+                    CustomSpinnerAdapter adapter3 = new CustomSpinnerAdapter(KYCActivity2.this, android.R.layout.simple_spinner_dropdown_item, earningmembertypeList);
                     earningmembertype.setAdapter(adapter3);
                 }
                 List<RangeCategoryDataClass> loanpurposeData = databaseClass.dao().getAllRCDataListby_catKey("loan_purpose");
                 for (RangeCategoryDataClass data : loanpurposeData) {
                     String descriptionEn = data.getDescriptionEn();
                     loanpurposeList.add(descriptionEn);
-                    ArrayAdapter<String> adapter4 = new ArrayAdapter<>(KYCActivity2.this, android.R.layout.simple_spinner_item, loanpurposeList);
+                    CustomSpinnerAdapter adapter4 = new CustomSpinnerAdapter(KYCActivity2.this, android.R.layout.simple_spinner_dropdown_item, loanpurposeList);
                     loanpurpose.setAdapter(adapter4);
                 }
                 List<RangeCategoryDataClass> occuptionData = databaseClass.dao().getAllRCDataListby_catKey("occupation-type");
                 for (RangeCategoryDataClass data : occuptionData) {
                     String descriptionEn = data.getDescriptionEn();
                     occuptionList.add(descriptionEn);
-                    ArrayAdapter<String> adapter5 = new ArrayAdapter<>(KYCActivity2.this, android.R.layout.simple_spinner_item, occuptionList);
+                    CustomSpinnerAdapter adapter5 = new CustomSpinnerAdapter(KYCActivity2.this, android.R.layout.simple_spinner_dropdown_item, occuptionList);
                     occuption.setAdapter(adapter5);
                     adapter5.notifyDataSetChanged();
                 }
@@ -214,7 +216,7 @@ public class KYCActivity2 extends AppCompatActivity {
         loanduration.setAdapter(adapter6);*/
 
                     String[] loandurationList = {"--Select--","12", "18", "24", "32", "40"};
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(KYCActivity2.this, android.R.layout.simple_spinner_item, loandurationList);
+                    CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(KYCActivity2.this, android.R.layout.simple_spinner_dropdown_item, Arrays.asList(loandurationList));
                     loanduration.setAdapter(adapter);
                 }
 

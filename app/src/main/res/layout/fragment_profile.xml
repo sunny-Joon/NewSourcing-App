@@ -229,10 +229,12 @@
             android:id="@+id/buttonprofile"
             android:layout_width="75dp"
             android:layout_height="45dp"
-            android:layout_alignParentBottom="true"
             android:text="Refer Now"
             android:textAllCaps="false"
             android:textSize="9dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="14dp"
+            android:layout_marginBottom="20dp"
             app:layout_constraintStart_toStartOf="@id/imageView5"
             app:layout_constraintBottom_toBottomOf="@+id/imageView5"
             tools:layout_editor_absoluteY="134dp" />

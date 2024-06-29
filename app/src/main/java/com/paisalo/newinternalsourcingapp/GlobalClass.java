@@ -289,13 +289,14 @@ public class GlobalClass extends Application {
         }
         return null;
     }
-    public static String formatDateString2(String inputDateString) {
+    public static String formatDateString2(String inputDateString, String style) {
+
         for (String format : INPUT_DATE_FORMATS) {
             try {
                 SimpleDateFormat inputFormat = new SimpleDateFormat(format, Locale.getDefault());
                 Date date = inputFormat.parse(inputDateString);
                 if (date != null) {
-                    SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
+                    SimpleDateFormat outputFormat = new SimpleDateFormat(style, Locale.getDefault());
                     return outputFormat.format(date);
                 }
             } catch (ParseException e) {

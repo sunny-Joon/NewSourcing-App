@@ -2,11 +2,14 @@ package com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.ApplicationFormF
 
 import static com.paisalo.newinternalsourcingapp.GlobalClass.SubmitAlert;
 import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidName;
+
 import android.content.Context;
 import android.os.Bundle;
+
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -24,6 +27,7 @@ import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivityMenu;
+import com.paisalo.newinternalsourcingapp.Adapters.CustomSpinnerAdapter;
 import com.paisalo.newinternalsourcingapp.Adapters.FaimlyMemberIncomeAdapter;
 import com.paisalo.newinternalsourcingapp.Adapters.FamilyBorrowingsAdapter;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
@@ -33,9 +37,11 @@ import com.paisalo.newinternalsourcingapp.ModelsRetrofit.UpdateFiModels.KycUpdat
 import com.paisalo.newinternalsourcingapp.R;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiClient;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiInterface;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
 import com.paisalo.newinternalsourcingapp.RoomDatabase.DatabaseClass;
 import com.paisalo.newinternalsourcingapp.RoomDatabase.RangeCategoryDataClass;
 import com.paisalo.newinternalsourcingapp.Utils.CustomProgress;
@@ -49,8 +55,8 @@ public class FamilyMembersIncomeFragment extends Fragment {
     FaimlyMemberIncomeAdapter adapter;
     List<FiFamMem> memberincomelist;
     RecyclerView recyclerView;
-    Button  addBtn,delBtn,canBtn,addmemberincome;
-    EditText faimlMemberName,etage,etBusiness,etTextincome;
+    Button addBtn, delBtn, canBtn, addmemberincome;
+    EditText faimlMemberName, etage, etBusiness, etTextincome;
     List<String> relationship_List = new ArrayList<>();
     List<String> gender_List = new ArrayList<>();
     List<String> Health_List = new ArrayList<>();
@@ -60,17 +66,18 @@ public class FamilyMembersIncomeFragment extends Fragment {
     List<String> incomeType_List = new ArrayList<>();
     List<FiFamMem> list;
 
-    String fiCode,creator,tag,famMemName,relationship,age,gender,health,education,schoolType,business,businessType,income,incomeType;
+    String fiCode, creator, tag, famMemName, relationship, age, gender, health, education, schoolType, business, businessType, income, incomeType;
 
-    Spinner relationship_spin,gender_spin,Health_spin,Education_spin,schoolType_spin,businessType_spin,incomeType_spin;
+    Spinner relationship_spin, gender_spin, Health_spin, Education_spin, schoolType_spin, businessType_spin, incomeType_spin;
     FloatingActionButton FMIncomeButton;
 
     AllDataAFDataModel allDataAFDataModel;
-    List<RangeCategoryDataClass>  relationship_DataList,incomeType_DataList,businessType_DataList,schoolType_DataList,Education_DataList,Health_DataList,gender_DataList;
+    List<RangeCategoryDataClass> relationship_DataList, incomeType_DataList, businessType_DataList, schoolType_DataList, Education_DataList, Health_DataList, gender_DataList;
 
-    ArrayAdapter<String> adapter1,adapter2,adapter3,adapter4,adapter5,adapter6,adapter7;
+    CustomSpinnerAdapter adapter1, adapter2, adapter3, adapter4, adapter5, adapter6, adapter7;
+
     public FamilyMembersIncomeFragment(AllDataAFDataModel allDataAFDataModel) {
-        this.allDataAFDataModel=allDataAFDataModel;
+        this.allDataAFDataModel = allDataAFDataModel;
     }
 
     @Override
@@ -80,11 +87,11 @@ public class FamilyMembersIncomeFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_family_members_income,container,false);
+        View view = inflater.inflate(R.layout.fragment_family_members_income, container, false);
 
 
         DatabaseClass databaseClass = DatabaseClass.getInstance(getContext());
-        memberincomelist= new ArrayList<>();
+        memberincomelist = new ArrayList<>();
 
         recyclerView = view.findViewById(R.id.memberincome);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -92,7 +99,7 @@ public class FamilyMembersIncomeFragment extends Fragment {
         addmemberincome = view.findViewById(R.id.addmemberincome);
 
         if (allDataAFDataModel != null) {
-            if (allDataAFDataModel.getFiFamMems().size()>0) {
+            if (allDataAFDataModel.getFiFamMems().size() > 0) {
                 Log.d("TAG", "allDataAFDataModel: " + " list.size()");
 
                 list = allDataAFDataModel.getFiFamMems();
@@ -109,6 +116,14 @@ public class FamilyMembersIncomeFragment extends Fragment {
         FMIncomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                relationship_List.clear();
+                      gender_List.clear();
+                      Health_List.clear();
+                   Education_List.clear();
+                  schoolType_List.clear();
+                businessType_List.clear();
+                  incomeType_List.clear();
 
                 LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View popupView = inflater.inflate(R.layout.familymemberincomepopup, null);
@@ -157,7 +172,7 @@ public class FamilyMembersIncomeFragment extends Fragment {
                     String descriptionEn = data.getDescriptionEn();
                     relationship_List.add(descriptionEn);
                 }
-                adapter1 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, relationship_List);
+                adapter1 = new CustomSpinnerAdapter(getActivity(), android.R.layout.simple_spinner_dropdown_item, relationship_List);
                 relationship_spin.setAdapter(adapter1);
 
 
@@ -166,7 +181,7 @@ public class FamilyMembersIncomeFragment extends Fragment {
                     String descriptionEn = data.getDescriptionEn();
                     gender_List.add(descriptionEn);
                 }
-                adapter2 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, gender_List);
+                adapter2 = new CustomSpinnerAdapter(getActivity(), android.R.layout.simple_spinner_item, gender_List);
                 gender_spin.setAdapter(adapter2);
 
                 Health_DataList = databaseClass.dao().getAllRCDataListby_catKey("health");
@@ -175,7 +190,7 @@ public class FamilyMembersIncomeFragment extends Fragment {
                     Health_List.add(descriptionEn);
 
                 }
-                adapter3 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, Health_List);
+                adapter3 = new CustomSpinnerAdapter(getActivity(), android.R.layout.simple_spinner_item, Health_List);
                 Health_spin.setAdapter(adapter3);
 
                 Education_DataList = databaseClass.dao().getAllRCDataListby_catKey("education");
@@ -183,7 +198,7 @@ public class FamilyMembersIncomeFragment extends Fragment {
                     String descriptionEn = data.getDescriptionEn();
                     Education_List.add(descriptionEn);
                 }
-                adapter4 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, Education_List);
+                adapter4 = new CustomSpinnerAdapter(getActivity(), android.R.layout.simple_spinner_item, Education_List);
                 Education_spin.setAdapter(adapter4);
 
                 schoolType_DataList = databaseClass.dao().getAllRCDataListby_catKey("school-type");
@@ -191,7 +206,7 @@ public class FamilyMembersIncomeFragment extends Fragment {
                     String descriptionEn = data.getDescriptionEn();
                     schoolType_List.add(descriptionEn);
                 }
-                adapter5 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, schoolType_List);
+                adapter5 = new CustomSpinnerAdapter(getActivity(), android.R.layout.simple_spinner_item, schoolType_List);
                 schoolType_spin.setAdapter(adapter5);
 
                 businessType_DataList = databaseClass.dao().getAllRCDataListby_catKey("business-type");
@@ -199,7 +214,7 @@ public class FamilyMembersIncomeFragment extends Fragment {
                     String descriptionEn = data.getDescriptionEn();
                     businessType_List.add(descriptionEn);
                 }
-                adapter6 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, businessType_List);
+                adapter6 = new CustomSpinnerAdapter(getActivity(), android.R.layout.simple_spinner_item, businessType_List);
                 businessType_spin.setAdapter(adapter6);
 
                 incomeType_DataList = databaseClass.dao().getAllRCDataListby_catKey("income-type");
@@ -207,7 +222,7 @@ public class FamilyMembersIncomeFragment extends Fragment {
                     String descriptionEn = data.getDescriptionEn();
                     incomeType_List.add(descriptionEn);
                 }
-                adapter7 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, incomeType_List);
+                adapter7 = new CustomSpinnerAdapter(getActivity(), android.R.layout.simple_spinner_item, incomeType_List);
                 incomeType_spin.setAdapter(adapter7);
 
                 if (allDataAFDataModel != null) {
@@ -289,7 +304,6 @@ public class FamilyMembersIncomeFragment extends Fragment {
                 addBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
 
 
                         boolean allConditionsSatisfied = true;
@@ -391,7 +405,7 @@ public class FamilyMembersIncomeFragment extends Fragment {
 
 
                             memberincomelist.add(fiFamMem);
-                             adapter= new FaimlyMemberIncomeAdapter(getActivity(), memberincomelist);
+                            adapter = new FaimlyMemberIncomeAdapter(getActivity(), memberincomelist);
                             recyclerView.setAdapter(adapter);
                             popupWindow.dismiss();
 
@@ -403,11 +417,11 @@ public class FamilyMembersIncomeFragment extends Fragment {
                 canBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                         popupWindow.dismiss();
+                        popupWindow.dismiss();
                     }
                 });
 
-             }
+            }
         });
 
 
@@ -417,8 +431,8 @@ public class FamilyMembersIncomeFragment extends Fragment {
 
                 for (FiFamMem fiFamMem : memberincomelist) {
                     JsonObject jsonborr = FamIncomeJson(fiFamMem);
-                  CustomProgressDialog customProgressDialog = new CustomProgressDialog(getActivity());
-                  customProgressDialog.getContext();
+                    CustomProgressDialog customProgressDialog = new CustomProgressDialog(getActivity());
+                    customProgressDialog.getContext();
 
                     ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
                     Call<KycUpdateModel> call = apiInterface.updateFamMemIncome(GlobalClass.Token, GlobalClass.dbname, jsonborr);
@@ -433,7 +447,7 @@ public class FamilyMembersIncomeFragment extends Fragment {
                                 Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
                                 Log.d("TAG", "onResponseAdhaarUpdatemsg: " + response.body().getMessage().toString());
                                 Toast.makeText(getActivity(), "Data set Successfully", Toast.LENGTH_SHORT).show();
-                               // SubmitAlert(getActivity(), "success", "Data set Successfully");
+                                // SubmitAlert(getActivity(), "success", "Data set Successfully");
 
                             } else {
                                 Log.d("TAG", "onResponseAdhaarUpdate: " + response.code());
@@ -459,10 +473,10 @@ public class FamilyMembersIncomeFragment extends Fragment {
     private JsonObject FamIncomeJson(FiFamMem fiFamMem) {
 
         JsonObject jsonfamIncome = new JsonObject();
-        jsonfamIncome.addProperty("fiCode",fiFamMem.getCode());
+        jsonfamIncome.addProperty("fiCode", fiFamMem.getCode());
         jsonfamIncome.addProperty("creator", fiFamMem.getCreator());
-        jsonfamIncome.addProperty("tag",fiFamMem.getTag());
-        jsonfamIncome.addProperty("famMemName",fiFamMem.getMemName());
+        jsonfamIncome.addProperty("tag", fiFamMem.getTag());
+        jsonfamIncome.addProperty("famMemName", fiFamMem.getMemName());
         jsonfamIncome.addProperty("relationship", fiFamMem.getRelationWBorrower());
         jsonfamIncome.addProperty("age", fiFamMem.getAge());
         jsonfamIncome.addProperty("gender", fiFamMem.getGender());

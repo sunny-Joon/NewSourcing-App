@@ -161,7 +161,7 @@ public class AadhaarFragment extends Fragment {
         RangeCategoryDataClass rangeCategoryDataClass = new RangeCategoryDataClass("--Select--", "--Select--", "--Select--", "--Select--", "--Select--", 0, "99");
         stateDataList.add(rangeCategoryDataClass);
         stateDataList.addAll(databaseClass.dao().getAllRCDataListby_catKey("state"));
-        rangeCategoryAdapter = new RangeCategoryAdapter(getActivity(), stateDataList);
+        rangeCategoryAdapter = new RangeCategoryAdapter(getActivity(),android.R.layout.simple_spinner_dropdown_item, stateDataList);
         spin_aadhaarState.setAdapter(rangeCategoryAdapter);
 
         if(allDataAFDataModel!=null) {
