@@ -64,6 +64,7 @@ dependencies {
     // For Room Database
     implementation "androidx.room:room-runtime:2.4.0"
     implementation 'androidx.activity:activity:1.8.0'
+    implementation project(':mupdf-viewer-library')
     annotationProcessor "androidx.room:room-compiler:2.4.0"
 
     //For Location GPS

@@ -118,7 +118,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="SmCode/Creator"
+                    android:text="FiCode/Creator"
                     android:layout_weight="1"
                     android:textColor="@color/white"
                     android:textSize="@dimen/heading"

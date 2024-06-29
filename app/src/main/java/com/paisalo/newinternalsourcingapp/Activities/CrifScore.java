@@ -32,6 +32,7 @@ import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.BorrowerListModels.BorrowerListDataModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.BreResponseModels.BREResponse;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.CheckCrifData;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.EsignListModels.PendingESignFI;
 import com.paisalo.newinternalsourcingapp.R;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiClient;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiInterface;
@@ -69,7 +70,7 @@ public class CrifScore extends AppCompatActivity {
    // AdapterListRange rlaBankType;
     String ficode,creator;
     CheckCrifData checkCrifData=new CheckCrifData();
-    BorrowerListDataModel eSignerborower;
+    PendingESignFI eSignerborower;
     String stateName;
     Spinner spinner;
     int attempts_left=4;
@@ -87,7 +88,7 @@ public class CrifScore extends AppCompatActivity {
         Log.d("TAG", "onCreate: "+i.getStringExtra("ficode"));
         ficode=i.getStringExtra("FIcode");
         creator=i.getStringExtra("creator");
-        eSignerborower = (BorrowerListDataModel) i.getSerializableExtra("ESignerBorower");
+        eSignerborower = (PendingESignFI) i.getSerializableExtra("ESignerBorower");
         sharedPreferences = getSharedPreferences("KYCData",MODE_PRIVATE);
         editor = sharedPreferences.edit();
        // editor.putString("Bank",eSignerborower.BankName);
@@ -366,7 +367,7 @@ public class CrifScore extends AppCompatActivity {
     }
 
 
-    private void generateCrifScore(BorrowerListDataModel eSignerborower) {
+    private void generateCrifScore(PendingESignFI eSignerborower) {
         ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setIndeterminate(false);
@@ -402,7 +403,7 @@ public class CrifScore extends AppCompatActivity {
             }
         });
     }
-    private JsonObject getJsonForGenerateCrif(BorrowerListDataModel eSignerborower) {
+    private JsonObject getJsonForGenerateCrif(PendingESignFI eSignerborower) {
         JsonObject jsonObject=new JsonObject();
         jsonObject.addProperty("full_name", "SHANTILAL D");
         jsonObject.addProperty("dobs", "1992-04-08");

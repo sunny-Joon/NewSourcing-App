@@ -4,6 +4,7 @@ import static android.app.Activity.RESULT_OK;
 
 import static com.paisalo.newinternalsourcingapp.GlobalClass.SubmitAlert;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -99,44 +100,62 @@ public class KycScanningFragment extends Fragment implements KycRecyclerViewAdap
             fiCode = (allDataAFDataModel.getCode() != null) ? String.valueOf(allDataAFDataModel.getCode()) : "N/A";
             gurNo = (allDataAFDataModel.getFiGuarantors() != null) ? allDataAFDataModel.getFiGuarantors().size() : 0;
 
+            Log.d("TAG", "DatainObject: "+ creator+" "+name+" "+oaadharNo+" "+olicenseNo+" "+ovoterIdNo+" "+opanNo+" "+fiCode+" "+gurNo);
+            Log.d("TAG", "DatainObject: "+allDataAFDataModel.getFiGuarantors().size());
+
             kycScanningList = new ArrayList<>();
             kycScanningList.add(new KYCScanningModel(name, "Borrower", "Aadhar", "Front", null, allDataAFDataModel.getAadharID()));
+            Log.d("TAG", "DatainObjectB:" +"Adhaar front");
             kycScanningList.add(new KYCScanningModel(name, "Borrower", "Aadhar", "Back", null, allDataAFDataModel.getAadharID()));
-            kycScanningList.add(new KYCScanningModel(name, "Borrower", "PassBook", "FirstPage", null, ""));
+            Log.d("TAG", "DatainObjectB:" +"Adhaar back");
 
-            if (ovoterIdNo != null) {
+            kycScanningList.add(new KYCScanningModel(name, "Borrower", "PassBook", "FirstPage", null, ""));
+            Log.d("TAG", "DatainObjectB:" +"passbook");
+
+            if (!ovoterIdNo.isEmpty()) {
                 kycScanningList.add(new KYCScanningModel(name, "Borrower", "VoterId", "Front", null, allDataAFDataModel.getVoterID()));
+                Log.d("TAG", "DatainObjectB:" +"VoterId");
+
             }
-            if (opanNo != null) {
+            if (!opanNo.isEmpty()) {
                 kycScanningList.add(new KYCScanningModel(name, "Borrower", "Pan", "Front", null, allDataAFDataModel.getPanNO()));
+                Log.d("TAG", "DatainObjectB:" +"Pan");
+
             }
-            if (olicenseNo != null) {
+            if (!olicenseNo.isEmpty()) {
                 kycScanningList.add(new KYCScanningModel(name, "Borrower", "DL", "Front", null, allDataAFDataModel.getDrivingLic()));
+                Log.d("TAG", "DatainObjectB:" +"Dl");
+
             }
 
 
             for (FiGuarantor fiGuarantor : allDataAFDataModel.getFiGuarantors()) {
 
                 kycScanningList.add(new KYCScanningModel(fiGuarantor.getName(), "Gurrantor" + fiGuarantor.getGrNo(), "GAadhaar", "Front", null, fiGuarantor.getAadharID()));
+                Log.d("TAG", "DatainObjectG:" +"Adhaarfront");
+
                 kycScanningList.add(new KYCScanningModel(fiGuarantor.getName(), "Gurrantor" + fiGuarantor.getGrNo(), "GAadhaar", "Back", null, fiGuarantor.getAadharID()));
-                if (fiGuarantor.getVoterID() != null) {
-                    kycScanningList.add(new KYCScanningModel(name, "Gurrantor" + fiGuarantor.getGrNo(), "GVoterId", "Front", null, fiGuarantor.getVoterID()));
+                Log.d("TAG", "DatainObjectG:" +"AdhaarBack");
+
+                if (!fiGuarantor.getVoterID().isEmpty()) {
+                    kycScanningList.add(new KYCScanningModel(fiGuarantor.getName(), "Gurrantor" + fiGuarantor.getGrNo(), "GVoterId", "Front", null, fiGuarantor.getVoterID()));
+                    Log.d("TAG", "DatainObjectG:" +"VoterId");
                 }
-                if (fiGuarantor.getPanNo() != null) {
-                    kycScanningList.add(new KYCScanningModel(name, "Gurrantor" + fiGuarantor.getGrNo(), "GPan", "Front", null, fiGuarantor.getPanNo()));
+                if (!fiGuarantor.getPanNo().isEmpty()) {
+                    kycScanningList.add(new KYCScanningModel(fiGuarantor.getName(), "Gurrantor" + fiGuarantor.getGrNo(), "GPan", "Front", null, fiGuarantor.getPanNo()));
+                    Log.d("TAG", "DatainObjectG:" +"Pan");
                 }
-                if (fiGuarantor.getDrivingLic() != null) {
-                    kycScanningList.add(new KYCScanningModel(name, "Gurrantor" + fiGuarantor.getGrNo(), "GDL", "Front", null, fiGuarantor.getDrivingLic()));
+                if (!fiGuarantor.getDrivingLic().isEmpty()) {
+                    kycScanningList.add(new KYCScanningModel(fiGuarantor.getName(), "Gurrantor" + fiGuarantor.getGrNo(), "GDL", "Front", null, fiGuarantor.getDrivingLic()));
+                    Log.d("TAG", "DatainObjectG:" +"Dl");
                 }
             }
             kycRecyclerViewAdapter = new KycRecyclerViewAdapter(requireContext(), kycScanningList, this);
 
         } else {
             Log.d("TAG", "sunny: " + "main obj is null");
-
         }
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -199,6 +218,7 @@ public class KycScanningFragment extends Fragment implements KycRecyclerViewAdap
         startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -209,6 +229,7 @@ public class KycScanningFragment extends Fragment implements KycRecyclerViewAdap
                 int pos = kycScanningList.indexOf(item);
                 kycScanningList.get(pos).setFile(ImageFile);
                 kycRecyclerViewAdapter.notifyDataSetChanged();
+
                 OSV(item,ImageFile,position);
             }
         }

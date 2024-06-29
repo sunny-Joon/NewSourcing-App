@@ -1,55 +1,60 @@
 package com.paisalo.newinternalsourcingapp.Adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.paisalo.newinternalsourcingapp.Activities.FirstEsignActivity;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.EsignListModels.Guarantor;
 import com.paisalo.newinternalsourcingapp.R;
 
-public class CustomAdapter extends ArrayAdapter<String> {
+import java.util.ArrayList;
 
-    private Context mContext;
-    private String[] mValues;
+public class CustomAdapter extends ArrayAdapter<Guarantor> {
 
-    public CustomAdapter(@NonNull Context context, int resource, @NonNull String[] values) {
-        super(context, resource, values);
-        mContext = context;
-        mValues = values;
-    }
+        private Context context;
+        private int resource;
+        private ArrayList<Guarantor> guarantors;
 
-    @NonNull
-    @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        ViewHolder viewHolder;
-        if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.layout_esigner, parent, false);
-            viewHolder = new ViewHolder();
-           // viewHolder.textView = convertView.findViewById(R.id.textView);
-
-            convertView.setTag(viewHolder);
-        } else {
-            viewHolder = (ViewHolder) convertView.getTag();
+        public CustomAdapter(Context context, int resource, ArrayList<Guarantor> guarantors) {
+            super(context, resource, guarantors);
+            this.context = context;
+            this.resource = resource;
+            this.guarantors = guarantors;
         }
 
-      //  viewHolder.textView.setText(mValues[position]);
-        convertView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, FirstEsignActivity.class);
-                mContext.startActivity(intent);
+        @SuppressLint("SetTextI18n")
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if (convertView == null) {
+                LayoutInflater inflater = LayoutInflater.from(context);
+                convertView = inflater.inflate(resource, parent, false);
             }
-        });
-        return convertView;
-    }
 
-    static class ViewHolder {
-      //  TextView textView;
+            Guarantor guarantor = guarantors.get(position);
+
+            TextView layoutCustGurFather = convertView.findViewById(R.id.layoutCustGurFather);
+            TextView layoutCustGurSignerAs = convertView.findViewById(R.id.layoutCustGurSignerAs);
+            TextView layoutCustGurMobile = convertView.findViewById(R.id.layoutCustGurMobile);
+            TextView itemLayoutCreator = convertView.findViewById(R.id.itemLayoutCreator);
+            TextView layoutCustGurAddress = convertView.findViewById(R.id.layoutCustGurAddress);
+            TextView layoutCustGurName = convertView.findViewById(R.id.layoutCustGurName);
+
+            layoutCustGurFather.setText(guarantor.getGuarantorFather());
+            layoutCustGurSignerAs.setText("GUARANTOR "+guarantor.getGuarantorNo());
+            layoutCustGurMobile.setText(String.valueOf(guarantor.getpPh3()));
+            itemLayoutCreator.setText(String.valueOf(guarantor.getCreator()));
+            layoutCustGurAddress.setText(String.valueOf(guarantor.getAddr()));
+            layoutCustGurName.setText(String.valueOf(guarantor.getGuarantorName()));
+
+            return convertView;
+        }
     }
-}

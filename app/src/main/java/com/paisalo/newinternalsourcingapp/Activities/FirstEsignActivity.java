@@ -5,6 +5,9 @@ import static com.paisalo.newinternalsourcingapp.Utils.CustomProgress.customProg
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -29,10 +32,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.artifex.mupdfdemo.MuPDFFragment;
 import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.BorrowerListModels.BorrowerListDataModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.DownloadEsignXml;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.EsignListModels.PendingESignFI;
 import com.paisalo.newinternalsourcingapp.R;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiClient;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiInterface;
@@ -62,8 +67,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FirstEsignActivity extends AppCompatActivity {
 
-    private ImageView pdfView;
+
     int whichButton;
+    FragmentManager fm;
     private PdfRenderer pdfRenderer;
     private PdfRenderer.Page currentPage;
     DialogInterface dlg;
@@ -74,23 +80,33 @@ public class FirstEsignActivity extends AppCompatActivity {
 
     private static final int APK_ESIGN_REQUEST_CODE = 404;
 
+    TextView tvESignName,tvESignGuardian,tvESignMobile;
 
   //  WebView pdfview;
-    private BorrowerListDataModel borrower;
+    private PendingESignFI borrower;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_esign);
 
-        pdfView = findViewById(R.id.pdfView);
+
+        tvESignName = findViewById(R.id.tvESignName);
+        tvESignGuardian = findViewById(R.id.tvESignGuardian);
+        tvESignMobile = findViewById(R.id.tvESignMobile);
+
+
+
+
         Intent intent = getIntent();
         if (intent != null) {
-            borrower = (BorrowerListDataModel) intent.getSerializableExtra(GlobalClass.ESIGN_BORROWER);
+            borrower = (PendingESignFI) intent.getSerializableExtra(GlobalClass.ESIGN_BORROWER);
             if (borrower != null) {
+                tvESignName.setText(borrower.getFname().toString());
+                tvESignGuardian.setText(borrower.getfFname().toString());
+                tvESignMobile.setText(borrower.getpPh3().toString());
                 JsonObject jsonObject=new JsonObject();
-                jsonObject.addProperty("DocName", "Esign");
-                jsonObject.addProperty("dbName", "SBINEWDOC");
+                jsonObject.addProperty("DocName", "loan_application_sample");
                 jsonObject.addProperty("FiCode", borrower.getCode());
                 jsonObject.addProperty("FiCreator", borrower.getCreator());
                 jsonObject.addProperty("UserID", GlobalClass.Id);
@@ -109,9 +125,9 @@ public class FirstEsignActivity extends AppCompatActivity {
                         .build();
 
                 ApiInterface apiInterface = retrofit2.create(ApiInterface.class);
-                Call<ResponseBody> call = apiInterface.DownloadDocFirstEsign(GlobalClass.Token,GlobalClass.dbname,jsonObject);
+                Call<ResponseBody> call = apiInterface.DownloadDocFirstEsign(GlobalClass.LiveToken,jsonObject,"gzip,deflate,compress","2234514145687247","SBIPDLCOL","868368051227918");
 
-                Log.d("TAG", "onResponse1: " + GlobalClass.Token+" "+ GlobalClass.dbname+" "+jsonObject.toString());
+                Log.d("TAG", "onResponse0: " + GlobalClass.LiveToken+" "+ GlobalClass.dbname+" "+jsonObject.toString());
                 call.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -119,15 +135,24 @@ public class FirstEsignActivity extends AppCompatActivity {
 
                          if(response.isSuccessful()){
                              Log.d("TAG", "onResponse2: " + response.body().contentLength());
-                             boolean written = writeResponseBodyToDisk(response.body());
+                             File written = writeResponseBodyToDisk(response.body());
+                             if(written==null){
+                                 Log.d("TAG", "onResponse2: " + "null");
 
-                             if (written) {
-                                 Log.d("TAG", "displayPdf1: "+ "display Pdf" );
+                             }else{
+                                 String path = written.getAbsolutePath();
 
-                                 displayPdf(new File(getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "downloaded.pdf"));
-                             } else {
-                                 Toast.makeText(FirstEsignActivity.this, "Failed to write PDF", Toast.LENGTH_SHORT).show();
+                                 fm = getSupportFragmentManager();
+                                 FragmentTransaction ft = fm.beginTransaction();
+                                 //  for (String path:filePaths) {
+                                 Fragment frag = MuPDFFragment.newInstance(path, false);
+                                 ft.add(R.id.pdfview, frag);
+
+                                 //}
+                                 ft.commit();
                              }
+
+
                          }else{
                              Log.d("TAG", "onResponse3: " + "UnSuccessful");
                          }
@@ -145,23 +170,7 @@ public class FirstEsignActivity extends AppCompatActivity {
             }
         }
 
-     //   pdfview = findViewById(R.id.pdfview);
         btnESignProcessing = findViewById(R.id.btnESignProcessing);
-  /*      WebSettings webSettings = pdfview.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-*/
-
-        String pdfUrl = "https://www.adobe.com/support/products/enterprise/knowledgecenter/media/c4611_sample_explain.pdf";
-     //   pdfview.loadUrl("https://docs.google.com/gview?embedded=true&url=" + pdfUrl);
-
-     /*   pdfview.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                return true;
-            }
-        });
-*/
 
         btnESignProcessing.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -249,15 +258,12 @@ public class FirstEsignActivity extends AppCompatActivity {
                             Log.d("TAG", "openpopup: " + response.message());
 
                         }
-                        //customProgress.hideProgress();
                     }
 
                     @Override
                     public void onFailure(Call<DownloadEsignXml> call, Throwable t) {
                         Log.d("TAG", "openpopup: " + t.getMessage());
                         Log.d("TAG", "openpopup: " + "failure");
-
-                       // customProgress.hideProgress();
                     }
                 });
 
@@ -268,7 +274,7 @@ public class FirstEsignActivity extends AppCompatActivity {
         popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
     }
 
-    private boolean writeResponseBodyToDisk(ResponseBody body) {
+    private File writeResponseBodyToDisk(ResponseBody body) {
         Log.d("TAG", "displayPdf1: "+ "display Pdf" );
 
         try {
@@ -301,9 +307,10 @@ public class FirstEsignActivity extends AppCompatActivity {
 
                 outputStream.flush();
 
-                return true;
+                return pdfFile;
             } catch (IOException e) {
-                return false;
+
+                return null;
             } finally {
                 if (inputStream != null) {
                     inputStream.close();
@@ -313,36 +320,8 @@ public class FirstEsignActivity extends AppCompatActivity {
                 }
             }
         } catch (IOException e) {
-            return false;
+            return null;
         }
-    }
-
-    private void displayPdf(File file) {
-        Log.d("TAG", "displayPdf2: "+ "display Pdf" );
-        try {
-            parcelFileDescriptor = ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY);
-            pdfRenderer = new PdfRenderer(parcelFileDescriptor);
-            Log.d("TAG", "displayPdf3: "+ "display Pdf" );
-
-            openPage(0);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void openPage(int index) {
-        Log.d("TAG", "displayPdf4: "+ "display Pdf" );
-
-        if (pdfRenderer.getPageCount() <= index) {
-            return;
-        }
-        if (currentPage != null) {
-            currentPage.close();
-        }
-        currentPage = pdfRenderer.openPage(index);
-        Bitmap bitmap = Bitmap.createBitmap(currentPage.getWidth(), currentPage.getHeight(), Bitmap.Config.ARGB_8888);
-        currentPage.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
-        pdfView.setImageBitmap(bitmap);
     }
 
     @Override
@@ -502,7 +481,7 @@ public class FirstEsignActivity extends AppCompatActivity {
                             Intent intent = new Intent(FirstEsignActivity.this, CrifScore.class);
                             intent.putExtra("FIcode", String.valueOf(borrower.getCode()));
                             intent.putExtra("creator", borrower.getCreator());
-                            intent.putExtra("ESignerBorower", borrower);
+                            intent.putExtra("ESignerBorower", (CharSequence) borrower);
                             startActivity(intent);
                             dlg.dismiss();
                             finish();

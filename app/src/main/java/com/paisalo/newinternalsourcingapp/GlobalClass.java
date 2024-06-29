@@ -65,6 +65,7 @@ public class GlobalClass extends Application {
     public static final String ESIGNER_TAG = "ESIGNER";
     public static final String ESIGN_TYPE_TAG = "ESIGN_TYPE";
     public static final String ESIGN_BORROWER = "ESIGN_BORROWER";
+    public static final String ESIGN_GUARANTOR = "ESIGN_GUARANTOR";
 
 
     private static final String[] INPUT_DATE_FORMATS = {

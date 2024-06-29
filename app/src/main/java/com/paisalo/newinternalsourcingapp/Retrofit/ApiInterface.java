@@ -12,6 +12,7 @@ import com.paisalo.newinternalsourcingapp.ModelsRetrofit.BreResponseModels.BRERe
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.Collection.CustomerListModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.CreatorListModels.CreatorListModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.DownloadEsignXml;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.EsignListModels.EsignListModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.HouseVisitModels.HVBorrowerModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.HouseVisitModels.HVGetModel;
@@ -177,10 +178,10 @@ public interface ApiInterface {
     Call<BorrowerListModel> PendingApplicationForms(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("IMEINO") String IMEINO, @Query("FOCode") String FOCode, @Query("AreaCd") String AreaCd, @Query("Creator") String Creator);
 
     @GET("POSDB/GetDataForESignCheck")
-    Call<BorrowerListModel> PendingFEsign(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("IMEINO") String IMEINO, @Query("FOCode") String FOCode, @Query("CityCode") String CityCode, @Query("Creator") String Creator);
+    Call<EsignListModel> PendingFEsign(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("IMEINO") String IMEINO, @Query("FOCode") String FOCode, @Query("CityCode") String CityCode, @Query("Creator") String Creator);
 
     @GET("POSDB/GetDataPendingForESign")
-    Call<BorrowerListModel> PendingSEsign(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("IMEINO") String IMEINO, @Query("FOCode") String FOCode, @Query("AreaCd") String AreaCd, @Query("Creator") String Creator);
+    Call<EsignListModel> PendingSEsign(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("IMEINO") String IMEINO, @Query("FOCode") String FOCode, @Query("AreaCd") String AreaCd, @Query("Creator") String Creator);
 
     @GET("InstCollection/getDueInstallments")
     Call<BorrowerListModel> PendingCollection(@Header("Authorization") String token, @Header("dbname") String dbname, @retrofit2.http.Header("imeino") String imeino, @retrofit2.http.Header("userid") String userid, @Query("gdate") String gdate, @Query("CityCode") String CityCode);
@@ -309,10 +310,22 @@ public interface ApiInterface {
                                 @retrofit2.http.Header("dbname") String dbName,
                                 @Body JsonObject jsonObject);
 
-    @POST("DocESignLoanApplication/DownloadUnSignedDoc")
+
+    @POST("DocsESignPvn/downloadunsigneddoc")
     Call<ResponseBody> DownloadDocFirstEsign(@Header("Authorization") String token,
+                                             @Body JsonObject jsonObject,
+                                             @Header("Content-Encoding") String ContentEncoding,
+                                             @Header("devid") String devid,
+                                             @Header("dbname") String dbName,
+                                             @Header("IMEINO") String IMEINO);
+    @POST("DocsESignPvn/downloadunsigneddoc")
+    Call<ResponseBody> DownloadDocSecondEsign(@Header("Authorization") String token,
+                                       @Body JsonObject jsonObject,
+                                       @Header("Content-Encoding") String ContentEncoding,
+                                       @Header("devid") String devid,
                                        @Header("dbname") String dbName,
-                                       @Body JsonObject jsonObject);
+                                       @Header("IMEINO") String IMEINO);
+
 
     @FormUrlEncoded
     @POST("token")

@@ -13,23 +13,29 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.paisalo.newinternalsourcingapp.ModelclassesRoom.CustomerModel;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.BorrowerListModels.BorrowerListDataModel;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.EsignListModels.EsignListDataModel;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.EsignListModels.Guarantor;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.EsignListModels.PendingESignFI;
 import com.paisalo.newinternalsourcingapp.R;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapter.MyViewHolder> {
-    private List<CustomerModel> dataList;
+    private EsignListDataModel dataModel;
     private Context context;
-    private CustomerListAdapter.OnItemClickListener onItemClickListener;
+    private OnItemClickListener listener;
 
     public interface OnItemClickListener {
-        void onItemClick(int position, View itemView);
+        void onItemClick(PendingESignFI adapterItem,ArrayList<Guarantor> guarantorArrayList);
     }
 
-    public CustomerListAdapter(Context context, List<CustomerModel> dataList, CustomerListAdapter.OnItemClickListener onItemClickListener) {
+    public CustomerListAdapter(Context context, EsignListDataModel dataModel, OnItemClickListener onItemClickListener) {
         this.context = context;
-        this.dataList = dataList;
-        this.onItemClickListener = onItemClickListener;
+        this.dataModel = dataModel;
+        this.listener = onItemClickListener;
 
     }
 
@@ -43,20 +49,20 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
 
     @Override
     public void onBindViewHolder(@NonNull CustomerListAdapter.MyViewHolder holder, int position) {
-        CustomerModel data = dataList.get(position);
+        PendingESignFI data = dataModel.getPendingESignFI().get(position);
 
-        holder.customerNameTextView.setText(data.getCustomerName());
-        holder.guardianTV.setText(data.getGuardian());
-        holder.customerMobileTV.setText(data.getCustomerMobile());
-        holder.totalPaymentTV.setText(data.getTotalPayment());
-        holder.smcodeTV.setText(data.getSmcode());
-        holder.customerAddressTV.setText(data.getCustomerAddress());
+        holder.customerNameTextView.setText(data.getFname()+" "+data.getMname() +" "+data.getLname());
+        holder.guardianTV.setText(data.getfFname()+" "+data.getfMname()+" "+data.getfLname());
+        holder.customerMobileTV.setText(data.getpPh3());
+        holder.totalPaymentTV.setText(data.getLoanAmt());
+        holder.ficodeTV.setText(String.valueOf(data.getCode()));
+        holder.customerAddressTV.setText(data.getAddr());
 
     }
 
     @Override
     public int getItemCount() {
-        return dataList.size();
+        return dataModel.getPendingESignFI().size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -64,7 +70,7 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
         TextView guardianTV;
         TextView customerMobileTV;
         TextView totalPaymentTV;
-        TextView smcodeTV;
+        TextView ficodeTV;
         TextView customerAddressTV;
         CardView customerCardView;
 
@@ -75,7 +81,7 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
             guardianTV = itemView.findViewById(R.id.guardianTV);
             customerMobileTV = itemView.findViewById(R.id.customerMobileTV);
             totalPaymentTV = itemView.findViewById(R.id.totalPaymentTV);
-            smcodeTV = itemView.findViewById(R.id.smcodeTV);
+            ficodeTV = itemView.findViewById(R.id.smcodeTV);
             customerAddressTV = itemView.findViewById(R.id.customerAddressTV);
 
             Intent intent = ((Activity) itemView.getContext()).getIntent();
@@ -85,8 +91,17 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION && onItemClickListener != null) {
-                        onItemClickListener.onItemClick(position, itemView);
+                    if (position != RecyclerView.NO_POSITION && listener != null) {
+                        PendingESignFI dataM = dataModel.getPendingESignFI().get(position);
+                        ArrayList<Guarantor> guarantorArrayList=new ArrayList<>();
+
+                        for (Guarantor guarantor:dataModel.getGuarantors()){
+                            if (guarantor.getCode() == dataM.getCode() && guarantor.getCreator().equals(dataM.getCreator())) {
+                             guarantorArrayList.add(guarantor);
+                            }
+                        }
+                        listener.onItemClick(dataM,guarantorArrayList);
+
                     }
                 }
             });
