@@ -43,26 +43,22 @@ public class KycRecyclerViewAdapter extends RecyclerView.Adapter<KycRecyclerView
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        KYCScanningModel entry = kycScanning.get(position);
-        holder.bind(entry);
 
-        holder.imgViewKycItemLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onItemClickListener.onItemClick(entry, position);
-            }
-        });
+        holder.bind(position);
 
-        if (kycScanning.get(position).getFile()!=null){
-            holder.docsCardView.setBackgroundColor(context.getResources().getColor(R.color.green));
-            holder.imgViewKycItemLayout.setImageURI(Uri.fromFile(kycScanning.get(position).getFile()));
-        }else{
-            holder.docsCardView.setBackgroundColor(context.getResources().getColor(R.color.red));
 
-        }
 
     }
+//not changing
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
 
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
     @Override
     public int getItemCount() {
         return kycScanning.size();
@@ -85,11 +81,26 @@ public class KycRecyclerViewAdapter extends RecyclerView.Adapter<KycRecyclerView
             tvKycItemLayoutRemarks = itemView.findViewById(R.id.tvKycItemLayoutRemarks);
         }
 
-        public void bind(KYCScanningModel entry) {
+        public void bind(int position) {
+            KYCScanningModel entry = kycScanning.get(position);
             tvKycItemLayoutName.setText(entry.getName());
             tvKycItemLayoutType.setText(entry.getType());
             tvKycItemLayoutDocType.setText(entry.getDocType());
             tvKycItemLayoutRemarks.setText(entry.getRemarks());
+            imgViewKycItemLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onItemClickListener.onItemClick(entry, position);
+                }
+            });
+
+            if (kycScanning.get(position).getFile()!=null){
+                docsCardView.setBackgroundColor(context.getResources().getColor(R.color.green));
+               imgViewKycItemLayout.setImageURI(Uri.fromFile(kycScanning.get(position).getFile()));
+            }else{
+                docsCardView.setBackgroundColor(context.getResources().getColor(R.color.red));
+
+            }
         }
     }
 }

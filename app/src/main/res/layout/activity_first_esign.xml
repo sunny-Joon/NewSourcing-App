@@ -6,11 +6,13 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/pdfView"
+    <FrameLayout
+        android:id="@+id/pdfview"
+        android:layout_alignParentTop="true"
         android:layout_width="match_parent"
+        android:layout_margin="@dimen/margin_6dp"
         android:layout_height="match_parent"
-        android:contentDescription="PDF View" />
+        android:layout_above="@+id/fragDetailESign"/>
 
     <LinearLayout
         android:id="@+id/fragDetailESign"

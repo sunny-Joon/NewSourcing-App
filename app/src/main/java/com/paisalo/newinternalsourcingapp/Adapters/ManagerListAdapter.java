@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.paisalo.newinternalsourcingapp.Activities.ActivityCollection;
 import com.paisalo.newinternalsourcingapp.Activities.BorrowerListActivity;
+import com.paisalo.newinternalsourcingapp.Activities.EsignListActivity;
 import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.KYCActivity;
 import com.paisalo.newinternalsourcingapp.R;
 import com.paisalo.newinternalsourcingapp.RoomDatabase.ManagerListDataClass;
@@ -136,7 +137,7 @@ public class ManagerListAdapter extends RecyclerView.Adapter<ManagerListAdapter.
             application.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context, BorrowerListActivity.class);
+                    Intent intent = new Intent(context, EsignListActivity.class);
                     intent.putExtra("keyName", "FEsign");
                     intent.putExtra("foCode", foCode);
                     intent.putExtra("creator", creator);
@@ -154,7 +155,7 @@ public class ManagerListAdapter extends RecyclerView.Adapter<ManagerListAdapter.
             documentation.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context, BorrowerListActivity.class);
+                    Intent intent = new Intent(context, EsignListActivity.class);
                     intent.putExtra("keyName", "SEsign");
                     intent.putExtra("foCode", foCode);
                     intent.putExtra("creator", creator);

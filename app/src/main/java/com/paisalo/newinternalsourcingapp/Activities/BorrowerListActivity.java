@@ -58,12 +58,6 @@ public class BorrowerListActivity extends AppCompatActivity implements BorrowerL
         Call<BorrowerListModel> call = null;
 
         switch (id) {
-            case "FEsign":
-                call = apiInterface.PendingFEsign(GlobalClass.Token, BuildConfig.dbname, GlobalClass.Imei, foCode, areaCode, creator);
-                break;
-            case "SEsign":
-                call = apiInterface.PendingSEsign(GlobalClass.Token, BuildConfig.dbname, GlobalClass.Imei, foCode, areaCode, creator);
-                break;
             case "HVisit":
             case "Application":
                 call = apiInterface.PendingApplicationForms(GlobalClass.Token, BuildConfig.dbname, GlobalClass.Imei, foCode, areaCode, creator);
@@ -104,16 +98,6 @@ public class BorrowerListActivity extends AppCompatActivity implements BorrowerL
     private void openActivity(BorrowerListDataModel adapterItem) {
         Intent intent = null;
         switch (id) {
-            case "FEsign":
-                intent = new Intent(this, FirstEsignActivity.class);
-                intent.putExtra(GlobalClass.ESIGN_TYPE_TAG, 1);
-                intent.putExtra(GlobalClass.ESIGN_BORROWER,adapterItem);
-                break;
-            case "SEsign":
-                intent = new Intent(this, SecondEsignActivity.class);
-                intent.putExtra(GlobalClass.ESIGN_TYPE_TAG, 0);
-                intent.putExtra(GlobalClass.ESIGN_BORROWER,adapterItem);
-                break;
             case "Application":
                 intent = new Intent(this, ApplicationFormActivityMenu.class);
                 intent.putExtra("fiCode", String.valueOf(adapterItem.getCode()));
