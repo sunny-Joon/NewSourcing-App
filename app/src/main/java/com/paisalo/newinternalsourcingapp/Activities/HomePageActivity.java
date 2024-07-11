@@ -10,6 +10,7 @@
     import android.provider.Settings;
     import android.util.Log;
     import android.view.View;
+    import android.widget.Toast;
 
     import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -26,6 +27,7 @@
     import com.google.gson.Gson;
     import com.google.gson.JsonObject;
     import com.paisalo.newinternalsourcingapp.Adapters.ViewPagerAdapter;
+    import com.paisalo.newinternalsourcingapp.BuildConfig;
     import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.OnBoardFragment;
     import com.paisalo.newinternalsourcingapp.Fragments.Profile.ProfileFragment;
     import com.paisalo.newinternalsourcingapp.Fragments.home.HomeFragment;
@@ -34,9 +36,17 @@
     import com.paisalo.newinternalsourcingapp.GlobalClass;
     import com.paisalo.newinternalsourcingapp.ModelsRetrofit.LeaderBoardModels.LeaderboardDataModel;
     import com.paisalo.newinternalsourcingapp.ModelsRetrofit.LeaderBoardModels.LeaderboardModel;
+    import com.paisalo.newinternalsourcingapp.ModelsRetrofit.ManagerListModels.ManagerListDataModel;
+    import com.paisalo.newinternalsourcingapp.ModelsRetrofit.ManagerListModels.ManagerListModel;
+    import com.paisalo.newinternalsourcingapp.ModelsRetrofit.RangeCategoryModels.RangeCategoryDataModel;
+    import com.paisalo.newinternalsourcingapp.ModelsRetrofit.RangeCategoryModels.RangeCategoryModel;
     import com.paisalo.newinternalsourcingapp.R;
     import com.paisalo.newinternalsourcingapp.Retrofit.ApiClient;
     import com.paisalo.newinternalsourcingapp.Retrofit.ApiInterface;
+    import com.paisalo.newinternalsourcingapp.RoomDatabase.DaoClass;
+    import com.paisalo.newinternalsourcingapp.RoomDatabase.DatabaseClass;
+    import com.paisalo.newinternalsourcingapp.RoomDatabase.ManagerListDataClass;
+    import com.paisalo.newinternalsourcingapp.RoomDatabase.RangeCategoryDataClass;
     import com.paisalo.newinternalsourcingapp.Utils.TiltTransformer;
     import com.paisalo.newinternalsourcingapp.databinding.ActivityMainBinding;
     import com.paisalo.newinternalsourcingapp.location.GpsTracker;
@@ -53,7 +63,8 @@
     import retrofit2.converter.gson.GsonConverterFactory;
 
     public class HomePageActivity extends AppCompatActivity {
-
+        DatabaseClass database;
+        DaoClass daoClass ;
         GpsTracker gpsTracker;
         ActivityMainBinding binding;
         List<LeaderboardEntry> leaderboardEntries = new ArrayList<>();
@@ -64,6 +75,11 @@
             super.onCreate(savedInstanceState);
             binding = ActivityMainBinding.inflate(getLayoutInflater());
             setContentView(binding.getRoot());
+
+            database = DatabaseClass.getInstance(HomePageActivity.this);
+            daoClass=database.dao();
+
+            RangeCategoriesApi();
 
             gpsTracker=new GpsTracker(getApplicationContext());
             if(gpsTracker.getGPSstatus()==false){
@@ -137,6 +153,60 @@
                 fragmentTransaction.commit();
             });
         }
+
+        private void RangeCategoriesApi() {
+            Log.d("TAG", "MyApp: "+ "Range Category Api Run");
+
+            ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+            Call<RangeCategoryModel> call = apiInterface.RangeCategory(GlobalClass.Token, BuildConfig.dbname);
+
+            call.enqueue(new Callback<RangeCategoryModel>() {
+                @Override
+                public void onResponse(Call<RangeCategoryModel> call, Response<RangeCategoryModel> response) {
+                    if (response.isSuccessful()) {
+                        Log.d("TAG", "MyApp: "+ "Range Category Api Successful");
+
+                        RangeCategoryModel rangeCategoryModel = response.body();
+                        assert rangeCategoryModel != null;
+                        List<RangeCategoryDataModel> rangeCategoryDataModelList = rangeCategoryModel.getData();
+
+                        List<RangeCategoryDataClass> rangeCategoryDataClassList = new ArrayList<>();
+                        for (RangeCategoryDataModel dataModel : rangeCategoryDataModelList) {
+                            RangeCategoryDataClass dataClass = new RangeCategoryDataClass(
+                                    dataModel.getCatKey(),
+                                    dataModel.getGroupDescriptionEn(),
+                                    dataModel.getGroupDescriptionHi(),
+                                    dataModel.getDescriptionEn(),
+                                    dataModel.getDescriptionHi(),
+                                    dataModel.getSortOrder(),
+                                    dataModel.getCode()
+                            );
+                            rangeCategoryDataClassList.add(dataClass);
+                        }
+
+                        DatabaseClass.databaseWriteExecutor.execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                daoClass.deleteAllRCList();
+                                daoClass.insertRCData( rangeCategoryDataClassList);
+                            }
+                        });
+                        ManagerListApi();
+
+
+                    }else{
+                        GlobalClass.showToast(HomePageActivity.this,5,response.message());
+                        ManagerListApi();
+                    }
+                }
+                @Override
+                public void onFailure(Call<RangeCategoryModel> call, Throwable t) {
+                    GlobalClass.showToast(HomePageActivity.this,5,t.getMessage());
+                    ManagerListApi();
+                }
+            });
+        }
+
         private void openFragment(Fragment fragment) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.nav_host_fragment_activity_main, fragment);
@@ -242,7 +312,7 @@
             jsonObject.addProperty("userId", GlobalClass.Id);
             jsonObject.addProperty("deviceId", GlobalClass.DevId);
             jsonObject.addProperty("Creator",GlobalClass.Creator);
-            jsonObject.addProperty("trackAppVersion","AppVersion");
+            jsonObject.addProperty("trackAppVersion",BuildConfig.VERSION_NAME);
             jsonObject.addProperty("latitude",gpsTracker.getLatitude()+"");
             jsonObject.addProperty("longitude", gpsTracker.getLongitude()+"");
             jsonObject.addProperty("appInBackground",login);
@@ -269,6 +339,63 @@
                 }
             }
             return addrerss;
+        }
+
+        private void ManagerListApi() {
+            Log.d("TAG", "MyApp: "+ "ManagerList Api Run");
+
+            ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+            Call<ManagerListModel> call = apiInterface.ManagerListApi(GlobalClass.Token,BuildConfig.dbname,GlobalClass.Imei,GlobalClass.Id);
+            Log.d("TAG", "ManagerListApi: "+GlobalClass.Token+"--"+ BuildConfig.dbname +"--"+ GlobalClass.Imei +"--"+GlobalClass.Id);
+            call.enqueue(new Callback<ManagerListModel>() {
+                @Override
+                public void onResponse(Call<ManagerListModel> call, Response<ManagerListModel> response) {
+                    Log.d("TAG", "MyApp: "+ response.body());
+
+                    if(response.isSuccessful()){
+                        Log.d("TAG", "MyApp: "+ "ManagerList Api Successful");
+                        Log.d("TAG", "ManagerListApi: "+ response.body());
+                        ManagerListModel managerListModel = response.body();
+                        List<ManagerListDataModel> managerListDataModel=  managerListModel.getData();
+                        Log.d("TAG", "MyApp: "+ "manager List Size = "+managerListDataModel.size());
+
+                        List<ManagerListDataClass> managerListDataClasses = new ArrayList<>();
+                        for (ManagerListDataModel managerListData : managerListDataModel) {
+                            ManagerListDataClass managerListDataClass = new ManagerListDataClass(
+                                    managerListData.getImeino(),
+                                    managerListData.getFoCode(),
+                                    managerListData.getFoName(),
+                                    managerListData.getCreator(),
+                                    managerListData.getIsActive(),
+                                    managerListData.getDataBase(),
+                                    managerListData.getTag(),
+                                    managerListData.getAreaCd(),
+                                    managerListData.getAreaName(),
+                                    managerListData.getCreatorDesc(),
+                                    managerListData.getFiExecCode(),
+                                    managerListData.getFiExecName()
+                            );
+                            managerListDataClasses.add(managerListDataClass);
+                        }
+
+                        DatabaseClass.databaseWriteExecutor.execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                daoClass.deleteAllManagerList();
+                                daoClass.insertManagerListData(managerListDataClasses);
+                            }
+                        });
+
+                    }else{
+                        GlobalClass.showToast(HomePageActivity.this,5,response.message());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ManagerListModel> call, Throwable t) {
+                    GlobalClass.showToast(HomePageActivity.this,5,t.getMessage());
+                }
+            });
         }
 
     }

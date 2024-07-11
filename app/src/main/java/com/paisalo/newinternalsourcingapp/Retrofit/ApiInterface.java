@@ -311,7 +311,7 @@ public interface ApiInterface {
                                 @Body JsonObject jsonObject);
 
 
-    @POST("DocsESignPvn/downloadunsigneddoc")
+    @POST("DocESignLoanApplication/DownloadUnSignedDoc")
     Call<ResponseBody> DownloadDocFirstEsign(@Header("Authorization") String token,
                                              @Body JsonObject jsonObject,
                                              @Header("Content-Encoding") String ContentEncoding,

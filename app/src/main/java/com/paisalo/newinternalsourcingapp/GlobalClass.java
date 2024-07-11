@@ -3,24 +3,27 @@ package com.paisalo.newinternalsourcingapp;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Application;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.view.LayoutInflater;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.util.Log;
+import android.renderscript.Allocation;
+import android.renderscript.Element;
+import android.renderscript.RenderScript;
+import android.renderscript.ScriptIntrinsicBlur;
 import android.view.View;
+import android.view.Window;
+import android.widget.ImageView;
+import android.widget.Switch;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.annotation.NonNull;
 import androidx.camera.core.ImageCapture;
-import androidx.camera.core.ImageCaptureException;
-import androidx.core.content.ContextCompat;
 
-import com.canhub.cropper.CropImageContract;
-import com.canhub.cropper.CropImageContractOptions;
-import com.canhub.cropper.CropImageOptions;
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -29,8 +32,8 @@ import com.paisalo.newinternalsourcingapp.Fragments.AbsCollectionFragment;
 import com.paisalo.newinternalsourcingapp.Modelclasses.DueData;
 import com.paisalo.newinternalsourcingapp.Modelclasses.PosInstRcv;
 import com.paisalo.newinternalsourcingapp.Modelclasses.SmCode_DateModel;
+import com.shashank.sony.fancytoastlib.FancyToast;
 
-import java.io.File;
 import java.lang.reflect.Type;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -84,7 +87,15 @@ public class GlobalClass extends Application {
     private static AdapterCollectionFragmentPager fragmentPagerAdapter;
     private static AbsCollectionFragment fragSettlement = null;
     private static ArrayList<AbsCollectionFragment> absFragments;
+    private static androidx.appcompat.app.AlertDialog alertDialog;
 
+    public static boolean isValidUsername(String username) {
+        return username.length() >= 1;
+    }
+
+    public static boolean isValidPassword(String password) {
+        return password.length() >= 5;
+    }
 
     public static void SubmitAlert(final Activity activity, String title, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
@@ -99,6 +110,60 @@ public class GlobalClass extends Application {
         builder.setCancelable(true);
         builder.show();
     }
+
+    public static void showLottieAlertDialog(int order, Context context) {
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View alertLayout = inflater.inflate(R.layout.custom_alert, null);
+
+        LottieAnimationView animationView = alertLayout.findViewById(R.id.animation_view);
+
+        switch (order) {
+            case 1:
+                animationView.setAnimation(R.raw.unlock); // Set the animation resource programmatically
+                break;
+            case 2:
+                animationView.setAnimation(R.raw.ai); // Set the animation resource programmatically
+                break;
+            case 3:
+                animationView.setAnimation(R.raw.location); // Set the animation resource programmatically
+                break;
+            case 4:
+                animationView.setAnimation(R.raw.locationtip); // Set the animation resource programmatically
+                break;
+            case 5:
+                animationView.setAnimation(R.raw.map); // Set the animation resource programmatically
+                break;
+            case 6:
+                animationView.setAnimation(R.raw.networkerror); // Set the animation resource programmatically
+                break;
+            case 7:
+                animationView.setAnimation(R.raw.qrscanner); // Set the animation resource programmatically
+                break;
+            case 8:
+                animationView.setAnimation(R.raw.rendering); // Set the animation resource programmatically
+                break;
+            case 9:
+                animationView.setAnimation(R.raw.error); // Set the animation resource programmatically
+                break;
+        }
+
+        androidx.appcompat.app.AlertDialog.Builder alert = new androidx.appcompat.app.AlertDialog.Builder(context, R.style.CustomAlertDialog);
+        alert.setView(alertLayout);
+
+         alertDialog = alert.create();
+        if (alertDialog.getWindow() != null) {
+            alertDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
+        alertDialog.show();
+    }
+
+    public static void dismissLottieAlertDialog() {
+        if (alertDialog != null && alertDialog.isShowing()) {
+            alertDialog.dismiss();
+            alertDialog = null;
+        }
+    }
+
     public static boolean isValidFullName(String name) {
         if (name.isEmpty()) {
             return false;
@@ -107,6 +172,7 @@ public class GlobalClass extends Application {
         Pattern pattern = Pattern.compile(regex);
         return pattern.matcher(name).matches();
     }
+
     public static boolean isValidName(String name) {
         if (name.isEmpty()) {
             return false;
@@ -115,6 +181,7 @@ public class GlobalClass extends Application {
         Pattern pattern = Pattern.compile(regex);
         return pattern.matcher(name).matches();
     }
+
     public static boolean isValidMName(String name) {
         if (name == null || name.trim().isEmpty()) {
             return true;
@@ -124,6 +191,7 @@ public class GlobalClass extends Application {
         Pattern pattern = Pattern.compile(regex);
         return pattern.matcher(name).matches();
     }
+
     public static boolean isValidAddr(String input) {
         if (input.isEmpty()) {
             return false;
@@ -132,6 +200,7 @@ public class GlobalClass extends Application {
 
         return (input.matches(allowedCharactersRegex) && !(input.startsWith(".") || input.startsWith(":") || input.startsWith("/") || input.startsWith("-") || input.startsWith(",")));
     }
+
     public static boolean isValidSAddr(String input) {
         if (input == null || input.trim().isEmpty()) {
             return true;
@@ -139,6 +208,7 @@ public class GlobalClass extends Application {
         String allowedCharactersRegex = "[a-zA-Z0-9 ,:./\\-()]+";
         return (input.matches(allowedCharactersRegex) && !(input.startsWith(".") || input.startsWith(":") || input.startsWith("/") || input.startsWith("-") || input.startsWith(",")));
     }
+
     public static boolean isNumber(String input) {
 
         if (input.isEmpty()) {
@@ -148,6 +218,7 @@ public class GlobalClass extends Application {
         Pattern pattern = Pattern.compile(regex);
         return pattern.matcher(input).matches();
     }
+
     public static boolean isValidPan(String pan) {
         if (pan.isEmpty()) {
             return false;
@@ -157,6 +228,7 @@ public class GlobalClass extends Application {
         Pattern pattern = Pattern.compile(regex);
         return pattern.matcher(pan).matches();
     }
+
     static int[][] d = new int[][]{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
             {1, 2, 3, 4, 0, 6, 7, 8, 9, 5},
             {2, 3, 4, 0, 1, 7, 8, 9, 5, 6},
@@ -193,6 +265,7 @@ public class GlobalClass extends Application {
 
         return (c == 0);
     }
+
     public static int[] stringToReversedIntArray(String num) {
 
         int[] myArray = new int[num.length()];
@@ -205,6 +278,7 @@ public class GlobalClass extends Application {
         return myArray;
 
     }
+
     public static int[] reverse(int[] myArray) {
         int[] reversed = new int[myArray.length];
 
@@ -214,15 +288,7 @@ public class GlobalClass extends Application {
 
         return reversed;
     }
-    public static boolean validatePan(String strPAN) {
-        Pattern pattern = Pattern.compile("^[A-Z]{3}P[A-Z]{1}[0-9]{4}[A-Z]{1}$");
-        boolean retVal = false;
-        if (strPAN != null & strPAN.length() == 10) {
-            Matcher matcher = pattern.matcher(strPAN);
-            retVal = matcher.matches();
-        }
-        return retVal;
-    }
+
     public static boolean validateIFSC(String strIFSC) {
         Pattern pattern = Pattern.compile("^[A-Z]{4}0[A-Z,0-9]{6}$");
         boolean retVal = false;
@@ -232,6 +298,7 @@ public class GlobalClass extends Application {
         }
         return retVal;
     }
+
     public static boolean validateCaseCode(String caseCode) {
         Pattern pattern = Pattern.compile("^[A-Z]{4}[0-9]{6}$");
         boolean retVal = false;
@@ -241,19 +308,23 @@ public class GlobalClass extends Application {
         }
         return retVal;
     }
+
     public static <E> List<E> convertToObjectArray(String jsonString, Type listType) {
         //Gson gson = new Gson();
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
         List<E> eList = gson.fromJson(jsonString, listType);
         return eList;
     }
+
     public static List<SmCode_DateModel> getList(Context context) {
         SharedPreferences prefs = context.getSharedPreferences("payment_case", Context.MODE_PRIVATE);
         Gson gson = new GsonBuilder().create();
         String json = prefs.getString("payment_list", null);
-        Type type = new TypeToken<List<SmCode_DateModel>>() {}.getType();
+        Type type = new TypeToken<List<SmCode_DateModel>>() {
+        }.getType();
         return gson.fromJson(json, type);
     }
+
     public static void removeItem(Context context, String propertyValueToRemove) {
         List<SmCode_DateModel> list = getList(context);
         // Iterate through the list and remove the object based on some condition
@@ -265,6 +336,7 @@ public class GlobalClass extends Application {
         }
         saveList(context, list); // Save the modified list back to SharedPreferences
     }
+
     public static void saveList(Context context, List<SmCode_DateModel> list) {
         SharedPreferences prefs = context.getSharedPreferences("payment_case", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
@@ -289,6 +361,7 @@ public class GlobalClass extends Application {
         }
         return null;
     }
+
     public static String formatDateString2(String inputDateString) {
         for (String format : INPUT_DATE_FORMATS) {
             try {
@@ -328,4 +401,105 @@ public class GlobalClass extends Application {
             return -1; // Error case
         }
     }
+
+    public static void showToast(Context context, int toastType, String msg) {
+        switch (toastType) {
+            case 1:
+                FancyToast.makeText(context, msg, FancyToast.LENGTH_SHORT, FancyToast.DEFAULT, true).show();
+                break;
+            case 2:
+                FancyToast.makeText(context, msg, FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, true).show();
+                break;
+            case 3:
+                FancyToast.makeText(context, msg, FancyToast.LENGTH_SHORT, FancyToast.INFO, true).show();
+                break;
+            case 4:
+                FancyToast.makeText(context, msg, FancyToast.LENGTH_SHORT, FancyToast.WARNING, true).show();
+                break;
+            case 5:
+                FancyToast.makeText(context, msg, FancyToast.LENGTH_SHORT, FancyToast.ERROR, true).show();
+                break;
+            case 6:
+                FancyToast.makeText(context, msg, FancyToast.LENGTH_SHORT, FancyToast.CONFUSING, true).show();
+                break;
+            case 7:
+                FancyToast.makeText(context, msg, FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show();
+                break;
+            case 8:
+                FancyToast.makeText(context, msg, FancyToast.LENGTH_SHORT, FancyToast.CONFUSING, R.drawable.rotate, false).show();
+                break;
+            default:
+                FancyToast.makeText(context, msg, FancyToast.LENGTH_SHORT, FancyToast.ERROR, true).show();
+                break;
+        }
+    }
+
+
+    private static final float BLUR_RADIUS = 25.0f;
+
+    public static Dialog showBlurredPopup(Context context, View view, ImageView imageView, int popupLayoutId) {
+        // Take screenshot of the provided view
+        view.setDrawingCacheEnabled(true);
+        view.buildDrawingCache(true);
+        Bitmap screenshot = Bitmap.createBitmap(view.getDrawingCache());
+        view.setDrawingCacheEnabled(false);
+
+        // Blur the screenshot using BlurUtils
+        Bitmap blurredScreenshot = blurBitmap(context, screenshot, BLUR_RADIUS);
+
+        // Set the blurred image in the provided ImageView
+        imageView.setImageBitmap(blurredScreenshot);
+
+        // Show the blurred image in a custom dialog
+        View popupView = LayoutInflater.from(context).inflate(popupLayoutId, null);
+
+        // Create the custom dialog
+        final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(popupView);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        // Show the popup
+        dialog.show();
+
+        return dialog; // Return the created dialog
+    }
+
+    public static void dismissPopup(Dialog dialog) {
+        if (dialog != null && dialog.isShowing()) {
+            dialog.dismiss();
+        }
+    }
+
+    private static Bitmap blurBitmap(Context context, Bitmap bitmap, float radius) {
+
+        // Create renderscript
+        RenderScript rs = RenderScript.create(context);
+
+        // Create an allocation from the bitmap and an allocation for the blurred output
+        Allocation input = Allocation.createFromBitmap(rs, bitmap);
+        Allocation output = Allocation.createTyped(rs, input.getType());
+
+        // Create a blur script and set the input
+        ScriptIntrinsicBlur blurScript = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs));
+        blurScript.setInput(input);
+
+        // Set the blur radius and apply the blur
+        blurScript.setRadius(radius);
+        blurScript.forEach(output);
+
+        // Create a new bitmap for the blurred output
+        Bitmap blurredBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), bitmap.getConfig());
+
+        // Copy the blurred output into the new bitmap
+        output.copyTo(blurredBitmap);
+
+        // Release resources
+        rs.destroy();
+
+        return blurredBitmap;
+
+
+    }
+
 }

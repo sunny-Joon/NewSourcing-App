@@ -107,19 +107,21 @@ public class FirstEsignActivity extends AppCompatActivity {
                 tvESignMobile.setText(borrower.getpPh3().toString());
                 JsonObject jsonObject=new JsonObject();
                 jsonObject.addProperty("DocName", "loan_application_sample");
-                jsonObject.addProperty("FiCode", borrower.getCode());
-                jsonObject.addProperty("FiCreator", borrower.getCreator());
-                jsonObject.addProperty("UserID", GlobalClass.Id);
+                jsonObject.addProperty("FiCode", "272725");
+              //  jsonObject.addProperty("FiCode", borrower.getCode());
+           //     jsonObject.addProperty("FiCreator", borrower.getCreator());
+                jsonObject.addProperty("FiCreator", "MAINPURI");
+                jsonObject.addProperty("UserID", "gfst005132");
+               // jsonObject.addProperty("UserID", GlobalClass.Id);
                 HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
                 logging.setLevel(HttpLoggingInterceptor.Level.BODY);
                 OkHttpClient.Builder httpClient = new OkHttpClient.Builder(
-
                 );
                 httpClient.connectTimeout(2, TimeUnit.MINUTES);
                 httpClient.readTimeout(2,TimeUnit.MINUTES);
                 httpClient.addInterceptor(logging);
                Retrofit retrofit2 = new Retrofit.Builder()
-                        .baseUrl("https://predeptest.paisalo.in:8084/PDL.ESign.API/api/")
+                        .baseUrl("https://agra.Paisalo.in:8444/ESignSBIAV1/api/")
                         .addConverterFactory(GsonConverterFactory.create())
                         .client(httpClient.build())
                         .build();
@@ -152,7 +154,6 @@ public class FirstEsignActivity extends AppCompatActivity {
                                  ft.commit();
                              }
 
-
                          }else{
                              Log.d("TAG", "onResponse3: " + "UnSuccessful");
                          }
@@ -161,7 +162,6 @@ public class FirstEsignActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
                         Log.d("TAG", "onResponse4: " + t.getMessage());
-
                     }
                 });
 

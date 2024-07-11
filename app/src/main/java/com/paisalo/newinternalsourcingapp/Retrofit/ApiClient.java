@@ -13,7 +13,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
 
-    public static final String BASE_URL = "https://predeptest.paisalo.in:8084/PDL.SourcingApp.Api/api/";
+    //Beta
+  //  public static final String BASE_URL = "https://predeptest.paisalo.in:8084/PDL.SourcingApp.Api/api/";
+    //Live
+    public static final String BASE_URL = "https://pdlmobilelending.paisalo.in:5320/api/";
     public static final String BASE_URL1 = "https://predeptest.paisalo.in:8084/PDL.ESign.API/api/";
     public static final String BASE_URL2 = "https://agra.paisalo.in:8444/ESignSBIAV1/";
     public static final String BASE_URL4 = "https://erpservice.paisalo.in:980/PDL.Mobile.API/api/";

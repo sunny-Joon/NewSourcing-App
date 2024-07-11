@@ -26,11 +26,9 @@ import com.paisalo.newinternalsourcingapp.ModelsRetrofit.ImeiMappingModel;
 import com.paisalo.newinternalsourcingapp.R;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiClient;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiInterface;
-import com.paisalo.newinternalsourcingapp.Utils.CameraUtils;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
+
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;

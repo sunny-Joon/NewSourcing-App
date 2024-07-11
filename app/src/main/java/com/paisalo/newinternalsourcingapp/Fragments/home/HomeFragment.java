@@ -23,12 +23,12 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.slider.Slider;
 import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.Activities.ActivityEarnMoreIncentive;
+import com.paisalo.newinternalsourcingapp.GlobalClass;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.TargetCountModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.TargetSetModel;
 import com.paisalo.newinternalsourcingapp.R;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiClient;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiInterface;
-import com.paisalo.newinternalsourcingapp.Utils.GlobalClass;
 import com.paisalo.newinternalsourcingapp.databinding.FragmentHomeBinding;
 
 import java.text.SimpleDateFormat;

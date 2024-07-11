@@ -1,15 +1,13 @@
 package com.paisalo.newinternalsourcingapp.Activities;
 
-import static com.paisalo.newinternalsourcingapp.Retrofit.ApiClient.BASE_URL;
-
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -23,19 +21,23 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.provider.Settings;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.airbnb.lottie.LottieAnimationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.Adapters.CreatorListAdapter;
@@ -44,7 +46,6 @@ import com.paisalo.newinternalsourcingapp.Entities.onListCReatorInteraction;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.CreatorListModels.CreatorListModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.CreatorListModels.CreatorListModelData;
-import com.paisalo.newinternalsourcingapp.ModelsRetrofit.DownloadEsignXml;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.ImeiMappingModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.LiveToken;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.LoginModels.DataModel;
@@ -52,10 +53,6 @@ import com.paisalo.newinternalsourcingapp.ModelsRetrofit.LoginModels.FoImeiModel
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.LoginModels.FoModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.LoginModels.LoginModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.LoginModels.TokenDetailsModel;
-import com.paisalo.newinternalsourcingapp.ModelsRetrofit.ManagerListModels.ManagerListDataModel;
-import com.paisalo.newinternalsourcingapp.ModelsRetrofit.ManagerListModels.ManagerListModel;
-import com.paisalo.newinternalsourcingapp.ModelsRetrofit.RangeCategoryModels.RangeCategoryDataModel;
-import com.paisalo.newinternalsourcingapp.ModelsRetrofit.RangeCategoryModels.RangeCategoryModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.TargetIndexModels.ResponseModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.TargetIndexModels.TargetResponseModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.TopAdImageModels.ImageDataModel;
@@ -63,12 +60,7 @@ import com.paisalo.newinternalsourcingapp.ModelsRetrofit.TopAdImageModels.ImageM
 import com.paisalo.newinternalsourcingapp.R;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiClient;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiInterface;
-import com.paisalo.newinternalsourcingapp.RoomDatabase.DaoClass;
-import com.paisalo.newinternalsourcingapp.RoomDatabase.DatabaseClass;
-import com.paisalo.newinternalsourcingapp.RoomDatabase.ManagerListDataClass;
-import com.paisalo.newinternalsourcingapp.RoomDatabase.RangeCategoryDataClass;
-import com.paisalo.newinternalsourcingapp.RoomDatabase.loginDataClass;
-import com.paisalo.newinternalsourcingapp.Utils.Utils;
+import com.paisalo.newinternalsourcingapp.Utils.CustomProgressDialog;
 import com.paisalo.newinternalsourcingapp.databinding.ActivityLoginBinding;
 import com.paisalo.newinternalsourcingapp.location.GpsTracker;
 import java.text.SimpleDateFormat;
@@ -76,32 +68,28 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.TimeUnit;
-
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
 
 public class LoginActivity extends AppCompatActivity implements onListCReatorInteraction {
-    DaoClass daoClass ;
+    private static final int PHONE_CALL_REQUEST=0;
+
     TextView versionset,btnTermCondition;
     Spinner selectDatabase;
     ActivityLoginBinding binding;
     String username, password,month = "";String year = "",stTarget_Popup="",image="" ,deviceId,choosedCreator;
-    DatabaseClass database;
     Dialog dialogSearch;
     CreatorListAdapter adapter;
     String selectDatabase1;
     onListCReatorInteraction listCReatorInteraction;
+    CustomProgressDialog customProgressDialog;
 
     List<CreatorListModelData> list=new ArrayList<>();
     public static final String DATABASE_NAME = BuildConfig.APPLICATION_ID + ".DBNAME";
-    private long deviceImei;
+    boolean isPasswordVisible = false;
+    private boolean isFABOpen = false;
+    private FloatingActionButton fabMain, fabEmail, fabWhatsapp,fabChatBot;
 
     String devid = "2234514145687247",imei = "868368051227919";
 
@@ -117,10 +105,73 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        getSupportActionBar().hide();
+
         versionset= findViewById(R.id.versionset);
         versionset.setText(BuildConfig.VERSION_NAME);
         selectDatabase= findViewById(R.id.selectDatabase);
         btnTermCondition= findViewById(R.id.btnTermCondition);
+        LottieAnimationView view = findViewById(R.id.view);
+
+        fabMain = findViewById(R.id.fab_main);
+        fabEmail = findViewById(R.id.fab_action1);
+        fabWhatsapp = findViewById(R.id.fab_action2);
+        fabChatBot = findViewById(R.id.fab_action3);
+
+        fabMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isFABOpen) {
+                    closeFABMenu();
+                } else {
+                    openFABMenu();
+                }
+            }
+        });
+
+        fabEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Log.d("TAG", "sendEmail: ");
+                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                        "mailto","itsupport@gmail.com", null));
+                startActivity(Intent.createChooser(emailIntent, "Send email..."));
+            }
+        });
+
+        fabWhatsapp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                OpenDialog();
+            }
+        });
+        fabChatBot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this,ChatBot.class);
+                startActivity(intent);            }
+        });
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isPasswordVisible) {
+                    // Hide the password
+                    binding.etLoginPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    isPasswordVisible = false;
+                } else {
+                    // Show the password
+                    binding.etLoginPassword.setInputType(InputType.TYPE_CLASS_TEXT);
+                    isPasswordVisible = true;
+                }
+
+                // Move the cursor to the end of the text
+                binding.etLoginPassword.setSelection(binding.etLoginPassword.getText().length());
+            }
+        });
+
+        customProgressDialog = new CustomProgressDialog(this);
 
         if (!checkPermissions()) {
             requestPermissions();
@@ -134,8 +185,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
 
         listCReatorInteraction=LoginActivity.this;
 
-        database = DatabaseClass.getInstance(LoginActivity.this);
-        daoClass=database.dao();
+
 
         btnTermCondition.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,14 +214,19 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                 username = binding.etLoginUsername.getText().toString();
                 password = binding.etLoginPassword.getText().toString();
                 GlobalClass.Id = username;
+                //customProgressDialog.show();
+                GlobalClass.showLottieAlertDialog(8,LoginActivity.this);
 
                 // Check if a database is selected before validating credentials
                 if (selectDatabase1.equalsIgnoreCase("--Select--")) {
                     Toast.makeText(LoginActivity.this, "Select Database Name", Toast.LENGTH_SHORT).show();
-                } else if (isValidUsername(username) && isValidPassword(password)) {
+                } else if (GlobalClass.isValidUsername(username) && GlobalClass.isValidPassword(password)) {
                     LoginAPi(devid, BuildConfig.dbname, imei);
                 } else {
                     Toast.makeText(LoginActivity.this, "Invalid credentials", Toast.LENGTH_SHORT).show();
+                    //customProgressDialog.dismiss();
+                    GlobalClass.dismissLottieAlertDialog();
+                    GlobalClass.showLottieAlertDialog(9,LoginActivity.this);
                 }
             }
         });
@@ -651,26 +706,17 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                         ImageAPI();
                         LiveTokenApi();
 
-
-                       /* if (foModel != null && foImeiModel != null && tokenDetailsModel != null) {
-                            saveDataToDatabase(foModel,foImeiModel,tokenDetailsModel);
-                      }*/
-
                     } else {
-                        Toast.makeText(LoginActivity.this, "Id Password Not Matched", Toast.LENGTH_SHORT).show();
+                        GlobalClass.showToast(LoginActivity.this,5,responseData.getMessage());
                     }
                 } else {
-                    Log.d("TAG", "MyApp: "+ "Login Api Unsuccessful");
-
-                   // LoginAPi(devid, dbname, imei);
+                    GlobalClass.showToast(LoginActivity.this,5,response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<LoginModel> call, Throwable t) {
-                Log.d("TAG", "MyApp: "+ "Login Api Failure");
-                Toast.makeText(LoginActivity.this, "Network Issue", Toast.LENGTH_SHORT).show();
-                t.printStackTrace();
+                GlobalClass.showToast(LoginActivity.this,5,t.getMessage());
             }
         });
     }
@@ -703,6 +749,53 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
         });
     }
 
+    private void ImageAPI() {
+
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<ImageDataModel> call = apiInterface.getTopImage(GlobalClass.Token,GlobalClass.dbname,"D");
+        call.enqueue(new Callback<ImageDataModel>() {
+            @Override
+            public void onResponse(Call<ImageDataModel> call, Response<ImageDataModel> response) {
+
+                if(response.isSuccessful() && response.body() != null){
+                    if (response.body().getMessage().equals("No Record Found")) {
+
+                       // getTargetApi();
+                        GlobalClass.showToast(LoginActivity.this,2,"Login SuccessFully");
+                        startActivity(new Intent(LoginActivity.this, HomePageActivity.class));
+                        finish();
+
+                        image = "null";
+                    } else {
+
+                        ImageDataModel imageDataModel = response.body();
+                        Gson gson = new Gson();
+                        //     ImageModel[] imageModels = gson.fromJson(imageDataModel.getData(), ImageModel[].class);
+                        ImageModel imageModelList = imageDataModel.getData();
+                        image = "https://erp.paisalo.in:981/LOSDOC/BannerPost/" + imageModelList.getBanner();
+                        Log.d("TAG", "MyApp: " + "Image = " + image);
+
+                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("image", image);
+                        editor.apply();
+                        GlobalClass.showToast(LoginActivity.this,2,"Login SuccessFully");
+                        startActivity(new Intent(LoginActivity.this, HomePageActivity.class));
+                        finish();
+                        //getTargetApi();
+
+                    }
+                }else {
+                    GlobalClass.showToast(LoginActivity.this,5,response.message());
+                }
+            }
+            @Override
+            public void onFailure(Call<ImageDataModel> call, Throwable t) {
+                GlobalClass.showToast(LoginActivity.this,5,t.getMessage());
+
+            }
+        });
+    }
     private void getTargetApi() {
 
         Calendar calendar = Calendar.getInstance();
@@ -722,7 +815,10 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
 
                     if (response.body().getMessage().equals("No Record Found!!")) {
                         stTarget_Popup = "000000";
-                        RangeCategoriesApi();
+
+                        GlobalClass.showToast(LoginActivity.this,2,"Login SuccessFully");
+                        startActivity(new Intent(LoginActivity.this, HomePageActivity.class));
+                        finish();
 
                     } else if (response.isSuccessful() && response.body() != null && response.body().getResponseModels().size() > 0) {
                         List<ResponseModel> responseModel = response.body().getResponseModels();
@@ -734,237 +830,28 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("stTarget_Popup", stTarget_Popup);
                         editor.apply();
-                        RangeCategoriesApi();
+
+                        GlobalClass.dismissLottieAlertDialog();
+
+                        GlobalClass.showToast(LoginActivity.this,2,"Login SuccessFully");
+                        startActivity(new Intent(LoginActivity.this, HomePageActivity.class));
+                        finish();
 
                     } else {
-                        Log.d("TAG", "getTargetApi: " + "Get Target Api Unsuccessful");
-                        Toast.makeText(LoginActivity.this, "1002", Toast.LENGTH_SHORT).show();
+                        GlobalClass.showToast(LoginActivity.this,5,response.message());
                     }
                 }else{
-                    Log.d("TAG", "getTargetApi: " +"unsuccessful" );
-
+                    GlobalClass.showToast(LoginActivity.this,5,response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<TargetResponseModel> call, Throwable t) {
-                Log.d("TAG", "getTargetApi: "+ "Target Api Failure");
-                Toast.makeText(LoginActivity.this, "1002", Toast.LENGTH_SHORT).show();
+                GlobalClass.showToast(LoginActivity.this,5,t.getMessage());
+
             }
         });
     }
-    private void ImageAPI() {
-
-        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<ImageDataModel> call = apiInterface.getTopImage(GlobalClass.Token,GlobalClass.dbname,"D");
-        call.enqueue(new Callback<ImageDataModel>() {
-            @Override
-            public void onResponse(Call<ImageDataModel> call, Response<ImageDataModel> response) {
-
-                if(response.isSuccessful() && response.body() != null){
-                if (response.body().getMessage().equals("No Record Found")) {
-
-                  //  getTargetApi();
-
-                    RangeCategoriesApi();
-
-                    image = "null";
-                } else {
-
-                    ImageDataModel imageDataModel = response.body();
-                    Gson gson = new Gson();
-               //     ImageModel[] imageModels = gson.fromJson(imageDataModel.getData(), ImageModel[].class);
-                    ImageModel imageModelList = imageDataModel.getData();
-                    image = "https://erp.paisalo.in:981/LOSDOC/BannerPost/" + imageModelList.getBanner();
-                    Log.d("TAG", "MyApp: " + "Image = " + image);
-
-                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("image", image);
-                    editor.apply();
-
-
-                    //getTargetApi();
-                    RangeCategoriesApi();
-
-                }
-            }else {
-                    Log.d("TAG", "MyApp: " + "Image Api Unsuccessful");
-                    Toast.makeText(LoginActivity.this, "1001", Toast.LENGTH_SHORT).show();
-                }
-            }
-            @Override
-            public void onFailure(Call<ImageDataModel> call, Throwable t) {
-                Log.d("TAG", "MyApp: "+ "Image Api Failure");
-                Toast.makeText(LoginActivity.this, "1001", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-    private void ManagerListApi() {
-        Log.d("TAG", "MyApp: "+ "ManagerList Api Run");
-
-        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<ManagerListModel> call = apiInterface.ManagerListApi(GlobalClass.Token,BuildConfig.dbname,GlobalClass.Imei,GlobalClass.Id);
-        Log.d("TAG", "ManagerListApi: "+GlobalClass.Token+"--"+ BuildConfig.dbname +"--"+ GlobalClass.Imei +"--"+GlobalClass.Id);
-        call.enqueue(new Callback<ManagerListModel>() {
-            @Override
-            public void onResponse(Call<ManagerListModel> call, Response<ManagerListModel> response) {
-                Log.d("TAG", "MyApp: "+ response.body());
-
-                if(response.isSuccessful()){
-                    Log.d("TAG", "MyApp: "+ "ManagerList Api Successful");
-                    Log.d("TAG", "ManagerListApi: "+ response.body());
-                    ManagerListModel managerListModel = response.body();
-                    List<ManagerListDataModel> managerListDataModel=  managerListModel.getData();
-                    Log.d("TAG", "MyApp: "+ "manager List Size = "+managerListDataModel.size());
-
-                    List<ManagerListDataClass> managerListDataClasses = new ArrayList<>();
-                    for (ManagerListDataModel managerListData : managerListDataModel) {
-                        ManagerListDataClass managerListDataClass = new ManagerListDataClass(
-                                managerListData.getImeino(),
-                                managerListData.getFoCode(),
-                                managerListData.getFoName(),
-                                managerListData.getCreator(),
-                                managerListData.getIsActive(),
-                                managerListData.getDataBase(),
-                                managerListData.getTag(),
-                                managerListData.getAreaCd(),
-                                managerListData.getAreaName(),
-                                managerListData.getCreatorDesc(),
-                                managerListData.getFiExecCode(),
-                                managerListData.getFiExecName()
-                        );
-                        managerListDataClasses.add(managerListDataClass);
-                    }
-
-                    DatabaseClass.databaseWriteExecutor.execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            daoClass.deleteAllManagerList();
-                            daoClass.insertManagerListData(managerListDataClasses);
-
-                        }
-                    });
-                    startActivity(new Intent(LoginActivity.this, HomePageActivity.class));
-
-
-                }else{
-                    Log.d("TAG", "MyApp: "+ "ManagerList Api Unsuccessful");
-                    Toast.makeText(LoginActivity.this, "1004", Toast.LENGTH_SHORT).show();
-                    Log.d("TAG", "onResponsemanager: "+ response.code());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ManagerListModel> call, Throwable t) {
-                Log.d("TAG", "MyApp: "+ "ManagerList Api Failure");
-                Toast.makeText(LoginActivity.this, "1004", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-    private void RangeCategoriesApi() {
-        Log.d("TAG", "MyApp: "+ "Range Category Api Run");
-
-            ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<RangeCategoryModel> call = apiInterface.RangeCategory(GlobalClass.Token,BuildConfig.dbname);
-
-        call.enqueue(new Callback<RangeCategoryModel>() {
-            @Override
-            public void onResponse(Call<RangeCategoryModel> call, Response<RangeCategoryModel> response) {
-                if (response.isSuccessful()) {
-                    Log.d("TAG", "MyApp: "+ "Range Category Api Successful");
-
-                    RangeCategoryModel rangeCategoryModel = response.body();
-                    assert rangeCategoryModel != null;
-                    List<RangeCategoryDataModel> rangeCategoryDataModelList = rangeCategoryModel.getData();
-
-                    List<RangeCategoryDataClass> rangeCategoryDataClassList = new ArrayList<>();
-                    for (RangeCategoryDataModel dataModel : rangeCategoryDataModelList) {
-                        RangeCategoryDataClass dataClass = new RangeCategoryDataClass(
-                                dataModel.getCatKey(),
-                                dataModel.getGroupDescriptionEn(),
-                                dataModel.getGroupDescriptionHi(),
-                                dataModel.getDescriptionEn(),
-                                dataModel.getDescriptionHi(),
-                                dataModel.getSortOrder(),
-                                dataModel.getCode()
-                        );
-                        rangeCategoryDataClassList.add(dataClass);
-                    }
-
-                    DatabaseClass.databaseWriteExecutor.execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            daoClass.deleteAllRCList();
-                            daoClass.insertRCData( rangeCategoryDataClassList);
-                        }
-                    });
-                    ManagerListApi();
-
-
-                }else{
-                    Log.d("TAG", "RangeCartegory: "+response.code());
-                    Log.d("TAG", "MyApp: "+ "Range Category Api Unsuccessful");
-                    Toast.makeText(LoginActivity.this, "1003", Toast.LENGTH_SHORT).show();
-                }
-            }
-            @Override
-            public void onFailure(Call<RangeCategoryModel> call, Throwable t) {
-                Log.d("TAG", "MyApp: "+ "Range Category Api Failure");
-                Toast.makeText(LoginActivity.this, "1003", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-/*
-    private void saveDataToDatabase(List<FoModel> foModel, FoImeiModel foImeiModel, TokenDetailsModel tokenDetailsModel) {
-        DatabaseClass database = DatabaseClass.getInstance(LoginActivity.this);
-        loginDataClass entity = new loginDataClass();
-
-        for (FoModel fomodel : foModel) {
-
-            entity.setImeino(fomodel.getImeino().toString());
-            entity.setFoCode(fomodel.getFoCode());
-            entity.setFoName(fomodel.getFoName());
-            entity.setCreator(fomodel.getCreator());
-            entity.setIsActive(fomodel.getIsActive());
-            entity.setDataBase(fomodel.getDataBase());
-            entity.setTag(fomodel.getTag());
-            entity.setAreaCd(fomodel.getAreaCd());
-            entity.setAreaName(fomodel.getAreaName());
-            entity.setCreatorDesc(fomodel.getCreatorDesc());
-            entity.setFiExecCode(fomodel.getFiExecCode());
-            entity.setFiExecName(fomodel.getFiExecName());
-
-            daoClass.insertLoginData(entity);
-        }
-        entity.setFoImeiimeino(foImeiModel.getImeino().toString());
-        entity.setActualYN(foImeiModel.getActualYN().toString());
-        entity.setFoImeiIsActive(foImeiModel.getIsActive().toString());
-        entity.setNewAppVersion(foImeiModel.getNewAppVerison().toString());
-        entity.setAppDownPath(foImeiModel.getAppDownPath().toString());
-        entity.setRequestUrl(foImeiModel.getRequestUrl().toString());
-        entity.setSimno(foImeiModel.getSimno().toString());
-        entity.setTokenId(tokenDetailsModel.getId().toString());
-        entity.setToken(tokenDetailsModel.getToken().toString());
-        entity.setUserName(tokenDetailsModel.getUserName().toString());
-        entity.setDeviceSrNo(tokenDetailsModel.getDeviceSrNo().toString());
-        entity.setPassword(tokenDetailsModel.getPassword().toString());
-        entity.setValidity(tokenDetailsModel.getValidaty().toString());
-        entity.setRefreshToken(tokenDetailsModel.getRefreshToken().toString());
-        entity.setRole(tokenDetailsModel.getRole().toString());
-        entity.setGuidId(tokenDetailsModel.getGuidId().toString());
-        entity.setExpiredTime(tokenDetailsModel.getExpiredTime().toString());
-
-        DatabaseClass.databaseWriteExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                daoClass.insertLoginData(entity);
-            }
-        });
-
-
-    }
-*/
 
     private JsonObject getJsonOfUserIdPassword() {
         JsonObject jsonObject = new JsonObject();
@@ -973,17 +860,193 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
         return jsonObject;
     }
 
-    private boolean isValidUsername(String username) {
-        return username.length() >= 1;
-    }
-
-    private boolean isValidPassword(String password) {
-        return password.length() >= 5;
-    }
-
     @Override
     public void onListCReatorInteraction(String choosedCreatora) {
         Log.d("TAG", "onListCReatorInteraction: "+choosedCreatora);
         choosedCreator=choosedCreatora;
+    }
+
+    private void openFABMenu() {
+        isFABOpen = true;
+        fabEmail.show();
+        fabWhatsapp.show();
+        fabChatBot.show();
+    }
+
+    private void closeFABMenu() {
+        isFABOpen = false;
+        fabEmail.hide();
+        fabWhatsapp.hide();
+        fabChatBot.hide();
+    }
+
+    private void openWhatsApp(int num) {
+        Log.d("TAG", "onClick2: ");
+        String phoneNumberWithCountryCode ="";
+        switch (num){
+            case 1:
+                phoneNumberWithCountryCode = "919258297452";
+                break;
+            case 2:
+                phoneNumberWithCountryCode = "918595847059";
+                break;
+            case 3:
+                phoneNumberWithCountryCode = "919258297453";
+                break;
+        }
+
+        try {
+            Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+            String url = "https://api.whatsapp.com/send?phone=" + phoneNumberWithCountryCode;
+            sendIntent.setData(Uri.parse(url));
+            startActivity(sendIntent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    private void openCall(int num){
+
+        String phoneNumber ="";
+        switch (num){
+            case 1:
+                phoneNumber = "tel:919258297452";
+                break;
+            case 2:
+                phoneNumber = "tel:918595847059";
+                break;
+            case 3:
+                phoneNumber = "tel:919258297453";
+                break;
+        }
+
+      //  String phoneNumber = "tel:9910238307";  // Replace with the predefined number
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        callIntent.setData(Uri.parse(phoneNumber));
+        if (callIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(callIntent);
+        }
+
+    }
+    private void openText(int num){
+
+        String phoneNumber ="";
+        switch (num){
+            case 1:
+                phoneNumber = "919258297452";
+                break;
+            case 2:
+                phoneNumber = "918595847059";
+                break;
+            case 3:
+                phoneNumber = "919258297453";
+                break;
+        }
+
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("smsto:" + Uri.encode(phoneNumber)));
+        startActivity(intent);
+    }
+    private void OpenDialog() {
+        // Inflate the custom layout
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.whatsapp_popup, null);
+
+        // Build the dialog
+        AlertDialog.Builder alert = new AlertDialog.Builder(this, R.style.CustomAlertDialog);
+        alert.setView(dialogView);
+
+        ImageView whatsapp1,whatsapp2,whatsapp3,text1,text2,text3,call1,call2,call3;
+        // Get the dialog elements
+        whatsapp1 = dialogView.findViewById(R.id.whatsapp1);
+        whatsapp2 = dialogView.findViewById(R.id.whatsapp2);
+        whatsapp3 = dialogView.findViewById(R.id.whatsapp3);
+        text1 = dialogView.findViewById(R.id.text1);
+        text2 = dialogView.findViewById(R.id.text2);
+        text3 = dialogView.findViewById(R.id.text3);
+        call1 = dialogView.findViewById(R.id.call1);
+        call2 = dialogView.findViewById(R.id.call2);
+        call3 = dialogView.findViewById(R.id.call3);
+
+        // Create and show the dialog
+        AlertDialog alertDialog = alert.create();
+        alertDialog.show();
+
+        // Set button click listener
+        whatsapp1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openWhatsApp(1);
+            }
+        });
+        whatsapp2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openWhatsApp(2);
+            }
+        });
+        whatsapp3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openWhatsApp(3);
+            }
+        });
+        text1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openText(1);
+            }
+        });
+        text2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openText(2);
+            }
+        });
+        text3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openText(3);
+            }
+        });
+        call1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ContextCompat.checkSelfPermission(LoginActivity.this, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
+                {
+                    ActivityCompat.requestPermissions(LoginActivity.this, new String[]{android.Manifest.permission.CALL_PHONE},PHONE_CALL_REQUEST);
+                }
+                else
+                {
+                    openCall(1);
+                }
+            }
+        });
+        call2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ContextCompat.checkSelfPermission(LoginActivity.this, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
+                {
+                    ActivityCompat.requestPermissions(LoginActivity.this, new String[]{android.Manifest.permission.CALL_PHONE},PHONE_CALL_REQUEST);
+                }
+                else
+                {
+                    openCall(2);
+                }
+
+            }
+        });
+        call3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ContextCompat.checkSelfPermission(LoginActivity.this, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
+                {
+                    ActivityCompat.requestPermissions(LoginActivity.this, new String[]{android.Manifest.permission.CALL_PHONE},PHONE_CALL_REQUEST);
+                }
+                else
+                {
+                    openCall(3);
+                }
+            }
+        });
     }
 }
