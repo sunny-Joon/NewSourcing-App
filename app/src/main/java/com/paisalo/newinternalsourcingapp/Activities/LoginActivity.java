@@ -87,7 +87,6 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
     CreatorListAdapter adapter;
     String selectDatabase1;
     onListCReatorInteraction listCReatorInteraction;
-    CustomProgressDialog customProgressDialog;
 
     List<CreatorListModelData> list=new ArrayList<>();
     public static final String DATABASE_NAME = BuildConfig.APPLICATION_ID + ".DBNAME";
@@ -175,7 +174,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
             }
         });
 
-        customProgressDialog = new CustomProgressDialog(this);
+    //    customProgressDialog = new CustomProgressDialog(this);
 
         customProgressDialog = new CustomProgressDialog(LoginActivity.this);
         if (!checkPermissions()) {
@@ -189,8 +188,6 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
         selectDatabase.setAdapter(adapter1);
 
         listCReatorInteraction=LoginActivity.this;
-
-
 
         btnTermCondition.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -227,7 +224,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                     Toast.makeText(LoginActivity.this, "Select Database Name", Toast.LENGTH_SHORT).show();
                 } else if (GlobalClass.isValidUsername(username) && GlobalClass.isValidPassword(password)) {
                     LoginAPi(devid, BuildConfig.dbname, imei);
-                    customProgressDialog.show();
+                   // customProgressDialog.show();
                 } else {
                     Toast.makeText(LoginActivity.this, "Invalid credentials", Toast.LENGTH_SHORT).show();
                     //customProgressDialog.dismiss();
