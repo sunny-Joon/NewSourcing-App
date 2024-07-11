@@ -42,6 +42,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -155,7 +156,9 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
     Bitmap bitmap;
     File file, profileImageFile, adhaarFrontFile, adhaarBackFile, panFile;
     CustomProgressDialog customProgressDialog;
-    ImageView aadhaarScanner, calendericon, profilePic;
+    ImageView  calendericon;
+    LottieAnimationView aadhaarScanner, profilePic;;
+
     boolean imageProcessed = false;
     List<VillageData> villageDataList = new ArrayList<>();
     List<CityData> cityDataList = new ArrayList<>();
@@ -216,11 +219,8 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         progressBar = findViewById(R.id.simpleProgressBar);
         progressBar.setMax(maxProgress);
 
-        tilPanName = findViewById(R.id.tilPanName);
-        tilVoterName = findViewById(R.id.tilVoterName);
-        tilDLName = findViewById(R.id.tilDLName);
+        aadhaarScanner = findViewById(R.id.aadhaarScannerKyc);
 
-        aadhaarScanner = findViewById(R.id.aadhaarScanner);
         calendericon = findViewById(R.id.calendericonKyc);
         submitButton = findViewById(R.id.submitButtonKyc);
         editTextAadhar = findViewById(R.id.editTextAadharKyc);

@@ -112,6 +112,12 @@ dependencies {
     implementation("com.vanniktech:android-image-cropper:4.5.0")
 
     implementation 'com.google.code.gson:gson:2.8.9'
+//Toast
+    implementation 'io.github.shashank02051997:FancyToast:2.0.2'
+
+    //lottie-animations
+    implementation "com.airbnb.android:lottie:6.0.0"
+
 
 
 
