@@ -723,8 +723,13 @@
                 android:layout_height="wrap_content"
                 android:drawablePadding="8dp" />
 
-
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/tilPanName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/green"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -764,6 +769,12 @@
     </LinearLayout>
 
         <TextView
+            android:id="@+id/tilDLName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/green"/>
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Voter Id *"
@@ -800,6 +811,11 @@
 
     </LinearLayout>
 
+        <TextView
+            android:id="@+id/tilVoterName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/green"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

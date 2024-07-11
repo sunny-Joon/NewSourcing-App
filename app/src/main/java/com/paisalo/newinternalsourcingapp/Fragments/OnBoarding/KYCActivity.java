@@ -49,6 +49,7 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.paisalo.newinternalsourcingapp.Activities.CameraActivity;
 import com.paisalo.newinternalsourcingapp.Adapters.CityListAdapter;
+import com.paisalo.newinternalsourcingapp.Adapters.CustomSpinnerAdapter;
 import com.paisalo.newinternalsourcingapp.Adapters.DistrictListAdapter;
 import com.paisalo.newinternalsourcingapp.Adapters.RangeCategoryAdapter;
 import com.paisalo.newinternalsourcingapp.Adapters.SubDistrictListAdapter;
@@ -135,7 +136,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             editTextfatherlastname, editTextspousefirstname, editTextspousemiddlename, editTextspouselastname;
 
     TextView txtVDistrictName, txtCityName, txtVillageName, txtSubDistictName;
-
+    TextView tilPanName,tilVoterName,tilDLName;
 
     String AadharID, isAadharVerified, name, Fname, Mname, Lname, Age, DOB, guardian, gender, guardianRelatnWithBorrower, P_Add1, P_Add2, P_Add3, P_City,
             P_State, P_Ph3, PanNO, DrivingLic, voterId, motherName, motherMiddleName, motherLastName, fatherName, fatherMiddleName, fatherLastName,
@@ -217,7 +218,9 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
         progressBar = findViewById(R.id.simpleProgressBar);
         progressBar.setMax(maxProgress);
+
         aadhaarScanner = findViewById(R.id.aadhaarScannerKyc);
+
         calendericon = findViewById(R.id.calendericonKyc);
         submitButton = findViewById(R.id.submitButtonKyc);
         editTextAadhar = findViewById(R.id.editTextAadharKyc);
@@ -290,28 +293,28 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
 
         //  Sample data
-        /*editTextAadhar.setText("123456789012");
-        editTextName.setText("John Doe");
-        editTextAge.setText("30");
-        editTextDob.setText("1999-05-23");
-        editTextGuardian.setText("Jane Doe");
-        editTextAddress1.setText("123, Street Name");
-        editTextAddress2.setText("Apartment Name");
-        editTextAddress3.setText("Area Name");
-        editTextCity.setText("City Name");
-        editTextPincode.setText("123456");
+//        editTextAadhar.setText("123456789012");
+//        editTextName.setText("John Doe");
+//        editTextAge.setText("30");
+//        editTextDob.setText("1999-05-23");
+//        editTextGuardian.setText("Jane Doe");
+//        editTextAddress1.setText("123, Street Name");
+//        editTextAddress2.setText("Apartment Name");
+//        editTextAddress3.setText("Area Name");
+//        editTextCity.setText("City Name");
+//        editTextPincode.setText("123456");
         editTextMobile.setText("9876543210");
         editTextPAN.setText("BKXPJ1310C");
+        editTextvoterIdKyc.setText("ZXD3104692");
         editTextdrivingLicense.setText("DL0420170426232");
-        editTextvoterIdKyc.setText("");
+//        editTextvoterIdKyc.setText("");
         editTextmotherfirstname.setText("Mary");
         editTextmothermiddlename.setText("Anne");
         editTextmotherlastname.setText("Doe");
-        editTextFatherFname.setText("Michael");
-        editTextfathermiddlename.setText("James");
-        editTextfatherlastname.setText("Doe");
-        isMarriedSpinner.setSelection(1);
-*/
+//        editTextFatherFname.setText("Michael");
+//        editTextfathermiddlename.setText("James");
+//        editTextfatherlastname.setText("Doe");
+//        isMarriedSpinner.setSelection(1);
 
         GenderList.add("--Select--");
         RelationWithBorrowerList.add("--Select--");
@@ -480,7 +483,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         for (RangeCategoryDataClass data : gendreDataList) {
             String descriptionEn = data.getDescriptionEn();
             GenderList.add(descriptionEn);
-            ArrayAdapter<String> adapter1 = new ArrayAdapter<>(KYCActivity.this, android.R.layout.simple_spinner_item, GenderList);
+            CustomSpinnerAdapter adapter1 = new CustomSpinnerAdapter(KYCActivity.this, android.R.layout.simple_spinner_dropdown_item, GenderList);
             acspGender.setAdapter(adapter1);
         }
 
@@ -499,14 +502,14 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         for (RangeCategoryDataClass item : stateDataList) {
             Log.d("TAG", "decodeData item: " + item.getCode());
         }
-        RangeCategoryAdapter rangeCategoryAdapter = new RangeCategoryAdapter(KYCActivity.this, stateDataList);
+        RangeCategoryAdapter rangeCategoryAdapter = new RangeCategoryAdapter(KYCActivity.this,android.R.layout.simple_spinner_dropdown_item, stateDataList);
         acspAadharState.setAdapter(rangeCategoryAdapter);
 
         relatnshipList = databaseClass.dao().getAllRCDataListby_catKey("relationship");
         for (RangeCategoryDataClass data : relatnshipList) {
             String descriptionEn = data.getDescriptionEn();
             RelationWithBorrowerList.add(descriptionEn);
-            ArrayAdapter<String> adapter3 = new ArrayAdapter<>(KYCActivity.this, android.R.layout.simple_spinner_item, RelationWithBorrowerList);
+            CustomSpinnerAdapter adapter3 = new CustomSpinnerAdapter(KYCActivity.this,android.R.layout.simple_spinner_dropdown_item, RelationWithBorrowerList);
             acspRelationship.setAdapter(adapter3);
         }
 
@@ -514,7 +517,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         for (RangeCategoryDataClass data : maritalStatusList) {
             String descriptionEn = data.getDescriptionEn();
             MaritalStatusList.add(descriptionEn);
-            ArrayAdapter<String> adapter4 = new ArrayAdapter<>(KYCActivity.this, android.R.layout.simple_spinner_item, MaritalStatusList);
+            CustomSpinnerAdapter adapter4 = new CustomSpinnerAdapter(KYCActivity.this, android.R.layout.simple_spinner_dropdown_item, MaritalStatusList);
             isMarriedSpinner.setAdapter(adapter4);
         }
 
@@ -572,9 +575,9 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                     if (editTextdrivingLicense.getText().toString().trim().length() < 5 || editTextdrivingLicense.length() > 15) {
                         // tilDL_Name.setVisibility(View.GONE);
                         editTextdrivingLicense.setError(" Driving License  Should be between 5 to 15 digits");
-
+                        tilDLName.setVisibility(View.GONE);
                     } else {
-                        String dateOB = GlobalClass.formatDateString2(editTextDob.getText().toString());
+                        String dateOB = GlobalClass.formatDateString2(editTextDob.getText().toString(),"yyyy/MM/dd");
                         Log.d("TAG", "drivinglicenseDOB: "+ editTextDob.getText().toString());
                         Log.d("TAG", "drivinglicenseDOB: "+ dateOB);
 
@@ -591,19 +594,96 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         pan_Checkbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                pan_Checkbox.setChecked(false);
-                panVerification("pancard", editTextPAN.getText().toString(), "");
+
+                if (editTextPAN.getText().toString().trim().length() == 10) {
+                    pan_Checkbox.setChecked(false);
+                    panVerification("pancard", editTextPAN.getText().toString(), "");
+                } else {
+                    tilPanName.setVisibility(View.GONE);
+                    tilPanName.setError("Enter PAN");
+                }
+
+
+//                pan_Checkbox.setChecked(false);
+//                panVerification("pancard", editTextPAN.getText().toString(), "");
             }
         });
+
+
+
+
         voterId_Checkbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                voterId_Checkbox.setChecked(false);
-                voterIdVerification("voterid", editTextvoterIdKyc.getText().toString(), "");
+
+                if (editTextvoterIdKyc.getText().toString().trim().length() < 5 || editTextvoterIdKyc.length()>16) {
+                    tilVoterName.setVisibility(View.GONE);
+                    editTextvoterIdKyc.setError("Voter Id  Should be between 5 to 15 digits");
+                } else {
+                    voterIdVerification("voterid", editTextvoterIdKyc.getText().toString(), "");
+                }
+
+//                voterId_Checkbox.setChecked(false);
+//                voterIdVerification("voterid", editTextvoterIdKyc.getText().toString(), "");
 
             }
         });
 
+        editTextPAN.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                pan_Checkbox.setEnabled(true);
+                pan_Checkbox.setChecked(false);
+                tilPanName.setText("");
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        editTextvoterIdKyc.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                voterId_Checkbox.setEnabled(true);
+                voterId_Checkbox.setChecked(false);
+                tilVoterName.setText("");
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        editTextdrivingLicense.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                dl_Checkbox.setEnabled(true);
+                dl_Checkbox.setChecked(false);
+                tilDLName.setText("");
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
         isMarriedSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -1617,11 +1697,22 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                                     dl_Checkbox.setChecked(true);
                                     Toast.makeText(KYCActivity.this, "DL Verified", Toast.LENGTH_SHORT).show();
                                     dl_Checkbox.setClickable(false);
+
+                                    tilDLName.setVisibility(View.VISIBLE);
+                                    tilDLName.setText(response.body().getData().getData().getData().getName().toString());
+                                    tilDLName.setTextColor(getResources().getColor(R.color.green));
+
+
                                 } else {
                                     dl_Checkbox.setChecked(false);
                                     Log.d("TAG", "onResponseID7: ");
 
                                     Toast.makeText(KYCActivity.this, "Invalid Input DL", Toast.LENGTH_SHORT).show();
+
+                                    tilDLName.setVisibility(View.VISIBLE);
+                                    tilDLName.setText("DL not Verify");
+                                    tilDLName.setTextColor(getResources().getColor(R.color.black));
+
                                 }
                             } else {
                                 Log.d("TAG", "onResponseID8: ");
@@ -1686,10 +1777,28 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                     Log.d("TAG", "onResponseID1: " + response.body());
                     PanVerificationModel panVerificationModel = response.body();
                     if (panVerificationModel.getMessage().toString().equals("Get Record Successfully !!")) {
-                        pan_Checkbox.setChecked(true);
-                        Toast.makeText(KYCActivity.this, "Pan Verified", Toast.LENGTH_SHORT).show();
-                        verifiedPanName = panVerificationModel.getData().getData().getData().getName();
-                        pan_Checkbox.setClickable(false);
+
+                        if (response.body().getData().getSuccess()) {
+                            pan_Checkbox.setChecked(true);
+                            Toast.makeText(KYCActivity.this, "Pan Verified", Toast.LENGTH_SHORT).show();
+                            verifiedPanName = panVerificationModel.getData().getData().getData().getName();
+
+                            tilPanName.setVisibility(View.VISIBLE);
+                            tilPanName.setText(response.body().getData().getData().getData().getName().toString());
+                            tilPanName.setTextColor(getResources().getColor(R.color.green));
+
+                            pan_Checkbox.setClickable(false);
+                        }else {
+
+
+                            Toast.makeText(KYCActivity.this, "Not Verified", Toast.LENGTH_SHORT).show();
+                           // showDialog(editTextPAN);
+                            SubmitAlert(KYCActivity.this, "success", "Data set Successfully");
+                            tilPanName.setVisibility(View.VISIBLE);
+                            tilPanName.setText("PAN not Verify");
+                            tilPanName.setTextColor(getResources().getColor(R.color.black));
+
+                        }
 
                     } else {
                         Toast.makeText(KYCActivity.this, "Invalid Pan", Toast.LENGTH_SHORT).show();
@@ -1725,10 +1834,28 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                     Log.d("TAG", "onResponseID: " + response.body());
                     VoterIdVerificationModel voterIdVerificationModel = response.body();
                     if (voterIdVerificationModel.getMessage().toString().equals("Get Record Successfully !!")) {
-                        voterId_Checkbox.setChecked(true);
-                        Toast.makeText(KYCActivity.this, "ID Verified", Toast.LENGTH_SHORT).show();
-                        verifiedVotername = voterIdVerificationModel.getData().getData().getData().getName();
-                        voterId_Checkbox.setClickable(false);
+
+                        if (response.body().getData().getSuccess()) {
+                            voterId_Checkbox.setChecked(true);
+                            Toast.makeText(KYCActivity.this, "ID Verified", Toast.LENGTH_SHORT).show();
+                            verifiedVotername = voterIdVerificationModel.getData().getData().getData().getName();
+                            voterId_Checkbox.setClickable(false);
+
+                            tilVoterName.setVisibility(View.VISIBLE);
+                            tilVoterName.setText(response.body().getData().getData().getData().getName().toString());
+                            tilVoterName.setTextColor(getResources().getColor(R.color.green));
+
+
+                        }else {
+                            Toast.makeText(KYCActivity.this, "Not Verified", Toast.LENGTH_SHORT).show();
+                            // showDialog(editTextPAN);
+                            SubmitAlert(KYCActivity.this, "success", "Data set Successfully");
+                            tilVoterName.setVisibility(View.VISIBLE);
+                            tilVoterName.setText("Voter not Verify");
+                            tilVoterName.setTextColor(getResources().getColor(R.color.black));
+
+
+                        }
 
                     } else {
                         Toast.makeText(KYCActivity.this, "Invalid Voter ID", Toast.LENGTH_SHORT).show();
@@ -1844,7 +1971,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             allConditionsSatisfied = false;
         } else {
             String temp = editTextDob.getText().toString();
-            String formattedDate = GlobalClass.formatDateString2(temp);
+            String formattedDate = GlobalClass.formatDateString2(temp,"yyyy-MM-dd");
             if (formattedDate != null) {
                 DOB = formattedDate;
 
@@ -2156,6 +2283,9 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
             jsonData.setLname(Lname);
             Log.d("TAG", "createJsonObject:F_Fname " + Lname);
+
+
+
 
 
             jsonData.setDob(DOB);

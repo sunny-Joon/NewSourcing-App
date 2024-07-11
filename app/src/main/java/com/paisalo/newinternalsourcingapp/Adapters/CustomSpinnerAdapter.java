@@ -12,24 +12,24 @@ import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 
 import com.paisalo.newinternalsourcingapp.R;
-import com.paisalo.newinternalsourcingapp.RoomDatabase.RangeCategoryDataClass;
 
 import java.util.List;
 
-public class RangeCategoryAdapter extends ArrayAdapter<RangeCategoryDataClass> {
+public class CustomSpinnerAdapter extends ArrayAdapter<String> {
     Context context;
     int resourecId;
-    List<RangeCategoryDataClass> rangeCategoryList = null;
+    List<String> rangeCategoryList = null;
+
     Boolean showDetail = false;
 
-    public RangeCategoryAdapter(Context context, @LayoutRes int resource, @NonNull List<RangeCategoryDataClass> objects) {
+    public CustomSpinnerAdapter(Context context, @LayoutRes int resource, @NonNull List<String> objects) {
         super(context, resource, objects);
         this.context = context;
         this.resourecId = resource;
         this.rangeCategoryList = objects;
     }
 
-    public RangeCategoryAdapter(Context context, @NonNull List<RangeCategoryDataClass> objects, Boolean withSubDetail) {
+    public CustomSpinnerAdapter(Context context, @NonNull List<String> objects, Boolean withSubDetail) {
         super(context, R.layout.spinner_card_orange, objects);
         this.context = context;
         this.resourecId = R.layout.spinner_card_orange;
@@ -40,12 +40,14 @@ public class RangeCategoryAdapter extends ArrayAdapter<RangeCategoryDataClass> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View v = convertView;
-
+        if (v == null) {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             v = inflater.inflate(R.layout.spinner_card_orange, parent, false);
+        } else {
+            v = convertView;
+        }
 
-
-        ((TextView) v.findViewById(R.id.text_cname)).setText(rangeCategoryList.get(position).descriptionEn);
+        ((TextView) v.findViewById(R.id.text_cname)).setText(rangeCategoryList.get(position));
         return v;
     }
 
@@ -60,7 +62,7 @@ public class RangeCategoryAdapter extends ArrayAdapter<RangeCategoryDataClass> {
             v = convertView;
         }
 
-            ((TextView) v.findViewById(R.id.text_cname)).setText(rangeCategoryList.get(position).descriptionEn);
+            ((TextView) v.findViewById(R.id.text_cname)).setText(rangeCategoryList.get(position));
 
 
         return v;

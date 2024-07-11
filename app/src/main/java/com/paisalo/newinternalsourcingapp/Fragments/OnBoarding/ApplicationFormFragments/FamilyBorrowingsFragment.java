@@ -26,6 +26,7 @@ import android.widget.PopupWindow;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivityMenu;
+import com.paisalo.newinternalsourcingapp.Adapters.CustomSpinnerAdapter;
 import com.paisalo.newinternalsourcingapp.Adapters.FamilyBorrowingsAdapter;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFDataModel;
@@ -114,6 +115,9 @@ public class FamilyBorrowingsFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
+                LoanUsedList.clear();
+                ReasonforloanList.clear();
+
                 LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View popupView = inflater.inflate(R.layout.familyborrowingspopup, null);
 
@@ -152,7 +156,7 @@ public class FamilyBorrowingsFragment extends Fragment {
                     LoanUsedList.add(descriptionEn);
 
                 }
-                ArrayAdapter<String> adapter1 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, LoanUsedList);
+                CustomSpinnerAdapter adapter1 = new CustomSpinnerAdapter(getActivity(),  android.R.layout.simple_spinner_dropdown_item, LoanUsedList);
                 spinnerReasonforloan.setAdapter(adapter1);
 
                 List<RangeCategoryDataClass> Reasonforloan_DataList = databaseClass.dao().getAllRCDataListby_catKey("relationship");
@@ -160,7 +164,7 @@ public class FamilyBorrowingsFragment extends Fragment {
                     String descriptionEn = data.getDescriptionEn();
                     ReasonforloanList.add(descriptionEn);
                 }
-                ArrayAdapter<String> adapter2 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, ReasonforloanList);
+                CustomSpinnerAdapter adapter2 = new CustomSpinnerAdapter(getActivity(),  android.R.layout.simple_spinner_dropdown_item, ReasonforloanList);
                 spinnerLoanUsed.setAdapter(adapter2);
 
                 ArrayAdapter<CharSequence> adapter3 = ArrayAdapter.createFromResource(getActivity(), R.array.lenderType, android.R.layout.simple_spinner_item);

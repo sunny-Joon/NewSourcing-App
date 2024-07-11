@@ -29,6 +29,7 @@ import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.Activities.ApplicationFormActivityMenu;
+import com.paisalo.newinternalsourcingapp.Adapters.CustomSpinnerAdapter;
 import com.paisalo.newinternalsourcingapp.BuildConfig;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFDataModel;
@@ -178,7 +179,7 @@ public class FinancialInfoFragment extends Fragment {
             houseType_List.add(descriptionEn);
 
         }
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, houseType_List);
+        CustomSpinnerAdapter adapter1 = new CustomSpinnerAdapter(getActivity(),  android.R.layout.simple_spinner_dropdown_item, houseType_List);
         houseTypeSpinner.setAdapter(adapter1);
 
         List<RangeCategoryDataClass> roofType_DataList = databaseClass.dao().getAllRCDataListby_catKey("house-roof-type");
@@ -187,7 +188,7 @@ public class FinancialInfoFragment extends Fragment {
             roofType_List.add(descriptionEn);
 
         }
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, roofType_List);
+        CustomSpinnerAdapter adapter2 = new CustomSpinnerAdapter(getActivity(), android.R.layout.simple_spinner_dropdown_item, roofType_List);
         roofTypeSpinner.setAdapter(adapter2);
 
         List<RangeCategoryDataClass> personalToilet_DataList = databaseClass.dao().getAllRCDataListby_catKey("toilet-type");
@@ -196,7 +197,7 @@ public class FinancialInfoFragment extends Fragment {
             personalToilet_List.add(descriptionEn);
 
         }
-        ArrayAdapter<String> adapter3 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, personalToilet_List);
+        CustomSpinnerAdapter adapter3 = new CustomSpinnerAdapter(getActivity(), android.R.layout.simple_spinner_dropdown_item, personalToilet_List);
         personalToiletSpinner.setAdapter(adapter3);
 
 
@@ -205,7 +206,7 @@ public class FinancialInfoFragment extends Fragment {
             String descriptionEn = data.getDescriptionEn();
             accountType_List.add(descriptionEn);
         }
-        ArrayAdapter<String> adapter4 = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, accountType_List);
+        CustomSpinnerAdapter adapter4 = new CustomSpinnerAdapter(getActivity(), android.R.layout.simple_spinner_dropdown_item, accountType_List);
         accountTypeSpinner.setAdapter(adapter4);
 
         if (allDataAFDataModel != null) {
@@ -287,7 +288,7 @@ public class FinancialInfoFragment extends Fragment {
 
                     Log.d("TAG", "onCreate:view7 "+allDataAFDataModel.getBankAcType());
                     if (allDataAFDataModel.getBankAcType() != null) {
-                        int castePos3 = adapter4.getPosition(String.valueOf(allDataAFDataModel.getBankAcType()));
+                        int castePos3 = adapter4.getPosition((allDataAFDataModel.getBankAcType().toUpperCase()));
                         accountTypeSpinner.setSelection(castePos3);
                     }
                 }
@@ -657,7 +658,7 @@ public class FinancialInfoFragment extends Fragment {
         jsonFinance.addProperty("fiCode", fiCode);
         jsonFinance.addProperty("creator", creator);
         jsonFinance.addProperty("tag", tag);
-        jsonFinance.addProperty("bankAccountType", "sa");
+        jsonFinance.addProperty("bankAccountType", "SA");
         jsonFinance.addProperty("bankAccNumber", bankAccNumber);
         jsonFinance.addProperty("accOpeningDate", accOpeningDate);
         jsonFinance.addProperty("ifscCode", ifscCode);
