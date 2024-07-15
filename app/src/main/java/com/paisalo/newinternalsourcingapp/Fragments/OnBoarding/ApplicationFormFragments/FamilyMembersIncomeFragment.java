@@ -176,11 +176,15 @@ public class FamilyMembersIncomeFragment extends Fragment {
                 relationship_spin.setAdapter(adapter1);
 
 
-                gender_DataList = databaseClass.dao().getAllRCDataListby_catKey("gender");
+                /*gender_DataList = databaseClass.dao().getAllRCDataListby_catKey("gender");
                 for (RangeCategoryDataClass data : gender_DataList) {
                     String descriptionEn = data.getDescriptionEn();
                     gender_List.add(descriptionEn);
-                }
+                }*/
+
+                gender_List.add("MALE");
+                gender_List.add("FEMALE");
+                gender_List.add("OTHERS");
                 adapter2 = new CustomSpinnerAdapter(getActivity(), android.R.layout.simple_spinner_item, gender_List);
                 gender_spin.setAdapter(adapter2);
 

@@ -20,6 +20,7 @@ import com.paisalo.newinternalsourcingapp.Activities.QrPayments;
 import com.paisalo.newinternalsourcingapp.Activities.ReferAndEanActivity;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
 import com.paisalo.newinternalsourcingapp.R;
+import com.paisalo.newinternalsourcingapp.Utils.CustomProgressDialog;
 import com.paisalo.newinternalsourcingapp.databinding.FragmentProfileBinding;
 
 import org.w3c.dom.Text;
@@ -75,6 +76,7 @@ public class ProfileFragment extends Fragment {
         });
 
         buttonprofile.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ReferAndEanActivity.class);

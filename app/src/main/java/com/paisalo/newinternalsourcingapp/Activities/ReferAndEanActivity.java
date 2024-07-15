@@ -8,18 +8,23 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.paisalo.newinternalsourcingapp.GlobalClass;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.ReferralCodeModel;
 import com.paisalo.newinternalsourcingapp.R;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiClient;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiInterface;
+import com.paisalo.newinternalsourcingapp.Utils.CustomProgressDialog;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ReferAndEanActivity extends AppCompatActivity {
 
+    CustomProgressDialog customProgressDialog;
     static TextView referalcode_txt;
     String Username;
     ImageView howitswork, knowmore;
@@ -34,6 +39,8 @@ public class ReferAndEanActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_refer_and_ean);
+
+        customProgressDialog=  new CustomProgressDialog(ReferAndEanActivity.this);
 
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Button referButton;
@@ -67,7 +74,7 @@ public class ReferAndEanActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
                 shareIntent.setType("text/plain");
-                String shareMessage = "Join Paisalo group with my referral code *" +referalcode_txt.getText().toString()  +"* get more benefits. Register on link https://www.paisalo.in/home/cso with my Referral code to become a CSO.";
+                String shareMessage = "Join Paisalo group with my referral code *" + referalcode_txt.getText().toString() + "* get more benefits. Register on link https://www.paisalo.in/home/cso with my Referral code to become a CSO.";
                 shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
                 startActivity(Intent.createChooser(shareIntent, "Share via"));
             }
@@ -75,20 +82,24 @@ public class ReferAndEanActivity extends AppCompatActivity {
     }
 
     private void GetCSOReferralCode(String username) {
-        ProgressDialog progressBar = new ProgressDialog(this);
-        progressBar.setCancelable(true);
-        progressBar.setMessage("Data Fetching Please wait...");
-        progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressBar.show();
+        customProgressDialog.show();
+//        ProgressDialog progressBar = new ProgressDialog(this);
+//        progressBar.setCancelable(true);
+//        progressBar.setMessage("Data Fetching Please wait...");
+//        progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//        progressBar.show();
+
+
 
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<ReferralCodeModel> call=apiInterface.getReferralCode(GlobalClass.Token,GlobalClass.dbname,username);
+        Call<ReferralCodeModel> call = apiInterface.getReferralCode(GlobalClass.Token, GlobalClass.dbname, username);
 
         call.enqueue(new Callback<ReferralCodeModel>() {
             @Override
             public void onResponse(Call<ReferralCodeModel> call, Response<ReferralCodeModel> response) {
                 if (response.isSuccessful()) {
-                    progressBar.dismiss();
+                    customProgressDialog.dismiss();
+                    //  progressBar.dismiss();
                     ReferralCodeModel result = response.body();
                     String referalcode = result.getData();
                     referalcode_txt.setText(referalcode);
@@ -96,14 +107,15 @@ public class ReferAndEanActivity extends AppCompatActivity {
                     Log.d("TAG", "onResponse2: " + referalcode);
                 } else {
                     Log.d("TAG", "onResponse3: " + response.code());
-                    progressBar.dismiss();
+                    customProgressDialog.dismiss();
+                    // progressBar.dismiss();
                 }
             }
 
             @Override
             public void onFailure(Call<ReferralCodeModel> call, Throwable t) {
-                progressBar.dismiss();
-
+                //  progressBar.dismiss();
+                customProgressDialog.dismiss();
                 Log.d("TAG", "onFailure3: " + t.getMessage());
             }
         });

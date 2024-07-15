@@ -128,8 +128,8 @@ public class ActivityCollection extends AppCompatActivity {
 
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
 
-        //Call<List<DueData>> call = apiInterface.dueInstallments(GlobalClass.Token,GlobalClass.Imei,GlobalClass.dbname,GlobalClass.Id,gdate, cityCode);
-        Call<CustomerListModel> call = apiInterface.dueInstallments(GlobalClass.Token,"353587955003255",GlobalClass.dbname,"GRST002632","10-06-2024", "0166");
+        Call<CustomerListModel> call = apiInterface.dueInstallments(GlobalClass.Token,GlobalClass.Imei,GlobalClass.dbname,GlobalClass.Id,gdate, cityCode);
+       //Call<CustomerListModel> call = apiInterface.dueInstallments(GlobalClass.Token,"353587955003255",GlobalClass.dbname,"GRST002632","10-06-2024", "0166");
         Log.d("TAG", "refreshData: " + GlobalClass.Token + GlobalClass.Imei + GlobalClass.dbname + GlobalClass.Id + gdate + cityCode);
 
         call.enqueue(new Callback<CustomerListModel>() {
@@ -145,7 +145,7 @@ public class ActivityCollection extends AppCompatActivity {
                         List<CustomerListDataModel> dueDataList1 = dueData.getData();
                         Log.d("refreshData4", dueDataList1.size() + "");
                         Log.d("TAG","refreshData6" + dueDataList1.toString() );
-                        dueDataList.addAll(getDueDataByDbName(dueDataList1, "003", "BALIA"));
+                        dueDataList.addAll(getDueDataByDbName(dueDataList1, foCode, creator));
 
 
 

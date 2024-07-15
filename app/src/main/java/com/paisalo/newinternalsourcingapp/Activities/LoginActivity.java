@@ -93,9 +93,8 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
     boolean isPasswordVisible = false;
     private boolean isFABOpen = false;
     private FloatingActionButton fabMain, fabEmail, fabWhatsapp,fabChatBot;
-
     String devid = "2234514145687247",imei = "868368051227919";
-
+ // String devid = "9798494825454248",imei = "860235055160759"; //GRST002979
     private static final String[] PERMISSIONS = {
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION,
