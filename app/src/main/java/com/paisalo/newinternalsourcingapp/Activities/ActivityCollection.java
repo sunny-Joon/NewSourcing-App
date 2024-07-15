@@ -129,8 +129,9 @@ public class ActivityCollection extends AppCompatActivity {
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
 
         Call<CustomerListModel> call = apiInterface.dueInstallments(GlobalClass.Token,GlobalClass.Imei,GlobalClass.dbname,GlobalClass.Id,gdate, cityCode);
-        //Call<CustomerListModel> call = apiInterface.dueInstallments(GlobalClass.Token,"353587955003255",GlobalClass.dbname,"GRST002632","10-06-2024", "0166");
-        Log.d("TAG", "refreshData: " + GlobalClass.Token + GlobalClass.Imei + GlobalClass.dbname + GlobalClass.Id + "11-07-2024" + cityCode);
+       //Call<CustomerListModel> call = apiInterface.dueInstallments(GlobalClass.Token,"353587955003255",GlobalClass.dbname,"GRST002632","10-06-2024", "0166");
+        Log.d("TAG", "refreshData: " + GlobalClass.Token + GlobalClass.Imei + GlobalClass.dbname + GlobalClass.Id + gdate + cityCode);
+
 
         call.enqueue(new Callback<CustomerListModel>() {
             @Override

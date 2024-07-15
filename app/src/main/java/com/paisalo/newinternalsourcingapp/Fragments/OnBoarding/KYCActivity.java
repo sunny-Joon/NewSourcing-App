@@ -65,6 +65,7 @@ import com.paisalo.newinternalsourcingapp.GlobalClass;
 import com.paisalo.newinternalsourcingapp.Modelclasses.FiExtra;
 import com.paisalo.newinternalsourcingapp.Modelclasses.FiJsonObject;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFDataModel;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.FiFamLoan;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.IdVerificationModels.DLVerificationModels.Data_;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.IdVerificationModels.DLVerificationModels.Data_1;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.IdVerificationModels.DLVerificationModels.Data_2;
@@ -178,6 +179,8 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
     CityChooseListner cityChooseListner;
     List<String> GenderList = new ArrayList<>();
 
+   // List<FiExtra> list;
+
     List<RangeCategoryDataClass> stateDataList, maritalStatusList, relatnshipList, gendreDataList;
     List<String> RelationWithBorrowerList = new ArrayList<>();
     List<String> MaritalStatusList = new ArrayList<>();
@@ -220,6 +223,10 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         progressBar.setMax(maxProgress);
 
         aadhaarScanner = findViewById(R.id.aadhaarScannerKyc);
+
+        tilPanName = findViewById(R.id.tilPanName);
+        tilDLName = findViewById(R.id.tilDLName);
+        tilVoterName = findViewById(R.id.tilVoterName);
 
         calendericon = findViewById(R.id.calendericonKyc);
         submitButton = findViewById(R.id.submitButtonKyc);
@@ -268,9 +275,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         acspRelationship = findViewById(R.id.acspRelationship);
 
         panOcr = findViewById(R.id.panOcr);
-
         spouseCardView = findViewById(R.id.spouseCardView);
-
         editTextDob.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -479,13 +484,25 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         });
 
 
-        gendreDataList = databaseClass.dao().getAllRCDataListby_catKey("gender");
+
+            GenderList.add("MALE");
+            GenderList.add("FEMALE");
+            GenderList.add("OTHERS");
+            CustomSpinnerAdapter adapter1 = new CustomSpinnerAdapter(KYCActivity.this, android.R.layout.simple_spinner_dropdown_item, GenderList);
+            acspGender.setAdapter(adapter1);
+
+
+        /*  gendreDataList = databaseClass.dao().getAllRCDataListby_catKey("gender");
         for (RangeCategoryDataClass data : gendreDataList) {
             String descriptionEn = data.getDescriptionEn();
             GenderList.add(descriptionEn);
             CustomSpinnerAdapter adapter1 = new CustomSpinnerAdapter(KYCActivity.this, android.R.layout.simple_spinner_dropdown_item, GenderList);
             acspGender.setAdapter(adapter1);
-        }
+        }*/
+
+      /*  ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(KYCActivity.this, R.array.genter_type, android.R.layout.simple_spinner_item);
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        acspGender.setAdapter(adapter1);*/
 
 //                stateDataList = new ArrayList<>();
 //                RangeCategoryDataClass rangeCategoryDataClass = new RangeCategoryDataClass("--Select--", "--Select--", "--Select--", "--Select--", "--Select--", 0, "99");
@@ -520,6 +537,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             CustomSpinnerAdapter adapter4 = new CustomSpinnerAdapter(KYCActivity.this, android.R.layout.simple_spinner_dropdown_item, MaritalStatusList);
             isMarriedSpinner.setAdapter(adapter4);
         }
+
 
         txtCityName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -935,9 +953,9 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                                     String gender = (String) adharDataModel.getGender();
 
                                     if (gender != null) {
-                                        if (gender.equalsIgnoreCase("Male")) {
+                                        if (gender.equalsIgnoreCase("FEMALE")) {
                                             acspGender.setSelection(2);
-                                        } else if (gender.equalsIgnoreCase("Female")) {
+                                        } else if (gender.equalsIgnoreCase("MALE")) {
                                             acspGender.setSelection(1);
                                         } else {
                                             acspGender.setSelection(3);
@@ -966,9 +984,9 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                                             for (int i = 0; i < addressParts.length; i++) {
                                                 String trimmedPart = addressParts[i].trim();
                                                 if (i < addressParts.length - 3) {
-                                                    if (i < 3) {
+                                                    if (i < 2) {
                                                         address1Builder.append(trimmedPart).append(" ");
-                                                    } else if (i >= 3 && i <= 5) {
+                                                    } else if (i >= 2 && i <= 5) {
                                                         address2Builder.append(trimmedPart).append(" ");
                                                     } else if (i > 5 && i < addressParts.length - 3) {
                                                         address3Builder.append(trimmedPart).append(" ");

@@ -163,6 +163,7 @@ public class GuarantorsFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
     }
 
@@ -258,11 +259,15 @@ public class GuarantorsFragment extends Fragment {
 
 
 
-                List<RangeCategoryDataClass> gender_DataList = databaseClass.dao().getAllRCDataListby_catKey("gender");
+               /* List<RangeCategoryDataClass> gender_DataList = databaseClass.dao().getAllRCDataListby_catKey("gender");
                 for (RangeCategoryDataClass data : gender_DataList) {
                     String descriptionEn = data.getDescriptionEn();
                     gender_List.add(descriptionEn);
-                }
+                }*/
+
+                gender_List.add("MALE");
+                gender_List.add("FEMALE");
+                gender_List.add("OTHERS");
                 CustomSpinnerAdapter adapter1 = new CustomSpinnerAdapter(getActivity(), android.R.layout.simple_spinner_dropdown_item, gender_List);
                 spin_gender.setAdapter(adapter1);
 
@@ -329,6 +334,7 @@ public class GuarantorsFragment extends Fragment {
                 aadhaarScanner.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
                         openAlertDialog();
                     }
 
@@ -804,9 +810,9 @@ public class GuarantorsFragment extends Fragment {
                                     String gender = (String) adharDataModel.getGender();
 
                                     if(gender != null) {
-                                        if (gender.equalsIgnoreCase("Male")) {
+                                        if (gender.equalsIgnoreCase("FEMALE")) {
                                             spin_gender.setSelection(2);
-                                        } else if (gender.equalsIgnoreCase("Female")) {
+                                        } else if (gender.equalsIgnoreCase("MALE")) {
                                             spin_gender.setSelection(1);
                                         } else {
                                             spin_gender.setSelection(3);
@@ -835,9 +841,9 @@ public class GuarantorsFragment extends Fragment {
                                             for (int i = 0; i < addressParts.length; i++) {
                                                 String trimmedPart = addressParts[i].trim();
                                                 if (i < addressParts.length - 3) {
-                                                    if (i < 3) {
+                                                    if (i < 2) {
                                                         address1Builder.append(trimmedPart).append(" ");
-                                                    } else if (i >= 3 && i <= 5) {
+                                                    } else if (i >= 2 && i <= 5) {
                                                         address2Builder.append(trimmedPart).append(" ");
                                                     } else if (i > 5 && i < addressParts.length - 3) {
                                                         address3Builder.append(trimmedPart).append(" ");
@@ -987,6 +993,7 @@ public class GuarantorsFragment extends Fragment {
             }
         });
     }
+
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.d("TAG", "onActivityResult: " + data + " // " + requestCode);
