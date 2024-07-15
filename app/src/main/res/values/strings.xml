@@ -333,7 +333,7 @@ Contact Email <i>DELHI@PAISALO.IN</i>
     <!-- Loan Application -->
     <string name="esigning">Esigning</string>
     <string name="borrower_name">Borrower Name</string>
-    <string name="guardian">Guardian</string>
+    <string name="guardian">Guardian :</string>
     <string name="aadharid">Aadhar Id</string>
     <string name="proceed">PROCEED</string>
     <string name="ok">OK</string>

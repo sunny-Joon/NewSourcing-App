@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:elevation="10dp"
         android:gravity="center"
-        android:text="50000"
+        android:text="00000"
         android:textColor="@color/white"
         android:textSize="24dp"
         android:textStyle="bold"

@@ -108,6 +108,8 @@ public class HouseVisitActivity2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_house_visit2);
 
+        getSupportActionBar().hide();
+
         Intent intent = getIntent();
         fiNo = intent.getStringExtra("FiCode");
         rentOfHouse = intent.getStringExtra("Rent_of_House");

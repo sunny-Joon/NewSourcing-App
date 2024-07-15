@@ -121,7 +121,7 @@ public class SecondEsignActivity extends AppCompatActivity {
                         .build();
 
                 ApiInterface apiInterface = retrofit2.create(ApiInterface.class);
-                Call<ResponseBody> call = apiInterface.DownloadDocSecondEsign(GlobalClass.LiveToken,jsonObject,"gzip,deflate,compress","2234514145687247","SBIPDLCOL","868368051227918");
+                Call<ResponseBody> call = apiInterface.DownloadDocSecondEsign(GlobalClass.LiveToken,jsonObject,"gzip,deflate,compress",GlobalClass.DevId,GlobalClass.DATABASE_NAME,GlobalClass.Imei);
                 Log.d("TAG", "onClickList:3 ");
 
                 Log.d("TAG", "onResponse1: " + GlobalClass.LiveToken+" "+ GlobalClass.dbname+" "+jsonObject.toString());

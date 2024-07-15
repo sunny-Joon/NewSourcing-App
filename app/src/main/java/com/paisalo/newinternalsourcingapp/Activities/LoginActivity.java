@@ -53,6 +53,7 @@ import com.paisalo.newinternalsourcingapp.ModelsRetrofit.LoginModels.FoImeiModel
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.LoginModels.FoModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.LoginModels.LoginModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.LoginModels.TokenDetailsModel;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.ProfilePicModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.TargetIndexModels.ResponseModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.TargetIndexModels.TargetResponseModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.TopAdImageModels.ImageDataModel;
@@ -94,7 +95,8 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
     private boolean isFABOpen = false;
     private FloatingActionButton fabMain, fabEmail, fabWhatsapp,fabChatBot;
 
-    String devid = "2234514145687247",imei = "868368051227919";
+    String devid = "2234514145687247",imei = "868368051227919";//GRST000223
+   // String devid = "4587494835455248",imei = "860567058235158";
 
     private static final String[] PERMISSIONS = {
             Manifest.permission.ACCESS_FINE_LOCATION,
@@ -122,14 +124,11 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
         fabWhatsapp = findViewById(R.id.fab_action2);
         fabChatBot = findViewById(R.id.fab_action3);
 
-        fabMain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (isFABOpen) {
-                    closeFABMenu();
-                } else {
-                    openFABMenu();
-                }
+        fabMain.setOnClickListener(view1 -> {
+            if (isFABOpen) {
+                closeFABMenu();
+            } else {
+                openFABMenu();
             }
         });
 
@@ -766,7 +765,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
     private void ImageAPI() {
 
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<ImageDataModel> call = apiInterface.getTopImage(GlobalClass.Token,GlobalClass.dbname,"D");
+        Call<ImageDataModel> call = apiInterface.getTopImage(GlobalClass.Token,GlobalClass.dbname,"s");
         call.enqueue(new Callback<ImageDataModel>() {
             @Override
             public void onResponse(Call<ImageDataModel> call, Response<ImageDataModel> response) {
@@ -774,16 +773,16 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                 if(response.isSuccessful() && response.body() != null){
                     if (response.body().getMessage().equals("No Record Found")) {
 
-                       // getTargetApi();
-                        GlobalClass.showToast(LoginActivity.this,2,"Login SuccessFully");
+                        getTargetApi();
+                        /*GlobalClass.showToast(LoginActivity.this,2,"Login SuccessFully");
                         startActivity(new Intent(LoginActivity.this, HomePageActivity.class));
-                        finish();
+                        finish();*/
 
                         image = "null";
                     } else {
 
                         ImageDataModel imageDataModel = response.body();
-                        Gson gson = new Gson();
+                       // Gson gson = new Gson();
                         //     ImageModel[] imageModels = gson.fromJson(imageDataModel.getData(), ImageModel[].class);
                         ImageModel imageModelList = imageDataModel.getData();
                         image = "https://erp.paisalo.in:981/LOSDOC/BannerPost/" + imageModelList.getBanner();
@@ -793,10 +792,8 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("image", image);
                         editor.apply();
-                        GlobalClass.showToast(LoginActivity.this,2,"Login SuccessFully");
-                        startActivity(new Intent(LoginActivity.this, HomePageActivity.class));
                         finish();
-                        //getTargetApi();
+                        getTargetApi();
 
                     }
                 }else {

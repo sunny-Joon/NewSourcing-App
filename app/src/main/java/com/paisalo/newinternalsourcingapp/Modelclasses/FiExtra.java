@@ -61,6 +61,17 @@ public class FiExtra implements Serializable {
     @SerializedName("occupation")
     @Expose
     private String occupation;
+    @SerializedName("isBorrowerHandicap")
+    @Expose
+    private String isBorrowerHandicap;
+
+    public String getIsBorrowerHandicap() {
+        return isBorrowerHandicap;
+    }
+
+    public void setIsBorrowerHandicap(String isBorrowerHandicap) {
+        this.isBorrowerHandicap = isBorrowerHandicap;
+    }
 
     public String getFatherName() {
         return fatherName;

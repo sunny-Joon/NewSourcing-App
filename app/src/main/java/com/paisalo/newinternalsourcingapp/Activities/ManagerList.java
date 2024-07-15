@@ -35,6 +35,8 @@ public class ManagerList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manager_list);
         Context context;
+        getSupportActionBar().hide();
+
         moduleName=getIntent().getStringExtra("keyName");
 
         recyclerView = findViewById(R.id.managerListRecyclerView);

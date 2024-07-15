@@ -33,6 +33,7 @@ public class HouseVisitActivity1 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_house_visit1);
+        getSupportActionBar().hide();
 
         Intent intent = getIntent();
         if (intent != null) {

@@ -140,6 +140,16 @@ public class FiJsonObject implements Serializable {
     @SerializedName("fiExtra")
     @Expose
     private FiExtra fiExtra;
+    @SerializedName("IsNameVerify")
+    @Expose
+    private String IsNameVerify;
+    public String getIsNameVerify() {
+        return IsNameVerify;
+    }
+
+    public void setIsNameVerify(String isNameVerify) {
+        IsNameVerify = isNameVerify;
+    }
 
     public String getgroupCode() {
         return groupCode;

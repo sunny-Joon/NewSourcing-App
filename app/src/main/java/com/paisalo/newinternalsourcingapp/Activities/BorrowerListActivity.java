@@ -40,6 +40,8 @@ public class BorrowerListActivity extends AppCompatActivity implements BorrowerL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_borrowerlist);
 
+        getSupportActionBar().hide();
+
         Intent intent = getIntent();
         id = intent.getStringExtra("keyName");
         foCode = intent.getStringExtra("foCode");
