@@ -123,7 +123,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
     private AlertDialog alertDialog;
     AllDataAFDataModel allDataAFDataModel;
     String timeStamp;
-
+    String isNameMatched = "0";
     RangeCategoryAdapter rangeCategoryAdapter;
 
     DatabaseClass databaseClass;
@@ -639,6 +639,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 pan_Checkbox.setEnabled(true);
                 pan_Checkbox.setChecked(false);
+                isNameMatched="0";
                 tilPanName.setText("");
             }
 
@@ -658,6 +659,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 voterId_Checkbox.setEnabled(true);
                 voterId_Checkbox.setChecked(false);
+                isNameMatched="0";
                 tilVoterName.setText("");
             }
 
@@ -676,6 +678,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 dl_Checkbox.setEnabled(true);
                 dl_Checkbox.setChecked(false);
+                isNameMatched="0";
                 tilDLName.setText("");
             }
 
@@ -777,6 +780,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                 pan_Checkbox.setClickable(true);
                 Toast.makeText(KYCActivity.this, "Pan Changed", Toast.LENGTH_SHORT).show();
                 pan_Checkbox.setChecked(false);
+                isNameMatched="0";
             }
 
             @Override
@@ -793,6 +797,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                 voterId_Checkbox.setClickable(true);
                 Toast.makeText(KYCActivity.this, "ID Changed", Toast.LENGTH_SHORT).show();
                 voterId_Checkbox.setChecked(false);
+                isNameMatched="0";
             }
 
             @Override
@@ -809,6 +814,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                 dl_Checkbox.setClickable(true);
                 Toast.makeText(KYCActivity.this, "DL Changed", Toast.LENGTH_SHORT).show();
                 dl_Checkbox.setChecked(false);
+                isNameMatched="0";
             }
 
             @Override
@@ -1695,6 +1701,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
                                     verifiedLicensename = response.body().getData().getData().getData().getName().toString();
                                     dl_Checkbox.setChecked(true);
+                                    isNameMatched="1";
                                     Toast.makeText(KYCActivity.this, "DL Verified", Toast.LENGTH_SHORT).show();
                                     dl_Checkbox.setClickable(false);
 
@@ -1705,6 +1712,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
                                 } else {
                                     dl_Checkbox.setChecked(false);
+                                    isNameMatched="0";
                                     Log.d("TAG", "onResponseID7: ");
 
                                     Toast.makeText(KYCActivity.this, "Invalid Input DL", Toast.LENGTH_SHORT).show();
@@ -1750,6 +1758,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
                     Log.d("TAG", "onResponseID: " + response.code());
                     dl_Checkbox.setChecked(false);
+                    isNameMatched="0";
                     Toast.makeText(KYCActivity.this, "Invalid Input DL", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -1757,6 +1766,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             @Override
             public void onFailure(Call<DLVerificationModel> call, Throwable t) {
                 dl_Checkbox.setChecked(false);
+                isNameMatched="0";
                 Toast.makeText(KYCActivity.this, "Network Issue", Toast.LENGTH_SHORT).show();
             }
         });
@@ -1780,6 +1790,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
                         if (response.body().getData().getSuccess()) {
                             pan_Checkbox.setChecked(true);
+                            isNameMatched="1";
                             Toast.makeText(KYCActivity.this, "Pan Verified", Toast.LENGTH_SHORT).show();
                             verifiedPanName = panVerificationModel.getData().getData().getData().getName();
 
@@ -1806,6 +1817,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                 } else {
                     Log.d("TAG", "onResponseID: " + response.code());
                     pan_Checkbox.setChecked(false);
+                    isNameMatched="0";
                     Toast.makeText(KYCActivity.this, "Invalid Pan", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -1814,6 +1826,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             public void onFailure(Call<PanVerificationModel> call, Throwable t) {
                 Log.d("TAG", "onResponseID: " + "Failure");
                 pan_Checkbox.setChecked(false);
+                isNameMatched="0";
                 Toast.makeText(KYCActivity.this, "Network Issue", Toast.LENGTH_SHORT).show();
             }
         });
@@ -1837,6 +1850,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
                         if (response.body().getData().getSuccess()) {
                             voterId_Checkbox.setChecked(true);
+                            isNameMatched="1";
                             Toast.makeText(KYCActivity.this, "ID Verified", Toast.LENGTH_SHORT).show();
                             verifiedVotername = voterIdVerificationModel.getData().getData().getData().getName();
                             voterId_Checkbox.setClickable(false);
@@ -2284,10 +2298,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             jsonData.setLname(Lname);
             Log.d("TAG", "createJsonObject:F_Fname " + Lname);
 
-
-
-
-
             jsonData.setDob(DOB);
             jsonData.setPAdd1(P_Add1);
             jsonData.setPAdd2(P_Add2);
@@ -2305,6 +2315,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             jsonData.setIsMarried(isMarried);
             jsonData.setGender(gender);
             jsonData.setPState(P_State);
+            jsonData.setIsNameVerify(P_State);
             jsonData.setGuardianRelatnWithBorrower(guardianRelatnWithBorrower);
 
             fiExtra = new FiExtra();

@@ -29,6 +29,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import com.google.gson.JsonObject;
+import com.paisalo.newinternalsourcingapp.GlobalClass;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.BorrowerListModels.BorrowerListDataModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.BreResponseModels.BREResponse;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.CheckCrifData;
@@ -36,7 +37,12 @@ import com.paisalo.newinternalsourcingapp.ModelsRetrofit.EsignListModels.Pending
 import com.paisalo.newinternalsourcingapp.R;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiClient;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiInterface;
+import com.paisalo.newinternalsourcingapp.RoomDatabase.DaoClass;
+import com.paisalo.newinternalsourcingapp.RoomDatabase.DatabaseClass;
 import com.paisalo.newinternalsourcingapp.Utils.Utils;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -61,6 +67,7 @@ public class CrifScore extends AppCompatActivity {
     GifImageView gifImageView;
     String amount="0",emi="0",score,message;
     int scrifScore=0;
+    DatabaseClass databaseClass;
     LinearLayout layout_design,layout_design_pending;
     Button btnTryAgain,btnSrifScore,btnSrifScoreSave;
     TextView textView_emi;
@@ -84,6 +91,9 @@ public class CrifScore extends AppCompatActivity {
         actionBar.setTitle("Loan Eligibility");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
+         databaseClass = DatabaseClass.getInstance(CrifScore.this);
+
         i=getIntent();
         Log.d("TAG", "onCreate: "+i.getStringExtra("ficode"));
         ficode=i.getStringExtra("FIcode");
@@ -386,11 +396,36 @@ public class CrifScore extends AppCompatActivity {
                     if (jsonObject.get("statusCode").getAsInt()==200 && jsonObject.get("data").getAsJsonArray().size()>=1){
                         JsonObject crifData=jsonObject.get("data").getAsJsonArray().get(0).getAsJsonObject();
                         if (response.code()==200){
-                            int crifscore=crifData.get("SCORE-VALUE").getAsString().length()>0?crifData.get("SCORE-VALUE").getAsInt():0;
-                            int ODAMT=crifData.get("OVERDUE-AMT").getAsString().length()>0?crifData.get("OVERDUE-AMT").getAsInt():0;
-                            int WOAMT=crifData.get("WRITE-OFF-AMT").getAsString().length()>0?crifData.get("WRITE-OFF-AMT").getAsInt():0;
-                            getDataFromBRE(progressDialog);
 
+                            if (response.body() != null) {
+                                try {
+                                    // Parse the JSON response
+                                    JSONObject responseObject = new JSONObject(response.body().toString());
+
+                                    // Get the data array
+                                    JSONArray dataArray = responseObject.getJSONArray("data");
+
+                                    // Check if the message "Crif Already Generated" is present in the data array
+                                    for (int i = 0; i < dataArray.length(); i++) {
+                                        JSONObject dataObject = dataArray.getJSONObject(i);
+                                        String message = dataObject.getString("Msg");
+                                        if (message.contains("Crif Already Generated")) {
+                                            progressDialog.hide();
+                                            // Show toast message "done"
+                                            Toast.makeText(CrifScore.this, "done", Toast.LENGTH_SHORT).show();
+                                            break;
+                                        }else{
+                                            int crifscore=crifData.get("SCORE-VALUE").getAsString().length()>0?crifData.get("SCORE-VALUE").getAsInt():0;
+                                            int ODAMT=crifData.get("OVERDUE-AMT").getAsString().length()>0?crifData.get("OVERDUE-AMT").getAsInt():0;
+                                            int WOAMT=crifData.get("WRITE-OFF-AMT").getAsString().length()>0?crifData.get("WRITE-OFF-AMT").getAsInt():0;
+                                            getDataFromBRE(progressDialog);
+                                        }
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
                         }
 
                     }
@@ -405,42 +440,63 @@ public class CrifScore extends AppCompatActivity {
     }
     private JsonObject getJsonForGenerateCrif(PendingESignFI eSignerborower) {
         JsonObject jsonObject=new JsonObject();
-        jsonObject.addProperty("full_name", "SHANTILAL D");
-        jsonObject.addProperty("dobs", "1992-04-08");
-        jsonObject.addProperty("emailid", "test@test.com");
-        jsonObject.addProperty("co", "MUTAN YADAV");
-        jsonObject.addProperty("address", "T 03 SANA APPARMENTS ALMAS COLONY KAUS A IN FRONT OF WAFA PARK ");
-        jsonObject.addProperty("city", "Thane");
-        jsonObject.addProperty("state", "Mumbai");
-        jsonObject.addProperty("pin", "400612");
-        jsonObject.addProperty("loan_amount", "50000");
-        jsonObject.addProperty("mobile", "6688493648");
-        jsonObject.addProperty("creator", "Thane");
-        jsonObject.addProperty("pancard", "ZDQPT2200V");
-        jsonObject.addProperty("voter_id", "83079747735704");
-        jsonObject.addProperty("AadharID", "");
-        jsonObject.addProperty("Gender", "F");
+//        jsonObject.addProperty("full_name", "SHANTILAL D");
+//        jsonObject.addProperty("dobs", "1992-04-08");
+//        jsonObject.addProperty("emailid", "test@test.com");
+//        jsonObject.addProperty("co", "MUTAN YADAV");
+//        jsonObject.addProperty("address", "T 03 SANA APPARMENTS ALMAS COLONY KAUS A IN FRONT OF WAFA PARK ");
+//        jsonObject.addProperty("city", "Thane");
+//        jsonObject.addProperty("state", "Mumbai");
+//        jsonObject.addProperty("pin", "400612");
+//        jsonObject.addProperty("loan_amount", "50000");
+//        jsonObject.addProperty("mobile", "6688493648");
+//        jsonObject.addProperty("creator", "Thane");
+//        jsonObject.addProperty("pancard", "ZDQPT2200V");
+//        jsonObject.addProperty("voter_id", "83079747735704");
+//        jsonObject.addProperty("AadharID", "");
+//        jsonObject.addProperty("Gender", "F");
 
-        /*jsonObject.addProperty("full_name", eSignerborower.PartyName);
+        jsonObject.addProperty("full_name", eSignerborower.getFname() + " "+eSignerborower.getMname()+" "+eSignerborower.getLname());
 
-        jsonObject.addProperty(    "dobs",eSignerborower.DOB.split("T")[0]);
+        String originalDateStr = eSignerborower.getDob().split("T")[0];
+        String newDateStr="";
+        try {
+            newDateStr = new SimpleDateFormat("yyyy-MM-dd")
+                    .format(new SimpleDateFormat("MMM dd yyyy hh:mma")
+                            .parse(originalDateStr));
+            System.out.println(newDateStr); // Output: 2024-04-30
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        jsonObject.addProperty(    "dobs",newDateStr);
+     //   jsonObject.addProperty(    "dobs",eSignerborower.getDob().split("T")[0]);
 
         jsonObject.addProperty(    "emailid", "test@gamil.com");
-        jsonObject.addProperty(    "co",eSignerborower.FatherName);
-        jsonObject.addProperty(    "address", eSignerborower.Address);
-        jsonObject.addProperty(    "city", eSignerborower.P_City);
-        jsonObject.addProperty(    "state", RangeCategory.getRangesByCatKeyName("state",eSignerborower.P_State, true));
-        jsonObject.addProperty(    "pin", String.valueOf(eSignerborower.P_Pin));
-        jsonObject.addProperty(    "loan_amount", String.valueOf(eSignerborower.Loan_Amt));
-        jsonObject.addProperty(    "mobile", String.valueOf(eSignerborower.MobileNo));
+        jsonObject.addProperty(    "co",eSignerborower.getfFname()+" "+eSignerborower.getfMname()+" "+eSignerborower.getfLname());
+        jsonObject.addProperty(    "address", eSignerborower.getAddr());
+        jsonObject.addProperty(    "city", eSignerborower.getpCity());
+        jsonObject.addProperty(    "state", databaseClass.dao().getStateByCode("state",eSignerborower.getpState()).descriptionEn);
+        jsonObject.addProperty(    "pin", String.valueOf(eSignerborower.getpPin()));
+        jsonObject.addProperty(    "loan_amount", String.valueOf(eSignerborower.getLoanAmt()));
+        jsonObject.addProperty(    "mobile", String.valueOf(eSignerborower.getpPh3()));
         jsonObject.addProperty(    "creator", creator);
         jsonObject.addProperty(    "FICode", String.valueOf(ficode));
-        jsonObject.addProperty(    "pancard", eSignerborower.PanNO);
-        jsonObject.addProperty(    "voter_id",eSignerborower.VoterID);
-        jsonObject.addProperty(    "AadharID", eSignerborower.AadharNo);
-        jsonObject.addProperty(    "Gender", eSignerborower.Gender);*/
+        jsonObject.addProperty(    "pancard", eSignerborower.getPanNO());
+        jsonObject.addProperty(    "voter_id",eSignerborower.getVoterID());
+        jsonObject.addProperty(    "AadharID", eSignerborower.getAadharid());
+        jsonObject.addProperty(    "Gender", eSignerborower.getGender());
 
+        Log.d("TAG", "getJsonForGenerateCrif: "+ jsonObject);
 
+       /* {"full_name":"RAGHVENDRA PRATAP SINGH","dobs":"2000-10-02","emailid":"test@gamil.com","co":"Jitendra Pratap Singh",
+                "address":"HOUSE NO. 18Cholapur,HATHIYAR KALA,Pindra,Varanasi","city":"Varanasi","state":"Uttar Pradesh",
+                "pin":"221101","loan_amount":"60000","mobile":"8757575456","creator":"HOAGRA","FICode":"250090",
+                "pancard":"LAMPS2172L","voter_id":"ZXD3104692","AadharID":"541516386793","Gender":"M"}*/
+
+        /*{"full_name":"Shivam null Savita","dobs":"Apr 30 2024 12:00AM","emailid":"test@gamil.com","co":"Akhilesh null Savita",
+                "address":"124 B barasirohi kalyanpur L.LT ,Kanpur Nagar","city":"Kanpur Nagar","state":"Uttar Pradesh",
+                "pin":"208016","loan_amount":"60000","mobile":"6585698454","creator":"HOAGRA","FICode":"250084",
+                "pancard":"LHYPS1074C","voter_id":"ZXD3104692","AadharID":"608559509930","Gender":"M"}*/
 
         return  jsonObject;
     }
@@ -481,13 +537,15 @@ public class CrifScore extends AppCompatActivity {
                         progressBarsmall.setVisibility(View.GONE);
                     }else{
                         if (scrifData.getData().getData().equals("0") || scrifData.getData().getData().equals("0_0_")){
-                          /* //Toast.makeText(CrifScore.this, ""+scrifData.getMessage(), Toast.LENGTH_SHORT).show();
+                           Toast.makeText(CrifScore.this, ""+scrifData.getMessage(), Toast.LENGTH_SHORT).show();
                             layout_design.setVisibility(View.GONE);
                             layout_design_pending.setVisibility(View.VISIBLE);
                             text_serverMessage.setText(scrifData.getMessage());
                             btnTryAgain.setVisibility(View.VISIBLE);
                             text_wait.setVisibility(View.GONE);
-                            progressBarsmall.setVisibility(View.GONE);*/
+                            progressBarsmall.setVisibility(View.GONE);
+
+
                             message=scrifData.getData().getMessage();
                             gifImageView.setImageResource(R.drawable.crosssign);
                             textView8.setText("Sorry!!");

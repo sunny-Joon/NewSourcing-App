@@ -357,6 +357,7 @@ public class KYCActivity2 extends AppCompatActivity {
                     fiExtra.setEarningMemberType(earningMemberType);
                     fiExtra.setEarningMemberIncome(earningMemberIncome);
                     fiExtra.setOccupation(occupation);
+                    fiExtra.setIsBorrowerHandicap("NO");
 
                     firstPageObject.setFiExtra(fiExtra);
 
