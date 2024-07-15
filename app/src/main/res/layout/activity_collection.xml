@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.material.appbar.AppBarLayout
+        <!--<com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -28,9 +28,9 @@
 
             </androidx.appcompat.widget.Toolbar>-->
 
-        </com.google.android.material.appbar.AppBarLayout>
+        </com.google.android.material.appbar.AppBarLayout>-->
 
-        <com.google.android.material.tabs.TabLayout
+       <!-- <com.google.android.material.tabs.TabLayout
             android:id="@+id/tablayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
             app:tabRippleColor="@color/white"
             app:tabSelectedTextColor="@color/white"
             app:tabTextColor="#DFBFBF"
-            app:tabUnboundedRipple="true"/>
+            app:tabUnboundedRipple="true"/>-->
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/fragContainer"
@@ -61,7 +61,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tablayout">
+            app:layout_constraintTop_toTopOf="parent">
 
 
         </androidx.viewpager.widget.ViewPager>

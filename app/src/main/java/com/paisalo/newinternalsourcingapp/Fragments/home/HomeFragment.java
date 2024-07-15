@@ -54,8 +54,6 @@ public class HomeFragment extends Fragment {
 
     CustomProgressDialog customProgressDialog;
 
-
-
     public static Fragment newInstance(int position) {
         HomeFragment homeFragment=new HomeFragment();
         Bundle args = new Bundle();
@@ -109,7 +107,9 @@ public class HomeFragment extends Fragment {
                     }
 
                     public void onFinish() {
-                        startActivity(new Intent(getActivity(), IncentiveAnimatedActivity.class));
+                        Intent intent = new Intent(getActivity(), IncentiveAnimatedActivity.class);
+                        intent.putExtra("Target",binding.monthlyDisbursmentTarget.getText().toString() );
+                        startActivity(intent);
                         binding.backgroundImageView.setVisibility(View.GONE);
                         GlobalClass.dismissPopup(popupDialog);                    }
                 }.start();
@@ -223,10 +223,11 @@ public class HomeFragment extends Fragment {
         Log.d("TAG1", "onResponsemessage: " + target);
         JsonObject jsonObject=new JsonObject();
         jsonObject.addProperty("id", 0);
-        jsonObject.addProperty("kO_ID", "GRST000223");
+        jsonObject.addProperty("kO_ID", GlobalClass.Id);
         jsonObject.addProperty("targetCommAmt",target);
         jsonObject.addProperty("month",month);
         jsonObject.addProperty("year",year);
+        Log.d("TAG", "settargetAPIII:logs "+","+GlobalClass.Id+","+target+","+month+","+year);
 
         return jsonObject;
     }
@@ -239,7 +240,9 @@ public class HomeFragment extends Fragment {
         Log.d("TAG", "settargetAPIII:11 "+target);
 
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<TargetSetModel> call = apiInterface.setTarget(com.paisalo.newinternalsourcingapp.GlobalClass.Token, com.paisalo.newinternalsourcingapp.GlobalClass.dbname,JsonOfTarget(target));
+        Call<TargetSetModel> call = apiInterface.setTarget(GlobalClass.Token,GlobalClass.dbname,JsonOfTarget(target));
+        Log.d("TAG", "settargetAPIII:logs "+","+GlobalClass.Token+","+GlobalClass.dbname);
+
         call.enqueue(new Callback<TargetSetModel>() {
 
             @Override

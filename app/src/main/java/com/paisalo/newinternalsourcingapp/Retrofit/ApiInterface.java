@@ -43,6 +43,7 @@ import com.paisalo.newinternalsourcingapp.ModelsRetrofit.TargetSetModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.TopAdImageModels.ImageDataModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.StateDistDataModels.VillageListModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.UpdateFiModels.KycUpdateModel;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.VersionCheck;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.Visitreportmodel;
 
 import java.util.List;
@@ -64,6 +65,8 @@ import retrofit2.http.Query;
 
 public interface ApiInterface {
 
+    @GET("LiveTrack/GetAppLink")
+    Call<VersionCheck> VersionCheck(@Header("dbname") String dbName, @Query("version") String version, @Query("AppName") String AppName, @Query("action") int action);
 
     @POST("Account/GetToken")
     Call<LoginModel> LoginApi(@Header("devid") String devid, @Header("dbname") String dbname, @Header("imeino") String imeino, @Body JsonObject object);
@@ -91,10 +94,10 @@ public interface ApiInterface {
     @GET("Notification/GetBannerPostingMobile")
     Call<ImageDataModel> getTopImage(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("AppType") String AppType);
 //----
-    @GET("api/LiveTrack/MonthlyTargetCsoIdCount")
+    @GET("LiveTrack/MonthlyTargetCsoIdCount")
      Call<TargetCountModel> getTargetCount(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("CsoId") String CsoId);
 
-    @POST("api/LiveTrack/InsertMonthTargetCSO")
+    @POST("LiveTrack/InsertMonthTargetCSO")
      Call<TargetSetModel> setTarget(@Header("Authorization") String token, @Header("dbname") String dbname, @Body JsonObject object);
 //----
     @GET("DDLHelper/GetSBICityMaster")
@@ -187,7 +190,7 @@ public interface ApiInterface {
     Call<BorrowerListModel> PendingCollection(@Header("Authorization") String token, @Header("dbname") String dbname, @retrofit2.http.Header("imeino") String imeino, @retrofit2.http.Header("userid") String userid, @Query("gdate") String gdate, @Query("CityCode") String CityCode);
 
     @POST("api/DocESignLoanApplication/signdoc")
-    Call<DownloadEsignXml> getXMLforESign(@Header("Authorization") String token,
+    Call<DownloadEsignXml>  getXMLforESign(@Header("Authorization") String token,
                                           @Header("Content-Encoding") String Encoding,
                                           @Header("devid") String devid,
                                           @Header("dbname") String dbname,
@@ -340,13 +343,19 @@ public interface ApiInterface {
                               @Field("username") String username,
                               @Field("password") String password);
 
+
     @FormUrlEncoded
     @POST("{subUrl}") // CallBack APi
     Call<ResponseBody> postEntityEsign(@Field("msg") String msg, @Field("obj") String obj,@Path("subUrl")String subUrl);
 
 
     @POST("api/docsESignPvn/AcceptESign") // Replace with your actual endpoint
-    Call<ResponseBody> postEntityESignSubmit(@Body RequestBody body);
+    Call<ResponseBody> postEntityESignSubmit(@Header("Authorization") String token,
+                                             @Header("Content-Encoding") String ContentEncoding,
+                                             @Header("devid") String devid,
+                                             @Header("dbname") String dbName,
+                                             @Header("IMEINO") String IMEINO,
+                                            @Body JsonObject body);
 
     @POST("LiveTrack/UpdateFiStatus")
     Call<JsonObject> restrictBorrower(@Query("ficode") String ficode,@Query("creator") String creator,@Query("Approved") String Approved);

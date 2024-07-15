@@ -25,6 +25,8 @@ public class IncentiveAnimatedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_incentive_animated);
 
+        getSupportActionBar().hide();
+
         incentiveTv = findViewById(R.id.incentivetrophy);
         incentiveTv.setVisibility(View.GONE);
 
@@ -38,7 +40,7 @@ public class IncentiveAnimatedActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         if (intent != null) {
-            String target = intent.getStringExtra("TvTarget_Screen");
+            String target = intent.getStringExtra("Target");
             Log.d("TAAAAAAG", "onCreate: "+ target);
 
             if (target != null) {

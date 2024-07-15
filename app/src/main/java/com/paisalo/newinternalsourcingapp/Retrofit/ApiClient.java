@@ -101,10 +101,10 @@ public class ApiClient {
         return retrofit2;
     }
 
-        public static Retrofit getClient3(String baseUrl) {
+        public static Retrofit getClient3(String baseUrlApi) {
             if (retrofit == null) {
                 retrofit = new Retrofit.Builder()
-                        .baseUrl(baseUrl)
+                        .baseUrl(baseUrlApi)
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
             }

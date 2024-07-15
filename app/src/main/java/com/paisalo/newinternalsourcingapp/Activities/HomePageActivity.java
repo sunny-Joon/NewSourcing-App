@@ -76,6 +76,8 @@
             binding = ActivityMainBinding.inflate(getLayoutInflater());
             setContentView(binding.getRoot());
 
+            getSupportActionBar().hide();
+
             database = DatabaseClass.getInstance(HomePageActivity.this);
             daoClass=database.dao();
 
@@ -196,13 +198,11 @@
 
                     }else{
                         GlobalClass.showToast(HomePageActivity.this,5,response.message());
-                        ManagerListApi();
                     }
                 }
                 @Override
                 public void onFailure(Call<RangeCategoryModel> call, Throwable t) {
                     GlobalClass.showToast(HomePageActivity.this,5,t.getMessage());
-                    ManagerListApi();
                 }
             });
         }
@@ -218,11 +218,12 @@
         private void leaderboardList() {
             Log.d("TAG", "onCreateView:zz1 "+ "Call Successfull");
 
-            Retrofit retrofit = new Retrofit.Builder()
+            /*Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl("https://erpservice.paisalo.in:980/PDL.Mobile.API/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
-            ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+            ApiInterface apiInterface = retrofit.create(ApiInterface.class);*/
+            ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
             Call<LeaderboardModel> call = apiInterface.getLeaderboardData(GlobalClass.Token,GlobalClass.dbname);
             call.enqueue(new Callback<LeaderboardModel>() {
                 @Override
@@ -256,7 +257,6 @@
 
                     }else{
                         Log.d("TAB_B", "onResponse: "+response.code());
-
                     }
                 }
 

@@ -39,8 +39,8 @@ public class EsignListActivity extends AppCompatActivity implements CustomerList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_esign_list);
+
         Intent intent = getIntent();
         id = intent.getStringExtra("keyName");
         foCode = intent.getStringExtra("foCode");

@@ -79,10 +79,10 @@ public class ActivityCollection extends AppCompatActivity {
         }
 
        /* Toolbar toolbar = (Toolbar) findViewById(R.id.toolBar);
-        setSupportActionBar(toolbar);*/
+        setSupportActionBar(toolbar);*//*
         TabLayout tabLayout  = findViewById(R.id.tablayout);
 
-        tabLayout.setVisibility(View.GONE);
+        tabLayout.setVisibility(View.GONE);*/
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         absFragments = new ArrayList<>();
@@ -131,6 +131,7 @@ public class ActivityCollection extends AppCompatActivity {
         Call<CustomerListModel> call = apiInterface.dueInstallments(GlobalClass.Token,GlobalClass.Imei,GlobalClass.dbname,GlobalClass.Id,gdate, cityCode);
        //Call<CustomerListModel> call = apiInterface.dueInstallments(GlobalClass.Token,"353587955003255",GlobalClass.dbname,"GRST002632","10-06-2024", "0166");
         Log.d("TAG", "refreshData: " + GlobalClass.Token + GlobalClass.Imei + GlobalClass.dbname + GlobalClass.Id + gdate + cityCode);
+
 
         call.enqueue(new Callback<CustomerListModel>() {
             @Override

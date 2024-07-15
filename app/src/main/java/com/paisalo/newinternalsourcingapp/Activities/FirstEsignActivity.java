@@ -33,6 +33,7 @@ import android.widget.Toast;
 
 
 import com.artifex.mupdfdemo.MuPDFFragment;
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.BorrowerListModels.BorrowerListDataModel;
@@ -41,6 +42,7 @@ import com.paisalo.newinternalsourcingapp.ModelsRetrofit.EsignListModels.Pending
 import com.paisalo.newinternalsourcingapp.R;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiClient;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiInterface;
+import com.paisalo.newinternalsourcingapp.Utils.CustomProgress;
 import com.paisalo.newinternalsourcingapp.Utils.Utils;
 
 import org.json.JSONException;
@@ -90,6 +92,7 @@ public class FirstEsignActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_esign);
 
+        getSupportActionBar().hide();
 
         tvESignName = findViewById(R.id.tvESignName);
         tvESignGuardian = findViewById(R.id.tvESignGuardian);
@@ -102,17 +105,20 @@ public class FirstEsignActivity extends AppCompatActivity {
         if (intent != null) {
             borrower = (PendingESignFI) intent.getSerializableExtra(GlobalClass.ESIGN_BORROWER);
             if (borrower != null) {
+                GlobalClass.showLottieAlertDialog(8,FirstEsignActivity.this);
+
+
                 tvESignName.setText(borrower.getFname().toString());
                 tvESignGuardian.setText(borrower.getfFname().toString());
                 tvESignMobile.setText(borrower.getpPh3().toString());
                 JsonObject jsonObject=new JsonObject();
                 jsonObject.addProperty("DocName", "loan_application_sample");
-                jsonObject.addProperty("FiCode", "272725");
-              //  jsonObject.addProperty("FiCode", borrower.getCode());
-           //     jsonObject.addProperty("FiCreator", borrower.getCreator());
-                jsonObject.addProperty("FiCreator", "MAINPURI");
-                jsonObject.addProperty("UserID", "gfst005132");
-               // jsonObject.addProperty("UserID", GlobalClass.Id);
+            //    jsonObject.addProperty("FiCode", "272725");
+                jsonObject.addProperty("FiCode", borrower.getCode());
+                jsonObject.addProperty("FiCreator", borrower.getCreator());
+               // jsonObject.addProperty("FiCreator", "MAINPURI");
+             //   jsonObject.addProperty("UserID", "gfst005132");
+                jsonObject.addProperty("UserID", GlobalClass.Id);
                 HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
                 logging.setLevel(HttpLoggingInterceptor.Level.BODY);
                 OkHttpClient.Builder httpClient = new OkHttpClient.Builder(
@@ -127,7 +133,8 @@ public class FirstEsignActivity extends AppCompatActivity {
                         .build();
 
                 ApiInterface apiInterface = retrofit2.create(ApiInterface.class);
-                Call<ResponseBody> call = apiInterface.DownloadDocFirstEsign(GlobalClass.LiveToken,jsonObject,"gzip,deflate,compress","2234514145687247","SBIPDLCOL","868368051227918");
+               // Call<ResponseBody> call = apiInterface.DownloadDocFirstEsign(GlobalClass.LiveToken,jsonObject,"gzip,deflate,compress","2234514145687247","SBIPDLCOL","868368051227918");
+                Call<ResponseBody> call = apiInterface.DownloadDocFirstEsign(GlobalClass.LiveToken,jsonObject,"gzip,deflate,compress",GlobalClass.DevId,GlobalClass.DATABASE_NAME,GlobalClass.Imei);
 
                 Log.d("TAG", "onResponse0: " + GlobalClass.LiveToken+" "+ GlobalClass.dbname+" "+jsonObject.toString());
                 call.enqueue(new Callback<ResponseBody>() {
@@ -140,6 +147,7 @@ public class FirstEsignActivity extends AppCompatActivity {
                              File written = writeResponseBodyToDisk(response.body());
                              if(written==null){
                                  Log.d("TAG", "onResponse2: " + "null");
+                                 GlobalClass.dismissLottieAlertDialog();
 
                              }else{
                                  String path = written.getAbsolutePath();
@@ -149,24 +157,30 @@ public class FirstEsignActivity extends AppCompatActivity {
                                  //  for (String path:filePaths) {
                                  Fragment frag = MuPDFFragment.newInstance(path, false);
                                  ft.add(R.id.pdfview, frag);
-
                                  //}
                                  ft.commit();
+                                 GlobalClass.dismissLottieAlertDialog();
+
                              }
 
                          }else{
                              Log.d("TAG", "onResponse3: " + "UnSuccessful");
+                             GlobalClass.dismissLottieAlertDialog();
+
                          }
                     }
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
                         Log.d("TAG", "onResponse4: " + t.getMessage());
+                        GlobalClass.dismissLottieAlertDialog();
+
                     }
                 });
 
             } else {
                 Log.e("FirstEsignActivity", "Borrower object is null");
+
             }
         }
 
@@ -175,104 +189,103 @@ public class FirstEsignActivity extends AppCompatActivity {
         btnESignProcessing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                openpopup();
+                Intent intent = new Intent(FirstEsignActivity.this, CrifScore.class);
+                intent.putExtra("FIcode", String.valueOf(borrower.getCode()));
+                intent.putExtra("creator", borrower.getCreator());
+                intent.putExtra("ESignerBorower",  borrower);
+                startActivity(intent);
+//                openpopup();
             }
         });
     }
 
     public void openpopup() {
-
-        Log.d("TAG", "openpopup: " + "Popup Open");
+        Log.d("TAG", "openPopup: " + "Popup Open");
 
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.adhar_nsdl, null);
 
         Button can = popupView.findViewById(R.id.can);
         Button proceed = popupView.findViewById(R.id.proceed);
-        TextView  adhaarId= popupView.findViewById(R.id.tiet_aadhar);
-        CheckBox chkAadharConsent= popupView.findViewById(R.id.chkAadharConsent);
+        TextView adhaarId = popupView.findViewById(R.id.tiet_aadhar);
+        CheckBox chkAadharConsent = popupView.findViewById(R.id.chkAadharConsent);
 
         adhaarId.setText(borrower.getAadharid());
 
-        int width = LinearLayout.LayoutParams.MATCH_PARENT;
-        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-        boolean focusable = true;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(popupView);
 
-        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+        final AlertDialog alertDialog = builder.create();
 
         can.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popupWindow.dismiss();
+                alertDialog.dismiss();
             }
         });
 
         proceed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("TAG", "openpopup: " + "Button Clicked");
+                Log.d("TAG", "openPopup: " + "Button Clicked");
 
-                if(chkAadharConsent.isChecked()){
-                JsonObject jsonObject= new JsonObject();
-                jsonObject.addProperty("Creator", borrower.getCreator());
-                jsonObject.addProperty("FICode", "250084");
-                jsonObject.addProperty("UserID",GlobalClass.Id);
-                jsonObject.addProperty("AuthMethod", "FP");
-                jsonObject.addProperty("OTPBioMetricData", "NOT APPLICABLE WITH ESIGN");
-                jsonObject.addProperty("CustName",borrower.getFname()+" "+borrower.getMname()+" "+borrower.getLname());
-                jsonObject.addProperty("eKycID", borrower.getAadharid());
-                jsonObject.addProperty("CustUUID","");
-                jsonObject.addProperty("Reason", "Borrower");
-                jsonObject.addProperty("Concent",getString(R.string.consent_1));
+                if (chkAadharConsent.isChecked()) {
+                    JsonObject jsonObject = new JsonObject();
+                    jsonObject.addProperty("Creator", borrower.getCreator());
+                    jsonObject.addProperty("FICode", borrower.getCode());
+                    jsonObject.addProperty("UserID", GlobalClass.Id);
+                    jsonObject.addProperty("AuthMethod", "FP");
+                    jsonObject.addProperty("OTPBioMetricData", "NOT APPLICABLE WITH ESIGN");
+                    jsonObject.addProperty("CustName", borrower.getFname() + " " + borrower.getMname() + " " + borrower.getLname());
+                    jsonObject.addProperty("eKycID", borrower.getAadharid());
+                    jsonObject.addProperty("CustUUID", "");
+                    jsonObject.addProperty("Reason", "Borrower");
+                    jsonObject.addProperty("Concent", getString(R.string.consent_1));
 
-                ApiInterface apiInterface = ApiClient.getClient2().create(ApiInterface.class);
-                Call<DownloadEsignXml> call = apiInterface.getXMLforESign(GlobalClass.LiveToken,"gzip,deflate,compress",GlobalClass.DevId,"SBIPDLCOL",
-                        GlobalClass.Imei,"application/json","application/json;charset=utf-8","application/json",jsonObject);
-                Log.d("TAG", "openpopup: " + jsonObject.toString());
-                Log.d("TAG", "openpopup: " + GlobalClass.LiveToken+" "+GlobalClass.DevId+" "+GlobalClass.Imei);
+                    ApiInterface apiInterface = ApiClient.getClient2().create(ApiInterface.class);
+                    Call<DownloadEsignXml> call = apiInterface.getXMLforESign(GlobalClass.LiveToken, "gzip,deflate,compress", GlobalClass.DevId, "SBIPDLCOL",
+                            GlobalClass.Imei, "application/json", "application/json;charset=utf-8", "application/json", jsonObject);
+                    Log.d("TAG", "openPopup: " + jsonObject.toString());
+                    Log.d("TAG", "openPopup: " + GlobalClass.LiveToken + " " + GlobalClass.DevId + " " + GlobalClass.Imei);
 
+                    call.enqueue(new Callback<DownloadEsignXml>() {
+                        @Override
+                        public void onResponse(@NonNull Call<DownloadEsignXml> call, @NonNull Response<DownloadEsignXml> response) {
+                            Log.d("TAG", "openPopup: " + "api run");
+                            if (response.isSuccessful()) {
+                                Log.d("TAG", "openPopup: " + "Api Successful");
+                                Log.d("TAG", "openPopup: " + response.body());
 
-                call.enqueue(new Callback<DownloadEsignXml>() {
-                    @Override
-                    public void onResponse(@NonNull Call<DownloadEsignXml> call, @NonNull Response<DownloadEsignXml> response) {
-                        Log.d("TAG", "openpopup: " + "api run");
-                        if (response.isSuccessful()) {
-                            Log.d("TAG", "openpopup: " + "Api Successful");
-                            Log.d("TAG", "openpopup: " + response.body());
+                                assert response.body() != null;
+                                xmlString = response.body().getESignXml().toString();
+                                responseUrl = Utils.getESignXmlAttribute(xmlString, "responseUrl");
 
-                            assert response.body() != null;
-                            xmlString = response.body().getESignXml().toString();
-                            responseUrl = Utils.getESignXmlAttribute(xmlString, "responseUrl");
-
-                            Intent appStartIntent = new Intent();
-                            appStartIntent.setAction("com.nsdl.egov.esign.rdservice.fp.CAPTURE");
-                            appStartIntent.putExtra("msg", xmlString); // msg contains esign request xml from ASP.
-                            appStartIntent.putExtra("env", "PROD"); //Possible values PREPROD or PROD (case insensative).
-                            appStartIntent.putExtra("returnUrl", responseUrl);
-                            startActivityForResult(appStartIntent, APK_ESIGN_REQUEST_CODE);
+                                Intent appStartIntent = new Intent();
+                                appStartIntent.setAction("com.nsdl.egov.esign.rdservice.fp.CAPTURE");
+                                appStartIntent.putExtra("msg", xmlString); // msg contains esign request xml from ASP.
+                                appStartIntent.putExtra("env", "PROD"); // Possible values PREPROD or PROD (case insensitive).
+                                appStartIntent.putExtra("returnUrl", responseUrl);
+                                startActivityForResult(appStartIntent, APK_ESIGN_REQUEST_CODE);
+                            } else {
+                                Log.d("TAG", "openPopup: " + "api Unsuccessful");
+                                Log.d("TAG", "openPopup: " + response.code());
+                                Log.d("TAG", "openPopup: " + response.message());
+                            }
                         }
-                        else{
-                            Log.d("TAG", "openpopup: " + "api Unsuccessful");
-                            Log.d("TAG", "openpopup: " + response.code());
-                            Log.d("TAG", "openpopup: " + response.message());
 
+                        @Override
+                        public void onFailure(Call<DownloadEsignXml> call, Throwable t) {
+                            Log.d("TAG", "openPopup: " + t.getMessage());
+                            Log.d("TAG", "openPopup: " + "failure");
                         }
-                    }
-
-                    @Override
-                    public void onFailure(Call<DownloadEsignXml> call, Throwable t) {
-                        Log.d("TAG", "openpopup: " + t.getMessage());
-                        Log.d("TAG", "openpopup: " + "failure");
-                    }
-                });
-
+                    });
+                }
             }
-        }
         });
 
-        popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
+        alertDialog.show();
     }
+
 
     private File writeResponseBodyToDisk(ResponseBody body) {
         Log.d("TAG", "displayPdf1: "+ "display Pdf" );
@@ -280,6 +293,10 @@ public class FirstEsignActivity extends AppCompatActivity {
         try {
             // Define the path where the file will be saved
             File pdfFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "downloaded.pdf");
+            Log.d("TAG", "displayPdf2: "+ pdfFile.getAbsolutePath() );
+            if (pdfFile.exists() && pdfFile.isFile()) {
+                pdfFile.delete();
+            }
 
             InputStream inputStream = null;
             OutputStream outputStream = null;
@@ -294,6 +311,7 @@ public class FirstEsignActivity extends AppCompatActivity {
 
                 while (true) {
                     int read = inputStream.read(fileReader);
+                    Log.d("TAG", "displayPdf3: "+ "pdfFile.getAbsolutePath()" );
 
                     if (read == -1) {
                         break;
@@ -302,7 +320,7 @@ public class FirstEsignActivity extends AppCompatActivity {
                     outputStream.write(fileReader, 0, read);
                     fileSizeDownloaded += read;
 
-                    Log.d("TAG", "file download: " + fileSizeDownloaded + " of " + fileSize);
+                    Log.d("TAG", "displayPdf4: " + fileSizeDownloaded + " of " + fileSize);
                 }
 
                 outputStream.flush();
@@ -377,18 +395,31 @@ public class FirstEsignActivity extends AppCompatActivity {
         String UrlB = "";
 
         int lastSlashIndex = responseUrl.lastIndexOf('/');
-        Log.d("TAG", "sendESign: "+  responseUrl);
+        Log.d("TAG", "sendESign1: "+  responseUrl);
 
         if (lastSlashIndex != -1) {
             UrlA = responseUrl.substring(0, lastSlashIndex + 1);
-            Log.d("TAG", "sendESign: "+  UrlA);
+            Log.d("TAG", "sendESign2: "+  UrlA);
 
             UrlB = responseUrl.substring(lastSlashIndex + 1);
-            Log.d("TAG", "sendESign: "+  UrlB);
+            Log.d("TAG", "sendESign3: "+  UrlB);
 
         }
 
-        ApiInterface apiInterface = ApiClient.getClient3(UrlA).create(ApiInterface.class);
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.connectTimeout(1, TimeUnit.MINUTES);
+        httpClient.readTimeout(1,TimeUnit.MINUTES);
+        httpClient.addInterceptor(logging);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(UrlA)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(httpClient.build())
+                .build();
+
+        ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+
         Call<ResponseBody> call = apiInterface.postEntityEsign(xml, "999999999999",UrlB);
         Log.d("TAG", "sendESign: "+  "Run");
 
@@ -413,8 +444,18 @@ public class FirstEsignActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }else{
-                    Log.d("TAG", "sendESign: "+  "Unsuccessful");
-
+                    Log.d("TAG", "sendESign: "+  response.message());
+                    Log.d("TAG", "sendESign: "+  response.code());
+                    try {
+                        String errorBody = response.message();
+                        JSONObject jsonObject = new JSONObject(errorBody);
+                        if (!jsonObject.getBoolean("isSuccess")) {
+                            Utils.alert(FirstEsignActivity.this, jsonObject.getString("ErrMsg"));
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Utils.alert(FirstEsignActivity.this, "Failed ESign Response");
+                    }
                 }
             }
 
@@ -422,18 +463,16 @@ public class FirstEsignActivity extends AppCompatActivity {
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.d("TAG", "sendESign: "+  t.getMessage());
 
-                try {
-                    String errorBody = t.getMessage();
-                    JSONObject jsonObject = new JSONObject(errorBody);
-                    if (!jsonObject.getBoolean("isSuccess")) {
-                        Utils.alert(FirstEsignActivity.this, jsonObject.getString("ErrMsg"));
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Utils.alert(FirstEsignActivity.this, "Failed ESign Response");
-                }
+                Utils.alert(FirstEsignActivity.this,t.getMessage());
             }
         });
+    }
+
+    private JsonObject getJsonObject(String xml) {
+        JsonObject jsonObject=new JsonObject();
+        jsonObject.addProperty("xml",xml);
+        jsonObject.addProperty("obj","999999999999");
+        return jsonObject;
     }
 
     private void showApprovalDialog(final JSONObject jsonObject) {
@@ -448,9 +487,8 @@ public class FirstEsignActivity extends AppCompatActivity {
 
                 whichButton = which;
                 if (which == DialogInterface.BUTTON_POSITIVE) {
-                    JSONObject jo = new JSONObject();
                     // Fill in your JSON object
-                    sendESignSubmit(jo.toString());
+                    sendESignSubmit(jsonObject);
                 }
             }
         };
@@ -462,17 +500,32 @@ public class FirstEsignActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    private void sendESignSubmit(String json) {
-        ApiInterface apiInterface = ApiClient.getClient3(responseUrl).create(ApiInterface.class);
-        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json);
-        Call<ResponseBody> call = apiInterface.postEntityESignSubmit(body);
+    private void sendESignSubmit(JSONObject json) {
+        Log.d("TAG", "sendESignSubmit: "+new Gson().toJson(json));
+        JsonObject jo = new JsonObject();
+        try {
+            jo.addProperty("CustCode", json.get("CustCode").toString());
+            jo.addProperty("Creator",  json.get("Creator").toString());
+            jo.addProperty("GrNo",     "0");
+            jo.addProperty("TxnID",    json.get("TxnID").toString());
+            jo.addProperty("isAccepted", whichButton == DialogInterface.BUTTON_POSITIVE);
+
+                    /*if(whichButton == DialogInterface.BUTTON_NEGATIVE){
+                        eSigner.ESignSucceed="BLK";
+                    }*/
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.d("TAG", "sendESignSubmit: "+jo);
+        ApiInterface apiInterface = ApiClient.getClient2().create(ApiInterface.class);
+
+        Call<ResponseBody> call = apiInterface.postEntityESignSubmit(GlobalClass.LiveToken,"gzip,deflate,compress",GlobalClass.DevId,GlobalClass.DATABASE_NAME,GlobalClass.Imei,jo);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    try {
-                        String responseString = response.body().string();
+
 
                         if (response.code() == 200 && whichButton == DialogInterface.BUTTON_POSITIVE) {
                             borrower.seteSignSucceed("Y");
@@ -481,15 +534,11 @@ public class FirstEsignActivity extends AppCompatActivity {
                             Intent intent = new Intent(FirstEsignActivity.this, CrifScore.class);
                             intent.putExtra("FIcode", String.valueOf(borrower.getCode()));
                             intent.putExtra("creator", borrower.getCreator());
-                            intent.putExtra("ESignerBorower", (CharSequence) borrower);
+                            intent.putExtra("ESignerBorower",  borrower);
                             startActivity(intent);
                             dlg.dismiss();
                             finish();
                         }
-                    } catch (Exception e) {
-                        Utils.alert(FirstEsignActivity.this, "Something went wrong in ESigning OR response is not correct");
-                        e.printStackTrace();
-                    }
                 }
             }
 
