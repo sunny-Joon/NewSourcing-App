@@ -2,63 +2,44 @@ package com.paisalo.newinternalsourcingapp.Activities;
 
 
 import static java.lang.Thread.sleep;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import com.google.gson.JsonObject;
-import com.paisalo.newinternalsourcingapp.GlobalClass;
-import com.paisalo.newinternalsourcingapp.ModelsRetrofit.BorrowerListModels.BorrowerListDataModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.BreResponseModels.BREResponse;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.CheckCrifData;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.EsignListModels.PendingESignFI;
 import com.paisalo.newinternalsourcingapp.R;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiClient;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiInterface;
-import com.paisalo.newinternalsourcingapp.RoomDatabase.DaoClass;
 import com.paisalo.newinternalsourcingapp.RoomDatabase.DatabaseClass;
 import com.paisalo.newinternalsourcingapp.Utils.Utils;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Random;
-import java.util.concurrent.TimeUnit;
-import cz.msebera.android.httpclient.Header;
-import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
-import okhttp3.logging.HttpLoggingInterceptor;
 import pl.droidsonroids.gif.GifImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CrifScore extends AppCompatActivity {
 
@@ -74,11 +55,9 @@ public class CrifScore extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     Intent i;
-   // AdapterListRange rlaBankType;
     String ficode,creator;
     CheckCrifData checkCrifData=new CheckCrifData();
     PendingESignFI eSignerborower;
-    String stateName;
     Spinner spinner;
     int attempts_left=4;
     TextView attempsTextView;
@@ -92,7 +71,7 @@ public class CrifScore extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-         databaseClass = DatabaseClass.getInstance(CrifScore.this);
+        databaseClass = DatabaseClass.getInstance(CrifScore.this);
 
         i=getIntent();
         Log.d("TAG", "onCreate: "+i.getStringExtra("ficode"));
@@ -126,12 +105,6 @@ public class CrifScore extends AppCompatActivity {
         btnTryAgain.setVisibility(View.GONE);
         layout_design_pending.setVisibility(View.VISIBLE);
 
-       /* Log.e("LOG", eSignerborower.P_State);
-        stateName= RangeCategory.getRangesByCatKeyName("state", eSignerborower.P_State, true);*/
-        stateName= "Delhi";
-
-        //  Toast.makeText(this,stateName, Toast.LENGTH_SHORT).show();
-
         btnSrifScoreSave=findViewById(R.id.btnSrifScoreSave);
         btnSrifScoreSave.setVisibility(View.GONE);
         btnSrifScoreSave.setOnClickListener(new View.OnClickListener() {
@@ -140,9 +113,10 @@ public class CrifScore extends AppCompatActivity {
                 AlertDialogBreEligibility();
             }
         });
+
         btnSrifScore=findViewById(R.id.btnSrifScore);
         attempsTextView.setText("Only "+attempts_left+" attempt to switch bank");
-        attempsTextView.addTextChangedListener(new TextWatcher() {
+        /*attempsTextView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -161,7 +135,8 @@ public class CrifScore extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
 
             }
-        });
+        });*/
+
         btnSrifScore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -175,13 +150,13 @@ public class CrifScore extends AppCompatActivity {
                     layout_design_pending.setVisibility(View.VISIBLE);
                     layout_design.setVisibility(View.GONE);
 
-                    ProgressDialog progressDialog = new ProgressDialog(CrifScore.this);
-                    progressDialog.setCanceledOnTouchOutside(false);
-                    progressDialog.setIndeterminate(false);
-                    progressDialog.setTitle("Fetching Details");
-                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                    progressDialog.show();
-                    getDataFromBRE(progressDialog);
+//                    ProgressDialog progressDialog = new ProgressDialog(CrifScore.this);
+//                    progressDialog.setCanceledOnTouchOutside(false);
+//                    progressDialog.setIndeterminate(false);
+//                    progressDialog.setTitle("Fetching Details");
+//                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//                    progressDialog.show();
+                    getDataFromBRE();
 
                 }
 
@@ -208,36 +183,6 @@ public class CrifScore extends AppCompatActivity {
         });
 
         generateCrifScore(eSignerborower);
-        String[] arraySpinner = new String[] {
-                "UCO", "BOB","PNB","SBI"
-        };
-
-        /*rlaBankType = new AdapterListRange(this,
-                SQLite.select().from(RangeCategory.class).where(RangeCategory_Table.cat_key.eq("banks")).queryList(), false);
-        spinner = (Spinner) findViewById(R.id.spinSelectBank);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, arraySpinner);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(rlaBankType);
-        spinner.setSelection(Utils.setSpinnerPosition(spinner,  AadharUtils.getBankCode(eSignerborower.BankName)));*/
-
-
-       /* spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                editor.putString("Bank",((RangeCategory) spinner.getSelectedItem()).DescriptionEn);
-                editor.apply();
-                btnSrifScore.setText("TRY AGAIN");
-                Log.d("TAG", "onItemSelected: "+sharedPreferences.getString("Bank",""));
-                saveBREData(score);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });*/
-
 
     }
 
@@ -269,6 +214,8 @@ public class CrifScore extends AppCompatActivity {
         alertDialog.show();
 
     }
+
+    //API
     private void restictBorrower() {
 
         ApiInterface apiInterface= ApiClient.getClient().create(ApiInterface.class);
@@ -334,24 +281,34 @@ public class CrifScore extends AppCompatActivity {
         });
     }
 
+    //API
     private void updateSourcingStatus(){
+        Log.d("TAG", "getDataFromBRE2: "+"START");
+
         ApiInterface apiInterface= ApiClient.getClient4().create(ApiInterface.class);
         Call<JsonObject> call=apiInterface.updateStatus(eSignerborower.getCode()+"",eSignerborower.getCreator());
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 Log.d("TAG", "onResponse: "+response.body());
+                Log.d("TAG", "getDataFromBRE2: "+"RUN");
+
 
             }
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Log.d("TAG", "onFailure: "+t.getMessage());
+                Log.d("TAG", "getDataFromBRE2: "+"Failure");
+
 
             }
         });
     }
 
+    //API
     private void saveBREData(String score) {
+        Log.d("TAG", "getDataFromBRE3: "+"START");
+
         String emiorScore = emi + "," + score;
         JsonObject jsonObject = getJsonForCrif(ficode, creator, amount, emiorScore, sharedPreferences.getString("Bank", ""));
 
@@ -362,43 +319,60 @@ public class CrifScore extends AppCompatActivity {
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
+                Log.d("TAG", "getDataFromBRE3: "+"Run");
+
                 if (response.isSuccessful()) {
+                    Log.d("TAG", "getDataFromBRE3: "+"Successful");
+
                     Toast.makeText(CrifScore.this, "Data saved successfully", Toast.LENGTH_LONG).show();
                 } else {
                     Log.e("TAG", "Error: " + response.code());
+                    Log.d("TAG", "getDataFromBRE3: "+"Unsuccssful");
+
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
                 Toast.makeText(CrifScore.this, t.getMessage(), Toast.LENGTH_LONG).show();
+                Log.d("TAG", "getDataFromBRE3: "+"Failure");
+
             }
         });
     }
 
-
+    //API
     private void generateCrifScore(PendingESignFI eSignerborower) {
-        ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.setIndeterminate(false);
-        progressDialog.setTitle("Fetching Details");
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.show();
+//        ProgressDialog progressDialog = new ProgressDialog(this);
+//        progressDialog.setCanceledOnTouchOutside(false);
+//        progressDialog.setIndeterminate(false);
+//        progressDialog.setTitle("Fetching Details");
+//        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//        progressDialog.show();
+
+        Log.d("TAG", "getDataFromBRE4: "+"START");
 
         ApiInterface apiInterface=ApiClient.getClient4().create(ApiInterface.class);
         Call<JsonObject> call=apiInterface.generateCrifForVehicle(getJsonForGenerateCrif(eSignerborower));
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                Log.d("TAG", "getDataFromBRE4: "+"RUN");
+
                 JsonObject jsonObject=response.body();
                 if (response.code()==200){
+                    Log.d("TAG", "getDataFromBRE4: "+"Successful");
+
                     Log.d("TAG", "onResponse: "+jsonObject);
                     if (jsonObject.get("statusCode").getAsInt()==200 && jsonObject.get("data").getAsJsonArray().size()>=1){
                         JsonObject crifData=jsonObject.get("data").getAsJsonArray().get(0).getAsJsonObject();
                         if (response.code()==200){
+                            layout_design_pending.setVisibility(View.GONE);
 
                             if (response.body() != null) {
                                 try {
+                                    Log.d("TAG", "getDataFromBRE4: "+"Successful1");
+
                                     // Parse the JSON response
                                     JSONObject responseObject = new JSONObject(response.body().toString());
 
@@ -406,21 +380,35 @@ public class CrifScore extends AppCompatActivity {
                                     JSONArray dataArray = responseObject.getJSONArray("data");
 
                                     // Check if the message "Crif Already Generated" is present in the data array
-                                    for (int i = 0; i < dataArray.length(); i++) {
-                                        JSONObject dataObject = dataArray.getJSONObject(i);
-                                        String message = dataObject.getString("Msg");
-                                        if (message.contains("Crif Already Generated")) {
-                                            progressDialog.hide();
-                                            // Show toast message "done"
-                                            Toast.makeText(CrifScore.this, "done", Toast.LENGTH_SHORT).show();
-                                            break;
-                                        }else{
+
+                                        JSONObject dataObject = dataArray.getJSONObject(0);
+                                        if (dataObject.has("Msg")){
+                                            String message = dataObject.getString("Msg");
+                                            if (message.contains("Crif Already Generated")) {
+                                                Log.d("TAG", "getDataFromBRE4: "+"Successful2");
+
+                                                //  progressDialog.hide();
+                                                finish();
+                                                // Show toast message "done"
+                                                Toast.makeText(CrifScore.this, "done", Toast.LENGTH_SHORT).show();
+
+                                            }else{
+                                                Log.d("TAG", "getDataFromBRE4: "+"Successful3");
+
+                                                int crifscore=crifData.get("SCORE-VALUE").getAsString().length()>0?crifData.get("SCORE-VALUE").getAsInt():0;
+                                                int ODAMT=crifData.get("OVERDUE-AMT").getAsString().length()>0?crifData.get("OVERDUE-AMT").getAsInt():0;
+                                                int WOAMT=crifData.get("WRITE-OFF-AMT").getAsString().length()>0?crifData.get("WRITE-OFF-AMT").getAsInt():0;
+                                                getDataFromBRE();
+                                            }
+                                        } else{
+                                            Log.d("TAG", "getDataFromBRE4: "+"Successful4");
+
                                             int crifscore=crifData.get("SCORE-VALUE").getAsString().length()>0?crifData.get("SCORE-VALUE").getAsInt():0;
                                             int ODAMT=crifData.get("OVERDUE-AMT").getAsString().length()>0?crifData.get("OVERDUE-AMT").getAsInt():0;
                                             int WOAMT=crifData.get("WRITE-OFF-AMT").getAsString().length()>0?crifData.get("WRITE-OFF-AMT").getAsInt():0;
-                                            getDataFromBRE(progressDialog);
+                                            getDataFromBRE();
                                         }
-                                    }
+
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -429,16 +417,23 @@ public class CrifScore extends AppCompatActivity {
                         }
 
                     }
+                }else{
+                    Log.d("TAG", "getDataFromBRE4: "+"Unsuccessful");
+
                 }
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Utils.alert(CrifScore.this,"Sorry!! we didn't get your CRIF details \nPlease Try Again...");
+                Log.d("TAG", "getDataFromBRE4: "+"Failure");
+
             }
         });
     }
+
     private JsonObject getJsonForGenerateCrif(PendingESignFI eSignerborower) {
+
         JsonObject jsonObject=new JsonObject();
 //        jsonObject.addProperty("full_name", "SHANTILAL D");
 //        jsonObject.addProperty("dobs", "1992-04-08");
@@ -488,42 +483,36 @@ public class CrifScore extends AppCompatActivity {
 
         Log.d("TAG", "getJsonForGenerateCrif: "+ jsonObject);
 
-       /* {"full_name":"RAGHVENDRA PRATAP SINGH","dobs":"2000-10-02","emailid":"test@gamil.com","co":"Jitendra Pratap Singh",
+       /* LIve
+       {"full_name":"RAGHVENDRA PRATAP SINGH","dobs":"2000-10-02","emailid":"test@gamil.com","co":"Jitendra Pratap Singh",
                 "address":"HOUSE NO. 18Cholapur,HATHIYAR KALA,Pindra,Varanasi","city":"Varanasi","state":"Uttar Pradesh",
                 "pin":"221101","loan_amount":"60000","mobile":"8757575456","creator":"HOAGRA","FICode":"250090",
                 "pancard":"LAMPS2172L","voter_id":"ZXD3104692","AadharID":"541516386793","Gender":"M"}*/
 
-        /*{"full_name":"Shivam null Savita","dobs":"Apr 30 2024 12:00AM","emailid":"test@gamil.com","co":"Akhilesh null Savita",
-                "address":"124 B barasirohi kalyanpur L.LT ,Kanpur Nagar","city":"Kanpur Nagar","state":"Uttar Pradesh",
-                "pin":"208016","loan_amount":"60000","mobile":"6585698454","creator":"HOAGRA","FICode":"250084",
-                "pancard":"LHYPS1074C","voter_id":"ZXD3104692","AadharID":"608559509930","Gender":"M"}*/
-
         return  jsonObject;
     }
 
-    public static String formatDate (String date, String initDateFormat, String endDateFormat) throws ParseException {
-
-        Date initDate = new SimpleDateFormat(initDateFormat).parse(date);
-        SimpleDateFormat formatter = new SimpleDateFormat(endDateFormat);
-        String parsedDate = formatter.format(initDate);
-
-        return parsedDate;
-    }
-    private void getDataFromBRE(ProgressDialog progressDialog) {
+    //API
+    private void getDataFromBRE() {
+        Log.d("TAG", "getDataFromBRE1: "+"START");
 
         ApiInterface apiInterface=ApiClient.getClient4().create(ApiInterface.class);
         JsonObject jsonObject=new JsonObject();
         jsonObject.addProperty("creator",eSignerborower.getCreator());
         jsonObject.addProperty("ficode",String.valueOf(eSignerborower.getCode()));
 
-        Log.d("TAG", "getDataFromBRE: "+jsonObject);
+        Log.d("TAG", "getDataFromBRE1: "+jsonObject);
         Call<BREResponse> call=apiInterface.getBREStatus(eSignerborower.getCreator(),String.valueOf(eSignerborower.getCode()));
         call.enqueue(new Callback<BREResponse>() {
             @Override
             public void onResponse(Call<BREResponse> call, Response<BREResponse> response) {
+                Log.d("TAG", "getDataFromBRE1: "+"RUN");
+
                 Log.d("TAG", "onResponse: "+response.body().getData());
                 BREResponse breResponse=response.body();
                 if(response.body() != null){
+                    Log.d("TAG", "getDataFromBRE1: "+"Successful");
+
                     attempts_left--;
                     attempsTextView.setText("Only "+attempts_left+" attempt to switch bank");
                     BREResponse scrifData=response.body();
@@ -647,6 +636,8 @@ public class CrifScore extends AppCompatActivity {
 
                     }
                 }else{
+                    Log.d("TAG", "getDataFromBRE1: "+"unsuccessful");
+
                     layout_design.setVisibility(View.GONE);
                     layout_design_pending.setVisibility(View.VISIBLE);
                     text_serverMessage.setText("Server Error!!");
@@ -655,60 +646,19 @@ public class CrifScore extends AppCompatActivity {
                 }
 
 
-                progressDialog.dismiss();
+                //progressDialog.dismiss();
             }
 
             @Override
             public void onFailure(Call<BREResponse> call, Throwable t) {
                 Log.d("TAG", "onFailure: "+t.getMessage());
-                progressDialog.dismiss();
+                Log.d("TAG", "getDataFromBRE1: "+"failure");
+
+             //   progressDialog.dismiss();
             }
         });
     }
 
-
-
-
-
-
-
-    public String parseDateToddMMyyyy(String time) {
-        String inputPattern = "yyyy-MM-dd";
-        String outputPattern = "dd-MM-yyyy";
-        SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
-        SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern);
-
-        Date date = null;
-        String str = null;
-
-        try {
-            date = inputFormat.parse(time);
-            str = outputFormat.format(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        Log.e("TAG",str);
-        return str;
-    }
-    public static String getRandomSixNumberString() {
-        // It will generate 6 digit random Number.
-        // from 0 to 999999
-        Random rnd = new Random();
-        int number = rnd.nextInt(999999);
-
-        // this will convert any number sequence into 6 character.
-        return String.format("%06d", number);
-    }
-
-    public static String getRandomTwoNumberString() {
-        // It will generate 6 digit random Number.
-        // from 0 to 999999
-        Random rnd = new Random();
-        int number = rnd.nextInt(99);
-
-        // this will convert any number sequence into 6 character.
-        return String.format("%02d", number);
-    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

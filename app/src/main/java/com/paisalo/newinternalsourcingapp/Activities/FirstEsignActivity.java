@@ -189,12 +189,8 @@ public class FirstEsignActivity extends AppCompatActivity {
         btnESignProcessing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(FirstEsignActivity.this, CrifScore.class);
-                intent.putExtra("FIcode", String.valueOf(borrower.getCode()));
-                intent.putExtra("creator", borrower.getCreator());
-                intent.putExtra("ESignerBorower",  borrower);
-                startActivity(intent);
-//                openpopup();
+
+                openpopup();
             }
         });
     }
@@ -216,6 +212,7 @@ public class FirstEsignActivity extends AppCompatActivity {
         builder.setView(popupView);
 
         final AlertDialog alertDialog = builder.create();
+        alertDialog.setCancelable(false);
 
         can.setOnClickListener(new View.OnClickListener() {
             @Override

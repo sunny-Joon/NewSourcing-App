@@ -2333,7 +2333,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             jsonData.setIsMarried(isMarried);
             jsonData.setGender(gender);
             jsonData.setPState(P_State);
-            jsonData.setIsNameVerify(P_State);
+            jsonData.setIsNameVerify(isNameMatched);
             jsonData.setGuardianRelatnWithBorrower(guardianRelatnWithBorrower);
 
             fiExtra = new FiExtra();
