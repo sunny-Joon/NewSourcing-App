@@ -2486,6 +2486,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             jsonData.setIsMarried(isMarried);
             jsonData.setGender(gender);
             jsonData.setPState(P_State);
+
             jsonData.setIsNameVerify(isNameMatched.toString());
 
             Log.d("TAG", "createJsonObject:123456 "+isNameMatched);
