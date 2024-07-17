@@ -6,17 +6,17 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.Adapters.CustomSpinnerAdapter;
-import com.paisalo.newinternalsourcingapp.Entities.CkycNoMODEL;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
 import com.paisalo.newinternalsourcingapp.Modelclasses.FiExtra;
 import com.paisalo.newinternalsourcingapp.Modelclasses.FiJsonObject;
@@ -33,28 +33,36 @@ import com.paisalo.newinternalsourcingapp.RoomDatabase.RangeCategoryDataClass;
 import com.paisalo.newinternalsourcingapp.Utils.CustomProgressDialog;
 import com.paisalo.newinternalsourcingapp.Utils.Utils;
 import com.paisalo.newinternalsourcingapp.location.GpsTracker;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class KYCActivity2 extends AppCompatActivity {
 
     EditText monthlyincome, expensemonthly, futureincome, agricultureincome, pensionincome, interestincome, otherincome, earningmemberincome, loanAmount;
     TextView textViewTotalAnnualIncome;
 
+    String ckycNumberExist = "";
+
     Spinner earningmembertype, businessdetail, loanpurpose, occuption, loanduration, selectbank;
 
-    String earningMemberType,businessDetails,loanPurpose,occupation, selectedBank;
-    int monthlyIncome,expense,futureIncome,earningMemberIncome,agricultureIncome,pensionIncome,interestIncome,loanDuration,otherIncome,loanamount;
+    String earningMemberType, businessDetails, loanPurpose, occupation, selectedBank;
+    int monthlyIncome, expense, futureIncome, earningMemberIncome, agricultureIncome, pensionIncome, interestIncome, loanDuration, otherIncome, loanamount;
     CustomProgressDialog customProgressDialog;
 
     List<String> BankList = new ArrayList<>();
@@ -65,6 +73,7 @@ public class KYCActivity2 extends AppCompatActivity {
     List<String> loandurationList = new ArrayList<>();
     JsonObject jsonObject2;
     private Button savedata;
+
     GpsTracker gpsTracker;
     FiJsonObject firstPageObject;
     FiExtra fiExtra;
@@ -86,14 +95,14 @@ public class KYCActivity2 extends AppCompatActivity {
         Intent intent = getIntent();
 
         String jsonDataString = getIntent().getStringExtra("jsonData");
-        Log.d("TAG", "Sunny joon: " +jsonDataString );
+        Log.d("TAG", "Sunny joon: " + jsonDataString);
         FiJsonObject receivedObject = new Gson().fromJson(jsonDataString, FiJsonObject.class);
-        Log.d("TAG", "onCreate: "+new Gson().toJson(receivedObject));
+        Log.d("TAG", "onCreate: " + new Gson().toJson(receivedObject));
 
-      //  Serializable receivedObject = intent.getSerializableExtra("jsonData");
+        //  Serializable receivedObject = intent.getSerializableExtra("jsonData");
         fiExtra = receivedObject.getFiExtra();
-        Log.d("TAG", "onCreateeee: "+fiExtra.getFatherLastName());
-        Log.d("TAG", "onCreateeee: "+fiExtra);
+        Log.d("TAG", "onCreateeee: " + fiExtra.getFatherLastName());
+        Log.d("TAG", "onCreateeee: " + fiExtra);
 
         String vName = intent.getStringExtra("vName");
         String vPanName = intent.getStringExtra("vPanName");
@@ -107,10 +116,13 @@ public class KYCActivity2 extends AppCompatActivity {
         String filePath = getIntent().getStringExtra("file");
         File file = new File(filePath);
 
-        Log.d("TAG", "jsonobjectstate " + villageCode +" villageCode "+ distCode +" distCode "+ subDistCode + " subDistCode " + cityCode+" cityCode " + vName + " name " + vLicName + " verifiedLicensename " + vVoterIdName + " verifiedVotername " + vPanName +" verifiedPanName ");
+        ckycNumberExist = intent.getStringExtra("ckycNumberExist");
+        ckycNumberExist = (ckycNumberExist != null && ckycNumberExist.length() > 0) ? ckycNumberExist : "";
+
+        Log.d("TAG", "jsonobjectstate " + villageCode + " villageCode " + distCode + " distCode " + subDistCode + " subDistCode " + cityCode + " cityCode " + vName + " name " + vLicName + " verifiedLicensename " + vVoterIdName + " verifiedVotername " + vPanName + " verifiedPanName ");
 
         if (receivedObject != null && receivedObject instanceof FiJsonObject) {
-             firstPageObject = (FiJsonObject) receivedObject;
+            firstPageObject = (FiJsonObject) receivedObject;
         }
 
         savedata = findViewById(R.id.savedata);
@@ -143,23 +155,24 @@ public class KYCActivity2 extends AppCompatActivity {
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
+
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 try {
-                    if(agricultureincome.getText().length()>0 ||futureincome.getText().length()>0 ||otherincome.getText().length()>0 ||monthlyincome.getText().length()>0 ||pensionincome.getText().length()>0 ||interestincome.getText().length()>0 ||earningmemberincome.getText().length()>0){
-                    if(earningmembertype.getSelectedItem().toString().contains("Self")){
-                        int totalAnnualIncome=Integer.parseInt(String.valueOf(Integer.parseInt(agricultureincome.getText().toString())+Integer.parseInt(futureincome.getText().toString())+Integer.parseInt(otherincome.getText().toString())+(12*Integer.parseInt(monthlyincome.getText().toString())+Integer.parseInt(pensionincome.getText().toString())+Integer.parseInt(interestincome.getText().toString()))));
-                        textViewTotalAnnualIncome.setText("Your Total Annual Income: "+String.valueOf(totalAnnualIncome)+" /-");
-                        textViewTotalAnnualIncome.setVisibility(View.VISIBLE);
-                    }else{
-                        int totalAnnualIncome=Integer.parseInt(earningmemberincome.getText().toString())+Integer.parseInt(agricultureincome.getText().toString())+Integer.parseInt(futureincome.getText().toString())+Integer.parseInt(otherincome.getText().toString())+(12*Integer.parseInt(monthlyincome.getText().toString())+Integer.parseInt(pensionincome.getText().toString())+Integer.parseInt(interestincome.getText().toString()));
-                        textViewTotalAnnualIncome.setText("Your Total Annual Income: "+String.valueOf(totalAnnualIncome)+" /-");
-                        textViewTotalAnnualIncome.setVisibility(View.VISIBLE);
-                    }
+                    if (agricultureincome.getText().length() > 0 || futureincome.getText().length() > 0 || otherincome.getText().length() > 0 || monthlyincome.getText().length() > 0 || pensionincome.getText().length() > 0 || interestincome.getText().length() > 0 || earningmemberincome.getText().length() > 0) {
+                        if (earningmembertype.getSelectedItem().toString().contains("Self")) {
+                            int totalAnnualIncome = Integer.parseInt(String.valueOf(Integer.parseInt(agricultureincome.getText().toString()) + Integer.parseInt(futureincome.getText().toString()) + Integer.parseInt(otherincome.getText().toString()) + (12 * Integer.parseInt(monthlyincome.getText().toString()) + Integer.parseInt(pensionincome.getText().toString()) + Integer.parseInt(interestincome.getText().toString()))));
+                            textViewTotalAnnualIncome.setText("Your Total Annual Income: " + String.valueOf(totalAnnualIncome) + " /-");
+                            textViewTotalAnnualIncome.setVisibility(View.VISIBLE);
+                        } else {
+                            int totalAnnualIncome = Integer.parseInt(earningmemberincome.getText().toString()) + Integer.parseInt(agricultureincome.getText().toString()) + Integer.parseInt(futureincome.getText().toString()) + Integer.parseInt(otherincome.getText().toString()) + (12 * Integer.parseInt(monthlyincome.getText().toString()) + Integer.parseInt(pensionincome.getText().toString()) + Integer.parseInt(interestincome.getText().toString()));
+                            textViewTotalAnnualIncome.setText("Your Total Annual Income: " + String.valueOf(totalAnnualIncome) + " /-");
+                            textViewTotalAnnualIncome.setVisibility(View.VISIBLE);
+                        }
                     }
 
 
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
             }
@@ -171,65 +184,65 @@ public class KYCActivity2 extends AppCompatActivity {
         });
 
 
-                List<RangeCategoryDataClass> bankData = databaseClass.dao().getAllRCDataListby_catKey("banks");
-                for (RangeCategoryDataClass data : bankData) {
-                    String descriptionEn = data.getDescriptionEn();
-                    BankList.add(descriptionEn);
-                    CustomSpinnerAdapter adapter1 = new CustomSpinnerAdapter(KYCActivity2.this, android.R.layout.simple_spinner_dropdown_item, BankList);
-                    selectbank.setAdapter(adapter1);
-                }
-                List<RangeCategoryDataClass> business_typeData = databaseClass.dao().getAllRCDataListby_catKey("business-type");
-                for (RangeCategoryDataClass data : business_typeData) {
-                    String descriptionEn = data.getDescriptionEn();
-                    BusinessTypeList.add(descriptionEn);
-                    CustomSpinnerAdapter adapter2 = new CustomSpinnerAdapter(KYCActivity2.this, android.R.layout.simple_spinner_dropdown_item, BusinessTypeList);
-                    businessdetail.setAdapter(adapter2);
+        List<RangeCategoryDataClass> bankData = databaseClass.dao().getAllRCDataListby_catKey("banks");
+        for (RangeCategoryDataClass data : bankData) {
+            String descriptionEn = data.getDescriptionEn();
+            BankList.add(descriptionEn);
+            CustomSpinnerAdapter adapter1 = new CustomSpinnerAdapter(KYCActivity2.this, android.R.layout.simple_spinner_dropdown_item, BankList);
+            selectbank.setAdapter(adapter1);
+        }
+        List<RangeCategoryDataClass> business_typeData = databaseClass.dao().getAllRCDataListby_catKey("business-type");
+        for (RangeCategoryDataClass data : business_typeData) {
+            String descriptionEn = data.getDescriptionEn();
+            BusinessTypeList.add(descriptionEn);
+            CustomSpinnerAdapter adapter2 = new CustomSpinnerAdapter(KYCActivity2.this, android.R.layout.simple_spinner_dropdown_item, BusinessTypeList);
+            businessdetail.setAdapter(adapter2);
 
-                }
-                List<RangeCategoryDataClass> earningmembertypeData = databaseClass.dao().getAllRCDataListby_catKey("other_income");
-                for (RangeCategoryDataClass data : earningmembertypeData) {
-                    String descriptionEn = data.getDescriptionEn();
-                    earningmembertypeList.add(descriptionEn);
-                    CustomSpinnerAdapter adapter3 = new CustomSpinnerAdapter(KYCActivity2.this, android.R.layout.simple_spinner_dropdown_item, earningmembertypeList);
-                    earningmembertype.setAdapter(adapter3);
-                }
-                List<RangeCategoryDataClass> loanpurposeData = databaseClass.dao().getAllRCDataListby_catKey("loan_purpose");
-                for (RangeCategoryDataClass data : loanpurposeData) {
-                    String descriptionEn = data.getDescriptionEn();
-                    loanpurposeList.add(descriptionEn);
-                    CustomSpinnerAdapter adapter4 = new CustomSpinnerAdapter(KYCActivity2.this, android.R.layout.simple_spinner_dropdown_item, loanpurposeList);
-                    loanpurpose.setAdapter(adapter4);
-                }
-                List<RangeCategoryDataClass> occuptionData = databaseClass.dao().getAllRCDataListby_catKey("occupation-type");
-                for (RangeCategoryDataClass data : occuptionData) {
-                    String descriptionEn = data.getDescriptionEn();
-                    occuptionList.add(descriptionEn);
-                    CustomSpinnerAdapter adapter5 = new CustomSpinnerAdapter(KYCActivity2.this, android.R.layout.simple_spinner_dropdown_item, occuptionList);
-                    occuption.setAdapter(adapter5);
-                    adapter5.notifyDataSetChanged();
-                }
-                List<RangeCategoryDataClass> loandurationData = databaseClass.dao().getAllRCDataListby_catKey("business-type");
-                for (RangeCategoryDataClass data : loandurationData) {
-                    String descriptionEn = data.getDescriptionEn();
-                    loandurationList.add(descriptionEn);
+        }
+        List<RangeCategoryDataClass> earningmembertypeData = databaseClass.dao().getAllRCDataListby_catKey("other_income");
+        for (RangeCategoryDataClass data : earningmembertypeData) {
+            String descriptionEn = data.getDescriptionEn();
+            earningmembertypeList.add(descriptionEn);
+            CustomSpinnerAdapter adapter3 = new CustomSpinnerAdapter(KYCActivity2.this, android.R.layout.simple_spinner_dropdown_item, earningmembertypeList);
+            earningmembertype.setAdapter(adapter3);
+        }
+        List<RangeCategoryDataClass> loanpurposeData = databaseClass.dao().getAllRCDataListby_catKey("loan_purpose");
+        for (RangeCategoryDataClass data : loanpurposeData) {
+            String descriptionEn = data.getDescriptionEn();
+            loanpurposeList.add(descriptionEn);
+            CustomSpinnerAdapter adapter4 = new CustomSpinnerAdapter(KYCActivity2.this, android.R.layout.simple_spinner_dropdown_item, loanpurposeList);
+            loanpurpose.setAdapter(adapter4);
+        }
+        List<RangeCategoryDataClass> occuptionData = databaseClass.dao().getAllRCDataListby_catKey("occupation-type");
+        for (RangeCategoryDataClass data : occuptionData) {
+            String descriptionEn = data.getDescriptionEn();
+            occuptionList.add(descriptionEn);
+            CustomSpinnerAdapter adapter5 = new CustomSpinnerAdapter(KYCActivity2.this, android.R.layout.simple_spinner_dropdown_item, occuptionList);
+            occuption.setAdapter(adapter5);
+            adapter5.notifyDataSetChanged();
+        }
+        List<RangeCategoryDataClass> loandurationData = databaseClass.dao().getAllRCDataListby_catKey("business-type");
+        for (RangeCategoryDataClass data : loandurationData) {
+            String descriptionEn = data.getDescriptionEn();
+            loandurationList.add(descriptionEn);
                       /*ArrayAdapter<String> adapter6 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, BusinessTypeList);
         loanduration.setAdapter(adapter6);*/
 
-                    String[] loandurationList = {"--Select--","12", "18", "24", "32", "40"};
-                    CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(KYCActivity2.this, android.R.layout.simple_spinner_dropdown_item, Arrays.asList(loandurationList));
-                    loanduration.setAdapter(adapter);
-                }
+            String[] loandurationList = {"--Select--", "12", "18", "24", "32", "40"};
+            CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(KYCActivity2.this, android.R.layout.simple_spinner_dropdown_item, Arrays.asList(loandurationList));
+            loanduration.setAdapter(adapter);
+        }
 
 
         savedata.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                boolean allConditionsSatisfied=true;
+                boolean allConditionsSatisfied = true;
 
-                if(!calculations()){
+                if (!calculations()) {
                     allConditionsSatisfied = false;
-                }else{
+                } else {
                     if (loanAmount.getText().toString().isEmpty()) {
                         loanAmount.setError("Invalid loanAmount");
                         allConditionsSatisfied = false;
@@ -238,22 +251,22 @@ public class KYCActivity2 extends AppCompatActivity {
                         if (loanduration.getSelectedItem().toString().contains("-Select-")) {
                             ((TextView) loanduration.getSelectedView()).setError("Please select a loanduration");
                             allConditionsSatisfied = false;
-                        }else{
+                        } else {
                             loanDuration = Integer.parseInt(loanduration.getSelectedItem().toString());
                             if (businessdetail.getSelectedItem().toString().contains("-Select-")) {
                                 ((TextView) businessdetail.getSelectedView()).setError("Please select a businessdetail");
                                 allConditionsSatisfied = false;
-                            }else{
+                            } else {
                                 businessDetails = businessdetail.getSelectedItem().toString();
                                 if (selectbank.getSelectedItem().toString().contains("-Select-")) {
                                     ((TextView) selectbank.getSelectedView()).setError("Please select a selectbank");
                                     allConditionsSatisfied = false;
-                                }else{
+                                } else {
                                     selectedBank = selectbank.getSelectedItem().toString();
                                     if (loanpurpose.getSelectedItem().toString().contains("-Select-")) {
                                         ((TextView) loanpurpose.getSelectedView()).setError("Please select a loanpurpose");
                                         allConditionsSatisfied = false;
-                                    }else{
+                                    } else {
                                         loanPurpose = loanpurpose.getSelectedItem().toString();
                                         if (expensemonthly.getText().toString().isEmpty()) {
                                             expensemonthly.setError("Invalid expensemonthly");
@@ -298,12 +311,12 @@ public class KYCActivity2 extends AppCompatActivity {
                                                                         if (earningmembertype.getSelectedItem().toString().contains("-Select-")) {
                                                                             ((TextView) earningmembertype.getSelectedView()).setError("Please select a earningmembertype");
                                                                             allConditionsSatisfied = false;
-                                                                        }else{
+                                                                        } else {
                                                                             earningMemberType = earningmembertype.getSelectedItem().toString();
                                                                             if (occuption.getSelectedItem().toString().contains("-Select-")) {
                                                                                 ((TextView) occuption.getSelectedView()).setError("Please select a occuption");
                                                                                 allConditionsSatisfied = false;
-                                                                            }else{
+                                                                            } else {
                                                                                 occupation = occuption.getSelectedItem().toString();
                                                                             }
                                                                         }
@@ -323,7 +336,6 @@ public class KYCActivity2 extends AppCompatActivity {
                 }
 
 
-
                 if (allConditionsSatisfied) {
 
                     firstPageObject.setLoanAmt(loanamount);
@@ -332,9 +344,9 @@ public class KYCActivity2 extends AppCompatActivity {
                     firstPageObject.setTPh3(selectedBank);
                     firstPageObject.setLoanReason(loanPurpose);
                     firstPageObject.setAreaOfHouse(0);
-                    if(selectbank.equals("Sbi")||selectbank.equals("SBI")){
+                    if (selectbank.equals("Sbi") || selectbank.equals("SBI")) {
                         firstPageObject.setBankName("STATE BANK OF INDIA");
-                    }else{
+                    } else {
                         firstPageObject.setBankName(selectedBank);
                     }
                     firstPageObject.setCast("");
@@ -362,7 +374,7 @@ public class KYCActivity2 extends AppCompatActivity {
                     firstPageObject.setFiExtra(fiExtra);
 
                     Gson gson = new Gson();
-               //     JsonObject jsonObject = gson.fromJson(gson.toJson(firstPageObject.toString()), JsonObject.class);
+                    //     JsonObject jsonObject = gson.fromJson(gson.toJson(firstPageObject.toString()), JsonObject.class);
                     JsonObject jsonObject = gson.fromJson(firstPageObject.toString(), JsonObject.class);
 
                     Log.d("TAG", "FirstPageObject1: " + jsonObject);
@@ -413,57 +425,69 @@ public class KYCActivity2 extends AppCompatActivity {
                                             RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), file);
                                             MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
 
-                                            Log.d("TAG", "onResponse:apiclient "+ApiClient.getClient4().create(ApiInterface.class));
+                                            Log.d("TAG", "onResponse:apiclient " + ApiClient.getClient4().create(ApiInterface.class));
 
-                                            Call<ProfilePicModel> call3 = apiInterface.updateprofilePic(GlobalClass.Token, GlobalClass.dbname, Message1.trim(), GlobalClass.Creator, GlobalClass.Tag,"0", body);
+                                            Call<ProfilePicModel> call3 = apiInterface.updateprofilePic(GlobalClass.Token, GlobalClass.dbname, Message1.trim(), GlobalClass.Creator, GlobalClass.Tag, "0", body);
 
                                             call3.enqueue(new Callback<ProfilePicModel>() {
                                                 @Override
                                                 public void onResponse(Call<ProfilePicModel> call3, Response<ProfilePicModel> response3) {
                                                     if (response3.isSuccessful()) {
-                                                        if(response3.body().getMessage().equals("Record Create Successfully!!")) {
-                                                            ApiInterface apiInterface4 = ApiClient.getClient4().create(ApiInterface.class);
+                                                        if (response3.body().getMessage().equals("Record Create Successfully!!")) {
+//                                                            ApiInterface apiInterface4 = ApiClient.getClient4().create(ApiInterface.class);
+//
+//                                                            Call<CkycNoMODEL> call = apiInterface4.getCkycNo(GlobalClass.Token, GlobalClass.dbname, Message1, GlobalClass.Creator);
+//                                                            Log.d("TAG", "onResponse:call "+call);
+//                                                            call.enqueue(new Callback<CkycNoMODEL>() {
+//                                                                @Override
+//                                                                public void onResponse(Call<CkycNoMODEL> call, Response<CkycNoMODEL> response) {
+//                                                                    if (response.isSuccessful()) {
+//                                                                        CkycNoMODEL result = response.body();
+//                                                                        if (result != null) {
+//                                                                            Log.d("TAG", "onResponse1:ckyc1 " + result.getData());
 
-                                                            Call<CkycNoMODEL> call = apiInterface4.getCkycNo(GlobalClass.Token, GlobalClass.dbname, Message1, GlobalClass.Creator);
-                                                            Log.d("TAG", "onResponse:call "+call);
-                                                            call.enqueue(new Callback<CkycNoMODEL>() {
-                                                                @Override
-                                                                public void onResponse(Call<CkycNoMODEL> call, Response<CkycNoMODEL> response) {
-                                                                    if (response.isSuccessful()) {
-                                                                        CkycNoMODEL result = response.body();
-                                                                        if (result != null) {
-                                                                            Log.d("TAG", "onResponse1:ckyc1 " + result.getData());
-                                                                            customProgressDialog.dismiss();
-                                                                            FiCPopup fiCPopup = new FiCPopup("Your Ficode & Creator is Here", Message1 + " & "+ GlobalClass.Creator);
 
-                                                                            fiCPopup.show(getSupportFragmentManager(), "CustomDialog");
-                                                                        } else {
-                                                                            Toast.makeText(KYCActivity2.this, "Failed", Toast.LENGTH_SHORT).show();
-                                                                            Log.d("TAG", "onResponse1:ckyc2 Response body is null" + response.body());
-                                                                        }
-                                                                    } else {
-                                                                        Toast.makeText(KYCActivity2.this, "Failed", Toast.LENGTH_SHORT).show();
-                                                                        Log.d("TAG", "onResponse2:ckyc3 " + response.code());
-                                                                    }
-                                                                }
+                                                            customProgressDialog.dismiss();
+                                                            FiCPopup fiCPopup = new FiCPopup("Your Ficode & Creator is Here", Message1 + " & " + GlobalClass.Creator);
 
-                                                                @Override
-                                                                public void onFailure(Call<CkycNoMODEL> call, Throwable t) {
-                                                                    Log.d("TAG", "onFailure3: " + t.getMessage());
-                                                                }
-                                                            });
-                                                        }else{
+                                                            Log.d("TAG", "onResponse: "+ckycNumberExist);
+
+//                                                            if (ckycNumberExist.equals("1")) {
+                                                                Log.d("TAG", "onResponse5: "+ckycNumberExist);
+                                                                updateAdharWithCodeCreatorForCKCY(firstPageObject.getAadharID(), Message1, GlobalClass.Creator);
+                                                      //      }
+
+                                                            fiCPopup.show(getSupportFragmentManager(), "CustomDialog");
+//                                                                        } else {
+//                                                                            Toast.makeText(KYCActivity2.this, "Failed", Toast.LENGTH_SHORT).show();
+//                                                                            Log.d("TAG", "onResponse1:ckyc2 Response body is null" + response.body());
+//                                                                        }
+//                                                                    } else {
+//                                                                        Toast.makeText(KYCActivity2.this, "Failed", Toast.LENGTH_SHORT).show();
+//                                                                        Log.d("TAG", "onResponse2:ckyc3 " + response.code());
+//                                                                    }
+//                                                                }
+//
+//                                                                @Override
+//                                                                public void onFailure(Call<CkycNoMODEL> call, Throwable t) {
+//                                                                    Log.d("TAG", "onFailure3: " + t.getMessage());
+//                                                                }
+//                                                            });
+
+
+                                                        } else {
                                                             Toast.makeText(KYCActivity2.this, "Failed", Toast.LENGTH_SHORT).show();
-                                                            Log.d("TAG", "onResponse3:ckyc2 Response body is null" );
+                                                            Log.d("TAG", "onResponse3:ckyc2 Response body is null");
 
                                                         }
                                                     } else {
                                                         customProgressDialog.dismiss();
                                                         Toast.makeText(KYCActivity2.this, "Failed", Toast.LENGTH_SHORT).show();
-                                                        Log.d("TAG", "onResponse4:ckyc2 Response body is null" );
+                                                        Log.d("TAG", "onResponse4:ckyc2 Response body is null");
 
                                                     }
                                                 }
+
                                                 @Override
                                                 public void onFailure(Call<ProfilePicModel> call3, Throwable t) {
                                                     customProgressDialog.dismiss();
@@ -475,7 +499,7 @@ public class KYCActivity2 extends AppCompatActivity {
                                         } else {
                                             customProgressDialog.dismiss();
                                             Toast.makeText(KYCActivity2.this, "Failed", Toast.LENGTH_SHORT).show();
-                                            Log.d("TAG", "onResponse5:ckyc2 Response body is null" );
+                                            Log.d("TAG", "onResponse5:ckyc2 Response body is null");
 
                                         }
                                     }
@@ -489,7 +513,7 @@ public class KYCActivity2 extends AppCompatActivity {
                             } else {
                                 customProgressDialog.dismiss();
                                 Toast.makeText(KYCActivity2.this, "Failed", Toast.LENGTH_SHORT).show();
-                                Log.d("TAG", "onResponse6:ckyc6 Response body is null" );
+                                Log.d("TAG", "onResponse6:ckyc6 Response body is null");
 
 
                             }
@@ -506,30 +530,60 @@ public class KYCActivity2 extends AppCompatActivity {
         });
     }// onCreate Closed
 
+    private void updateAdharWithCodeCreatorForCKCY(String aadharid, String fiCode, String creator) {
+        Log.d("TAG", "updateAdharWithCodeCreatorForCKCY: "+aadharid+fiCode+creator);
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.connectTimeout(1, TimeUnit.MINUTES);
+        httpClient.readTimeout(1, TimeUnit.MINUTES);
+        httpClient.addInterceptor(logging);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ApiClient.BASE_URL4)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(httpClient.build())
+                .build();
+
+        ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+        Call<JsonObject> call = apiInterface.updateAdharWithCodeCreator(aadharid, String.valueOf(fiCode), creator);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                Log.d("TAG", "onResponse:ckycrps " + response.body());
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable throwable) {
+                Log.d("TAG", "onFailure: " + throwable.getMessage());
+
+            }
+        });
+    }
+
     private boolean calculations() {
         boolean A = true;
-        int maxLoanAmt=300000;
-        String maxLoanAmtStr="Three lacks";
-        Log.d("TAG", "updateBorrower: "+GlobalClass.Creator);
-        if (GlobalClass.Creator.toLowerCase().startsWith("vh")){
-            maxLoanAmt=1000000;
-            maxLoanAmtStr="Ten lacks";
+        int maxLoanAmt = 300000;
+        String maxLoanAmtStr = "Three lacks";
+        Log.d("TAG", "updateBorrower: " + GlobalClass.Creator);
+        if (GlobalClass.Creator.toLowerCase().startsWith("vh")) {
+            maxLoanAmt = 1000000;
+            maxLoanAmtStr = "Ten lacks";
         }
-        if(Objects.equals(selectedBank, "SBI") && Integer.parseInt(monthlyincome.getText().toString())>25000){
-            Utils.showSnakbar(findViewById(android.R.id.content),"Income is more for SBI");
-            A=false;
-        } else if(Integer.parseInt(loanAmount.getText().toString().trim())>maxLoanAmt ||Integer.parseInt(loanAmount.getText().toString().trim())<5000){
-            loanAmount.setError("Please Enter Loan Amount Less than "+maxLoanAmtStr+" and Greater than 5 thousand");
-            Utils.showSnakbar(findViewById(android.R.id.content),"Please enter Loan Amount Less than "+maxLoanAmtStr+" and Greater than 5 thousand");
-            A=false;
-        }else if(!GlobalClass.Creator.startsWith("VH") && ((Double.parseDouble(monthlyincome.getText().toString().trim())))<(0.15*Double.parseDouble(loanAmount.getText().toString().trim()))){
+        if (Objects.equals(selectedBank, "SBI") && Integer.parseInt(monthlyincome.getText().toString()) > 25000) {
+            Utils.showSnakbar(findViewById(android.R.id.content), "Income is more for SBI");
+            A = false;
+        } else if (Integer.parseInt(loanAmount.getText().toString().trim()) > maxLoanAmt || Integer.parseInt(loanAmount.getText().toString().trim()) < 5000) {
+            loanAmount.setError("Please Enter Loan Amount Less than " + maxLoanAmtStr + " and Greater than 5 thousand");
+            Utils.showSnakbar(findViewById(android.R.id.content), "Please enter Loan Amount Less than " + maxLoanAmtStr + " and Greater than 5 thousand");
+            A = false;
+        } else if (!GlobalClass.Creator.startsWith("VH") && ((Double.parseDouble(monthlyincome.getText().toString().trim()))) < (0.15 * Double.parseDouble(loanAmount.getText().toString().trim()))) {
             monthlyincome.setError("Income should be greater than 15% of Loan Amount");
-            Utils.showSnakbar(findViewById(android.R.id.content),"Income should be greater than 15% of Loan Amount");
-            A=false;
-        }else if(!GlobalClass.Creator.startsWith("VH") && ((Double.parseDouble(monthlyincome.getText().toString().trim()))* 0.25)>Double.parseDouble(expensemonthly.getText().toString().trim())){
+            Utils.showSnakbar(findViewById(android.R.id.content), "Income should be greater than 15% of Loan Amount");
+            A = false;
+        } else if (!GlobalClass.Creator.startsWith("VH") && ((Double.parseDouble(monthlyincome.getText().toString().trim())) * 0.25) > Double.parseDouble(expensemonthly.getText().toString().trim())) {
             expensemonthly.setError("Expense should be greater than 25 % of Income");
-            Utils.showSnakbar(findViewById(android.R.id.content),"Expense should be greater than 25 % of Income");
-            A=false;
+            Utils.showSnakbar(findViewById(android.R.id.content), "Expense should be greater than 25 % of Income");
+            A = false;
         }
         return A;
     }

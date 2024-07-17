@@ -6,6 +6,8 @@ import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidAddr;
 import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidFullName;
 import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidMName;
 import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidName;
+import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidSAddr;
+import static com.paisalo.newinternalsourcingapp.GlobalClass.validateVerhoeff;
 
 import static cz.msebera.android.httpclient.client.utils.DateUtils.formatDate;
 
@@ -20,14 +22,12 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Environment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -55,6 +55,7 @@ import com.paisalo.newinternalsourcingapp.Adapters.RangeCategoryAdapter;
 import com.paisalo.newinternalsourcingapp.Adapters.SubDistrictListAdapter;
 import com.paisalo.newinternalsourcingapp.Adapters.VillageListAdapter;
 import com.paisalo.newinternalsourcingapp.BuildConfig;
+import com.paisalo.newinternalsourcingapp.Entities.CkycNoMODEL;
 import com.paisalo.newinternalsourcingapp.Entities.ScanAadhaar.AadharData;
 import com.paisalo.newinternalsourcingapp.Entities.CityChooseListner;
 import com.paisalo.newinternalsourcingapp.Entities.DistrictChooseListner;
@@ -65,10 +66,6 @@ import com.paisalo.newinternalsourcingapp.GlobalClass;
 import com.paisalo.newinternalsourcingapp.Modelclasses.FiExtra;
 import com.paisalo.newinternalsourcingapp.Modelclasses.FiJsonObject;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFDataModel;
-import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.FiFamLoan;
-import com.paisalo.newinternalsourcingapp.ModelsRetrofit.IdVerificationModels.DLVerificationModels.Data_;
-import com.paisalo.newinternalsourcingapp.ModelsRetrofit.IdVerificationModels.DLVerificationModels.Data_1;
-import com.paisalo.newinternalsourcingapp.ModelsRetrofit.IdVerificationModels.DLVerificationModels.Data_2;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.IdVerificationModels.PANerificationModels.PanVerificationModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.IdVerificationModels.DLVerificationModels.DLVerificationModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.IdVerificationModels.VoterIdVerificationModels.VoterIdVerificationModel;
@@ -94,7 +91,6 @@ import com.paisalo.newinternalsourcingapp.Utils.Utils;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
@@ -109,18 +105,23 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 import java.util.zip.GZIPInputStream;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class KYCActivity extends AppCompatActivity implements VillageChooseListner, DistrictChooseListner, CityChooseListner, SubDistChooseListner {
 
+    int ckycNumberExist=0;
     private AlertDialog alertDialog;
     AllDataAFDataModel allDataAFDataModel;
     String timeStamp;
@@ -130,11 +131,29 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
     DatabaseClass databaseClass;
     boolean allConditionsSatisfied = true;
 
-    EditText editTextAadhar, editTextName, editTextAge, editTextDob, editTextGuardian,
-            editTextAddress1, editTextAddress2, editTextAddress3,
-            editTextCity, editTextPincode, editTextMobile, editTextPAN, editTextdrivingLicense,
-            editTextvoterIdKyc, editTextmotherfirstname, editTextmothermiddlename, editTextmotherlastname, editTextFatherFname, editTextfathermiddlename,
-            editTextfatherlastname, editTextspousefirstname, editTextspousemiddlename, editTextspouselastname;
+    EditText editTextAadhar;
+    EditText editTextName;
+    EditText editTextAge;
+    public EditText editTextDob;
+    EditText editTextGuardian;
+    EditText editTextAddress1;
+    EditText editTextAddress2;
+    EditText editTextAddress3;
+    EditText editTextCity;
+    EditText editTextPincode;
+    EditText editTextMobile;
+    EditText editTextPAN;
+    EditText editTextdrivingLicense;
+    EditText editTextvoterIdKyc;
+    EditText editTextmotherfirstname;
+    EditText editTextmothermiddlename;
+    EditText editTextmotherlastname;
+    EditText editTextFatherFname;
+    EditText editTextfathermiddlename;
+    EditText editTextfatherlastname;
+    EditText editTextspousefirstname;
+    EditText editTextspousemiddlename;
+    EditText editTextspouselastname;
 
     TextView txtVDistrictName, txtCityName, txtVillageName, txtSubDistictName;
     TextView tilPanName,tilVoterName,tilDLName;
@@ -308,18 +327,18 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 //        editTextAddress3.setText("Area Name");
 //        editTextCity.setText("City Name");
 //        editTextPincode.setText("123456");
-        editTextMobile.setText("9876543210");
+//        editTextMobile.setText("9876543210");
         editTextPAN.setText("BKXPJ1310C");
         editTextvoterIdKyc.setText("ZXD3104692");
         editTextdrivingLicense.setText("DL0420170426232");
-//        editTextvoterIdKyc.setText("");
+////        editTextvoterIdKyc.setText("");
         editTextmotherfirstname.setText("Mary");
         editTextmothermiddlename.setText("Anne");
         editTextmotherlastname.setText("Doe");
-//        editTextFatherFname.setText("Michael");
-//        editTextfathermiddlename.setText("James");
-//        editTextfatherlastname.setText("Doe");
-//        isMarriedSpinner.setSelection(1);
+////        editTextFatherFname.setText("Michael");
+////        editTextfathermiddlename.setText("James");
+////        editTextfatherlastname.setText("Doe");
+////        isMarriedSpinner.setSelection(1);
 
         GenderList.add("--Select--");
         RelationWithBorrowerList.add("--Select--");
@@ -612,13 +631,19 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         pan_Checkbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (basicDetailsFound()) {
+                    if (editTextPAN.getText().toString().trim().length() == 10) {
+                        pan_Checkbox.setChecked(false);
+                        panVerification("pancard", editTextPAN.getText().toString(), "");
 
-                if (editTextPAN.getText().toString().trim().length() == 10) {
-                    pan_Checkbox.setChecked(false);
-                    panVerification("pancard", editTextPAN.getText().toString(), "");
-                } else {
-                    tilPanName.setVisibility(View.GONE);
-                    tilPanName.setError("Enter PAN");
+                    } else {
+                        tilPanName.setVisibility(View.GONE);
+                        tilPanName.setError("Enter PAN");
+                    }
+
+                }else {
+                    Utils.alert(KYCActivity.this,"Please fill all basic details of borrower\nlike AadhaarId, Name,DOB,Gender etc then verify Voter ID");
+
                 }
 
 
@@ -634,11 +659,20 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             @Override
             public void onClick(View view) {
 
-                if (editTextvoterIdKyc.getText().toString().trim().length() < 5 || editTextvoterIdKyc.length()>16) {
-                    tilVoterName.setVisibility(View.GONE);
-                    editTextvoterIdKyc.setError("Voter Id  Should be between 5 to 15 digits");
-                } else {
-                    voterIdVerification("voterid", editTextvoterIdKyc.getText().toString(), "");
+                if (basicDetailsFound()) {
+                    if (editTextvoterIdKyc.getText().toString().trim().length() < 5 || editTextvoterIdKyc.length() > 16) {
+                        tilVoterName.setVisibility(View.GONE);
+                        editTextvoterIdKyc.setError("Voter Id  Should be between 5 to 15 digits");
+                    } else {
+                        voterIdVerification("voterid", editTextvoterIdKyc.getText().toString(), "");
+
+                        if (ckycNumberExist != 1) {
+                            getCkycByPanorVoter(editTextPAN, editTextvoterIdKyc, 3);
+                        }
+                    }
+                }else {
+                    Utils.alert(KYCActivity.this,"Please fill all basic details of borrower\nlike AadhaarId, Name,DOB,Gender etc then verify Voter ID");
+
                 }
 
 //                voterId_Checkbox.setChecked(false);
@@ -841,6 +875,120 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         });
 
     }//On Create Close
+
+    private boolean basicDetailsFound() {
+        boolean retVal = true;
+        retVal &= validateControls(editTextAadhar, editTextAadhar.getText().toString());
+        retVal &= isValidFullName(editTextName.getText().toString());
+        retVal &= validateControls(editTextDob, editTextDob.getText().toString());
+
+        return retVal;
+    }
+
+    private boolean validateControls(EditText editText, String text) {
+        boolean retVal = true;
+        editText.setError(null);
+        switch (editText.getId()) {
+            case R.id.editTextAadhar:
+                if (editText.length() != 12) {
+                    editText.setError("Should be of 12 Characters");
+                    Utils.alert(this, "Should be of 12 Characters");
+                    retVal = false;
+                } else if (!validateVerhoeff(editText.getText().toString())) {
+                    editText.setError("Aadhar is not Valid");
+                    Utils.alert(this, "Aadhar is not Valid");
+
+                    retVal = false;
+                }
+                break;
+            case R.id.editTextDob:
+                if (editText.length() < 10) {
+                    editText.setError("Should be more than 3 Characters");
+                    Utils.alert(this, "Age should be more than 3 Characters");
+
+                    retVal = false;
+                }
+                break;
+
+
+            case R.id.editTextAge:
+                try {
+                    if (text.length() == 0) text = "0";
+                    int age = Integer.parseInt(text);
+                    if (age < 21) {
+                        editText.setError("Age should be greater than 17");
+                        retVal = false;
+                    } else if (age > 57) {
+                        editText.setError("Age should be less than 66");
+                        retVal = false;
+                    }
+                    editTextDob.setEnabled(retVal);
+                } catch (Exception e) {
+                    editText.setError("");
+                }
+                break;
+        }
+        return retVal;
+    }
+
+    private void getCkycByPanorVoter(EditText editTextPAN, EditText editTextvoterIdKyc, int idType) {
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.connectTimeout(1, TimeUnit.MINUTES);
+        httpClient.readTimeout(1,TimeUnit.MINUTES);
+        httpClient.addInterceptor(logging);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ApiClient.BASE_URL4)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(httpClient.build())
+                .build();
+
+        ApiInterface apiInterface=retrofit.create(ApiInterface.class);
+
+        String dateForCKyc= null;
+
+           // dateForCKyc = formatDate(editTextDob.getText().toString(),"dd-MMM-yyyy","yyyy-MM-dd");
+            dateForCKyc = GlobalClass.formatDateString2(editTextDob.getText().toString(),"yyyy-MM-dd");
+
+        Call<CkycNoMODEL> call=apiInterface.checkCkycData(editTextAadhar.getText().toString(),editTextPAN.getText().toString().length()<1?"123":editTextPAN.getText().toString(),editTextvoterIdKyc.getText().toString(),dateForCKyc,(acspGender.getSelectedItem().toString()),editTextName.getText().toString());
+
+
+        call.enqueue(new Callback<CkycNoMODEL>() {
+            @Override
+            public void onResponse(Call<CkycNoMODEL> call, Response<CkycNoMODEL> response) {
+                Log.d("TAG", "onResponse:ckyc3 "+call+response);
+                if (response.isSuccessful() && response.code()==200){
+                    CkycNoMODEL ckycNoMODEL= response.body();
+                    if (ckycNoMODEL.getData()==-1){
+                        if(ckycNumberExist==2){
+                            ckycNumberExist=0;
+
+                        }else if(ckycNumberExist==3){
+                            ckycNumberExist=0;
+                        }else{
+                            ckycNumberExist=idType;
+                        }
+                    }else{
+                        ckycNumberExist=1;
+                    }
+                    Log.d("TAG", "onResponse:ckyc6 "+ckycNumberExist);
+
+                }else{
+                    ckycNumberExist=0;
+                    Log.d("TAG", "onResponse:ckyc7 "+response.code());
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CkycNoMODEL> call, Throwable throwable) {
+                Log.d("TAG-ckyc", "onFailure: "+throwable.getMessage());
+                ckycNumberExist=0;
+            }
+        });
+    }
+
 
     public void openAlertDialog() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
@@ -1809,6 +1957,11 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                         if (response.body().getData().getSuccess()) {
                             pan_Checkbox.setChecked(true);
                             isNameMatched="1";
+
+                            if (ckycNumberExist != 1) {
+                                getCkycByPanorVoter(editTextPAN, editTextvoterIdKyc, 2);
+                            }
+
                             Toast.makeText(KYCActivity.this, "Pan Verified", Toast.LENGTH_SHORT).show();
                             verifiedPanName = panVerificationModel.getData().getData().getData().getName();
 
@@ -2025,7 +2178,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             P_Add1 = editTextAddress1.getText().toString();
         }
 
-        if (!isValidAddr(editTextAddress2.getText().toString().isEmpty() ? "" : editTextAddress2.getText().toString())) {
+        if (!isValidSAddr(editTextAddress2.getText().toString().isEmpty() ? "" : editTextAddress2.getText().toString())) {
             editTextAddress2.setError("Invalid Address");
             Log.d("TAG", "onClickTAG6: " + "creating Json");
 
@@ -2034,7 +2187,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             P_Add2 = editTextAddress2.getText().toString();
         }
 
-        if (!isValidAddr(editTextAddress3.getText().toString().isEmpty() ? "" : editTextAddress3.getText().toString())) {
+        if (!isValidSAddr(editTextAddress3.getText().toString().isEmpty() ? "" : editTextAddress3.getText().toString())) {
 
             editTextAddress3.setError("Invalid Address");
             Log.d("TAG", "onClickTAG7: " + "creating Json");
@@ -2333,7 +2486,10 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             jsonData.setIsMarried(isMarried);
             jsonData.setGender(gender);
             jsonData.setPState(P_State);
-            jsonData.setIsNameVerify(P_State);
+            jsonData.setIsNameVerify(isNameMatched.toString());
+
+            Log.d("TAG", "createJsonObject:123456 "+isNameMatched);
+
             jsonData.setGuardianRelatnWithBorrower(guardianRelatnWithBorrower);
 
             fiExtra = new FiExtra();
@@ -2377,6 +2533,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                         intent.putExtra("subDistCode", subDistCode);
                         intent.putExtra("villageCode", villageCode);
                         intent.putExtra("stateCode", stateCode);
+                        intent.putExtra("ckycNumberExist", String.valueOf(ckycNumberExist) );
                         intent.putExtra("file", profileImageFile.getAbsolutePath());
 
                         SubmitAlert(KYCActivity.this, "Submit", "Successfully!!!");

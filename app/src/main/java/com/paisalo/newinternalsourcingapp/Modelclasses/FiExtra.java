@@ -236,9 +236,14 @@ public class FiExtra implements Serializable {
                 "\"pensionIncome\": " + pensionIncome + "," +
                 "\"interestIncome\": " + interestIncome + "," +
                 "\"otherIncome\": " + otherIncome + "," +
+
+                "\"isBorrowerHandicap\": " + isBorrowerHandicap + "," +
+
                 "\"earningMemberType\": " + (earningMemberType != null ? "\"" + earningMemberType + "\"" : null) + "," +
                 "\"earningMemberIncome\": " + earningMemberIncome + "," +
                 "\"occupation\": " + (occupation != null ? "\"" + occupation + "\"" : null) +
+
+
                 "}";
     }
 

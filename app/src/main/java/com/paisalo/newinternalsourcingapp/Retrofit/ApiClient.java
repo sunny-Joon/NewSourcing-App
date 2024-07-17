@@ -21,7 +21,9 @@ public class ApiClient {
     public static final String BASE_URL2 = "https://agra.paisalo.in:8444/ESignSBIAV1/";
     public static final String BASE_URL4 = "https://erpservice.paisalo.in:980/PDL.Mobile.API/api/";
 
-   // public static final String BASE_URL5_OCR = "https://ocr.paisalo.in:950/api/";
+
+
+    // public static final String BASE_URL5_OCR = "https://ocr.paisalo.in:950/api/";
     private static Retrofit retrofit = null;
     private static Retrofit retrofit1 = null;
     private static Retrofit retrofit2 = null;

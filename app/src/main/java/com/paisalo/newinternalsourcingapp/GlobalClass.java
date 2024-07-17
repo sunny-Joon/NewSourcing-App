@@ -18,6 +18,7 @@ import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
 import android.view.View;
 import android.view.Window;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Switch;
 
@@ -29,9 +30,11 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.paisalo.newinternalsourcingapp.Adapters.AdapterCollectionFragmentPager;
 import com.paisalo.newinternalsourcingapp.Fragments.AbsCollectionFragment;
+import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.KYCActivity;
 import com.paisalo.newinternalsourcingapp.Modelclasses.DueData;
 import com.paisalo.newinternalsourcingapp.Modelclasses.PosInstRcv;
 import com.paisalo.newinternalsourcingapp.Modelclasses.SmCode_DateModel;
+import com.paisalo.newinternalsourcingapp.Utils.Utils;
 import com.shashank.sony.fancytoastlib.FancyToast;
 
 import java.lang.reflect.Type;
@@ -46,6 +49,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class GlobalClass extends Application {
+
+    static KYCActivity kycActivity;
 
     public static String Id = "";
     public static String Creator = "";
@@ -173,6 +178,8 @@ public class GlobalClass extends Application {
         return pattern.matcher(name).matches();
     }
 
+
+
     public static boolean isValidName(String name) {
         if (name.isEmpty()) {
             return false;
@@ -181,6 +188,9 @@ public class GlobalClass extends Application {
         Pattern pattern = Pattern.compile(regex);
         return pattern.matcher(name).matches();
     }
+
+
+
 
     public static boolean isValidMName(String name) {
         if (name == null || name.trim().isEmpty()) {

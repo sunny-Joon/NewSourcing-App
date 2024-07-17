@@ -1005,6 +1005,7 @@ public class GuarantorsFragment extends Fragment {
                 Log.d("CheckXMLDATA3", "AadharData:->" + scanContent);
                 if (scanFormat != null) {
                     try {
+                        Log.d("TAG", "onActivityResult:rps" );
                         setAadharContent(scanContent);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -1105,10 +1106,12 @@ public class GuarantorsFragment extends Fragment {
     private void setAadharContent(String aadharDataString) throws Exception {
 
         if (aadharDataString.toUpperCase().contains("XML")) {
+            Log.d("TAG", "onActivityResult:rps1" );
 
             Log.d("XML printing", "AadharData:->" + aadharDataString);
             //AadharData aadharData = AadharUtils.getAadhar(aadharDataString);
             AadharData aadharData = AadharUtils.getAadhar(AadharUtils.ParseAadhar(aadharDataString));
+            Log.d("TAG", "onActivityResult:rps2" );
 
             Log.d("TAG", "setAadharContent: " + aadharData.isAadharVerified);
             if (aadharData.AadharId != null) {

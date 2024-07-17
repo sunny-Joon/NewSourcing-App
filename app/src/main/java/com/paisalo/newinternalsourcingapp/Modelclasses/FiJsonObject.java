@@ -650,6 +650,7 @@ public class FiJsonObject implements Serializable {
                 "\"Tag\": " + (tag != null ? "\"" + tag + "\"" : null) + "," +
                 "\"UserID\": " + (userID != null ? "\"" + userID + "\"" : null) + "," +
                 "\"Expense\": " + expense + "," +
+                "\"IsNameVerify\": " +(IsNameVerify != null ? "\"" + IsNameVerify + "\"" : null)  + "," +
                 "\"fiExtra\": " + (fiExtra != null ? fiExtra.toString() : null) +
                 "}";
     }

@@ -371,4 +371,12 @@ public interface ApiInterface {
     @POST("BreEligibility/SaveBreEligibility")
     Call<Void> saveBreEligibility(@Body RequestBody body);
 
+
+    @POST("UserMobile/SearchCkycNoByAadhar")
+    Call<CkycNoMODEL> checkCkycData(@Query("AadharId") String AadharId, @Query("Panno") String Panno, @Query("VoterId") String VoterId, @Query("DOB") String DOB, @Query("Gender") String Gender, @Query("Name") String Name);
+
+
+    @POST("UserMobile/UpdateSelectFi")
+    Call<JsonObject> updateAdharWithCodeCreator(@Query("Aadharid") String Aadharid,@Query("FiCode") String FiCode, @Query("Creator") String Creator);
+
 }
