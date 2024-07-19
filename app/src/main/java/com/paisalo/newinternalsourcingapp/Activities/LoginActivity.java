@@ -152,7 +152,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
         fabChatBot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this,ChatBot.class);
+                Intent intent = new Intent(LoginActivity.this,ChatActivity.class);
                 startActivity(intent);            }
         });
         view.setOnClickListener(new View.OnClickListener() {

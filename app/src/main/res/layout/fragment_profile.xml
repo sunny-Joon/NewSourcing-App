@@ -17,6 +17,32 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="15dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="end">
+                <androidx.appcompat.widget.AppCompatButton
+                    android:textColor="@color/red"
+                    android:text="PUNCH IN"
+                    android:backgroundTint="@color/white"
+                    android:id="@+id/punchin"
+                    android:textSize="12dp"
+                    android:textStyle="bold"
+                    android:layout_width="120dp"
+                    android:layout_height="40dp"/>
+                <androidx.appcompat.widget.AppCompatButton
+                    android:textColor="@color/red"
+                    android:text="PUNCH OUT"
+                    android:backgroundTint="@color/white"
+                    android:id="@+id/punchout"
+                    android:textSize="12dp"
+                    android:textStyle="bold"
+                    android:layout_width="120dp"
+                    android:layout_height="40dp"/>
+
+            </LinearLayout>
 
     <ImageView
         android:id="@+id/userimage"

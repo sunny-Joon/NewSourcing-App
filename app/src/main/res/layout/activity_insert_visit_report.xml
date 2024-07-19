@@ -182,9 +182,10 @@
 
             <Button
                 android:id="@+id/btnUploadImage"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/white"
+                android:layout_weight="1"
                 android:drawableRight="@drawable/arrow_up"
                 android:drawableTint="@color/red"
                 android:text="Click Image"
@@ -195,7 +196,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_margin="10dp"
-                android:visibility="gone"
                 android:layout_weight="1"
                 android:scaleType="fitXY" />
         </LinearLayout>
