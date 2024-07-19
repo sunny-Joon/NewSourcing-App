@@ -366,7 +366,7 @@ public interface ApiInterface {
 
     @POST("Crif/InitilizeCrif")
     Call<JsonObject> generateCrifForVehicle(@Body JsonObject jsonObject);
-    @POST("PDL.Mobile.API/api/Crif/GetBREDetails")
+    @POST("Crif/GetBREDetails")
     Call<BREResponse> getBREStatus(@Query("creator") String creator, @Query("ficode") String ficode);
 
     @POST("BreEligibility/SaveBreEligibility")

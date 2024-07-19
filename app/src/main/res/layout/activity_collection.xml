@@ -7,41 +7,42 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <!-- <com.google.android.material.tabs.TabLayout
-         android:id="@+id/tablayout"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:layout_below="@+id/appbar"
-         android:background="@color/white"
-         android:scrollIndicators="bottom"
-         app:layout_constraintEnd_toEndOf="parent"
-         app:layout_constraintStart_toStartOf="parent"
-         app:layout_constraintTop_toBottomOf="@+id/appbar"
-         app:tabBackground="@color/red"
-         app:tabGravity="center"
-         app:tabIndicatorColor="@color/white"
-         app:tabIndicatorFullWidth="true"
-         app:tabIndicatorHeight="3dp"
-         app:tabMode="auto"
-         app:tabPadding="2dp"
-         app:tabRippleColor="@color/white"
-         app:tabSelectedTextColor="@color/white"
-         app:tabTextColor="#DFBFBF"
-         app:tabUnboundedRipple="true"/>-->
+       <!-- <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tablayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/appbar"
+            android:background="@color/white"
+            android:scrollIndicators="bottom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appbar"
+            app:tabBackground="@color/red"
+            app:tabGravity="center"
+            app:tabIndicatorColor="@color/white"
+            app:tabIndicatorFullWidth="true"
+            app:tabIndicatorHeight="3dp"
+            app:tabMode="auto"
+            app:tabPadding="2dp"
+            app:tabRippleColor="@color/white"
+            app:tabSelectedTextColor="@color/white"
+            app:tabTextColor="#DFBFBF"
+            app:tabUnboundedRipple="true"/>-->
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/fragContainer"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_alignParentBottom="true"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/fragContainer"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_alignParentBottom="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
 
-    </androidx.viewpager.widget.ViewPager>
+        </androidx.viewpager.widget.ViewPager>
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
@@ -53,3 +54,4 @@
         android:src="@android:drawable/ic_dialog_email" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
