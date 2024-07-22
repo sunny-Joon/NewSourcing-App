@@ -1,9 +1,11 @@
 package com.paisalo.newinternalsourcingapp.Adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,6 +35,11 @@ public class BorrowerListAdapter extends RecyclerView.Adapter<BorrowerListAdapte
     public void onBindViewHolder(ViewHolder holder, int position) {
         BorrowerListDataModel dataModel = borrowerListDataModel.get(position);
 
+        if (dataModel.getApproved() == null || !dataModel.getApproved().equals("YES")) {
+            holder.borrowerListLL.setBackgroundColor(context.getResources().getColor(R.color.darkgrey));
+        }
+
+
         if (dataModel.getMname() == null && dataModel.getLname() == null) {
             holder.userNameTextView.setText(dataModel.getFname());
         } else if (dataModel.getMname() == null) {
@@ -56,6 +63,15 @@ public class BorrowerListAdapter extends RecyclerView.Adapter<BorrowerListAdapte
     }
 
     @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+    @Override
     public int getItemCount() {
         return borrowerListDataModel.size();
     }
@@ -67,10 +83,12 @@ public class BorrowerListAdapter extends RecyclerView.Adapter<BorrowerListAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView userNameTextView, fatherOrSpouseTextView, fiCodeTextView, mobileTextView, creatorTextView, addressTextView;
         CardView borrowerCardView;
+        LinearLayout borrowerListLL;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            borrowerCardView = itemView.findViewById(R.id.borrowerCardView);
+            borrowerListLL = itemView.findViewById(R.id.borrowerListLL);
+            borrowerCardView = itemView.findViewById(R.id.borrowerCardView1);
             userNameTextView = itemView.findViewById(R.id.userNameTextView);
             fatherOrSpouseTextView = itemView.findViewById(R.id.fatherOrSpouseTextView);
             fiCodeTextView = itemView.findViewById(R.id.fiCodeTextView);
@@ -81,11 +99,14 @@ public class BorrowerListAdapter extends RecyclerView.Adapter<BorrowerListAdapte
             borrowerCardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     int position = getAdapterPosition();
+                    if (borrowerListDataModel.get(position).getApproved() != null && borrowerListDataModel.get(position).getApproved().equals("YES") ) {
                     if (position != RecyclerView.NO_POSITION) {
                         BorrowerListDataModel dataModel = borrowerListDataModel.get(position);
                         listener.onItemClick(dataModel);
                     }
+                }
                 }
             });
         }

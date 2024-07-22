@@ -11,10 +11,25 @@ public class BorrowerListDataModel implements Serializable {
 
     @SerializedName("code")
     @Expose
-    private int code;
+    private String code;
     @SerializedName("creator")
     @Expose
     private String creator;
+    @SerializedName("sanctionedAmt")
+    @Expose
+    private Double sanctionedAmt;
+    @SerializedName("remarks")
+    @Expose
+    private Object remarks;
+    @SerializedName("dt_Fin")
+    @Expose
+    private String dtFin;
+    @SerializedName("dt_Start")
+    @Expose
+    private String dtStart;
+    @SerializedName("schCode")
+    @Expose
+    private Object schCode;
     @SerializedName("fname")
     @Expose
     private String fname;
@@ -33,45 +48,45 @@ public class BorrowerListDataModel implements Serializable {
     @SerializedName("f_lname")
     @Expose
     private String fLname;
+    @SerializedName("description")
+    @Expose
+    private Object description;
+    @SerializedName("period")
+    @Expose
+    private Object period;
+    @SerializedName("rate")
+    @Expose
+    private Double rate;
     @SerializedName("aadharid")
     @Expose
     private String aadharid;
-    @SerializedName("p_ph3")
-    @Expose
-    private String pPh3;
-    @SerializedName("sanctionedAmt")
-    @Expose
-    private int sanctionedAmt;
-    @SerializedName("dtFin")
-    @Expose
-    private String dtFin;
-    @SerializedName("period")
-    @Expose
-    private int period;
-    @SerializedName("intRate")
-    @Expose
-    private Double intRate;
     @SerializedName("addr")
     @Expose
     private String addr;
-    @SerializedName("foCode")
+    @SerializedName("p_ph3")
     @Expose
-    private String foCode;
-    @SerializedName("eSignSucceed")
+    private String pPh3;
+    @SerializedName("groupCode")
     @Expose
-    private String eSignSucceed;
-    @SerializedName("kycUuid")
-    @Expose
-    private String kycUuid;
+    private String groupCode;
     @SerializedName("cityCode")
     @Expose
     private String cityCode;
+    @SerializedName("borrLoanAppSignStatus")
+    @Expose
+    private String borrLoanAppSignStatus;
+    @SerializedName("approved")
+    @Expose
+    private String approved;
+    @SerializedName("sel")
+    @Expose
+    private String sel;
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(String code) {
         this.code = code;
     }
 
@@ -81,6 +96,46 @@ public class BorrowerListDataModel implements Serializable {
 
     public void setCreator(String creator) {
         this.creator = creator;
+    }
+
+    public Double getSanctionedAmt() {
+        return sanctionedAmt;
+    }
+
+    public void setSanctionedAmt(Double sanctionedAmt) {
+        this.sanctionedAmt = sanctionedAmt;
+    }
+
+    public Object getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(Object remarks) {
+        this.remarks = remarks;
+    }
+
+    public String getDtFin() {
+        return dtFin;
+    }
+
+    public void setDtFin(String dtFin) {
+        this.dtFin = dtFin;
+    }
+
+    public String getDtStart() {
+        return dtStart;
+    }
+
+    public void setDtStart(String dtStart) {
+        this.dtStart = dtStart;
+    }
+
+    public Object getSchCode() {
+        return schCode;
+    }
+
+    public void setSchCode(Object schCode) {
+        this.schCode = schCode;
     }
 
     public String getFname() {
@@ -131,52 +186,36 @@ public class BorrowerListDataModel implements Serializable {
         this.fLname = fLname;
     }
 
+    public Object getDescription() {
+        return description;
+    }
+
+    public void setDescription(Object description) {
+        this.description = description;
+    }
+
+    public Object getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(Object period) {
+        this.period = period;
+    }
+
+    public Double getRate() {
+        return rate;
+    }
+
+    public void setRate(Double rate) {
+        this.rate = rate;
+    }
+
     public String getAadharid() {
         return aadharid;
     }
 
     public void setAadharid(String aadharid) {
         this.aadharid = aadharid;
-    }
-
-    public String getpPh3() {
-        return pPh3;
-    }
-
-    public void setpPh3(String pPh3) {
-        this.pPh3 = pPh3;
-    }
-
-    public int getSanctionedAmt() {
-        return sanctionedAmt;
-    }
-
-    public void setSanctionedAmt(int sanctionedAmt) {
-        this.sanctionedAmt = sanctionedAmt;
-    }
-
-    public String getDtFin() {
-        return dtFin;
-    }
-
-    public void setDtFin(String dtFin) {
-        this.dtFin = dtFin;
-    }
-
-    public int getPeriod() {
-        return period;
-    }
-
-    public void setPeriod(int period) {
-        this.period = period;
-    }
-
-    public Double getIntRate() {
-        return intRate;
-    }
-
-    public void setIntRate(Double intRate) {
-        this.intRate = intRate;
     }
 
     public String getAddr() {
@@ -187,28 +226,20 @@ public class BorrowerListDataModel implements Serializable {
         this.addr = addr;
     }
 
-    public String getFoCode() {
-        return foCode;
+    public String getpPh3() {
+        return pPh3;
     }
 
-    public void setFoCode(String foCode) {
-        this.foCode = foCode;
+    public void setpPh3(String pPh3) {
+        this.pPh3 = pPh3;
     }
 
-    public String geteSignSucceed() {
-        return eSignSucceed;
+    public String getGroupCode() {
+        return groupCode;
     }
 
-    public void seteSignSucceed(String eSignSucceed) {
-        this.eSignSucceed = eSignSucceed;
-    }
-
-    public String getKycUuid() {
-        return kycUuid;
-    }
-
-    public void setKycUuid(String kycUuid) {
-        this.kycUuid = kycUuid;
+    public void setGroupCode(String groupCode) {
+        this.groupCode = groupCode;
     }
 
     public String getCityCode() {
@@ -217,6 +248,30 @@ public class BorrowerListDataModel implements Serializable {
 
     public void setCityCode(String cityCode) {
         this.cityCode = cityCode;
+    }
+
+    public String getBorrLoanAppSignStatus() {
+        return borrLoanAppSignStatus;
+    }
+
+    public void setBorrLoanAppSignStatus(String borrLoanAppSignStatus) {
+        this.borrLoanAppSignStatus = borrLoanAppSignStatus;
+    }
+
+    public String getApproved() {
+        return approved;
+    }
+
+    public void setApproved(String approved) {
+        this.approved = approved;
+    }
+
+    public String getSel() {
+        return sel;
+    }
+
+    public void setSel(String sel) {
+        this.sel = sel;
     }
 
 }
