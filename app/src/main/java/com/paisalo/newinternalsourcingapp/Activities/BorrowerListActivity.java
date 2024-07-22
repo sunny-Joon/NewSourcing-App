@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.paisalo.newinternalsourcingapp.Adapters.BorrowerListAdapter;
 import com.paisalo.newinternalsourcingapp.BuildConfig;
 import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.HouseVisitActivity1;
@@ -73,6 +74,7 @@ public class BorrowerListActivity extends AppCompatActivity implements BorrowerL
             call.enqueue(new Callback<BorrowerListModel>() {
                 @Override
                 public void onResponse(Call<BorrowerListModel> call, Response<BorrowerListModel> response) {
+                    Log.d("TAG", "onResponse: "+new Gson().toJson(response.body()));
                     if (response.isSuccessful() && response.body() != null) {
                         borrowerListDataModel = response.body().getData();
                         if (borrowerListDataModel != null && !borrowerListDataModel.isEmpty()) {
