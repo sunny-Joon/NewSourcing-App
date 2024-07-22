@@ -17,7 +17,6 @@ public class ApiClient {
   //  public static final String BASE_URL = "https://predeptest.paisalo.in:8084/PDL.SourcingApp.Api/api/";
     //Live
     public static final String BASE_URL = "https://pdlmobilelending.paisalo.in:5320/api/";
-    public static final String BASE_URL1 = "https://predeptest.paisalo.in:8084/PDL.ESign.API/api/";
     public static final String BASE_URL2 = "https://agra.paisalo.in:8444/ESignSBIAV1/";
     public static final String BASE_URL4 = "https://erpservice.paisalo.in:980/PDL.Mobile.API/api/";
 
@@ -26,12 +25,9 @@ public class ApiClient {
 
 
 
-    // public static final String BASE_URL5_OCR = "https://ocr.paisalo.in:950/api/";
     private static Retrofit retrofit = null;
-    private static Retrofit retrofit1 = null;
     private static Retrofit retrofit2 = null;
     private static Retrofit retrofit4 = null;
-    private static Retrofit retrofit5 = null;
 
     public static Retrofit getClient() {
         if (retrofit==null) {
@@ -51,6 +47,7 @@ public class ApiClient {
         }
         return retrofit;
     }
+
     public static Retrofit getClient5() {
         if (retrofit5==null) {
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
@@ -75,18 +72,7 @@ public class ApiClient {
             logging.setLevel(HttpLoggingInterceptor.Level.BODY);
             OkHttpClient.Builder httpClient = new OkHttpClient.Builder(
 
-            );
-            httpClient.connectTimeout(1, TimeUnit.MINUTES);
-            httpClient.readTimeout(1,TimeUnit.MINUTES);
-            httpClient.addInterceptor(logging);
-            retrofit1 = new Retrofit.Builder()
-                    .baseUrl("https://predeptest.paisalo.in:8084/PDL.ESign.API/api/")
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .client(httpClient.build())
-                    .build();
-        }
-        return retrofit;
-    }
+
     public static Retrofit getClient2() {
         if (retrofit2==null) {
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
@@ -106,15 +92,6 @@ public class ApiClient {
         return retrofit2;
     }
 
-        public static Retrofit getClient3(String baseUrlApi) {
-            if (retrofit == null) {
-                retrofit = new Retrofit.Builder()
-                        .baseUrl(baseUrlApi)
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
-            }
-            return retrofit;
-        }
 
     public static Retrofit getClient4() {
         if (retrofit4==null) {

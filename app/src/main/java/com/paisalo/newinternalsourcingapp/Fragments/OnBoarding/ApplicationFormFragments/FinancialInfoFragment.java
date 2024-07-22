@@ -74,7 +74,7 @@ public class FinancialInfoFragment extends Fragment {
     List<String> accountType_List = new ArrayList<>();
     ImageView calender_icon;
 
-    String fiCode, creator, tag, bankAccNumber, accOpeningDate, ifscCode, houseType, roofType, personalToilet,isAccountVerify="N",bankname,accountNo;
+    String fiCode, creator, tag, bankAccNumber,bankAddress, accOpeningDate, ifscCode, houseType, roofType, personalToilet,isAccountVerify="N",bankname,accountNo;
 
      Integer expenseforEducation,expenseforEntertainment,expenseforFood,expenseforHealth,expenseforTravelling,expenseinRent,otherexpense,rentalincome;
     AllDataAFDataModel allDataAFDataModel;
@@ -335,6 +335,13 @@ public class FinancialInfoFragment extends Fragment {
                     allConditionsSatisfied = false;
                 } else {
                     bankAccNumber = bankAccountNumber.getText().toString();
+                }
+
+                if (tvBankBranch.getText().toString().isEmpty() ) {
+                    tvBankBranch.setError("Invalid bankAddress");
+                    allConditionsSatisfied = false;
+                } else {
+                    bankAddress = tvBankBranch.getText().toString();
                 }
 
                 if (etaccount_date.getText().toString().isEmpty()) {
@@ -660,6 +667,7 @@ public class FinancialInfoFragment extends Fragment {
         jsonFinance.addProperty("tag", tag);
         jsonFinance.addProperty("bankAccountType", "SA");
         jsonFinance.addProperty("bankAccNumber", bankAccNumber);
+        jsonFinance.addProperty("bankAddress", bankAddress);
         jsonFinance.addProperty("accOpeningDate", accOpeningDate);
         jsonFinance.addProperty("ifscCode", ifscCode);
         jsonFinance.addProperty("rentalIncome", rentalincome);

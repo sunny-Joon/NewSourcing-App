@@ -425,7 +425,6 @@ public class KYCActivity2 extends AppCompatActivity {
                                             RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), file);
                                             MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
 
-                                            Log.d("TAG", "onResponse:apiclient " + ApiClient.getClient4().create(ApiInterface.class));
 
                                             Call<ProfilePicModel> call3 = apiInterface.updateprofilePic(GlobalClass.Token, GlobalClass.dbname, Message1.trim(), GlobalClass.Creator, GlobalClass.Tag, "0", body);
 
@@ -532,6 +531,7 @@ public class KYCActivity2 extends AppCompatActivity {
 
     private void updateAdharWithCodeCreatorForCKCY(String aadharid, String fiCode, String creator) {
         Log.d("TAG", "updateAdharWithCodeCreatorForCKCY: "+aadharid+fiCode+creator);
+
         ApiInterface apiInterface = ApiClient.getClient4().create(ApiInterface.class);
         Call<JsonObject> call = apiInterface.updateAdharWithCodeCreator(aadharid, String.valueOf(fiCode), creator);
         call.enqueue(new Callback<JsonObject>() {
@@ -543,7 +543,6 @@ public class KYCActivity2 extends AppCompatActivity {
             @Override
             public void onFailure(Call<JsonObject> call, Throwable throwable) {
                 Log.d("TAG", "onFailure: " + throwable.getMessage());
-
             }
         });
     }
