@@ -155,7 +155,6 @@ public class KycScanningFragment extends Fragment implements OnItemClickListener
                         if (kycDocsFlag.getData().getPanExists()) {
                             kycScanningList.add(new KYCScanningModel(name, "Borrower", "Pan", "Front", null, allDataAFDataModel.getPanNO(), "4","0",false));
                             Log.d("TAG", "DatainObjectB:" + "Pan");
-
                         }
                         if (kycDocsFlag.getData().getDrivingExists()) {
                             kycScanningList.add(new KYCScanningModel(name, "Borrower", "DL", "Front", null, allDataAFDataModel.getDrivingLic(), "15","0",false));
@@ -168,7 +167,6 @@ public class KycScanningFragment extends Fragment implements OnItemClickListener
 
           /*  kycScanningList.add(new KYCScanningModel(grName, "Gurrantor" + 1, "GAadhaar", "Back", null, allDataAFDataModel.getFiGuarantors().get(0).getAadharID(),));
             Log.d("TAG", "DatainObjectG:" + "AdhaarBack");*/
-
 
                         if (kycDocsFlag.getData().getGrDocs().get(0).getVoterExists()) {
                             kycScanningList.add(new KYCScanningModel(grName, "Gurrantor", "GVoterId", "Front", null, allDataAFDataModel.getFiGuarantors().get(0).getVoterID(),"5","1",false));
@@ -185,8 +183,6 @@ public class KycScanningFragment extends Fragment implements OnItemClickListener
 
                         kycRecyclerViewAdapter = new KycRecyclerViewAdapter(requireContext(), kycScanningList,   KycScanningFragment.this);
                         recyclerView.setAdapter(kycRecyclerViewAdapter);
-
-
 
                     } else {
                         Log.d("TAG", "sunny: " + "main obj is null");

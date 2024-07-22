@@ -15,6 +15,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -27,10 +28,12 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -121,7 +124,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class KYCActivity extends AppCompatActivity implements VillageChooseListner, DistrictChooseListner, CityChooseListner, SubDistChooseListner {
 
-    int ckycNumberExist=0;
+    int ckycNumberExist=0,otpVerified=0;
     private AlertDialog alertDialog;
     AllDataAFDataModel allDataAFDataModel;
     String timeStamp;
@@ -212,7 +215,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
     private Calendar calendar;
     Spinner acspGender, acspAadharState, acspRelationship, isMarriedSpinner;
 
-    CheckBox dl_Checkbox, pan_Checkbox, voterId_Checkbox;
+    CheckBox dl_Checkbox, pan_Checkbox, voterId_Checkbox,mobile_checkbox;
     protected static final byte SEPARATOR_BYTE = (byte) 255;
     protected static final int VTC_INDEX = 15;
     protected int imageStartIndex, emailMobilePresent, imageEndIndex;
@@ -283,6 +286,8 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         dl_Checkbox = findViewById(R.id.DL_checkbox);
         voterId_Checkbox = findViewById(R.id.voterID_checkbox);
         pan_Checkbox = findViewById(R.id.pan_checkbox);
+        mobile_checkbox = findViewById(R.id.mobile_checkbox);
+
 
         cityChooseListner = KYCActivity.this;
         listDistictInteraction = KYCActivity.this;
@@ -603,6 +608,27 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                 }
             }
         });
+
+        mobile_checkbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                otpVerified=0;
+              //  mobile_checkbox.setBackground(getResources().getDrawable(R.drawable.circleuncheck));
+                if (editTextMobile.getText().toString().trim().length()!=10){
+                    mobile_checkbox.setChecked(false);
+
+                    editTextMobile.setError("Please enter correct mobile number!!");
+                }else{
+
+                    mobile_checkbox.setChecked(false);
+
+                    getMobileOTP(editTextMobile.getText().toString().trim(),mobile_checkbox);
+                }
+
+            }
+        });
+
+
         dl_Checkbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -677,6 +703,23 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
 //                voterId_Checkbox.setChecked(false);
 //                voterIdVerification("voterid", editTextvoterIdKyc.getText().toString(), "");
+
+            }
+        });
+
+        editTextMobile.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                mobile_checkbox.setEnabled(true);
+//                mobile_checkbox.setChecked(false);
+//                editTextMobile.setText("");
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
 
             }
         });
@@ -876,6 +919,111 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
     }//On Create Close
 
+    private void getMobileOTP(String mobileNumber,CheckBox mobileCheckBox) {
+        customProgressDialog.show();
+        ApiInterface apiInterface = ApiClient.getClient5().create(ApiInterface.class);
+
+        Log.d("TAG", "getMobileOTP:1 "+apiInterface);
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(KYCActivity.this);
+        View dialogView = getLayoutInflater().inflate(R.layout.otp_dialog_layout, null);
+        builder.setView(dialogView);
+        Log.d("TAG", "getMobileOTP:2 ");
+        androidx.appcompat.app.AlertDialog dialogs = builder.create();
+        dialogs.setCanceledOnTouchOutside(false);
+        dialogs.setCancelable(false);
+        EditText otpEditText = dialogView.findViewById(R.id.editTextOTP);
+        Button submitButton = dialogView.findViewById(R.id.buttonSubmit);
+        ImageButton crossButtonDialog = dialogView.findViewById(R.id.crossButtonDialog);
+
+        crossButtonDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                customProgressDialog.dismiss();
+                dialogs.dismiss();
+            }
+        });
+
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+        Log.d("TAG", "getMobileOTP:3 ");
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (otpEditText.getText().toString().trim().length() != 6) {
+                    otpEditText.setError("Wrong OTP");
+                } else {
+                    Call<JsonObject> call = apiInterface.verifyOTP(mobileNumber, otpEditText.getText().toString().trim());
+                    Log.d("TAG", "onClick:call "+call);
+                    call.enqueue(new Callback<JsonObject>() {
+                        @Override
+                        public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                            Log.d("TAG", "getMobileOTP:4 ");
+                            if (response.isSuccessful()) {
+                                Log.d("TAG", "getMobileOTP:5 "+response.code());
+                                if (response.body().get("message").getAsString().equals("verified OTP")) {
+                                    Log.d("TAG", "onResponseSUNNY: "+ "hit");
+                                    mobileCheckBox.setChecked(true);
+                                   // mobile_checkbox.setChecked(true);
+                               //     mobile_checkbox.setEnabled(false);
+                                    Toast.makeText(KYCActivity.this, "OTP verified", Toast.LENGTH_SHORT).show();
+                                    otpVerified = 1;
+                                    customProgressDialog.dismiss();
+                                    dialogs.dismiss();
+                                } else {
+                                    otpEditText.setError("Wrong OTP");
+                                    Toast.makeText(KYCActivity.this, "OTP Not verified", Toast.LENGTH_SHORT).show();
+                                    mobile_checkbox.setChecked(false);
+                                   // mobile_checkbox.setEnabled(true);
+                                }
+                            } else {
+                                otpEditText.setError("Wrong OTP");
+                                Toast.makeText(KYCActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                                mobile_checkbox.setChecked(false);
+                                mobile_checkbox.setEnabled(true);
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<JsonObject> call, Throwable t) {
+                            Toast.makeText(KYCActivity.this, "Please try again!!", Toast.LENGTH_SHORT).show();
+                            mobile_checkbox.setChecked(false);
+                            mobile_checkbox.setEnabled(true);
+                        }
+                    });
+                }
+            }
+        });
+
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("MobileNo", mobileNumber);
+        jsonObject.addProperty("Language", "English");
+        jsonObject.addProperty("ContentId", "1007458689942092806");
+        Log.d("TAG", "getMobileOTP:6 ");
+        Call<JsonObject> call = apiInterface.getOtp(jsonObject);
+        Log.d("TAG", "getMobileOTP:call "+jsonObject);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+
+                if (response.isSuccessful()) {
+                    Log.d("TAG", "getMobileOTP:7 ");
+                    Log.d("TAG", "onResponse: "+response.message().toString());
+                    if (response.body().get("message").getAsString().contains("Message Send Successfully")) {
+                        dialogs.show();
+                    } else {
+                        Toast.makeText(KYCActivity.this, "Something went wrong, API Failure", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                customProgressDialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Toast.makeText(KYCActivity.this, "Something went wrong " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                customProgressDialog.dismiss();
+            }
+        });
+    }
     private boolean basicDetailsFound() {
         boolean retVal = true;
         retVal &= validateControls(editTextAadhar, editTextAadhar.getText().toString());

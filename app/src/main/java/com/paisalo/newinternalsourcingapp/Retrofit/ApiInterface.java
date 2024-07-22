@@ -2,6 +2,7 @@ package com.paisalo.newinternalsourcingapp.Retrofit;
 
 import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.Entities.CkycNoMODEL;
+import com.paisalo.newinternalsourcingapp.Modelclasses.AppAttendance;
 import com.paisalo.newinternalsourcingapp.Modelclasses.EmiCollectionModels.CollectionReportModel;
 import com.paisalo.newinternalsourcingapp.Modelclasses.PosInstRcv;
 import com.paisalo.newinternalsourcingapp.Modelclasses.PosInstRcvNew;
@@ -386,6 +387,18 @@ public interface ApiInterface {
 
     @POST("UserMobile/UpdateSelectFi")
     Call<JsonObject> updateAdharWithCodeCreator(@Query("Aadharid") String Aadharid,@Query("FiCode") String FiCode, @Query("Creator") String Creator);
+
+    @POST("LiveTrack/InsertMobileAppAttendance")
+    Call<JsonObject> updateAttendance(@Body JsonObject object);
+
+    @GET("LiveTrack/GetMobileAppAttendance")
+    Call<AppAttendance> getAttendance(@Query("UserName") String UserName);
+
+    @POST("PDL.SMS.API/api/Sms/SendSms?MessageType=otp")
+    Call<JsonObject> getOtp(@Body JsonObject jsonObject);
+
+    @GET("PDL.SMS.API/api/Sms/SendOtp")
+    Call<JsonObject> verifyOTP(@Query("MobileNo") String MobileNo,@Query("Otp") String Otp);
 
 
 

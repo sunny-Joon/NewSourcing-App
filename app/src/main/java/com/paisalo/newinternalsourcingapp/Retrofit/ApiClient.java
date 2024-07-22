@@ -20,6 +20,9 @@ public class ApiClient {
     public static final String BASE_URL2 = "https://agra.paisalo.in:8444/ESignSBIAV1/";
     public static final String BASE_URL4 = "https://erpservice.paisalo.in:980/PDL.Mobile.API/api/";
 
+    public static final String BASE_URL5 = "https://erpservice.paisalo.in:980/";
+
+
 
 
     private static Retrofit retrofit = null;
@@ -44,6 +47,31 @@ public class ApiClient {
         }
         return retrofit;
     }
+
+    public static Retrofit getClient5() {
+        if (retrofit5==null) {
+            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder(
+
+            );
+            httpClient.connectTimeout(1, TimeUnit.MINUTES);
+            httpClient.readTimeout(1,TimeUnit.MINUTES);
+            httpClient.addInterceptor(logging);
+            retrofit5 = new Retrofit.Builder()
+                    .baseUrl(BASE_URL5)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(httpClient.build())
+                    .build();
+        }
+        return retrofit5;
+    }
+    public static Retrofit getClient1() {
+        if (retrofit1==null) {
+            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder(
+
 
     public static Retrofit getClient2() {
         if (retrofit2==null) {

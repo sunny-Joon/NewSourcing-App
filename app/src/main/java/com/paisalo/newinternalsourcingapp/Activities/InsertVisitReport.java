@@ -3,6 +3,10 @@ package com.paisalo.newinternalsourcingapp.Activities;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +20,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatSpinner;
 
+import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.KYCActivity;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.Visitreportmodel;
 import com.paisalo.newinternalsourcingapp.R;
@@ -41,12 +46,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class InsertVisitReport extends AppCompatActivity {
 
+    private static final int REQUEST_IMAGE_CAPTURE = 1001;
     AppCompatSpinner acspVisitType;
     EditText etAmount,etSmcode;
     Button btnDataSave,btnUploadImage;
     ImageView clickedImage;
     private Uri uriPicture;
-    File tempCroppedImage;
+    File SaveImageFile;
     String AddressREGX="[a-zA-Z]{4}\\d{6}";
 
     @Override
@@ -71,9 +77,8 @@ public class InsertVisitReport extends AppCompatActivity {
         btnUploadImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*ImagePicker.with(InsertVisitReport.this)
-                        .cameraOnly()
-                        .start(REQUEST_TAKE_PHOTO);*/
+                Intent intent = new Intent(InsertVisitReport.this, CameraActivity.class);
+                startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
             }
         });
 
@@ -85,7 +90,7 @@ public class InsertVisitReport extends AppCompatActivity {
                     Utils.alert(InsertVisitReport.this,"Please enter correct smcode");
                 }else if(!etSmcode.getText().toString().matches("[a-zA-Z]{4}\\d{6}")){
                     Utils.alert(InsertVisitReport.this,"Please enter correct smcode");
-                }else if(tempCroppedImage==null){
+                }else if(SaveImageFile==null){
                     Utils.alert(InsertVisitReport.this,"Click Image");
                 }else if(acspVisitType.getSelectedItem().toString().equals("Recovery") ){
                     if (etAmount.getText()==null || etAmount.getText().length()<1 || Double.parseDouble(etAmount.getText().toString())<1){
@@ -117,13 +122,13 @@ public class InsertVisitReport extends AppCompatActivity {
             String longitude = String.valueOf(gpsTracker.getLongitude());
 
 
-            if (tempCroppedImage == null) {
+            if (SaveImageFile == null) {
                 Toast.makeText(this, "Please select an image", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), tempCroppedImage);
-            MultipartBody.Part imagePart = MultipartBody.Part.createFormData("Picture", tempCroppedImage.getName(), requestBody);
+            RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), SaveImageFile);
+            MultipartBody.Part imagePart = MultipartBody.Part.createFormData("Picture", SaveImageFile.getName(), requestBody);
             RequestBody visitTypeBody=RequestBody.create(MediaType.parse("multipart/form-data"),acspVisitType.getSelectedItem().toString());
             RequestBody etSmcodeBody=RequestBody.create(MediaType.parse("multipart/form-data"),etSmcode.getText().toString());
             RequestBody amountBody=RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(amount));
@@ -174,6 +179,16 @@ public class InsertVisitReport extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            if (data != null && data.hasExtra("croppedImagePath")) {
+                String croppedImagePath = data.getStringExtra("croppedImagePath");
+                SaveImageFile = new File(croppedImagePath);
+                setprofileImage(SaveImageFile);
+            }
+        }
+
+
       /*  if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
 
 
@@ -200,5 +215,11 @@ public class InsertVisitReport extends AppCompatActivity {
                 clickedImage.setVisibility(View.VISIBLE);
             }}*/
 
+    }
+
+    private void setprofileImage(File profileImageFile) {
+        Bitmap bitmap = BitmapFactory.decodeFile(profileImageFile.getAbsolutePath());
+        Drawable drawable = new BitmapDrawable(getResources(), bitmap);
+        clickedImage.setImageDrawable(drawable);
     }
 }
