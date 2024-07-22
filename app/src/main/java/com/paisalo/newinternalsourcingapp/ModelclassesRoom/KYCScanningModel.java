@@ -8,21 +8,52 @@ public class KYCScanningModel {
     private String type;
     private String docType;
     private String remarks;
+    private String checklistId;
+    private String GrNo;
+
+    public boolean isUploaded() {
+        return isUploaded;
+    }
+
+    public void setUploaded(boolean uploaded) {
+        isUploaded = uploaded;
+    }
+
+    private boolean isUploaded;
     private File file;
 
     private String docId;
 
-    public KYCScanningModel(String name, String type, String docType, String remarks, File file, String docId) {
+    public KYCScanningModel(String name, String type, String docType, String remarks, File file, String docId,String checklistId,String GrNo,boolean isUploaded) {
         this.name = name;
         this.type = type;
         this.docType = docType;
         this.remarks = remarks;
         this.file = file;
         this.docId = docId;
+        this.checklistId = checklistId;
+        this.GrNo = GrNo;
+        this.isUploaded = isUploaded;
+    }
+
+    public String getGrNo() {
+        return GrNo;
+    }
+
+    public void setGrNo(String grNo) {
+        GrNo = grNo;
     }
 
     public File getFile() {
         return file;
+    }
+
+    public String getChecklistId() {
+        return checklistId;
+    }
+
+    public void setChecklistId(String checklistId) {
+        this.checklistId = checklistId;
     }
 
     public void setFile(File file) {

@@ -932,19 +932,8 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
     }
 
     private void getCkycByPanorVoter(EditText editTextPAN, EditText editTextvoterIdKyc, int idType) {
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-        httpClient.connectTimeout(1, TimeUnit.MINUTES);
-        httpClient.readTimeout(1,TimeUnit.MINUTES);
-        httpClient.addInterceptor(logging);
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(ApiClient.BASE_URL4)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(httpClient.build())
-                .build();
 
-        ApiInterface apiInterface=retrofit.create(ApiInterface.class);
+        ApiInterface apiInterface=ApiClient.getClient4().create(ApiInterface.class);
 
         String dateForCKyc= null;
 

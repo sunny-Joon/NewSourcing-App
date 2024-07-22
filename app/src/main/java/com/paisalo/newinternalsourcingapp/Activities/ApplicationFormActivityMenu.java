@@ -37,7 +37,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ApplicationFormActivityMenu extends AppCompatActivity {
+public class ApplicationFormActivityMenu extends AppCompatActivity   {
 
     CardView aadhaar,personalDetails,borrowings,guarantors,kycScanning,financialInfo,familyIncome;
     CheckBox kycScanningCheckBox, guarantorCheckBox,borrowingsCheckBox, familyIncomeCheckBox,financialInfoCheckBox,personaldetailCheckBox,aadhaarCheckBox;

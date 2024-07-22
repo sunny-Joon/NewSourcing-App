@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,9 +25,6 @@ public class KycRecyclerViewAdapter extends RecyclerView.Adapter<KycRecyclerView
     private List<KYCScanningModel> kycScanning;
     private OnItemClickListener onItemClickListener;
 
-    public interface OnItemClickListener {
-        void onItemClick(KYCScanningModel item, int position);
-    }
 
     public KycRecyclerViewAdapter(Context context, List<KYCScanningModel> kycScanning, OnItemClickListener onItemClickListener) {
         this.context = context;
@@ -68,12 +66,14 @@ public class KycRecyclerViewAdapter extends RecyclerView.Adapter<KycRecyclerView
 
         TextView tvKycItemLayoutName, tvKycItemLayoutType, tvKycItemLayoutDocType, tvKycItemLayoutRemarks, tvKycItemLayoutAadhar;
         ImageView imgViewKycItemLayout;
+        LinearLayout mainLinearLayout;
         CardView docsCardView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             docsCardView = itemView.findViewById(R.id.docsCardView);
+            mainLinearLayout = itemView.findViewById(R.id.mainLinearLayout);
             imgViewKycItemLayout = itemView.findViewById(R.id.imgViewKycItemLayout);
             tvKycItemLayoutName = itemView.findViewById(R.id.tvKycItemLayoutName);
             tvKycItemLayoutType = itemView.findViewById(R.id.tvKycItemLayoutType);
@@ -101,7 +101,14 @@ public class KycRecyclerViewAdapter extends RecyclerView.Adapter<KycRecyclerView
                 docsCardView.setBackgroundColor(context.getResources().getColor(R.color.red));
 
             }
+            if(kycScanning.get(position).isUploaded()){
+                mainLinearLayout.setBackgroundColor(context.getResources().getColor(R.color.green));
+            }else{
+                mainLinearLayout.setBackgroundColor(context.getResources().getColor(R.color.red));
+            }
         }
     }
 }
+
+
 

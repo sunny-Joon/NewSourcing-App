@@ -22,6 +22,7 @@ import com.paisalo.newinternalsourcingapp.ModelsRetrofit.IdVerificationModels.PA
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.IdVerificationModels.DLVerificationModels.DLVerificationModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.IdVerificationModels.VoterIdVerificationModels.VoterIdVerificationModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.ImeiMappingModel;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.KycDocsFlag.KycDocsFlag;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.KycScanningModels.KycScanningModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.LiveToken;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.OCRScanModels.AdharDataResponse;
@@ -202,12 +203,13 @@ public interface ApiInterface {
 
     @Multipart
     @POST("UploadDocs/SaveFiDocsJson")
-    Call<JsonObject> saveDocKyc(@Header("Authorization") String token, @Header("dbname") String dbname,
+    Call<JsonObject> saveDocKyc(@Header("Authorization") String token,
+                                @Header("dbname") String dbname,
                                 @Part MultipartBody.Part Document,
-                                @Part("ficode") RequestBody ficode,
-                                @Part("DbName") RequestBody DbName,
-                                @Part("Creator") RequestBody Creator,
+                                @Part("DbName") RequestBody Dbname,
+                                @Part("Creator") RequestBody creator,
                                 @Part("FiTag") RequestBody FiTag,
+                                @Part("FiCode") RequestBody FiCode,
                                 @Part("CheckListId") RequestBody CheckListId,
                                 @Part("Remarks") RequestBody Remarks,
                                 @Part("UserId") RequestBody UserId,
@@ -313,6 +315,12 @@ public interface ApiInterface {
                                 @retrofit2.http.Header("dbname") String dbName,
                                 @Body JsonObject jsonObject);
 
+    @GET("POSFI/getFiUploadedDocs")
+    Call<KycDocsFlag> DocsFlag(@Header("Authorization") String token,
+                               @Header("dbname") String dbName,
+                               @Query("ficode") String ficode,
+                               @Query("creator") String creator);
+
 
     @POST("DocESignLoanApplication/DownloadUnSignedDoc")
     Call<ResponseBody> DownloadDocFirstEsign(@Header("Authorization") String token,
@@ -378,5 +386,7 @@ public interface ApiInterface {
 
     @POST("UserMobile/UpdateSelectFi")
     Call<JsonObject> updateAdharWithCodeCreator(@Query("Aadharid") String Aadharid,@Query("FiCode") String FiCode, @Query("Creator") String Creator);
+
+
 
 }
