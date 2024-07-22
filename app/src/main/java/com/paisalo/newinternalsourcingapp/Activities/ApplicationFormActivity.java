@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.paisalo.newinternalsourcingapp.Adapters.OnItemClickListener;
 import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.ApplicationFormFragments.AadhaarFragment;
 import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.ApplicationFormFragments.FamilyBorrowingsFragment;
 import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.ApplicationFormFragments.FamilyMembersIncomeFragment;
@@ -20,6 +22,7 @@ import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.ApplicationFormFr
 import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.ApplicationFormFragments.GuarantorsFragment;
 import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.ApplicationFormFragments.KycScanningFragment;
 import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.ApplicationFormFragments.PersonalDetailsFragment;
+import com.paisalo.newinternalsourcingapp.ModelclassesRoom.KYCScanningModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFDataModel;
 import com.paisalo.newinternalsourcingapp.R;
 
@@ -97,6 +100,8 @@ public class ApplicationFormActivity extends AppCompatActivity {
                 return new AadhaarFragment(allDataAFDataModel);
         }
     }
+
+
 
     private static class MyPagerAdapter extends FragmentStateAdapter {
 
