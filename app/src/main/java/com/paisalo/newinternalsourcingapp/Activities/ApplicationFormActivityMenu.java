@@ -235,30 +235,23 @@ public class ApplicationFormActivityMenu extends AppCompatActivity   {
 
                         if (allDataAFDataModel != null) {
 
-                          /*  fiExtra = allDataAFDataModel.getFiExtra();
-
-                            fiExtraBankBo = allDataAFDataModel.getFiExtraBankBo();
-                            fiFamExpenses = allDataAFDataModel.getFiFamExpenses();
-                            fiFamLoan = allDataAFDataModel.getFiFamLoans();
-                            fiFamMem = allDataAFDataModel.getFiFamMems();
-                            fiGuarantor = allDataAFDataModel.getFiGuarantors();
-                            uploadedFiDocs = allDataAFDataModel.getUploadedFiDocsList();*/
-
-                            if(allDataAFDataModel.getoAdd1() == null){
+                            if(allDataAFDataModel.getoAdd1().isEmpty()){
                                 aadhaarCheckBox.setChecked(false);
                             } else{
+                                Log.d("TAG", "onResponse: "+ "address");
                                 aadhaarCheckBox.setChecked(true);
                             }
-
-                            if (allDataAFDataModel.getFiExtra() != null &&  allDataAFDataModel.getFiExtra().getEmaiLID() != null){
+                            if (allDataAFDataModel.getFiExtra() != null &&  !allDataAFDataModel.getFiExtra().getEmaiLID().isEmpty()){
                                 personaldetailCheckBox.setChecked(true);
+                                Log.d("TAG", "onResponse: "+ allDataAFDataModel.getFiExtra().getEmaiLID().toString());
                             }else {
                                 personaldetailCheckBox.setChecked(false);
                             }
-                            if (allDataAFDataModel.getBankAcNo() != null){
-                                financialInfoCheckBox.setChecked(true);
-                            }else {
+                            if (allDataAFDataModel.getBankAcNo().isEmpty()){
                                 financialInfoCheckBox.setChecked(false);
+                                Log.d("TAG", "onResponse: "+ "financialInfo");
+                            }else {
+                                financialInfoCheckBox.setChecked(true);
                             }
                             if(allDataAFDataModel.getFiFamMems() !=null && allDataAFDataModel.getFiFamMems().size() >0 && allDataAFDataModel.getFiFamMems().get(0).getMemName() !=null){
                                 familyIncomeCheckBox.setChecked(true);

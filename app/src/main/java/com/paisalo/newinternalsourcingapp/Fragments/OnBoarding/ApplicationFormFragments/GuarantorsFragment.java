@@ -782,7 +782,7 @@ public class GuarantorsFragment extends Fragment {
                                     Log.d("TAG", "onResponse:dob " + dob);
 
                                     try {
-                                        dob=formatDate(dob, "dd/MM/yyyy", "dd-MMM-YYYY");
+                                        dob=formatDate(dob, "dd/MM/yyyy", "dd-MM-YYYY");
                                     } catch (ParseException e) {
                                         throw new RuntimeException(e);
                                     }
