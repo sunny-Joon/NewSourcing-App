@@ -393,22 +393,7 @@ public class GuarantorsFragment extends Fragment {
                     public void onClick(View view) {
                         Intent intent = new Intent(getActivity(), CameraActivity.class);
                         startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
-                        /*Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        if (takePictureIntent.resolveActivity(getContext().getPackageManager()) != null) {
-                            File photoFile = null;
-                            try {
-                                photoFile = createImageFile();
-                            } catch (IOException ex) {
-                                ex.printStackTrace();
-                            }
-                            if (photoFile != null) {
-                                Uri photoURI = FileProvider.getUriForFile(getActivity(),
-                                        "com.paisalo.newinternalsourcingapp.provider",
-                                        photoFile);
-                                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-                            }
-                        }*/
+
                     }
 
                     private File createImageFile() throws IOException {
@@ -552,12 +537,12 @@ public class GuarantorsFragment extends Fragment {
                                 perAdd2 = etTextAddress2.getText().toString();
                             }
 
-//                            if (!isValidAddr(etTextAddress3.getText().toString().isEmpty() ? "" : etTextAddress3.getText().toString())) {
-//                                etTextAddress3.setError("Invalid Address");
-//                                allConditionsSatisfied = false;
-//                            } else {
+                            if (!isValidAddr(etTextAddress3.getText().toString().isEmpty() ? "" : etTextAddress3.getText().toString())) {
+                                etTextAddress3.setError("Invalid Address");
+                               // allConditionsSatisfied = false;
+                            } else {
                                 perAdd3 = etTextAddress3.getText().toString();
-                          //  }
+                           }
 
                             if (!isValidName(etTextCity.getText().toString().isEmpty() ? " " : etTextCity.getText().toString())) {
                                 etTextCity.setError("Invalid City");
@@ -1013,15 +998,7 @@ public class GuarantorsFragment extends Fragment {
                 }
             }
         }
-        /*else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
 
-            File imgFile = new File(currentPhotoPathBefWork);
-            if (imgFile.exists()) {
-                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                cropImage(myBitmap);
-            }
-
-        }*/
 
         else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             if (data != null && data.hasExtra("croppedImagePath")) {
@@ -1031,15 +1008,6 @@ public class GuarantorsFragment extends Fragment {
             }
         }
 
-       /* else if (requestCode == REQUEST_IMAGE_CROP && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            if (extras != null) {
-                Bitmap croppedBitmap = extras.getParcelable("data");
-                bitmap = croppedBitmap;
-                profileImageFile = bitmapToFile(bitmap);
-                setprofileImage(profileImageFile);
-            }
-        }*/
         else if (requestCode == REQUEST_ADHAARFRONT_CAPTURE && resultCode == RESULT_OK) {
             if (data != null && data.hasExtra("croppedImagePath")) {
                 String croppedImagePath = data.getStringExtra("croppedImagePath");
@@ -1053,54 +1021,6 @@ public class GuarantorsFragment extends Fragment {
                 setDataOfAdhar(adhaarBackFile, "aadharback");
             }
         }
-        /*else if (requestCode == REQUEST_PAN_CAPTURE && resultCode == RESULT_OK) {
-            if (data != null && data.hasExtra("croppedImagePath")) {
-                String croppedImagePath = data.getStringExtra("croppedImagePath");
-                panFile = new File(croppedImagePath);
-                setDataOfAdhar(panFile, "pan");
-            }
-        }*/
-
-
-        /*else if (requestCode == REQUEST_ADHAARFRONT_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            cropImage(imageBitmap);
-        } else if (requestCode == REQUEST_ADHAARFRONT_CROP && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            if (extras != null) {
-                Bitmap croppedBitmap = extras.getParcelable("data");
-                bitmap = croppedBitmap;
-                adhaarFrontFile = bitmapToFile(bitmap);
-                setDataOfAdhar(adhaarFrontFile, "aadharfront");
-            }
-        } *//*else if (requestCode == REQUEST_ADHAARBACK_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            cropImage(imageBitmap);
-        } else if (requestCode == REQUEST_ADHAARBACK_CROP && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            if (extras != null) {
-                Bitmap croppedBitmap = extras.getParcelable("data");
-                bitmap = croppedBitmap;
-                adhaarBackFile = bitmapToFile(bitmap);
-                setDataOfAdhar(adhaarBackFile, "aadharback");
-            }
-        } */
-       /* else if (requestCode == REQUEST_PAN_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            cropImage(imageBitmap);
-        }
-        else if (requestCode == REQUEST_PAN_CROP && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            if (extras != null) {
-                Bitmap croppedBitmap = extras.getParcelable("data");
-                bitmap = croppedBitmap;
-                panFile = bitmapToFile(bitmap);
-                setDataOfAdhar(panFile, "pan");
-            }
-        }*/
     }
 
     private void setAadharContent(String aadharDataString) throws Exception {
