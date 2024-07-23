@@ -80,6 +80,7 @@ public class FirstEsignActivity extends AppCompatActivity {
     String xmlString,responseUrl;
     AlertDialog alertDialog;
 
+    int esign = 1;
     private static final int APK_ESIGN_REQUEST_CODE = 404;
 
     TextView tvESignName,tvESignGuardian,tvESignMobile;
@@ -99,89 +100,109 @@ public class FirstEsignActivity extends AppCompatActivity {
         tvESignMobile = findViewById(R.id.tvESignMobile);
 
 
-
-
         Intent intent = getIntent();
         if (intent != null) {
-            borrower = (PendingESignFI) intent.getSerializableExtra(GlobalClass.ESIGN_BORROWER);
-            if (borrower != null) {
-                GlobalClass.showLottieAlertDialog(8,FirstEsignActivity.this);
 
+            if (intent.hasExtra("SecondEsign")) {
+                String path = intent.getStringExtra("SecondEsign");
 
-                tvESignName.setText(borrower.getFname().toString());
-                tvESignGuardian.setText(borrower.getfFname().toString());
-                tvESignMobile.setText(borrower.getpPh3().toString());
-                JsonObject jsonObject=new JsonObject();
-                jsonObject.addProperty("DocName", "loan_application_sample");
-            //    jsonObject.addProperty("FiCode", "272725");
-                jsonObject.addProperty("FiCode", borrower.getCode());
-                jsonObject.addProperty("FiCreator", borrower.getCreator());
-               // jsonObject.addProperty("FiCreator", "MAINPURI");
-             //   jsonObject.addProperty("UserID", "gfst005132");
-                jsonObject.addProperty("UserID", GlobalClass.Id);
-                HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-                logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-                OkHttpClient.Builder httpClient = new OkHttpClient.Builder(
-                );
-                httpClient.connectTimeout(2, TimeUnit.MINUTES);
-                httpClient.readTimeout(2,TimeUnit.MINUTES);
-                httpClient.addInterceptor(logging);
-               Retrofit retrofit2 = new Retrofit.Builder()
-                        .baseUrl("https://agra.Paisalo.in:8444/ESignSBIAV1/api/")
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .client(httpClient.build())
-                        .build();
+                borrower = (PendingESignFI) intent.getSerializableExtra(GlobalClass.ESIGN_GUARANTOR);
+                if (borrower != null) {
+                    esign = 2;
+                    Log.d("TAG", "onCreateborrower");
+                    Log.d("TAG", "onCreateborrower: "+borrower.getFname());
+                    tvESignName.setText(borrower.getFname().toString());
+                    tvESignGuardian.setText(borrower.getfFname().toString());
+                    tvESignMobile.setText(borrower.getpPh3().toString());
+                }
+                fm = getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
 
-                ApiInterface apiInterface = retrofit2.create(ApiInterface.class);
-               // Call<ResponseBody> call = apiInterface.DownloadDocFirstEsign(GlobalClass.LiveToken,jsonObject,"gzip,deflate,compress","2234514145687247","SBIPDLCOL","868368051227918");
-                Call<ResponseBody> call = apiInterface.DownloadDocFirstEsign(GlobalClass.LiveToken,jsonObject,"gzip,deflate,compress",GlobalClass.DevId,GlobalClass.DATABASE_NAME,GlobalClass.Imei);
+                Fragment frag = MuPDFFragment.newInstance(path, false);
+                ft.add(R.id.pdfview, frag);
 
-                Log.d("TAG", "onResponse0: " + GlobalClass.LiveToken+" "+ GlobalClass.dbname+" "+jsonObject.toString());
-                call.enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        Log.d("TAG", "onResponse1: " + response.body()+response.code()+response.message());
-
-                         if(response.isSuccessful()){
-                             Log.d("TAG", "onResponse2: " + response.body().contentLength());
-                             File written = writeResponseBodyToDisk(response.body());
-                             if(written==null){
-                                 Log.d("TAG", "onResponse2: " + "null");
-                                 GlobalClass.dismissLottieAlertDialog();
-
-                             }else{
-                                 String path = written.getAbsolutePath();
-
-                                 fm = getSupportFragmentManager();
-                                 FragmentTransaction ft = fm.beginTransaction();
-                                 //  for (String path:filePaths) {
-                                 Fragment frag = MuPDFFragment.newInstance(path, false);
-                                 ft.add(R.id.pdfview, frag);
-                                 //}
-                                 ft.commit();
-                                 GlobalClass.dismissLottieAlertDialog();
-
-                             }
-
-                         }else{
-                             Log.d("TAG", "onResponse3: " + "UnSuccessful");
-                             GlobalClass.dismissLottieAlertDialog();
-
-                         }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                        Log.d("TAG", "onResponse4: " + t.getMessage());
-                        GlobalClass.dismissLottieAlertDialog();
-
-                    }
-                });
-
+                ft.commit();
             } else {
+                borrower = (PendingESignFI) intent.getSerializableExtra(GlobalClass.ESIGN_BORROWER);
+                if (borrower != null) {
+                    GlobalClass.showLottieAlertDialog(8, FirstEsignActivity.this);
+
+
+                    tvESignName.setText(borrower.getFname().toString());
+                    tvESignGuardian.setText(borrower.getfFname().toString());
+                    tvESignMobile.setText(borrower.getpPh3().toString());
+                    JsonObject jsonObject = new JsonObject();
+                    jsonObject.addProperty("DocName", "loan_application_sample");
+                    //    jsonObject.addProperty("FiCode", "272725");
+                    jsonObject.addProperty("FiCode", borrower.getCode());
+                    jsonObject.addProperty("FiCreator", borrower.getCreator());
+                    // jsonObject.addProperty("FiCreator", "MAINPURI");
+                    //   jsonObject.addProperty("UserID", "gfst005132");
+                    jsonObject.addProperty("UserID", GlobalClass.Id);
+                    HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+                    logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+                    OkHttpClient.Builder httpClient = new OkHttpClient.Builder(
+                    );
+                    httpClient.connectTimeout(2, TimeUnit.MINUTES);
+                    httpClient.readTimeout(2, TimeUnit.MINUTES);
+                    httpClient.addInterceptor(logging);
+                    Retrofit retrofit2 = new Retrofit.Builder()
+                            .baseUrl("https://agra.Paisalo.in:8444/ESignSBIAV1/api/")
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .client(httpClient.build())
+                            .build();
+
+                    ApiInterface apiInterface = retrofit2.create(ApiInterface.class);
+                    // Call<ResponseBody> call = apiInterface.DownloadDocFirstEsign(GlobalClass.LiveToken,jsonObject,"gzip,deflate,compress","2234514145687247","SBIPDLCOL","868368051227918");
+                    Call<ResponseBody> call = apiInterface.DownloadDocFirstEsign(GlobalClass.LiveToken, jsonObject, "gzip,deflate,compress", GlobalClass.DevId, GlobalClass.DATABASE_NAME, GlobalClass.Imei);
+
+                    Log.d("TAG", "onResponse0: " + GlobalClass.LiveToken + " " + GlobalClass.dbname + " " + jsonObject.toString());
+                    call.enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            Log.d("TAG", "onResponse1: " + response.body() + response.code() + response.message());
+
+                            if (response.isSuccessful()) {
+                                Log.d("TAG", "onResponse2: " + response.body().contentLength());
+                                File written = writeResponseBodyToDisk(response.body());
+                                if (written == null) {
+                                    Log.d("TAG", "onResponse2: " + "null");
+                                    GlobalClass.dismissLottieAlertDialog();
+
+                                } else {
+                                    String path = written.getAbsolutePath();
+
+                                    fm = getSupportFragmentManager();
+                                    FragmentTransaction ft = fm.beginTransaction();
+
+                                    Fragment frag = MuPDFFragment.newInstance(path, false);
+                                    ft.add(R.id.pdfview, frag);
+
+                                    ft.commit();
+                                    GlobalClass.dismissLottieAlertDialog();
+
+                                }
+
+                            } else {
+                                Log.d("TAG", "onResponse3: " + "UnSuccessful");
+                                GlobalClass.dismissLottieAlertDialog();
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            Log.d("TAG", "onResponse4: " + t.getMessage());
+                            GlobalClass.dismissLottieAlertDialog();
+
+                        }
+                    });
+
+            } else{
                 Log.e("FirstEsignActivity", "Borrower object is null");
 
             }
+        }
         }
 
         btnESignProcessing = findViewById(R.id.btnESignProcessing);
@@ -240,10 +261,21 @@ public class FirstEsignActivity extends AppCompatActivity {
                     jsonObject.addProperty("Concent", getString(R.string.consent_1));
 
                     ApiInterface apiInterface = ApiClient.getClient2().create(ApiInterface.class);
-                    Call<DownloadEsignXml> call = apiInterface.getXMLforESign(GlobalClass.LiveToken, "gzip,deflate,compress", GlobalClass.DevId, "SBIPDLCOL",
-                            GlobalClass.Imei, "application/json", "application/json;charset=utf-8", "application/json", jsonObject);
-                    Log.d("TAG", "openPopup: " + jsonObject.toString());
-                    Log.d("TAG", "openPopup: " + GlobalClass.LiveToken + " " + GlobalClass.DevId + " " + GlobalClass.Imei);
+                    Call<DownloadEsignXml> call = null;
+                    if (esign == 1) {
+                         call = apiInterface.getXMLforESign(GlobalClass.LiveToken, "gzip,deflate,compress", GlobalClass.DevId, "SBIPDLCOL",
+                                GlobalClass.Imei, "application/json", "application/json;charset=utf-8", "application/json", jsonObject);
+                        Log.d("TAG", "openPopup: " + jsonObject.toString());
+                        Log.d("TAG", "openPopup: " + GlobalClass.LiveToken + " " + GlobalClass.DevId + " " + GlobalClass.Imei);
+
+                    }else if(esign ==2){
+                         call = apiInterface.getXMLforSecondESign(GlobalClass.LiveToken, "gzip,deflate,compress", GlobalClass.DevId, "SBIPDLCOL",
+                                GlobalClass.Imei, "application/json", "application/json;charset=utf-8", "application/json", jsonObject);
+                        Log.d("TAG", "openPopup: " + jsonObject.toString());
+                        Log.d("TAG", "openPopup: " + GlobalClass.LiveToken + " " + GlobalClass.DevId + " " + GlobalClass.Imei);
+
+                    }
+
 
                     call.enqueue(new Callback<DownloadEsignXml>() {
                         @Override
@@ -528,11 +560,13 @@ public class FirstEsignActivity extends AppCompatActivity {
                             borrower.seteSignSucceed("Y");
                             setResult(RESULT_OK);
 
-                            Intent intent = new Intent(FirstEsignActivity.this, CrifScore.class);
-                            intent.putExtra("FIcode", String.valueOf(borrower.getCode()));
-                            intent.putExtra("creator", borrower.getCreator());
-                            intent.putExtra("ESignerBorower",  borrower);
-                            startActivity(intent);
+                            if(esign ==1){
+                                Intent intent = new Intent(FirstEsignActivity.this, CrifScore.class);
+                                intent.putExtra("FIcode", String.valueOf(borrower.getCode()));
+                                intent.putExtra("creator", borrower.getCreator());
+                                intent.putExtra("ESignerBorower",  borrower);
+                                startActivity(intent);
+                            }
                             dlg.dismiss();
                             finish();
                         }
