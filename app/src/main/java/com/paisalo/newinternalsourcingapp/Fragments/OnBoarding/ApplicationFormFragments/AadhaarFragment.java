@@ -231,14 +231,14 @@ public class AadhaarFragment extends Fragment {
 
                 if (!isValidAddr(address2ET.getText().toString().isEmpty() ? "" : address2ET.getText().toString())) {
                     address2ET.setError("Invalid Address");
-                    allConditionsSatisfied = false;
+                  //  allConditionsSatisfied = false;
                 } else {
                     address2 = address2ET.getText().toString();
                 }
 
                 if (!isValidAddr(address3ET.getText().toString().isEmpty() ? "" : address3ET.getText().toString())) {
                     address3ET.setError("Invalid Address");
-                    allConditionsSatisfied = false;
+                   // allConditionsSatisfied = false;
                 } else {
                     address3 = address3ET.getText().toString();
                 }
