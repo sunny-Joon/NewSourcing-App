@@ -44,7 +44,9 @@ import com.paisalo.newinternalsourcingapp.ModelclassesRoom.KYCScanningModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.CreatorListModels.CreatorListModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFDataModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.FiGuarantor;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.KycDocsFlag.GrDoc;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.KycDocsFlag.KycDocsFlag;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.KycDocsFlag.KycDocsFlagDataModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.KycScanningModels.KycScanningDataModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.KycScanningModels.KycScanningModel;
 import com.paisalo.newinternalsourcingapp.R;
@@ -72,6 +74,7 @@ public class KycScanningFragment extends Fragment implements OnItemClickListener
     Button submitBtn;
     String fiCode, creator, name, grName="",rDocID;//oaadharNo,opanNo,ovoterIdNo,olicenseNo;
     int gurNo, position;
+    String adhaarFront,adhaarBack,Pan,VoterFront,VoterBack,DrivingLicense,Passbook,GadhaarFront,GPan,GVoterFront,GDrivingLicense;
 
     File ImageFile;
     List<KYCScanningModel> kycScanningList;
@@ -85,14 +88,11 @@ public class KycScanningFragment extends Fragment implements OnItemClickListener
         this.allDataAFDataModel = allDataAFDataModel;
         this.fiCode = fiCode;
         this.creator = creator;
-
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
 
@@ -103,8 +103,6 @@ public class KycScanningFragment extends Fragment implements OnItemClickListener
 
         RecyclerView recyclerView = view.findViewById(R.id.kycScanningRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-
 
         if (allDataAFDataModel != null) {
             creator = (allDataAFDataModel.getCreator() != null) ? allDataAFDataModel.getCreator() : "N/A";
@@ -131,54 +129,70 @@ public class KycScanningFragment extends Fragment implements OnItemClickListener
                 public void onResponse(Call<KycDocsFlag> call, Response<KycDocsFlag> response) {
                     if (response.isSuccessful()) {
                         kycDocsFlag = response.body();
-                        Log.d("TAG", "onResponseodc: " + kycDocsFlag);
-                        Log.d("TAG", "onResponseodc: " + kycDocsFlag.getData());
-                        Log.d("TAG", "onResponseodc: " + kycDocsFlag.getData().getGrDocs());
-                        Log.d("TAG", "onResponseodc: " + kycDocsFlag.getData().getGrDocs().get(0));
-                        Log.d("TAG", "onResponseodc: " + kycDocsFlag.getData().getGrDocs().get(0).getDrivingExists());
+                        KycDocsFlagDataModel kycDocsFlagDataModel = kycDocsFlag.getData();
+                        List<GrDoc> grDocs = kycDocsFlagDataModel.getGrDocs();
+
+                         /*adhaarFront = kycDocsFlagDataModel.getAadharPath().toString();
+                         adhaarBack = kycDocsFlagDataModel.getAadharBPath().toString();
+                         Pan = kycDocsFlagDataModel.getPanPath().toString();
+                         VoterFront = kycDocsFlagDataModel.getVoterPath().toString();
+                         VoterBack = kycDocsFlagDataModel.getVoterBPath().toString();
+                         DrivingLicense = kycDocsFlagDataModel.getDrivingPath().toString();
+                         Passbook = kycDocsFlagDataModel.getPassBookPath().toString();
+                         GadhaarFront = grDocs.get(0).getAadharPath().toString();
+                         GPan = grDocs.get(0).getPanPath().toString();
+                         GVoterFront = grDocs.get(0).getVoterPath().toString();
+                         GDrivingLicense = grDocs.get(0).getDrivingPath().toString();*/
 
                         kycScanningList = new ArrayList<>();
-                        kycScanningList.add(new KYCScanningModel(name, "Borrower", "Aadhar", "Front", null, allDataAFDataModel.getAadharID(), "1","0",false));
+
+                        kycScanningList.add(new KYCScanningModel(name, "Borrower", "Aadhar", "FRONT", null, allDataAFDataModel.getAadharID(), "1","0",kycDocsFlagDataModel.getAadharPath()==null?false:true));
                         Log.d("TAG", "DatainObjectB:" + "Adhaar front");
-                        kycScanningList.add(new KYCScanningModel(name, "Borrower", "Aadhar", "Back", null, allDataAFDataModel.getAadharID(), "27","0",false));
+                        kycScanningList.add(new KYCScanningModel(name, "Borrower", "Aadhar", "BACK", null, allDataAFDataModel.getAadharID(), "27","0",kycDocsFlagDataModel.getAadharBPath()==null?false:true));
                         Log.d("TAG", "DatainObjectB:" + "Adhaar back");
 
-                        kycScanningList.add(new KYCScanningModel(name, "Borrower", "PassBook", "FirstPage", null, "", "2","0",false));
+                        kycScanningList.add(new KYCScanningModel(name, "Borrower", "PassBook", "FRONT", null, "", "2","0",kycDocsFlagDataModel.getPassBookPath()==null?false:true));
                         Log.d("TAG", "DatainObjectB:" + "passbook");
 
                         if (kycDocsFlag.getData().getVoterExists()) {
-                            kycScanningList.add(new KYCScanningModel(name, "Borrower", "VoterId", "Front", null, allDataAFDataModel.getVoterID(), "3","0",false));
-                            kycScanningList.add(new KYCScanningModel(name, "Borrower", "VoterId", "Back", null, allDataAFDataModel.getVoterID(), "26","0",false));
+                            kycScanningList.add(new KYCScanningModel(name, "Borrower", "VoterId", "FRONT", null, allDataAFDataModel.getVoterID(), "3","0",kycDocsFlagDataModel.getVoterPath()==null?false:true));
+                            kycScanningList.add(new KYCScanningModel(name, "Borrower", "VoterId", "BACK", null, allDataAFDataModel.getVoterID(), "26","0",kycDocsFlagDataModel.getVoterBPath()==null?false:true));
                             Log.d("TAG", "DatainObjectB:" + "VoterId");
 
                         }
                         if (kycDocsFlag.getData().getPanExists()) {
-                            kycScanningList.add(new KYCScanningModel(name, "Borrower", "Pan", "Front", null, allDataAFDataModel.getPanNO(), "4","0",false));
+                            kycScanningList.add(new KYCScanningModel(name, "Borrower", "Pan", "FRONT", null, allDataAFDataModel.getPanNO(), "4","0",kycDocsFlagDataModel.getPanPath()==null?false:true));
                             Log.d("TAG", "DatainObjectB:" + "Pan");
                         }
                         if (kycDocsFlag.getData().getDrivingExists()) {
-                            kycScanningList.add(new KYCScanningModel(name, "Borrower", "DL", "Front", null, allDataAFDataModel.getDrivingLic(), "15","0",false));
+                            kycScanningList.add(new KYCScanningModel(name, "Borrower", "DL", "FRONT", null, allDataAFDataModel.getDrivingLic(), "15","0",kycDocsFlagDataModel.getDrivingPath()==null?false:true));
                             Log.d("TAG", "DatainObjectB:" + "Dl");
 
                         }
-                        kycScanningList.add(new KYCScanningModel(grName, "Gurrantor" + 1, "GAadhaar", "Front", null, allDataAFDataModel.getFiGuarantors().get(0).getAadharID(),"7","1",false));
-                        Log.d("TAG", "DatainObjectG:" + "Adhaarfront");
+
+                        if(grDocs.size() >0) {
+                            if(grDocs.get(0).getAddharExists()){
+
+                            kycScanningList.add(new KYCScanningModel(grName, "Gurrantor" + 1, "GAadhaar", "FRONT", null, allDataAFDataModel.getFiGuarantors().get(0).getAadharID(), "7", "1", grDocs.get(0).getAadharPath() == null ? false : true));
+                            Log.d("TAG", "DatainObjectG:" + "Adhaarfront");
 
 
           /*  kycScanningList.add(new KYCScanningModel(grName, "Gurrantor" + 1, "GAadhaar", "Back", null, allDataAFDataModel.getFiGuarantors().get(0).getAadharID(),));
             Log.d("TAG", "DatainObjectG:" + "AdhaarBack");*/
 
-                        if (kycDocsFlag.getData().getGrDocs().get(0).getVoterExists()) {
-                            kycScanningList.add(new KYCScanningModel(grName, "Gurrantor", "GVoterId", "Front", null, allDataAFDataModel.getFiGuarantors().get(0).getVoterID(),"5","1",false));
-                            Log.d("TAG", "DatainObjectG:" + "VoterId");
+                            if (kycDocsFlag.getData().getGrDocs().get(0).getVoterExists()) {
+                                kycScanningList.add(new KYCScanningModel(grName, "Gurrantor", "GVoterId", "FRONT", null, allDataAFDataModel.getFiGuarantors().get(0).getVoterID(), "5", "1", grDocs.get(0).getVoterPath() == null ? false : true));
+                                Log.d("TAG", "DatainObjectG:" + "VoterId");
+                            }
+                            if (kycDocsFlag.getData().getGrDocs().get(0).getPanExists()) {
+                                kycScanningList.add(new KYCScanningModel(grName, "Gurrantor", "GPan", "FRONT", null, allDataAFDataModel.getFiGuarantors().get(0).getPanNo(), "8", "1", grDocs.get(0).getPanPath() == null ? false : true));
+                                Log.d("TAG", "DatainObjectG:" + "Pan");
+                            }
+                            if (kycDocsFlag.getData().getGrDocs().get(0).getDrivingExists()) {
+                                kycScanningList.add(new KYCScanningModel(grName, "Gurrantor", "GDL", "FRONT", null, allDataAFDataModel.getFiGuarantors().get(0).getDrivingLic(), "16", "1", grDocs.get(0).getDrivingPath() == null ? false : true));
+                                Log.d("TAG", "DatainObjectG:" + "Dl");
+                            }
                         }
-                        if (kycDocsFlag.getData().getGrDocs().get(0).getPanExists()) {
-                            kycScanningList.add(new KYCScanningModel(grName, "Gurrantor", "GPan", "Front", null, allDataAFDataModel.getFiGuarantors().get(0).getPanNo(),"8","1",false));
-                            Log.d("TAG", "DatainObjectG:" + "Pan");
-                        }
-                        if (kycDocsFlag.getData().getGrDocs().get(0).getDrivingExists()) {
-                            kycScanningList.add(new KYCScanningModel(grName, "Gurrantor", "GDL", "Front", null, allDataAFDataModel.getFiGuarantors().get(0).getDrivingLic(),"16","1",false));
-                            Log.d("TAG", "DatainObjectG:" + "Dl");
                         }
 
                         kycRecyclerViewAdapter = new KycRecyclerViewAdapter(requireContext(), kycScanningList,   KycScanningFragment.this);

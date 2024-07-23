@@ -381,8 +381,8 @@ public class PersonalDetailsFragment extends Fragment {
                                 builder.setMessage("Data submitted successfully.")
                                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int id) {
-                                                Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
-                                                startActivity(intent);
+                                                /*Intent intent = new Intent(getActivity(), ApplicationFormActivityMenu.class);
+                                                startActivity(intent);*/
                                                 getActivity().finish();
                                             }
                                         });
