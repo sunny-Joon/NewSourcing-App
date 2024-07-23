@@ -93,6 +93,7 @@ public class SecondEsignActivity extends AppCompatActivity {
                 lvLoanDetails.setAdapter(adapter);
             }
         }
+
    btnLoanDetailsDownloadDoc.setOnClickListener(new View.OnClickListener() {
        @Override
        public void onClick(View v) {
@@ -173,6 +174,7 @@ public class SecondEsignActivity extends AppCompatActivity {
            });
        }
    });
+
     }
 
     private File writeResponseBodyToDisk(ResponseBody body) {
@@ -182,6 +184,10 @@ public class SecondEsignActivity extends AppCompatActivity {
             // Define the path where the file will be saved
             File pdfFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "downloaded.pdf");
             Log.d("TAG", "displayPdf2: "+ pdfFile.getAbsolutePath() );
+            if (pdfFile.exists() && pdfFile.isFile()) {
+                pdfFile.delete();
+            }
+
             if (pdfFile.exists() && pdfFile.isFile()) {
                 pdfFile.delete();
             }
