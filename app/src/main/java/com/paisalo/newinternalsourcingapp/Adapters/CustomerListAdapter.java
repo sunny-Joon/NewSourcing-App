@@ -47,7 +47,7 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
     }
 
 
-    @Override
+   /* @Override
     public void onBindViewHolder(@NonNull CustomerListAdapter.MyViewHolder holder, int position) {
         PendingESignFI data = dataModel.getPendingESignFI().get(position);
 
@@ -58,7 +58,54 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
         holder.ficodeTV.setText(String.valueOf(data.getCode()));
         holder.customerAddressTV.setText(data.getAddr());
 
+    }*/
+
+    @Override
+    public void onBindViewHolder(@NonNull CustomerListAdapter.MyViewHolder holder, int position) {
+        PendingESignFI data = dataModel.getPendingESignFI().get(position);
+
+        StringBuilder customerNameBuilder = new StringBuilder();
+        if (data.getFname() != null && !data.getFname().isEmpty()) {
+            customerNameBuilder.append(data.getFname());
+        }
+        if (data.getMname() != null && !data.getMname().isEmpty()) {
+            if (customerNameBuilder.length() > 0) {
+                customerNameBuilder.append(" ");
+            }
+            customerNameBuilder.append(data.getMname());
+        }
+        if (data.getLname() != null && !data.getLname().isEmpty()) {
+            if (customerNameBuilder.length() > 0) {
+                customerNameBuilder.append(" ");
+            }
+            customerNameBuilder.append(data.getLname());
+        }
+        holder.customerNameTextView.setText(customerNameBuilder.toString());
+
+        StringBuilder guardianNameBuilder = new StringBuilder();
+        if (data.getfFname() != null && !data.getfFname().isEmpty()) {
+            guardianNameBuilder.append(data.getfFname());
+        }
+        if (data.getfMname() != null && !data.getfMname().isEmpty()) {
+            if (guardianNameBuilder.length() > 0) {
+                guardianNameBuilder.append(" ");
+            }
+            guardianNameBuilder.append(data.getfMname());
+        }
+        if (data.getfLname() != null && !data.getfLname().isEmpty()) {
+            if (guardianNameBuilder.length() > 0) {
+                guardianNameBuilder.append(" ");
+            }
+            guardianNameBuilder.append(data.getfLname());
+        }
+        holder.guardianTV.setText(guardianNameBuilder.toString());
+
+        holder.customerMobileTV.setText(data.getpPh3());
+        holder.totalPaymentTV.setText(data.getLoanAmt());
+        holder.ficodeTV.setText(String.valueOf(data.getCode()));
+        holder.customerAddressTV.setText(data.getAddr());
     }
+
 
     @Override
     public int getItemCount() {
