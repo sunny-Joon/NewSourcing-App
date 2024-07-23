@@ -98,6 +98,7 @@ public class SecondEsignActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.d("TAG", "onClickList:2 ");
+                GlobalClass.showLottieAlertDialog(8,SecondEsignActivity.this);
 
                 JsonObject jsonObject=new JsonObject();
                 jsonObject.addProperty("DocName", "Esign");
@@ -133,13 +134,11 @@ public class SecondEsignActivity extends AppCompatActivity {
                         Log.d("TAG", "onResponse1: " + response.body()+response.code()+response.message());
 
                         if(response.isSuccessful()){
-                            Log.d("TAG", "onClickList:5 ");
-
                             Log.d("TAG", "onResponse2: " + response.body().contentLength());
                             File written = writeResponseBodyToDisk(response.body());
                             if(written==null){
                                 Log.d("TAG", "onClickList:6 ");
-
+                                GlobalClass.dismissLottieAlertDialog();
                                 Log.d("TAG", "onResponse2: " + "null");
 
                             }else{
@@ -155,11 +154,14 @@ public class SecondEsignActivity extends AppCompatActivity {
 
                                 //}
                                 ft.commit();
+                                GlobalClass.dismissLottieAlertDialog();
+
                             }
 
 
                         }else{
                             Log.d("TAG", "onClickList:8 ");
+                            GlobalClass.dismissLottieAlertDialog();
 
                             Log.d("TAG", "onResponse3: " + "UnSuccessful");
                         }
@@ -183,6 +185,10 @@ public class SecondEsignActivity extends AppCompatActivity {
         try {
             // Define the path where the file will be saved
             File pdfFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "downloaded.pdf");
+
+            if (pdfFile.exists() && pdfFile.isFile()) {
+                pdfFile.delete();
+            }
 
             InputStream inputStream = null;
             OutputStream outputStream = null;
