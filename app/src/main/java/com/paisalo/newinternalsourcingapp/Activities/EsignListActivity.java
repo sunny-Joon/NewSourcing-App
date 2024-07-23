@@ -74,6 +74,7 @@ public class EsignListActivity extends AppCompatActivity implements CustomerList
                     if (response.isSuccessful() && response.body() != null) {
                         EsignListDataModel esignListDataModel = response.body().getData();
                         if (esignListDataModel != null ) {
+
                             customerListAdapter = new CustomerListAdapter((Context) EsignListActivity.this, esignListDataModel, (CustomerListAdapter.OnItemClickListener) EsignListActivity.this);
                             recyclerView.setAdapter(customerListAdapter);
                         }

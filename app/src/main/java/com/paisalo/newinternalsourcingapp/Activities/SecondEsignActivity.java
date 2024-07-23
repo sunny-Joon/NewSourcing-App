@@ -93,88 +93,86 @@ public class SecondEsignActivity extends AppCompatActivity {
                 lvLoanDetails.setAdapter(adapter);
             }
         }
-        Log.d("TAG", "onClickList: ");
-        lvLoanDetails.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("TAG", "onClickList:2 ");
+   btnLoanDetailsDownloadDoc.setOnClickListener(new View.OnClickListener() {
+       @Override
+       public void onClick(View v) {
+           Log.d("TAG", "onClickList:2 ");
 
-                JsonObject jsonObject=new JsonObject();
-                jsonObject.addProperty("DocName", "Esign");
-                jsonObject.addProperty("dbName", "SBINEWDOC");
-               // jsonObject.addProperty("FiCode", borrower.getCode());
-                jsonObject.addProperty("FiCode", "250012");
-                jsonObject.addProperty("FiCreator", borrower.getCreator());
-                jsonObject.addProperty("UserID", GlobalClass.Id);
-                HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-                logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-                OkHttpClient.Builder httpClient = new OkHttpClient.Builder(
+           JsonObject jsonObject=new JsonObject();
+           jsonObject.addProperty("DocName", "Esign");
+           jsonObject.addProperty("dbName", "SBINEWDOC");
+           // jsonObject.addProperty("FiCode", borrower.getCode());
+           jsonObject.addProperty("FiCode", borrower.getCode());
+           jsonObject.addProperty("FiCreator", borrower.getCreator());
+           jsonObject.addProperty("UserID", GlobalClass.Id);
+           HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+           logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+           OkHttpClient.Builder httpClient = new OkHttpClient.Builder(
 
-                );
-                httpClient.connectTimeout(2, TimeUnit.MINUTES);
-                httpClient.readTimeout(2,TimeUnit.MINUTES);
-                httpClient.addInterceptor(logging);
-                Retrofit retrofit2 = new Retrofit.Builder()
-                        .baseUrl("https://agra.Paisalo.in:8444/ESignSBIAV1/api/")
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .client(httpClient.build())
-                        .build();
+           );
+           httpClient.connectTimeout(2, TimeUnit.MINUTES);
+           httpClient.readTimeout(2,TimeUnit.MINUTES);
+           httpClient.addInterceptor(logging);
+           Retrofit retrofit2 = new Retrofit.Builder()
+                   .baseUrl("https://agra.Paisalo.in:8444/ESignSBIAV1/api/")
+                   .addConverterFactory(GsonConverterFactory.create())
+                   .client(httpClient.build())
+                   .build();
 
-                ApiInterface apiInterface = retrofit2.create(ApiInterface.class);
-                Call<ResponseBody> call = apiInterface.DownloadDocSecondEsign(GlobalClass.LiveToken,jsonObject,"gzip,deflate,compress",GlobalClass.DevId,GlobalClass.DATABASE_NAME,GlobalClass.Imei);
-                Log.d("TAG", "onClickList:3 ");
+           ApiInterface apiInterface = retrofit2.create(ApiInterface.class);
+           Call<ResponseBody> call = apiInterface.DownloadDocSecondEsign(GlobalClass.LiveToken,jsonObject,"gzip,deflate,compress",GlobalClass.DevId,GlobalClass.DATABASE_NAME,GlobalClass.Imei);
+           Log.d("TAG", "onClickList:3 ");
 
-                Log.d("TAG", "onResponse1: " + GlobalClass.LiveToken+" "+ GlobalClass.dbname+" "+jsonObject.toString());
-                call.enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        Log.d("TAG", "onClickList:4 ");
+           Log.d("TAG", "onResponse1: " + GlobalClass.LiveToken+" "+ GlobalClass.dbname+" "+jsonObject.toString());
+           call.enqueue(new Callback<ResponseBody>() {
+               @Override
+               public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                   Log.d("TAG", "onClickList:4 ");
 
-                        Log.d("TAG", "onResponse1: " + response.body()+response.code()+response.message());
+                   Log.d("TAG", "onResponse1: " + response.body()+response.code()+response.message());
 
-                        if(response.isSuccessful()){
-                            Log.d("TAG", "onClickList:5 ");
+                   if(response.isSuccessful()){
+                       Log.d("TAG", "onClickList:5 ");
 
-                            Log.d("TAG", "onResponse2: " + response.body().contentLength());
-                            File written = writeResponseBodyToDisk(response.body());
-                            if(written==null){
-                                Log.d("TAG", "onClickList:6 ");
+                       Log.d("TAG", "onResponse2: " + response.body().contentLength());
+                       File written = writeResponseBodyToDisk(response.body());
+                       if(written==null){
+                           Log.d("TAG", "onClickList:6 ");
 
-                                Log.d("TAG", "onResponse2: " + "null");
+                           Log.d("TAG", "onResponse2: " + "null");
 
-                            }else{
-                                Log.d("TAG", "onClickList:7 ");
+                       }else{
+                           String path = written.getAbsolutePath();
 
-                                String path = written.getAbsolutePath();
+                           fm = getSupportFragmentManager();
+                           FragmentTransaction ft = fm.beginTransaction();
+                           //  for (String path:filePaths) {
+                           Fragment frag = MuPDFFragment.newInstance(path, false);
+                           ft.add(R.id.pdfview, frag);
+                           //}
+                           ft.commit();
+                           GlobalClass.dismissLottieAlertDialog();
 
-                                fm = getSupportFragmentManager();
-                                FragmentTransaction ft = fm.beginTransaction();
-                                //  for (String path:filePaths) {
-                                Fragment frag = MuPDFFragment.newInstance(path, false);
-                                ft.add(R.id.pdfview, frag);
-
-                                //}
-                                ft.commit();
-                            }
+                       }
 
 
-                        }else{
-                            Log.d("TAG", "onClickList:8 ");
+                   }else{
+                       Log.d("TAG", "onClickList:8 ");
 
-                            Log.d("TAG", "onResponse3: " + "UnSuccessful");
-                        }
-                    }
+                       Log.d("TAG", "onResponse3: " + "UnSuccessful");
+                   }
+               }
 
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                        Log.d("TAG", "onClickList:9 ");
+               @Override
+               public void onFailure(Call<ResponseBody> call, Throwable t) {
+                   Log.d("TAG", "onClickList:9 ");
 
-                        Log.d("TAG", "onResponse4: " + t.getMessage());
+                   Log.d("TAG", "onResponse4: " + t.getMessage());
 
-                    }
-                });
-            }
-        });
+               }
+           });
+       }
+   });
     }
 
     private File writeResponseBodyToDisk(ResponseBody body) {
@@ -183,6 +181,10 @@ public class SecondEsignActivity extends AppCompatActivity {
         try {
             // Define the path where the file will be saved
             File pdfFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "downloaded.pdf");
+            Log.d("TAG", "displayPdf2: "+ pdfFile.getAbsolutePath() );
+            if (pdfFile.exists() && pdfFile.isFile()) {
+                pdfFile.delete();
+            }
 
             InputStream inputStream = null;
             OutputStream outputStream = null;
@@ -197,6 +199,7 @@ public class SecondEsignActivity extends AppCompatActivity {
 
                 while (true) {
                     int read = inputStream.read(fileReader);
+                    Log.d("TAG", "displayPdf3: "+ "pdfFile.getAbsolutePath()" );
 
                     if (read == -1) {
                         break;
@@ -205,7 +208,7 @@ public class SecondEsignActivity extends AppCompatActivity {
                     outputStream.write(fileReader, 0, read);
                     fileSizeDownloaded += read;
 
-                    Log.d("TAG", "file download: " + fileSizeDownloaded + " of " + fileSize);
+                    Log.d("TAG", "displayPdf4: " + fileSizeDownloaded + " of " + fileSize);
                 }
 
                 outputStream.flush();
