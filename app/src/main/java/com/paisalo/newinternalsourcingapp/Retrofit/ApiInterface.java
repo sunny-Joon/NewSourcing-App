@@ -202,6 +202,17 @@ public interface ApiInterface {
                                           @Header("Accept") String Accept,
                                           @Body JsonObject jsonObject);
 
+    @POST("api/docsESignPvn/signdoc")
+    Call<DownloadEsignXml>  getXMLforSecondESign(@Header("Authorization") String token,
+                                          @Header("Content-Encoding") String Encoding,
+                                          @Header("devid") String devid,
+                                          @Header("dbname") String dbname,
+                                          @Header("imeino") String imeino,
+                                          @Header("access") String access,
+                                          @Header("content-type") String content,
+                                          @Header("Accept") String Accept,
+                                          @Body JsonObject jsonObject);
+
     @Multipart
     @POST("UploadDocs/SaveFiDocsJson")
     Call<JsonObject> saveDocKyc(@Header("Authorization") String token,

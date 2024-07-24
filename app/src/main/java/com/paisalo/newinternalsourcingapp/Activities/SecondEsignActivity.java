@@ -45,6 +45,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class SecondEsignActivity extends AppCompatActivity {
 
     FragmentManager fm;
+    FragmentTransaction ft;
     ListView lvLoanDetails;
     Button btnLoanDetailsDownloadDoc;
     private PendingESignFI borrower;
@@ -65,7 +66,8 @@ public class SecondEsignActivity extends AppCompatActivity {
         tvLoanDetailAmount = findViewById(R.id.tvLoanDetailAmount);
         tvLoanDetailPeriod = findViewById(R.id.tvLoanDetailPeriod);
         tvLoanDetailInterestRate = findViewById(R.id.tvLoanDetailInterestRate);
-
+        fm = getSupportFragmentManager();
+         ft = fm.beginTransaction();
         Intent intent = getIntent();
         if (intent != null) {
             borrower = (PendingESignFI) intent.getSerializableExtra(GlobalClass.ESIGN_BORROWER);
@@ -98,6 +100,7 @@ public class SecondEsignActivity extends AppCompatActivity {
        @Override
        public void onClick(View v) {
            Log.d("TAG", "onClickList:2 ");
+           GlobalClass.showLottieAlertDialog(8,SecondEsignActivity.this);
 
            JsonObject jsonObject=new JsonObject();
            jsonObject.addProperty("DocName", "Esign");
@@ -139,19 +142,24 @@ public class SecondEsignActivity extends AppCompatActivity {
                        File written = writeResponseBodyToDisk(response.body());
                        if(written==null){
                            Log.d("TAG", "onClickList:6 ");
+                           GlobalClass.dismissLottieAlertDialog();
 
                            Log.d("TAG", "onResponse2: " + "null");
 
                        }else{
                            String path = written.getAbsolutePath();
+                           Log.d("TAG", "onResponse2: " + path);
 
-                           fm = getSupportFragmentManager();
-                           FragmentTransaction ft = fm.beginTransaction();
-                           //  for (String path:filePaths) {
-                           Fragment frag = MuPDFFragment.newInstance(path, false);
+                           Intent intent = new Intent(SecondEsignActivity.this, FirstEsignActivity.class);
+                           // Add data to the intent
+                           intent.putExtra("SecondEsign", path);
+                           intent.putExtra(GlobalClass.ESIGN_GUARANTOR, borrower);
+
+                           startActivity(intent);
+
+                           /*Fragment frag = MuPDFFragment.newInstance(path, false);
                            ft.add(R.id.pdfview, frag);
-                           //}
-                           ft.commit();
+                           ft.commit();*/
                            GlobalClass.dismissLottieAlertDialog();
 
                        }
@@ -159,6 +167,7 @@ public class SecondEsignActivity extends AppCompatActivity {
 
                    }else{
                        Log.d("TAG", "onClickList:8 ");
+                       GlobalClass.dismissLottieAlertDialog();
 
                        Log.d("TAG", "onResponse3: " + "UnSuccessful");
                    }
@@ -184,9 +193,6 @@ public class SecondEsignActivity extends AppCompatActivity {
             // Define the path where the file will be saved
             File pdfFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "downloaded.pdf");
             Log.d("TAG", "displayPdf2: "+ pdfFile.getAbsolutePath() );
-            if (pdfFile.exists() && pdfFile.isFile()) {
-                pdfFile.delete();
-            }
 
             if (pdfFile.exists() && pdfFile.isFile()) {
                 pdfFile.delete();
