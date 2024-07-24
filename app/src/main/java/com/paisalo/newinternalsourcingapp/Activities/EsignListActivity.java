@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
-import androidx.activity.EdgeToEdge;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,7 +33,7 @@ public class EsignListActivity extends AppCompatActivity implements CustomerList
     private RecyclerView recyclerView;
     private CustomerListAdapter customerListAdapter;
     ArrayList<Guarantor> guarantorArrayList;
-    private String id, foCode, creator, areaCode;
+    private String id, BranchCode, creator, GroupCode;
 
     CustomProgressDialog customProgressDialog;
     PendingESignFI pendingESignFI;
@@ -46,9 +46,10 @@ public class EsignListActivity extends AppCompatActivity implements CustomerList
         customProgressDialog= new CustomProgressDialog(EsignListActivity.this);
         Intent intent = getIntent();
         id = intent.getStringExtra("keyName");
-        foCode = intent.getStringExtra("foCode");
+        BranchCode = intent.getStringExtra("foCode");
         creator = intent.getStringExtra("creator");
-        areaCode = intent.getStringExtra("areaCode");
+        GroupCode = intent.getStringExtra("areaCode");
+        Log.d("TAG", "onCreate: " + BranchCode +","+ GroupCode);
         Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
 
         recyclerView = findViewById(R.id.recyclerViewEsign);
@@ -64,10 +65,10 @@ public class EsignListActivity extends AppCompatActivity implements CustomerList
 
         switch (id) {
             case "FEsign":
-                call = apiInterface.PendingFEsign(GlobalClass.Token, BuildConfig.dbname, GlobalClass.Imei, foCode, areaCode, creator);
+                call = apiInterface.PendingFEsign(GlobalClass.Token, BuildConfig.dbname, GlobalClass.Imei, BranchCode, GroupCode, creator);
                 break;
             case "SEsign":
-                call = apiInterface.PendingSEsign(GlobalClass.Token, BuildConfig.dbname, GlobalClass.Imei, foCode, areaCode, creator);
+                call = apiInterface.PendingSEsign(GlobalClass.Token, BuildConfig.dbname, GlobalClass.Imei, BranchCode, GroupCode, creator);
                 break;
         }
 
@@ -78,9 +79,29 @@ public class EsignListActivity extends AppCompatActivity implements CustomerList
                     if (response.isSuccessful() && response.body() != null) {
                         customProgressDialog.dismiss();
                         EsignListDataModel esignListDataModel = response.body().getData();
-                        if (esignListDataModel != null ) {
-                            customProgressDialog.dismiss();
-                            customerListAdapter = new CustomerListAdapter((Context) EsignListActivity.this, esignListDataModel, (CustomerListAdapter.OnItemClickListener) EsignListActivity.this);
+                        if (esignListDataModel != null) {
+                            List<Guarantor> guarantors = esignListDataModel.getGuarantors();
+                            List<PendingESignFI> pendingESignFIs = esignListDataModel.getPendingESignFI();
+                            List<PendingESignFI> filteredPendingESignFIs = new ArrayList<>();
+
+                            if (pendingESignFIs != null) {
+                                for (PendingESignFI pendingESignFI : pendingESignFIs) {
+                                    if (pendingESignFI.getCityCode().toString().equals(GroupCode)) {
+                                        filteredPendingESignFIs.add(pendingESignFI);
+                                    }
+                                }
+                            }
+
+                            // Combine the lists
+                            EsignListDataModel combinedList = new EsignListDataModel();
+                            if (guarantors != null) {
+                                combinedList.setGuarantors(guarantors);
+                            }
+                            combinedList.setPendingESignFI(filteredPendingESignFIs);
+
+                            // Update the RecyclerView
+                            customerListAdapter = new CustomerListAdapter((Context) EsignListActivity.this, combinedList, (CustomerListAdapter.OnItemClickListener) EsignListActivity.this);
+
                             recyclerView.setAdapter(customerListAdapter);
                         }
                     } else {
@@ -88,6 +109,7 @@ public class EsignListActivity extends AppCompatActivity implements CustomerList
                         Log.d("BorrowerListActivity", "Response Code: " + response.code());
                     }
                 }
+
 
                 @Override
                 public void onFailure(Call<EsignListModel> call, Throwable t) {
