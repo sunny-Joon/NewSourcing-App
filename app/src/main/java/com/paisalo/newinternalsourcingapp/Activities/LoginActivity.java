@@ -215,20 +215,20 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                 username = binding.etLoginUsername.getText().toString();
                 password = binding.etLoginPassword.getText().toString();
                 GlobalClass.Id = username;
-                //customProgressDialog.show();
-                GlobalClass.showLottieAlertDialog(8,LoginActivity.this);
+                customProgressDialog.show();
+              //  GlobalClass.showLottieAlertDialog(8,LoginActivity.this);
 
                 // Check if a database is selected before validating credentials
                 if (selectDatabase1.equalsIgnoreCase("--Select--")) {
                     Toast.makeText(LoginActivity.this, "Select Database Name", Toast.LENGTH_SHORT).show();
                 } else if (GlobalClass.isValidUsername(username) && GlobalClass.isValidPassword(password)) {
                     LoginAPi(devid, BuildConfig.dbname, imei);
-                   // customProgressDialog.show();
+                   customProgressDialog.show();
                 } else {
                     Toast.makeText(LoginActivity.this, "Invalid credentials", Toast.LENGTH_SHORT).show();
-                    //customProgressDialog.dismiss();
-                    GlobalClass.dismissLottieAlertDialog();
-                    GlobalClass.showLottieAlertDialog(9,LoginActivity.this);
+                    customProgressDialog.dismiss();
+//                    GlobalClass.dismissLottieAlertDialog();
+//                    GlobalClass.showLottieAlertDialog(9,LoginActivity.this);
                 }
             }
         });

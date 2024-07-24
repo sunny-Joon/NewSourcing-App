@@ -1,27 +1,20 @@
 package com.paisalo.newinternalsourcingapp.Fragments.Profile;
 
-import static com.paisalo.newinternalsourcingapp.Utils.Utils.getAddress;
-
 import android.content.Intent;
 import android.os.Bundle;
-
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
 import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.Activities.CollectionReportActivity;
-import com.paisalo.newinternalsourcingapp.Activities.LoginActivity;
 import com.paisalo.newinternalsourcingapp.Activities.QrPayments;
 import com.paisalo.newinternalsourcingapp.Activities.ReferAndEanActivity;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
@@ -29,13 +22,8 @@ import com.paisalo.newinternalsourcingapp.Modelclasses.AppAttendance;
 import com.paisalo.newinternalsourcingapp.R;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiClient;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiInterface;
-import com.paisalo.newinternalsourcingapp.Utils.CustomProgressDialog;
 import com.paisalo.newinternalsourcingapp.Utils.Utils;
 import com.paisalo.newinternalsourcingapp.databinding.FragmentProfileBinding;
-import com.paisalo.newinternalsourcingapp.location.GpsTracker;
-
-import org.w3c.dom.Text;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -45,11 +33,11 @@ public class ProfileFragment extends Fragment {
     TextView username, creator, id, address;
     CardView cvCollectionReport, cvQrPayments;
     Button buttonprofile;
-    GpsTracker gpsTracker;
+
     AppCompatButton punchin, punchout;
     ConstraintLayout referAndEarn;
     FragmentProfileBinding binding;
-    GlobalClass globalClass;
+
 
 
     @Override
@@ -59,8 +47,8 @@ public class ProfileFragment extends Fragment {
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        globalClass = new GlobalClass();
-        gpsTracker = new GpsTracker(getContext());
+
+
         punchin = root.findViewById(R.id.punchin);
         punchout = root.findViewById(R.id.punchout);
 
@@ -130,17 +118,17 @@ public class ProfileFragment extends Fragment {
 
     private void UpdateDailyAtt(String punchStatus) {
         JsonObject jsonobject = new JsonObject();
-        jsonobject.addProperty("userName", globalClass.Id);
+        jsonobject.addProperty("userName", GlobalClass.Id);
 
         if (punchStatus.equals("PUNCH IN")) {
             jsonobject.addProperty("inTime", "2024-05-10T11:47:52.845Z");  // Use actual date and time
-            jsonobject.addProperty("inLatlon", gpsTracker.getLatitude() + "," + gpsTracker.getLongitude());
-            jsonobject.addProperty("inLocation", Utils.getAddress(gpsTracker.getLatitude(), gpsTracker.getLongitude(), getContext()));
+            jsonobject.addProperty("inLatlon", GlobalClass.Latitude + "," + GlobalClass.Longitude);
+            jsonobject.addProperty("inLocation", Utils.getAddress(GlobalClass.Latitude, GlobalClass.Longitude, getContext()));
             jsonobject.addProperty("status", "1");  // Set status to 1 for punch in
         } else {
             jsonobject.addProperty("outTime", "2024-05-10T11:47:52.845Z");  // Use actual date and time
-            jsonobject.addProperty("outLatlon", gpsTracker.getLatitude() + "," + gpsTracker.getLongitude());
-            jsonobject.addProperty("outLocation", Utils.getAddress(gpsTracker.getLatitude(), gpsTracker.getLongitude(), getContext()));
+            jsonobject.addProperty("outLatlon", GlobalClass.Latitude + "," + GlobalClass.Longitude);
+            jsonobject.addProperty("outLocation", Utils.getAddress(GlobalClass.Latitude, GlobalClass.Longitude, getContext()));
             jsonobject.addProperty("status", "0");  // Set status to 0 for punch out
         }
 
@@ -168,7 +156,7 @@ public class ProfileFragment extends Fragment {
 
     private void getDailyAtt() {
         ApiInterface apiInterface = ApiClient.getClient4().create(ApiInterface.class);
-        Call<AppAttendance> call = apiInterface.getAttendance(globalClass.Id);
+        Call<AppAttendance> call = apiInterface.getAttendance(GlobalClass.Id);
 
         call.enqueue(new Callback<AppAttendance>() {
             @Override

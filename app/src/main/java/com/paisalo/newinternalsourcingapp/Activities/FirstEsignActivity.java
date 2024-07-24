@@ -43,6 +43,7 @@ import com.paisalo.newinternalsourcingapp.R;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiClient;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiInterface;
 import com.paisalo.newinternalsourcingapp.Utils.CustomProgress;
+import com.paisalo.newinternalsourcingapp.Utils.CustomProgressDialog;
 import com.paisalo.newinternalsourcingapp.Utils.Utils;
 
 import org.json.JSONException;
@@ -79,6 +80,7 @@ public class FirstEsignActivity extends AppCompatActivity {
     Button btnESignProcessing;
     String xmlString,responseUrl;
     AlertDialog alertDialog;
+    CustomProgressDialog customProgressDialog;
 
     private static final int APK_ESIGN_REQUEST_CODE = 404;
 
@@ -92,6 +94,7 @@ public class FirstEsignActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_esign);
 
+        customProgressDialog = new CustomProgressDialog(FirstEsignActivity.this);
         getSupportActionBar().hide();
 
         tvESignName = findViewById(R.id.tvESignName);
@@ -105,8 +108,8 @@ public class FirstEsignActivity extends AppCompatActivity {
         if (intent != null) {
             borrower = (PendingESignFI) intent.getSerializableExtra(GlobalClass.ESIGN_BORROWER);
             if (borrower != null) {
-                GlobalClass.showLottieAlertDialog(8,FirstEsignActivity.this);
-
+              //  GlobalClass.showLottieAlertDialog(8,FirstEsignActivity.this);
+                customProgressDialog.show();
 
                 tvESignName.setText(borrower.getFname().toString());
                 tvESignGuardian.setText(borrower.getfFname().toString());
@@ -143,6 +146,7 @@ public class FirstEsignActivity extends AppCompatActivity {
                         Log.d("TAG", "onResponse1: " + response.body()+response.code()+response.message());
 
                          if(response.isSuccessful()){
+                             customProgressDialog.dismiss();
                              Log.d("TAG", "onResponse2: " + response.body().contentLength());
                              File written = writeResponseBodyToDisk(response.body());
                              if(written==null){
@@ -159,22 +163,22 @@ public class FirstEsignActivity extends AppCompatActivity {
                                  ft.add(R.id.pdfview, frag);
                                  //}
                                  ft.commit();
-                                 GlobalClass.dismissLottieAlertDialog();
-
+                               //  GlobalClass.dismissLottieAlertDialog();
+                                customProgressDialog.dismiss();
                              }
 
                          }else{
                              Log.d("TAG", "onResponse3: " + "UnSuccessful");
-                             GlobalClass.dismissLottieAlertDialog();
-
+                           //  GlobalClass.dismissLottieAlertDialog();
+                             customProgressDialog.dismiss();
                          }
                     }
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
                         Log.d("TAG", "onResponse4: " + t.getMessage());
-                        GlobalClass.dismissLottieAlertDialog();
-
+                     //   GlobalClass.dismissLottieAlertDialog();
+                     customProgressDialog.dismiss();
                     }
                 });
 
