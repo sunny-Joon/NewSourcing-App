@@ -20,6 +20,7 @@ import com.paisalo.newinternalsourcingapp.ModelsRetrofit.BorrowerListModels.Borr
 import com.paisalo.newinternalsourcingapp.R;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiClient;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiInterface;
+import com.paisalo.newinternalsourcingapp.Utils.CustomProgressDialog;
 
 import java.io.Serializable;
 import java.util.List;
@@ -34,6 +35,7 @@ public class BorrowerListActivity extends AppCompatActivity implements BorrowerL
     private BorrowerListAdapter borrowerListAdapter;
     private List<BorrowerListDataModel> borrowerListDataModel;
     private String id, foCode, creator, areaCode;
+    CustomProgressDialog customProgressDialog;
 
     BorrowerListDataModel adapterItem;
     @Override
@@ -41,6 +43,7 @@ public class BorrowerListActivity extends AppCompatActivity implements BorrowerL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_borrowerlist);
 
+        customProgressDialog= new CustomProgressDialog(BorrowerListActivity.this);
         getSupportActionBar().hide();
 
         Intent intent = getIntent();
@@ -57,6 +60,7 @@ public class BorrowerListActivity extends AppCompatActivity implements BorrowerL
     }
 
     private void fetchBorrowerList() {
+        customProgressDialog.show();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<BorrowerListModel> call = null;
 
@@ -76,18 +80,25 @@ public class BorrowerListActivity extends AppCompatActivity implements BorrowerL
                 public void onResponse(Call<BorrowerListModel> call, Response<BorrowerListModel> response) {
                     Log.d("TAG", "onResponse: "+new Gson().toJson(response.body()));
                     if (response.isSuccessful() && response.body() != null) {
+                        customProgressDialog.dismiss();
                         borrowerListDataModel = response.body().getData();
                         if (borrowerListDataModel != null && !borrowerListDataModel.isEmpty()) {
+                            customProgressDialog.dismiss();
                             borrowerListAdapter = new BorrowerListAdapter((Context) BorrowerListActivity.this, borrowerListDataModel, (BorrowerListAdapter.OnItemClickListener) BorrowerListActivity.this);
                             recyclerView.setAdapter(borrowerListAdapter);
                         }
+
                     } else {
+                        customProgressDialog.dismiss();
+
                         Log.d("BorrowerListActivity", "Response Code: " + response.code());
                     }
                 }
 
                 @Override
                 public void onFailure(Call<BorrowerListModel> call, Throwable t) {
+                    customProgressDialog.dismiss();
+
                     Log.d("BorrowerListActivity", "Error: " + t.getMessage());
                 }
             });
