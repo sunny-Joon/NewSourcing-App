@@ -81,7 +81,7 @@ public class GlobalClass extends Application {
             "yyyy-MM-dd",
             "dd/MM/yyyy",
             "yyyy/MM/dd",
-            // Add more formats as needed
+
     };
     static String currentFileName;
     private static ImageCapture imageCapture;
@@ -250,7 +250,7 @@ public class GlobalClass extends Application {
             {8, 7, 6, 5, 9, 3, 2, 1, 0, 4},
             {9, 8, 7, 6, 5, 4, 3, 2, 1, 0}};
 
-    // The permutation table
+
     static int[][] p = new int[][]{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
             {1, 5, 7, 6, 2, 8, 3, 0, 9, 4},
             {5, 8, 0, 3, 7, 9, 6, 1, 4, 2},
@@ -260,7 +260,7 @@ public class GlobalClass extends Application {
             {2, 7, 9, 3, 8, 0, 6, 4, 1, 5},
             {7, 0, 4, 6, 9, 1, 3, 2, 5, 8}};
 
-    // The inverse table
+
     int[] inv = {0, 4, 3, 2, 1, 5, 6, 7, 8, 9};
 
     public static boolean validateVerhoeff(String num) {
@@ -320,7 +320,7 @@ public class GlobalClass extends Application {
     }
 
     public static <E> List<E> convertToObjectArray(String jsonString, Type listType) {
-        //Gson gson = new Gson();
+
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
         List<E> eList = gson.fromJson(jsonString, listType);
         return eList;
@@ -337,14 +337,14 @@ public class GlobalClass extends Application {
 
     public static void removeItem(Context context, String propertyValueToRemove) {
         List<SmCode_DateModel> list = getList(context);
-        // Iterate through the list and remove the object based on some condition
+
         for (SmCode_DateModel obj : list) {
             if (obj.getTranDate().equals(propertyValueToRemove)) {
                 list.remove(obj);
-                break; // Break once the first matching object is removed
+                break;
             }
         }
-        saveList(context, list); // Save the modified list back to SharedPreferences
+        saveList(context, list);
     }
 
     public static void saveList(Context context, List<SmCode_DateModel> list) {
@@ -366,7 +366,7 @@ public class GlobalClass extends Application {
                     return outputFormat.format(date);
                 }
             } catch (ParseException e) {
-                // Continue to the next format
+
             }
         }
         return null;
@@ -383,7 +383,7 @@ public class GlobalClass extends Application {
                     return outputFormat.format(date);
                 }
             } catch (ParseException e) {
-                // Continue to the next format
+
             }
         }
         return null;
@@ -409,7 +409,7 @@ public class GlobalClass extends Application {
             return age;
         } catch (ParseException e) {
             e.printStackTrace();
-            return -1; // Error case
+            return -1;
         }
     }
 
@@ -449,31 +449,31 @@ public class GlobalClass extends Application {
     private static final float BLUR_RADIUS = 25.0f;
 
     public static Dialog showBlurredPopup(Context context, View view, ImageView imageView, int popupLayoutId) {
-        // Take screenshot of the provided view
+
         view.setDrawingCacheEnabled(true);
         view.buildDrawingCache(true);
         Bitmap screenshot = Bitmap.createBitmap(view.getDrawingCache());
         view.setDrawingCacheEnabled(false);
 
-        // Blur the screenshot using BlurUtils
+
         Bitmap blurredScreenshot = blurBitmap(context, screenshot, BLUR_RADIUS);
 
-        // Set the blurred image in the provided ImageView
+
         imageView.setImageBitmap(blurredScreenshot);
 
-        // Show the blurred image in a custom dialog
+
         View popupView = LayoutInflater.from(context).inflate(popupLayoutId, null);
 
-        // Create the custom dialog
+
         final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(popupView);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        // Show the popup
+
         dialog.show();
 
-        return dialog; // Return the created dialog
+        return dialog;
     }
 
     public static void dismissPopup(Dialog dialog) {
@@ -484,28 +484,21 @@ public class GlobalClass extends Application {
 
     private static Bitmap blurBitmap(Context context, Bitmap bitmap, float radius) {
 
-        // Create renderscript
         RenderScript rs = RenderScript.create(context);
 
-        // Create an allocation from the bitmap and an allocation for the blurred output
         Allocation input = Allocation.createFromBitmap(rs, bitmap);
         Allocation output = Allocation.createTyped(rs, input.getType());
 
-        // Create a blur script and set the input
         ScriptIntrinsicBlur blurScript = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs));
         blurScript.setInput(input);
 
-        // Set the blur radius and apply the blur
         blurScript.setRadius(radius);
         blurScript.forEach(output);
 
-        // Create a new bitmap for the blurred output
         Bitmap blurredBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), bitmap.getConfig());
 
-        // Copy the blurred output into the new bitmap
         output.copyTo(blurredBitmap);
 
-        // Release resources
         rs.destroy();
 
         return blurredBitmap;

@@ -303,12 +303,12 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         editTextDob.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // Do nothing before text is changed
+
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // Do nothing while text is being changed
+
             }
 
             @Override
@@ -333,13 +333,13 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 //        editTextCity.setText("City Name");
 //        editTextPincode.setText("123456");
 //        editTextMobile.setText("9876543210");
-        editTextPAN.setText("BKXPJ1310C");
-        editTextvoterIdKyc.setText("ZXD3104692");
-        editTextdrivingLicense.setText("DL0420170426232");
-////        editTextvoterIdKyc.setText("");
-        editTextmotherfirstname.setText("Mary");
-        editTextmothermiddlename.setText("Anne");
-        editTextmotherlastname.setText("Doe");
+//        editTextPAN.setText("BKXPJ1310C");
+//        editTextvoterIdKyc.setText("ZXD3104692");
+//        editTextdrivingLicense.setText("DL0420170426232");
+//        editTextvoterIdKyc.setText("");
+//        editTextmotherfirstname.setText("Mary");
+//        editTextmothermiddlename.setText("Anne");
+//        editTextmotherlastname.setText("Doe");
 ////        editTextFatherFname.setText("Michael");
 ////        editTextfathermiddlename.setText("James");
 ////        editTextfatherlastname.setText("Doe");
@@ -360,20 +360,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                 editTextmotherfirstname, editTextmothermiddlename, editTextmotherlastname, editTextFatherFname, editTextfathermiddlename,
                 editTextfatherlastname, editTextspousefirstname, editTextspousemiddlename, editTextspouselastname
         };
-       /* for (final EditText editText : editTexts) {
-            editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View view, boolean hasFocus) {
-                    if (!hasFocus) {
-                        if (isEmpty(editText)) {
-                            progressBar.incrementProgressBy(-1);
-                        } else {
-                            progressBar.incrementProgressBy(1);
-                        }
-                    }
-                }
-            });
-        }*/
+
 
         aadhaarScanner.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -483,10 +470,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                 Intent intent = new Intent(KYCActivity.this, CameraActivity.class);
                 startActivityForResult(intent, REQUEST_PAN_CAPTURE);
 
-               /* Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                    startActivityForResult(takePictureIntent, REQUEST_PAN_CAPTURE);
-                }*/
+
             }
         });
 
@@ -516,24 +500,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             acspGender.setAdapter(adapter1);
 
 
-        /*  gendreDataList = databaseClass.dao().getAllRCDataListby_catKey("gender");
-        for (RangeCategoryDataClass data : gendreDataList) {
-            String descriptionEn = data.getDescriptionEn();
-            GenderList.add(descriptionEn);
-            CustomSpinnerAdapter adapter1 = new CustomSpinnerAdapter(KYCActivity.this, android.R.layout.simple_spinner_dropdown_item, GenderList);
-            acspGender.setAdapter(adapter1);
-        }*/
-
-      /*  ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(KYCActivity.this, R.array.genter_type, android.R.layout.simple_spinner_item);
-        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        acspGender.setAdapter(adapter1);*/
-
-//                stateDataList = new ArrayList<>();
-//                RangeCategoryDataClass rangeCategoryDataClass = new RangeCategoryDataClass("--Select--", "--Select--", "--Select--", "--Select--", "--Select--", 0, "99");
-//                stateDataList.add(rangeCategoryDataClass);
-//                stateDataList.addAll(databaseClass.dao().getAllRCDataListby_catKey("state"));
-//                RangeCategoryAdapter rangeCategoryAdapter = new RangeCategoryAdapter(KYCActivity.this, stateDataList);
-//                acspAadharState.setAdapter(rangeCategoryAdapter);
 
 
         stateDataList = new ArrayList<>();
@@ -613,7 +579,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             @Override
             public void onClick(View v) {
                 otpVerified=0;
-              //  mobile_checkbox.setBackground(getResources().getDrawable(R.drawable.circleuncheck));
                 if (editTextMobile.getText().toString().trim().length()!=10){
                     mobile_checkbox.setChecked(false);
 
@@ -672,9 +637,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
                 }
 
-
-//                pan_Checkbox.setChecked(false);
-//                panVerification("pancard", editTextPAN.getText().toString(), "");
             }
         });
 
@@ -701,8 +663,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
                 }
 
-//                voterId_Checkbox.setChecked(false);
-//                voterIdVerification("voterid", editTextvoterIdKyc.getText().toString(), "");
 
             }
         });
@@ -796,7 +756,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
-                // Do nothing if nothing is selected
             }
         });
 
@@ -854,7 +813,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
-                // Do nothing if nothing is selected
+
             }
         });
 
@@ -1137,7 +1096,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         qrScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                alertDialog.dismiss(); // Dismiss the AlertDialog
+                alertDialog.dismiss();
                 IntentIntegrator scanIntegrator = new IntentIntegrator(KYCActivity.this);
                 scanIntegrator.setOrientationLocked(false);
                 scanIntegrator.initiateScan(Collections.singleton("QR_CODE"));

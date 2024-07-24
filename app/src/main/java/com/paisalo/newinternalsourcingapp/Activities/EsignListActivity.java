@@ -20,6 +20,7 @@ import com.paisalo.newinternalsourcingapp.ModelsRetrofit.EsignListModels.Pending
 import com.paisalo.newinternalsourcingapp.R;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiClient;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiInterface;
+import com.paisalo.newinternalsourcingapp.Utils.CustomProgressDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,7 @@ public class EsignListActivity extends AppCompatActivity implements CustomerList
     ArrayList<Guarantor> guarantorArrayList;
     private String id, foCode, creator, areaCode;
 
+    CustomProgressDialog customProgressDialog;
     PendingESignFI pendingESignFI;
     
     @Override
@@ -41,6 +43,7 @@ public class EsignListActivity extends AppCompatActivity implements CustomerList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_esign_list);
 
+        customProgressDialog= new CustomProgressDialog(EsignListActivity.this);
         Intent intent = getIntent();
         id = intent.getStringExtra("keyName");
         foCode = intent.getStringExtra("foCode");
@@ -55,6 +58,7 @@ public class EsignListActivity extends AppCompatActivity implements CustomerList
     }
 
     private void fetchBorrowerList() {
+        customProgressDialog.show();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<EsignListModel> call = null;
 
@@ -72,19 +76,22 @@ public class EsignListActivity extends AppCompatActivity implements CustomerList
                 @Override
                 public void onResponse(Call<EsignListModel> call, Response<EsignListModel> response) {
                     if (response.isSuccessful() && response.body() != null) {
+                        customProgressDialog.dismiss();
                         EsignListDataModel esignListDataModel = response.body().getData();
                         if (esignListDataModel != null ) {
-
+                            customProgressDialog.dismiss();
                             customerListAdapter = new CustomerListAdapter((Context) EsignListActivity.this, esignListDataModel, (CustomerListAdapter.OnItemClickListener) EsignListActivity.this);
                             recyclerView.setAdapter(customerListAdapter);
                         }
                     } else {
+                        customProgressDialog.dismiss();
                         Log.d("BorrowerListActivity", "Response Code: " + response.code());
                     }
                 }
 
                 @Override
                 public void onFailure(Call<EsignListModel> call, Throwable t) {
+                    customProgressDialog.dismiss();
                     Log.d("BorrowerListActivity", "Error: " + t.getMessage());
                 }
             });
