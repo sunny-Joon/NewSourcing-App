@@ -128,8 +128,8 @@ public class FirstEsignActivity extends AppCompatActivity {
             } else {
                 borrower = (PendingESignFI) intent.getSerializableExtra(GlobalClass.ESIGN_BORROWER);
                 if (borrower != null) {
-                    GlobalClass.showLottieAlertDialog(8, FirstEsignActivity.this);
-
+                   // GlobalClass.showLottieAlertDialog(8, FirstEsignActivity.this);
+                     customProgressDialog.show();
 
                     tvESignName.setText(borrower.getFname().toString());
                     tvESignGuardian.setText(borrower.getfFname().toString());
@@ -166,12 +166,14 @@ public class FirstEsignActivity extends AppCompatActivity {
                             Log.d("TAG", "onResponse1: " + response.body() + response.code() + response.message());
 
                             if (response.isSuccessful()) {
+                                customProgressDialog.dismiss();
                                 Log.d("TAG", "onResponse2: " + response.body().contentLength());
                                 File written = writeResponseBodyToDisk(response.body());
                                 if (written == null) {
-                                    Log.d("TAG", "onResponse2: " + "null");
-                                    GlobalClass.dismissLottieAlertDialog();
 
+                                    Log.d("TAG", "onResponse2: " + "null");
+                                    //GlobalClass.dismissLottieAlertDialog();
+                                    customProgressDialog.dismiss();
                                 } else {
                                     String path = written.getAbsolutePath();
 
@@ -182,22 +184,22 @@ public class FirstEsignActivity extends AppCompatActivity {
                                     ft.add(R.id.pdfview, frag);
 
                                     ft.commit();
-                                    GlobalClass.dismissLottieAlertDialog();
-
+                                   // GlobalClass.dismissLottieAlertDialog();
+                                    customProgressDialog.dismiss();
                                 }
 
                             } else {
                                 Log.d("TAG", "onResponse3: " + "UnSuccessful");
-                                GlobalClass.dismissLottieAlertDialog();
-
+                              //  GlobalClass.dismissLottieAlertDialog();
+                                customProgressDialog.dismiss();
                             }
                         }
 
                         @Override
                         public void onFailure(Call<ResponseBody> call, Throwable t) {
                             Log.d("TAG", "onResponse4: " + t.getMessage());
-                            GlobalClass.dismissLottieAlertDialog();
-
+                           // GlobalClass.dismissLottieAlertDialog();
+                            customProgressDialog.dismiss();
                         }
                     });
 
