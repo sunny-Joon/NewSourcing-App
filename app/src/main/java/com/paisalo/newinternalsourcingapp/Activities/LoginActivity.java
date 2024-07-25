@@ -21,6 +21,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -97,18 +98,91 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
     String devid = "2234514145687247",imei = "868368051227918";//GRST000223;
  // String devid = "4547494815494248",imei = "861556040245135"; //GRST003454
 
-    private static final String[] PERMISSIONS = {
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.CAMERA,
-        //   Manifest.permission.WRITE_EXTERNAL_STORAGE
-    };
+
+    private static final ArrayList<String> PERMISSIONS = new ArrayList<String>();
+    private final ActivityResultLauncher<String[]> requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), permissions -> {
+        boolean allPermissionsGranted = true;
+        for (Boolean isGranted : permissions.values()) {
+            if (!isGranted) {
+                allPermissionsGranted = false;
+                break;
+            }
+        }
+        if (allPermissionsGranted) {
+           // getDeviceID();
+            GpsTracker gpsTracker=new GpsTracker(getApplicationContext());
+        } else {
+            // If any permission is not granted, close the app
+            showSettingsDialog();
+        }
+    });
+
+    private void showSettingsDialog() {
+        // we are displaying an alert dialog for permissions
+        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+        // below line is the title for our alert dialog.
+        builder.setTitle("Need Permissions");
+        // below line is our message for our dialog
+        builder.setMessage("This app needs permission to use this feature. You can grant them in app settings.");
+        builder.setPositiveButton("GOTO SETTINGS", (dialog, which) -> {
+            // this method is called on click on positive button and on clicking shit button
+            // we are redirecting our user from our app to the settings page of our app.
+            dialog.cancel();
+            // below is the intent from which we are redirecting our user.
+            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            Uri uri = Uri.fromParts("package", getPackageName(), null);
+            intent.setData(uri);
+            startActivityForResult(intent, 101);
+        });
+        builder.setNegativeButton("Cancel", (dialog, which) -> {
+            // this method is called when user click on negative button.
+            dialog.cancel();
+            handlePermissionException();
+        });
+        // below line is used to display our dialog
+        builder.show();
+    }
+
+
+    private void handlePermissionException() {
+        InstalledAppDetailsActivity(this);
+        System.exit(0);
+    }
+    private void InstalledAppDetailsActivity(LoginActivity activityLogin) {
+
+        if (activityLogin == null) {
+            return;
+        }
+
+        Intent intent = new Intent();
+        //intent.setAction(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        Uri uri = Uri.fromParts("package", getApplicationContext().getPackageName(), null);
+        intent.setData(uri);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+        startActivity(intent);
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+
+        PERMISSIONS.add(   android.Manifest.permission.ACCESS_FINE_LOCATION);
+        PERMISSIONS.add(   android.Manifest.permission.ACCESS_COARSE_LOCATION);
+        PERMISSIONS.add(   android.Manifest.permission.CAMERA);
+        PERMISSIONS.add(   Manifest.permission.READ_PHONE_STATE);
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            PERMISSIONS.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+        }
+
+
 
         getSupportActionBar().hide();
 
@@ -472,26 +546,6 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
         dialogSearch.show();
     }
 
-    private final ActivityResultLauncher<String[]> requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), permissions -> {
-        boolean allPermissionsGranted = true;
-        for (Boolean isGranted : permissions.values()) {
-            if (!isGranted) {
-                allPermissionsGranted = false;
-                break;
-            }
-        }
-        if (allPermissionsGranted) {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                //    startActivity(new Intent(Splash_Screen.this,MainActivity.class));
-                }
-            },4000);
-        } else {
-            // If any permission is not granted, close the app
-            showPermissionAlertDialog();
-        }
-    });
     private boolean checkPermissions() {
         for (String permission : PERMISSIONS) {
             if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
@@ -502,8 +556,13 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
     }
 
     private void requestPermissions() {
-        requestPermissionLauncher.launch(PERMISSIONS);
+        String[] permissionArr=new String[PERMISSIONS.size()];
+        for (int i=0;i<PERMISSIONS.size();i++) {
+            permissionArr[i]=PERMISSIONS.get(i);
+        }
+        requestPermissionLauncher.launch(permissionArr);
     }
+
 
     private void showPermissionAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -693,7 +752,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                 if (response.isSuccessful()) {
                     Log.d("TAG", "MyApp: "+ "Login Api Successful");
 
-                    customProgressDialog.dismiss();
+                    //customProgressDialog.dismiss();
                     LoginModel responseData = response.body();
                     if (responseData.getMessage().contains("Successfully")) {
 
@@ -792,8 +851,8 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("image", image);
                         editor.apply();
-                        finish();
                         getTargetApi();
+                       // finish();
 
                     }
                 }else {
@@ -827,9 +886,10 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                     if (response.body().getMessage().equals("No Record Found!!")) {
                         stTarget_Popup = "000000";
 
-                        GlobalClass.showToast(LoginActivity.this,2,"Login SuccessFully");
+                        //GlobalClass.showToast(LoginActivity.this,2,"Login SuccessFully");
+                        customProgressDialog.dismiss();
                         startActivity(new Intent(LoginActivity.this, HomePageActivity.class));
-                        finish();
+                        //finish();
 
                     } else if (response.isSuccessful() && response.body() != null && response.body().getResponseModels().size() > 0) {
                         List<ResponseModel> responseModel = response.body().getResponseModels();
@@ -842,11 +902,13 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                         editor.putString("stTarget_Popup", stTarget_Popup);
                         editor.apply();
 
-                        GlobalClass.dismissLottieAlertDialog();
+//                        GlobalClass.dismissLottieAlertDialog();
+//
+//                        GlobalClass.showToast(LoginActivity.this,2,"Login SuccessFully");
+                        customProgressDialog.dismiss();
 
-                        GlobalClass.showToast(LoginActivity.this,2,"Login SuccessFully");
                         startActivity(new Intent(LoginActivity.this, HomePageActivity.class));
-                        finish();
+                        //finish();
 
                     } else {
                         GlobalClass.showToast(LoginActivity.this,5,response.message());
