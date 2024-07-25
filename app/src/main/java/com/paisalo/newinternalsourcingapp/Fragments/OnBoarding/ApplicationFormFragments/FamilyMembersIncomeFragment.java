@@ -3,6 +3,7 @@ package com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.ApplicationFormF
 import static com.paisalo.newinternalsourcingapp.GlobalClass.SubmitAlert;
 import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidName;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -129,13 +130,12 @@ public class FamilyMembersIncomeFragment extends Fragment {
                 View popupView = inflater.inflate(R.layout.familymemberincomepopup, null);
 
 
-                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                boolean focusable = true;
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
+                dialogBuilder.setView(popupView);
+                dialogBuilder.setCancelable(false);
+                AlertDialog alertDialog = dialogBuilder.create();
+                alertDialog.show();
 
-                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-
-                popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
                 addBtn = popupView.findViewById(R.id.addupdateButton);
                 delBtn = popupView.findViewById(R.id.deleteButton);
                 canBtn = popupView.findViewById(R.id.cancelButton);
@@ -239,7 +239,6 @@ public class FamilyMembersIncomeFragment extends Fragment {
                             Log.d("TAG", "onCreateView222: " + allDataAFDataModel.getFiFamMems().get(0).getIncome());
                             Log.d("TAG", "onCreateView222: " + allDataAFDataModel.getFiFamMems().get(0).getGender());
                             Log.d("TAG", "onCreateView222: " + allDataAFDataModel.getFiFamMems().get(0).getSchoolType());
-
 
                             if (allDataAFDataModel.getFiFamMems().get(0).getMemName() != null) {
                                 faimlMemberName.setText(allDataAFDataModel.getFiFamMems().get(0).getMemName());
@@ -417,7 +416,7 @@ public class FamilyMembersIncomeFragment extends Fragment {
                             memberincomelist.add(fiFamMem);
                             adapter = new FaimlyMemberIncomeAdapter(getActivity(), memberincomelist);
                             recyclerView.setAdapter(adapter);
-                            popupWindow.dismiss();
+                            alertDialog.dismiss();
 
                         }
 
@@ -427,7 +426,7 @@ public class FamilyMembersIncomeFragment extends Fragment {
                 canBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        popupWindow.dismiss();
+                        alertDialog.dismiss();
                     }
                 });
 
