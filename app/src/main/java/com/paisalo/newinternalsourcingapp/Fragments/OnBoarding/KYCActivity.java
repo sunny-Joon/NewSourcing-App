@@ -320,6 +320,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             }
         });
 
+        editTextName.setEnabled(false);
 
         //  Sample data
 //        editTextAadhar.setText("123456789012");
@@ -1920,7 +1921,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         return separatedParts;
     }
     private void dlVerification(String ID, String IDno, String dob) {
-
+        customProgressDialog.show();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<DLVerificationModel> call = apiInterface.getDLVerified(GlobalClass.Token, BuildConfig.dbname, createJson(ID, IDno, dob));
 
@@ -1930,20 +1931,21 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             public void onResponse(Call<DLVerificationModel> call, Response<DLVerificationModel> response) {
                 Log.d("TAG", "onResponseID1: " + response.body());
                 if (response.isSuccessful()) {
+                    customProgressDialog.dismiss();
                     Log.d("TAG", "onResponseID2: "+response.body().getMessage());
 
                     if (response.body().getMessage().equals("Get Record Successfully !!")) {
                         Log.d("TAG", "onResponseID3: ");
-
+                        customProgressDialog.dismiss();
                         if (response.body().getData().getSuccess()) {
                             Log.d("TAG", "onResponseID4: ");
 
                             if (response.body().getData().getData().getStatus().equals("success")) {
                                 Log.d("TAG", "onResponseID5: ");
-
+                                customProgressDialog.dismiss();
                                 if (response.body().getData().getData().getData().getName()!=null) {
                                     Log.d("TAG", "onResponseID6: ");
-
+                                    customProgressDialog.dismiss();
                                     verifiedLicensename = response.body().getData().getData().getData().getName().toString();
                                     dl_Checkbox.setChecked(true);
                                     isNameMatched="1";
@@ -1956,6 +1958,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
 
                                 } else {
+                                    customProgressDialog.dismiss();
                                     dl_Checkbox.setChecked(false);
                                     isNameMatched="0";
                                     Log.d("TAG", "onResponseID7: ");
@@ -1968,16 +1971,19 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
                                 }
                             } else {
+                                customProgressDialog.dismiss();
                                 Log.d("TAG", "onResponseID8: ");
 
                                 Toast.makeText(KYCActivity.this, "Invalid Input DL", Toast.LENGTH_SHORT).show();
                             }
                         } else {
+                            customProgressDialog.dismiss();
                             Log.d("TAG", "onResponseID9: ");
 
                             Toast.makeText(KYCActivity.this, "Invalid Input DL", Toast.LENGTH_SHORT).show();
                         }
                     } else {
+                        customProgressDialog.dismiss();
                         Log.d("TAG", "onResponseID10: ");
 
                         Toast.makeText(KYCActivity.this, "Invalid Input DL", Toast.LENGTH_SHORT).show();
@@ -2000,7 +2006,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                     }*/
                 } else {
                     Log.d("TAG", "onResponseID: ");
-
+                    customProgressDialog.dismiss();
                     Log.d("TAG", "onResponseID: " + response.code());
                     dl_Checkbox.setChecked(false);
                     isNameMatched="0";
@@ -2010,6 +2016,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
             @Override
             public void onFailure(Call<DLVerificationModel> call, Throwable t) {
+                customProgressDialog.dismiss();
                 dl_Checkbox.setChecked(false);
                 isNameMatched="0";
                 Toast.makeText(KYCActivity.this, "Network Issue", Toast.LENGTH_SHORT).show();
@@ -2018,7 +2025,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
     }
     private void panVerification(String ID, String IDno, String dob) {
-
+       customProgressDialog.show();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<PanVerificationModel> call = apiInterface.getpanVerified(GlobalClass.Token, BuildConfig.dbname, createJson(ID, IDno, dob));
 
@@ -2028,11 +2035,13 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             public void onResponse(Call<PanVerificationModel> call, Response<PanVerificationModel> response) {
                 Log.d("TAG", "onResponseID: " + response.body());
                 if (response.isSuccessful()) {
+                    customProgressDialog.dismiss();
                     Log.d("TAG", "onResponseID1: " + response.body());
                     PanVerificationModel panVerificationModel = response.body();
                     if (panVerificationModel.getMessage().toString().equals("Get Record Successfully !!")) {
 
                         if (response.body().getData().getSuccess()) {
+                            customProgressDialog.dismiss();
                             pan_Checkbox.setChecked(true);
                             isNameMatched="1";
 
@@ -2050,7 +2059,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                             pan_Checkbox.setClickable(false);
                         }else {
 
-
+                            customProgressDialog.dismiss();
                             Toast.makeText(KYCActivity.this, "Not Verified", Toast.LENGTH_SHORT).show();
                            // showDialog(editTextPAN);
                             SubmitAlert(KYCActivity.this, "success", "Data set Successfully");
@@ -2061,10 +2070,12 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                         }
 
                     } else {
+                        customProgressDialog.dismiss();
                         Toast.makeText(KYCActivity.this, "Invalid Pan", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Log.d("TAG", "onResponseID: " + response.code());
+                    customProgressDialog.dismiss();
                     pan_Checkbox.setChecked(false);
                     isNameMatched="0";
                     Toast.makeText(KYCActivity.this, "Invalid Pan", Toast.LENGTH_SHORT).show();
@@ -2082,7 +2093,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
     }
     private void voterIdVerification(String ID, String IDno, String dob) {
-
+        customProgressDialog.show();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<VoterIdVerificationModel> call = apiInterface.getvoterIDVerified(GlobalClass.Token, BuildConfig.dbname, createJson(ID, IDno, dob));
 
@@ -2092,11 +2103,13 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             public void onResponse(Call<VoterIdVerificationModel> call, Response<VoterIdVerificationModel> response) {
                 Log.d("TAG", "onResponseID: " + response.body());
                 if (response.isSuccessful()) {
+                    customProgressDialog.dismiss();
                     Log.d("TAG", "onResponseID: " + response.body());
                     VoterIdVerificationModel voterIdVerificationModel = response.body();
                     if (voterIdVerificationModel.getMessage().toString().equals("Get Record Successfully !!")) {
 
                         if (response.body().getData().getSuccess()) {
+                            customProgressDialog.dismiss();
                             voterId_Checkbox.setChecked(true);
                             isNameMatched="1";
                             Toast.makeText(KYCActivity.this, "ID Verified", Toast.LENGTH_SHORT).show();
@@ -2109,6 +2122,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
 
                         }else {
+                            customProgressDialog.dismiss();
                             Toast.makeText(KYCActivity.this, "Not Verified", Toast.LENGTH_SHORT).show();
                             // showDialog(editTextPAN);
                             SubmitAlert(KYCActivity.this, "success", "Data set Successfully");
@@ -2120,9 +2134,11 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                         }
 
                     } else {
+                        customProgressDialog.dismiss();
                         Toast.makeText(KYCActivity.this, "Invalid Voter ID", Toast.LENGTH_SHORT).show();
                     }
                 } else {
+                    customProgressDialog.dismiss();
                     Log.d("TAG", "onResponseID: " + response.code());
                     voterId_Checkbox.setChecked(false);
                     Toast.makeText(KYCActivity.this, "Invalid ID", Toast.LENGTH_SHORT).show();
@@ -2132,6 +2148,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
             @Override
             public void onFailure(Call<VoterIdVerificationModel> call, Throwable t) {
+                customProgressDialog.dismiss();
                 voterId_Checkbox.setChecked(false);
                 Toast.makeText(KYCActivity.this, "Network Issue", Toast.LENGTH_SHORT).show();
 
@@ -2286,7 +2303,13 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         } else {
             P_Ph3 = editTextMobile.getText().toString();
         }
-        Log.d("TAG", "onClickTAG1: " + allConditionsSatisfied);
+
+
+        if (!mobile_checkbox.isChecked()) {
+            editTextMobile.setError("Mobile Number Not Verify !!");
+            allConditionsSatisfied = false;
+        }
+
 
         if (!dl_Checkbox.isChecked() && !pan_Checkbox.isChecked() && !voterId_Checkbox.isChecked()) {
             editTextPAN.setError("Invalid Pan");
@@ -2424,7 +2447,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         Log.d("TAG", "onClickTAG1: " + allConditionsSatisfied);
 
         if (acspRelationship.getSelectedItem().toString().contains("-Select-")) {
-            ((TextView) acspRelationship.getSelectedView()).setError("Please select a relationship");
+            Toast.makeText(this, "Please select a relationship", Toast.LENGTH_SHORT).show();
             Log.d("TAG", "onClickTAG23: " + "creating Json");
 
             allConditionsSatisfied = false;
@@ -2434,7 +2457,8 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         Log.d("TAG", "onClickTAG1: " + allConditionsSatisfied);
 
         if (acspAadharState.getSelectedItem().toString().contains("-Select-")) {
-            ((TextView) acspAadharState.getSelectedView()).setError("Please select a state");
+            Toast.makeText(this, "Please select a state", Toast.LENGTH_SHORT).show();
+
             Log.d("TAG", "onClickTAG24: " + "creating Json");
 
             allConditionsSatisfied = false;
@@ -2444,7 +2468,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         Log.d("TAG", "onClickTAG1: " + allConditionsSatisfied);
 
         if (acspGender.getSelectedItem().toString().contains("-Select-")) {
-            ((TextView) acspGender.getSelectedView()).setError("Please select a Gender");
+            Toast.makeText(this, "Please select a Gender", Toast.LENGTH_SHORT).show();
             Log.d("TAG", "onClickTAG25: " + "creating Json");
 
             allConditionsSatisfied = false;
@@ -2454,7 +2478,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         Log.d("TAG", "onClickTAG1: " + allConditionsSatisfied);
 
         if (isMarriedSpinner.getSelectedItem().toString().contains("-Select-")) {
-            ((TextView) isMarriedSpinner.getSelectedView()).setError("Select Marital Status");
+            Toast.makeText(this, "Select Marital Status", Toast.LENGTH_SHORT).show();
             Log.d("TAG", "onClickTAG26: " + "creating Json");
 
             allConditionsSatisfied = false;
