@@ -393,7 +393,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Address3 *"
                     android:textColor="@color/white"
                     android:textSize="@dimen/heading" />
             </androidx.cardview.widget.CardView>

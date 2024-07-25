@@ -81,6 +81,7 @@ public class GlobalClass extends Application {
             "yyyy-MM-dd",
             "dd/MM/yyyy",
             "yyyy/MM/dd",
+            "EEE, dd MMM yyyy HH:mm:ss z"
 
     };
     static String currentFileName;
