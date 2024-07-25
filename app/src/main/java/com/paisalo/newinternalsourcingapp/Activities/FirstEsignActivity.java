@@ -1,5 +1,6 @@
 package com.paisalo.newinternalsourcingapp.Activities;
 
+import static com.paisalo.newinternalsourcingapp.GlobalClass.SubmitAlert;
 import static com.paisalo.newinternalsourcingapp.Utils.CustomProgress.customProgress;
 
 import androidx.annotation.NonNull;
@@ -128,12 +129,14 @@ public class FirstEsignActivity extends AppCompatActivity {
             } else {
                 borrower = (PendingESignFI) intent.getSerializableExtra(GlobalClass.ESIGN_BORROWER);
                 if (borrower != null) {
-                    GlobalClass.showLottieAlertDialog(8, FirstEsignActivity.this);
-
+                   // GlobalClass.showLottieAlertDialog(8, FirstEsignActivity.this);
+                     customProgressDialog.show();
 
                     tvESignName.setText(borrower.getFname().toString());
                     tvESignGuardian.setText(borrower.getfFname().toString());
                     tvESignMobile.setText(borrower.getpPh3().toString());
+
+
                     JsonObject jsonObject = new JsonObject();
                     jsonObject.addProperty("DocName", "loan_application_sample");
                     //    jsonObject.addProperty("FiCode", "272725");
@@ -142,6 +145,8 @@ public class FirstEsignActivity extends AppCompatActivity {
                     // jsonObject.addProperty("FiCreator", "MAINPURI");
                     //   jsonObject.addProperty("UserID", "gfst005132");
                     jsonObject.addProperty("UserID", GlobalClass.Id);
+
+                    Log.d("TAG", "onCreateSUbmit: "+borrower.getCode()+","+borrower.getCreator());
                     HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
                     logging.setLevel(HttpLoggingInterceptor.Level.BODY);
                     OkHttpClient.Builder httpClient = new OkHttpClient.Builder(
@@ -159,19 +164,21 @@ public class FirstEsignActivity extends AppCompatActivity {
                     // Call<ResponseBody> call = apiInterface.DownloadDocFirstEsign(GlobalClass.LiveToken,jsonObject,"gzip,deflate,compress","2234514145687247","SBIPDLCOL","868368051227918");
                     Call<ResponseBody> call = apiInterface.DownloadDocFirstEsign(GlobalClass.LiveToken, jsonObject, "gzip,deflate,compress", GlobalClass.DevId, GlobalClass.DATABASE_NAME, GlobalClass.Imei);
 
-                    Log.d("TAG", "onResponse0: " + GlobalClass.LiveToken + " " + GlobalClass.dbname + " " + jsonObject.toString());
+                    Log.d("TAG", "onCreateSUbmit: " +  ", " + GlobalClass.LiveToken + " ,"+GlobalClass.Imei+"," + jsonObject.toString());
                     call.enqueue(new Callback<ResponseBody>() {
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                             Log.d("TAG", "onResponse1: " + response.body() + response.code() + response.message());
 
                             if (response.isSuccessful()) {
+                                customProgressDialog.dismiss();
                                 Log.d("TAG", "onResponse2: " + response.body().contentLength());
                                 File written = writeResponseBodyToDisk(response.body());
                                 if (written == null) {
-                                    Log.d("TAG", "onResponse2: " + "null");
-                                    GlobalClass.dismissLottieAlertDialog();
 
+                                    Log.d("TAG", "onResponse2: " + "null");
+                                    //GlobalClass.dismissLottieAlertDialog();
+                                    customProgressDialog.dismiss();
                                 } else {
                                     String path = written.getAbsolutePath();
 
@@ -182,21 +189,27 @@ public class FirstEsignActivity extends AppCompatActivity {
                                     ft.add(R.id.pdfview, frag);
 
                                     ft.commit();
-                                    GlobalClass.dismissLottieAlertDialog();
-
+                                   // GlobalClass.dismissLottieAlertDialog();
+                                    customProgressDialog.dismiss();
                                 }
 
                             } else {
                                 Log.d("TAG", "onResponse3: " + "UnSuccessful");
-                                GlobalClass.dismissLottieAlertDialog();
-
+                                Log.d("TAG", "onResponse3: " + response.message());
+                                Log.d("TAG", "onResponse3: " + response.code());
+                              //  GlobalClass.dismissLottieAlertDialog();
+                                customProgressDialog.dismiss();
+                                SubmitAlert(FirstEsignActivity.this, "Error", "Data Not Found");
+                                finish();
                             }
                         }
 
                         @Override
                         public void onFailure(Call<ResponseBody> call, Throwable t) {
                             Log.d("TAG", "onResponse4: " + t.getMessage());
-                            GlobalClass.dismissLottieAlertDialog();
+                           // GlobalClass.dismissLottieAlertDialog();
+                            customProgressDialog.dismiss();
+                            SubmitAlert(FirstEsignActivity.this, "Error", "Data Not Found");
 
                         }
                     });
