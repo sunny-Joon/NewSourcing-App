@@ -767,7 +767,7 @@ public class GuarantorsFragment extends Fragment {
                                     Log.d("TAG", "onResponse:dob " + dob);
 
                                     try {
-                                        dob=formatDate(dob, "dd/MM/yyyy", "dd-MM-YYYY");
+                                        dob=formatDate(dob, "dd/MM/yyyy", "yyyy-MM-dd");
                                     } catch (ParseException e) {
                                         throw new RuntimeException(e);
                                     }
@@ -876,7 +876,7 @@ public class GuarantorsFragment extends Fragment {
                                         spin_relationwithborr.setSelection(1);
                                     }
                                     Log.d("TAG", "onResponse(relation): " + Relation);
-                                    String Relation1 =  adharDataModel.getRelation();
+                                  //  String Relation1 =  adharDataModel.getRelation();
                                   /*  if (Relation1 != null) {
                                         if (Relation1.equals("Father")) {
                                             String guardian1 = adharDataModel.getGuardianName();

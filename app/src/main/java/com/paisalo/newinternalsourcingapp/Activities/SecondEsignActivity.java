@@ -24,6 +24,7 @@ import com.paisalo.newinternalsourcingapp.ModelsRetrofit.EsignListModels.Guarant
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.EsignListModels.PendingESignFI;
 import com.paisalo.newinternalsourcingapp.R;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiInterface;
+import com.paisalo.newinternalsourcingapp.Utils.CustomProgressDialog;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -52,10 +53,13 @@ public class SecondEsignActivity extends AppCompatActivity {
     ArrayList<Guarantor> guarantor;
     TextView tvLoanDetailCaseLocation, tvLoanDetailFmName, tvLoanDetailFiCode, tvLoanDetailAmount, tvLoanDetailPeriod, tvLoanDetailInterestRate;
 
+    CustomProgressDialog customProgressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second_esign);
+
+        customProgressDialog = new CustomProgressDialog(SecondEsignActivity.this);
 
         btnLoanDetailsDownloadDoc = findViewById(R.id.btnLoanDetailsDownloadDoc);
         lvLoanDetails = findViewById(R.id.lvLoanDetails);
@@ -100,8 +104,8 @@ public class SecondEsignActivity extends AppCompatActivity {
        @Override
        public void onClick(View v) {
            Log.d("TAG", "onClickList:2 ");
-           GlobalClass.showLottieAlertDialog(8,SecondEsignActivity.this);
-
+          // GlobalClass.showLottieAlertDialog(8,SecondEsignActivity.this);
+           customProgressDialog.show();
            JsonObject jsonObject=new JsonObject();
            jsonObject.addProperty("DocName", "Esign");
            jsonObject.addProperty("dbName", "SBINEWDOC");
@@ -136,13 +140,15 @@ public class SecondEsignActivity extends AppCompatActivity {
                    Log.d("TAG", "onResponse1: " + response.body()+response.code()+response.message());
 
                    if(response.isSuccessful()){
+                       customProgressDialog.dismiss();
                        Log.d("TAG", "onClickList:5 ");
 
                        Log.d("TAG", "onResponse2: " + response.body().contentLength());
                        File written = writeResponseBodyToDisk(response.body());
                        if(written==null){
                            Log.d("TAG", "onClickList:6 ");
-                           GlobalClass.dismissLottieAlertDialog();
+                          // GlobalClass.dismissLottieAlertDialog();
+                           customProgressDialog.dismiss();
 
                            Log.d("TAG", "onResponse2: " + "null");
 
@@ -160,14 +166,16 @@ public class SecondEsignActivity extends AppCompatActivity {
                            /*Fragment frag = MuPDFFragment.newInstance(path, false);
                            ft.add(R.id.pdfview, frag);
                            ft.commit();*/
-                           GlobalClass.dismissLottieAlertDialog();
+                          // GlobalClass.dismissLottieAlertDialog();
+                           customProgressDialog.dismiss();
 
                        }
 
 
                    }else{
                        Log.d("TAG", "onClickList:8 ");
-                       GlobalClass.dismissLottieAlertDialog();
+                     //  GlobalClass.dismissLottieAlertDialog();
+                       customProgressDialog.dismiss();
 
                        Log.d("TAG", "onResponse3: " + "UnSuccessful");
                    }
@@ -176,6 +184,7 @@ public class SecondEsignActivity extends AppCompatActivity {
                @Override
                public void onFailure(Call<ResponseBody> call, Throwable t) {
                    Log.d("TAG", "onClickList:9 ");
+                   customProgressDialog.dismiss();
 
                    Log.d("TAG", "onResponse4: " + t.getMessage());
 
