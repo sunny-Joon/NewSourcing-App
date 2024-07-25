@@ -1,5 +1,8 @@
 package com.paisalo.newinternalsourcingapp.Activities;
 
+import static com.paisalo.newinternalsourcingapp.GlobalClass.SubmitAlert;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -149,6 +152,7 @@ public class SecondEsignActivity extends AppCompatActivity {
                            Log.d("TAG", "onClickList:6 ");
                           // GlobalClass.dismissLottieAlertDialog();
                            customProgressDialog.dismiss();
+                           SubmitAlert(SecondEsignActivity.this, "Error", "Document Not Download");
 
                            Log.d("TAG", "onResponse2: " + "null");
 
@@ -200,7 +204,7 @@ public class SecondEsignActivity extends AppCompatActivity {
 
         try {
             // Define the path where the file will be saved
-            File pdfFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "downloaded.pdf");
+            File pdfFile = new File(getBaseContext().getFilesDir(), borrower.getCode()+"_"+borrower.getCreator()+".pdf");
             Log.d("TAG", "displayPdf2: "+ pdfFile.getAbsolutePath() );
 
             if (pdfFile.exists() && pdfFile.isFile()) {
@@ -236,7 +240,7 @@ public class SecondEsignActivity extends AppCompatActivity {
 
                 return pdfFile;
             } catch (IOException e) {
-
+                Log.d("TAG", "writeResponseBodyToDisk: "+e.getMessage());
                 return null;
             } finally {
                 if (inputStream != null) {

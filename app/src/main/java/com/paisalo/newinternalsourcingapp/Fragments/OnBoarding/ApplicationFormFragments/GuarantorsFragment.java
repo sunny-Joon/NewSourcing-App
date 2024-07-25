@@ -221,13 +221,11 @@ public class GuarantorsFragment extends Fragment {
                 LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View popupView = inflater.inflate(R.layout.guarantorspopup, null);
 
-                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                boolean focusable = true;
-
-                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-
-                popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
+                AlertDialog.Builder dialogBuilder1 = new AlertDialog.Builder(getContext());
+                dialogBuilder1.setView(popupView);
+                dialogBuilder1.setCancelable(false);
+                AlertDialog alertDialog1 = dialogBuilder1.create();
+                alertDialog1.show();
 
                 aadhaarScanner = popupView.findViewById(R.id.aadhaarScanner);
                 gurProfilePic = popupView.findViewById(R.id.gurprofilePic);
@@ -639,7 +637,7 @@ public class GuarantorsFragment extends Fragment {
                             adapter = new GurrantorListAdapter(getActivity(), gurrantorList);
                             recyclerView.setAdapter(adapter);
 
-                            popupWindow.dismiss();
+                            alertDialog1.dismiss();
                         }
                     }
                 });
@@ -648,7 +646,7 @@ public class GuarantorsFragment extends Fragment {
                 delete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        popupWindow.dismiss();
+                        alertDialog1.dismiss();
                     }
                 });
             }
