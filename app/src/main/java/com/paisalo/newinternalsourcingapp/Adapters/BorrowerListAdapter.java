@@ -35,7 +35,7 @@ public class BorrowerListAdapter extends RecyclerView.Adapter<BorrowerListAdapte
     public void onBindViewHolder(ViewHolder holder, int position) {
         BorrowerListDataModel dataModel = borrowerListDataModel.get(position);
 
-        if (dataModel.getBorrLoanAppSignStatus() == null) {
+        if (dataModel.getBorrLoanAppSignStatus() == null || dataModel.getBorrLoanAppSignStatus().equals("N")) {
             holder.borrowerListLL.setBackgroundColor(context.getResources().getColor(R.color.darkgrey));
         }
 
@@ -101,7 +101,7 @@ public class BorrowerListAdapter extends RecyclerView.Adapter<BorrowerListAdapte
                 public void onClick(View v) {
 
                     int position = getAdapterPosition();
-                    if (borrowerListDataModel.get(position).getApproved() != null && borrowerListDataModel.get(position).getBorrLoanAppSignStatus() != null ) {
+                    if (borrowerListDataModel.get(position).getBorrLoanAppSignStatus() != null && borrowerListDataModel.get(position).getBorrLoanAppSignStatus().equals("Y") ) {
                     if (position != RecyclerView.NO_POSITION) {
                         BorrowerListDataModel dataModel = borrowerListDataModel.get(position);
                         listener.onItemClick(dataModel);
