@@ -326,7 +326,7 @@ public class GuarantorsFragment extends Fragment {
 
                         }
                     } catch (Exception exception) {
-                        Toast.makeText(getContext(), "fifamloans is null here", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(getContext(), "fifamloans is null here", Toast.LENGTH_SHORT).show();
                     }
                 }
 

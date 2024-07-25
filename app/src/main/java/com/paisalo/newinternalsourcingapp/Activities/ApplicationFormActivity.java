@@ -41,7 +41,7 @@ public class ApplicationFormActivity extends AppCompatActivity {
         setContentView(R.layout.activity_application_form);
 
         viewPager = findViewById(R.id.viewPager);
-        toolbar = findViewById(R.id.toolbar);
+     //   toolbar = findViewById(R.id.toolbar);
 
         Intent intent = getIntent();
         if (intent != null) {

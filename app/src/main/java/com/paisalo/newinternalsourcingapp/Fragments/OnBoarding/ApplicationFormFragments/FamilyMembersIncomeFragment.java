@@ -319,7 +319,7 @@ public class FamilyMembersIncomeFragment extends Fragment {
                         }
 
                         if (relationship_spin.getSelectedItem().toString().contains("-Select-")) {
-                            ((TextView) relationship_spin.getSelectedView()).setError("Please select a relationship");
+                            Toast.makeText(getContext(), "\"Please select a relationship\"", Toast.LENGTH_SHORT).show();
                             allConditionsSatisfied = false;
                         } else {
                             relationship = relationship_spin.getSelectedItem().toString();
@@ -333,28 +333,32 @@ public class FamilyMembersIncomeFragment extends Fragment {
                         }
 
                         if (gender_spin.getSelectedItem().toString().contains("-Select-")) {
-                            ((TextView) gender_spin.getSelectedView()).setError("Please select a Gender");
+                            Toast.makeText(getContext(), "\"Please select a Gender\"", Toast.LENGTH_SHORT).show();
+
                             allConditionsSatisfied = false;
                         } else {
                             gender = gender_spin.getSelectedItem().toString();
                         }
 
                         if (Health_spin.getSelectedItem().toString().contains("-Select-")) {
-                            ((TextView) Health_spin.getSelectedView()).setError("Please select a Health");
+                            Toast.makeText(getContext(), "\"Please select a Health\"", Toast.LENGTH_SHORT).show();
+
                             allConditionsSatisfied = false;
                         } else {
                             health = Health_spin.getSelectedItem().toString();
                         }
 
                         if (Education_spin.getSelectedItem().toString().contains("-Select-")) {
-                            ((TextView) Education_spin.getSelectedView()).setError("Please select a Education");
+                            Toast.makeText(getContext(), "\"Please select a Education\"", Toast.LENGTH_SHORT).show();
+
                             allConditionsSatisfied = false;
                         } else {
                             education = Education_spin.getSelectedItem().toString();
                         }
 
                         if (schoolType_spin.getSelectedItem().toString().contains("-Select-")) {
-                            ((TextView) schoolType_spin.getSelectedView()).setError("Please select a schoolType");
+                            Toast.makeText(getContext(), "\"Please select a schoolType\"", Toast.LENGTH_SHORT).show();
+
                             allConditionsSatisfied = false;
                         } else {
                             schoolType = schoolType_spin.getSelectedItem().toString();
@@ -368,7 +372,8 @@ public class FamilyMembersIncomeFragment extends Fragment {
                         }
 
                         if (businessType_spin.getSelectedItem().toString().contains("-Select-")) {
-                            ((TextView) businessType_spin.getSelectedView()).setError("Please select a Gender");
+                            Toast.makeText(getContext(), "\"Please select a Gender\"", Toast.LENGTH_SHORT).show();
+
                             allConditionsSatisfied = false;
                         } else {
                             businessType = businessType_spin.getSelectedItem().toString();
@@ -383,7 +388,8 @@ public class FamilyMembersIncomeFragment extends Fragment {
 
 
                         if (incomeType_spin.getSelectedItem().toString().contains("-Select-")) {
-                            ((TextView) incomeType_spin.getSelectedView()).setError("Please select a Gender");
+                            Toast.makeText(getContext(), "\"Please select a Gender\"", Toast.LENGTH_SHORT).show();
+
                             allConditionsSatisfied = false;
                         } else {
                             incomeType = incomeType_spin.getSelectedItem().toString();
@@ -450,9 +456,8 @@ public class FamilyMembersIncomeFragment extends Fragment {
                                 customProgressDialog.dismiss();
                                 Log.d("TAG", "onResponseAdhaarUpdate: " + response.body());
                                 Log.d("TAG", "onResponseAdhaarUpdatemsg: " + response.body().getMessage().toString());
-                                Toast.makeText(getActivity(), "Data set Successfully", Toast.LENGTH_SHORT).show();
-                                // SubmitAlert(getActivity(), "success", "Data set Successfully");
-
+                              //  Toast.makeText(getActivity(), "Data set Successfully", Toast.LENGTH_SHORT).show();
+                                 SubmitAlert(getActivity(), "success", "Data set Successfully");
                             } else {
                                 Log.d("TAG", "onResponseAdhaarUpdate: " + response.code());
                                 SubmitAlert(getActivity(), "unsuccessful", "Check Your Internet Connection");
