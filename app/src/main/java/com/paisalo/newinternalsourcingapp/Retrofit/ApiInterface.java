@@ -67,8 +67,13 @@ import retrofit2.http.Query;
 
 public interface ApiInterface {
 
+    //page
+    //link
+
     @GET("LiveTrack/GetAppLink")
     Call<VersionCheck> VersionCheck(@Header("dbname") String dbName, @Query("version") String version, @Query("AppName") String AppName, @Query("action") int action);
+    //response
+
 
     @POST("Account/GetToken")
     Call<LoginModel> LoginApi(@Header("devid") String devid, @Header("dbname") String dbname, @Header("imeino") String imeino, @Body JsonObject object);
