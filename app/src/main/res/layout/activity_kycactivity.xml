@@ -376,8 +376,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="City *"
-                    android:textAlignment="center"
+                    android:layout_marginTop="8dp"
                     android:textColor="@color/white"
                     android:textSize="@dimen/heading" />
 

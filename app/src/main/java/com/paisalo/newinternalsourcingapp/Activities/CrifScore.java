@@ -1,6 +1,7 @@
 package com.paisalo.newinternalsourcingapp.Activities;
 
 
+import static com.paisalo.newinternalsourcingapp.GlobalClass.SubmitAlert;
 import static java.lang.Thread.sleep;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -23,6 +24,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import com.google.gson.JsonObject;
+import com.paisalo.newinternalsourcingapp.GlobalClass;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.BreResponseModels.BREResponse;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.CheckCrifData;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.EsignListModels.PendingESignFI;
@@ -419,6 +421,8 @@ public class CrifScore extends AppCompatActivity {
                     }
                 }else{
                     Log.d("TAG", "getDataFromBRE4: "+"Unsuccessful");
+                    layout_design_pending.setVisibility(View.GONE);
+                    SubmitAlert(CrifScore.this, "Error", "Unsuccessful");
 
                 }
             }
@@ -427,6 +431,8 @@ public class CrifScore extends AppCompatActivity {
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Utils.alert(CrifScore.this,"Sorry!! we didn't get your CRIF details \nPlease Try Again...");
                 Log.d("TAG", "getDataFromBRE4: "+"Failure");
+                layout_design_pending.setVisibility(View.GONE);
+                SubmitAlert(CrifScore.this, "Error", "Fail to Get Data");
 
             }
         });
@@ -451,10 +457,34 @@ public class CrifScore extends AppCompatActivity {
 //        jsonObject.addProperty("AadharID", "");
 //        jsonObject.addProperty("Gender", "F");
 
-        jsonObject.addProperty("full_name", eSignerborower.getFname() + " "+eSignerborower.getMname()+" "+eSignerborower.getLname());
 
-        String originalDateStr = eSignerborower.getDob().split("T")[0];
-        String newDateStr="";
+        StringBuilder fullNameBuilder = new StringBuilder();
+
+        if (eSignerborower.getFname() != null && !eSignerborower.getFname().trim().isEmpty()) {
+            fullNameBuilder.append(eSignerborower.getFname());
+        }
+
+        if (eSignerborower.getMname() != null && !eSignerborower.getMname().trim().isEmpty()) {
+            if (fullNameBuilder.length() > 0) {
+                fullNameBuilder.append(" ");
+            }
+            fullNameBuilder.append(eSignerborower.getMname());
+        }
+
+        if (eSignerborower.getLname() != null && !eSignerborower.getLname().trim().isEmpty()) {
+            if (fullNameBuilder.length() > 0) {
+                fullNameBuilder.append(" ");
+            }
+            fullNameBuilder.append(eSignerborower.getLname());
+        }
+
+        String fullName = fullNameBuilder.toString();
+        jsonObject.addProperty("full_name", fullName);
+
+        /*String originalDateStr = eSignerborower.getDob().split("T")[0];*/
+        String formattedDate = GlobalClass.formatDateString2(eSignerborower.getDob().split("T")[0],"yyyy-MM-dd");
+
+        /*String newDateStr="";
         try {
             newDateStr = new SimpleDateFormat("yyyy-MM-dd")
                     .format(new SimpleDateFormat("MMM dd yyyy hh:mma")
@@ -462,8 +492,10 @@ public class CrifScore extends AppCompatActivity {
             System.out.println(newDateStr); // Output: 2024-04-30
         } catch (ParseException e) {
             e.printStackTrace();
-        }
-        jsonObject.addProperty(    "dobs",newDateStr);
+        }*/
+
+
+        jsonObject.addProperty(    "dobs",formattedDate);
      //   jsonObject.addProperty(    "dobs",eSignerborower.getDob().split("T")[0]);
 
         jsonObject.addProperty(    "emailid", "test@gamil.com");
