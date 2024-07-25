@@ -143,6 +143,7 @@
                         android:id="@+id/editTextAge"
                         android:layout_width="match_parent"
                         android:inputType="number"
+                        android:enabled="false"
                         android:maxLength="3"
                         android:layout_height="match_parent"
                         android:hint="Age"/>
