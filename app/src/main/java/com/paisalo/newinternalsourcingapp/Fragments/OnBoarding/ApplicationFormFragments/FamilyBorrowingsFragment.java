@@ -4,6 +4,7 @@ import static com.paisalo.newinternalsourcingapp.GlobalClass.SubmitAlert;
 import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidName;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -121,14 +122,20 @@ public class FamilyBorrowingsFragment extends Fragment {
                 LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View popupView = inflater.inflate(R.layout.familyborrowingspopup, null);
 
-                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+             /*   int width = LinearLayout.LayoutParams.WRAP_CONTENT;
                 int height = LinearLayout.LayoutParams.WRAP_CONTENT;
                 boolean focusable = true;
 
                 final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
 
-                popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
+                popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);*/
 
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setView(popupView);
+                builder.setCancelable(false);
+                AlertDialog popupWindow = builder.create();
+                popupWindow.show();
 
                 dltButton = popupView.findViewById(R.id.deleteBorrowings);
                 canButton = popupView.findViewById(R.id.cancelBorrowings);
