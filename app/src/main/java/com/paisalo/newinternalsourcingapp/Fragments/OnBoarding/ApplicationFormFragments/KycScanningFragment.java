@@ -137,40 +137,41 @@ public class KycScanningFragment extends Fragment implements OnItemClickListener
                         KycDocsFlagDataModel kycDocsFlagDataModel = kycDocsFlag.getData();
                         List<GrDoc> grDocs = kycDocsFlagDataModel.getGrDocs();
 
-                         /*adhaarFront = kycDocsFlagDataModel.getAadharPath().toString();
-                         adhaarBack = kycDocsFlagDataModel.getAadharBPath().toString();
-                         Pan = kycDocsFlagDataModel.getPanPath().toString();
-                         VoterFront = kycDocsFlagDataModel.getVoterPath().toString();
-                         VoterBack = kycDocsFlagDataModel.getVoterBPath().toString();
-                         DrivingLicense = kycDocsFlagDataModel.getDrivingPath().toString();
-                         Passbook = kycDocsFlagDataModel.getPassBookPath().toString();
-                         GadhaarFront = grDocs.get(0).getAadharPath().toString();
-                         GPan = grDocs.get(0).getPanPath().toString();
-                         GVoterFront = grDocs.get(0).getVoterPath().toString();
-                         GDrivingLicense = grDocs.get(0).getDrivingPath().toString();*/
+                        adhaarFront = kycDocsFlagDataModel.getAadharPath() != null ? kycDocsFlagDataModel.getAadharPath().toString() : "";
+                        adhaarBack = kycDocsFlagDataModel.getAadharBPath() != null ? kycDocsFlagDataModel.getAadharBPath().toString() : "";
+                        Pan = kycDocsFlagDataModel.getPanPath() != null ? kycDocsFlagDataModel.getPanPath().toString() : "";
+                        VoterFront = kycDocsFlagDataModel.getVoterPath() != null ? kycDocsFlagDataModel.getVoterPath().toString() : "";
+                        VoterBack = kycDocsFlagDataModel.getVoterBPath() != null ? kycDocsFlagDataModel.getVoterBPath().toString() : "";
+                        DrivingLicense = kycDocsFlagDataModel.getDrivingPath() != null ? kycDocsFlagDataModel.getDrivingPath().toString() : "";
+                        Passbook = kycDocsFlagDataModel.getPassBookPath() != null ? kycDocsFlagDataModel.getPassBookPath().toString() : "";
+                        GadhaarFront = grDocs.get(0).getAadharPath() != null ? grDocs.get(0).getAadharPath().toString() : "";
+                        GPan = grDocs.get(0).getPanPath() != null ? grDocs.get(0).getPanPath().toString() : "";
+                        GVoterFront = grDocs.get(0).getVoterPath() != null ? grDocs.get(0).getVoterPath().toString() : "";
+                        GDrivingLicense = grDocs.get(0).getDrivingPath() != null ? grDocs.get(0).getDrivingPath().toString() : "";
+
 
                         kycScanningList = new ArrayList<>();
 
-                        kycScanningList.add(new KYCScanningModel(name, "Borrower", "Aadhar", "FRONT", null, allDataAFDataModel.getAadharID(), "1", "0", kycDocsFlagDataModel.getAadharPath() == null ? false : true));
+                        kycScanningList.add(new KYCScanningModel(name, "Borrower", "Aadhar", "FRONT", null, allDataAFDataModel.getAadharID(), "1", "0", kycDocsFlagDataModel.getAadharPath() == null ? false : true,adhaarFront));
                         Log.d("TAG", "DatainObjectB:" + "Adhaar front");
-                        kycScanningList.add(new KYCScanningModel(name, "Borrower", "Aadhar", "BACK", null, allDataAFDataModel.getAadharID(), "27", "0", kycDocsFlagDataModel.getAadharBPath() == null ? false : true));
+                        kycScanningList.add(new KYCScanningModel(name, "Borrower", "Aadhar", "BACK", null, allDataAFDataModel.getAadharID(), "27", "0", kycDocsFlagDataModel.getAadharBPath() == null ? false : true,adhaarBack));
                         Log.d("TAG", "DatainObjectB:" + "Adhaar back");
 
-                        kycScanningList.add(new KYCScanningModel(name, "Borrower", "PassBook", "FRONT", null, "", "2", "0", kycDocsFlagDataModel.getPassBookPath() == null ? false : true));
+                        kycScanningList.add(new KYCScanningModel(name, "Borrower", "PassBook", "FRONT", null, "", "2", "0", kycDocsFlagDataModel.getPassBookPath() == null ? false : true,Passbook));
                         Log.d("TAG", "DatainObjectB:" + "passbook");
 
                         if (kycDocsFlag.getData().getVoterExists()) {
-                            kycScanningList.add(new KYCScanningModel(name, "Borrower", "VoterId", "FRONT", null, allDataAFDataModel.getVoterID(), "3", "0", kycDocsFlagDataModel.getVoterPath() == null ? false : true));
-                            kycScanningList.add(new KYCScanningModel(name, "Borrower", "VoterId", "BACK", null, allDataAFDataModel.getVoterID(), "26", "0", kycDocsFlagDataModel.getVoterBPath() == null ? false : true));
+                            kycScanningList.add(new KYCScanningModel(name, "Borrower", "VoterId", "FRONT", null, allDataAFDataModel.getVoterID(), "3", "0", kycDocsFlagDataModel.getVoterPath() == null ? false : true,VoterFront));
+                            kycScanningList.add(new KYCScanningModel(name, "Borrower", "VoterId", "BACK", null, allDataAFDataModel.getVoterID(), "26", "0", kycDocsFlagDataModel.getVoterBPath() == null ? false : true,VoterBack));
                             Log.d("TAG", "DatainObjectB:" + "VoterId");
 
                         }
                         if (kycDocsFlag.getData().getPanExists()) {
-                            kycScanningList.add(new KYCScanningModel(name, "Borrower", "Pan", "FRONT", null, allDataAFDataModel.getPanNO(), "4", "0", kycDocsFlagDataModel.getPanPath() == null ? false : true));
+                            kycScanningList.add(new KYCScanningModel(name, "Borrower", "Pan", "FRONT", null, allDataAFDataModel.getPanNO(), "4", "0", kycDocsFlagDataModel.getPanPath() == null ? false : true,Pan));
                             Log.d("TAG", "DatainObjectB:" + "Pan");
                         }
                         if (kycDocsFlag.getData().getDrivingExists()) {
-                            kycScanningList.add(new KYCScanningModel(name, "Borrower", "DL", "FRONT", null, allDataAFDataModel.getDrivingLic(), "15", "0", kycDocsFlagDataModel.getDrivingPath() == null ? false : true));
+                            kycScanningList.add(new KYCScanningModel(name, "Borrower", "DL", "FRONT", null, allDataAFDataModel.getDrivingLic(), "15", "0", kycDocsFlagDataModel.getDrivingPath() == null ? false : true,DrivingLicense));
                             Log.d("TAG", "DatainObjectB:" + "Dl");
 
                         }
@@ -178,7 +179,7 @@ public class KycScanningFragment extends Fragment implements OnItemClickListener
                         if (grDocs.size() > 0) {
                             if (grDocs.get(0).getAddharExists()) {
 
-                                kycScanningList.add(new KYCScanningModel(grName, "Gurrantor" + 1, "GAadhaar", "FRONT", null, allDataAFDataModel.getFiGuarantors().get(0).getAadharID(), "7", "1", grDocs.get(0).getAadharPath() == null ? false : true));
+                                kycScanningList.add(new KYCScanningModel(grName, "Gurrantor" + 1, "GAadhaar", "FRONT", null, allDataAFDataModel.getFiGuarantors().get(0).getAadharID(), "7", "1", grDocs.get(0).getAadharPath() == null ? false : true,GadhaarFront));
                                 Log.d("TAG", "DatainObjectG:" + "Adhaarfront");
 
 
@@ -186,15 +187,15 @@ public class KycScanningFragment extends Fragment implements OnItemClickListener
             Log.d("TAG", "DatainObjectG:" + "AdhaarBack");*/
 
                                 if (kycDocsFlag.getData().getGrDocs().get(0).getVoterExists()) {
-                                    kycScanningList.add(new KYCScanningModel(grName, "Gurrantor", "GVoterId", "FRONT", null, allDataAFDataModel.getFiGuarantors().get(0).getVoterID(), "5", "1", grDocs.get(0).getVoterPath() == null ? false : true));
+                                    kycScanningList.add(new KYCScanningModel(grName, "Gurrantor", "GVoterId", "FRONT", null, allDataAFDataModel.getFiGuarantors().get(0).getVoterID(), "5", "1", grDocs.get(0).getVoterPath() == null ? false : true,GVoterFront));
                                     Log.d("TAG", "DatainObjectG:" + "VoterId");
                                 }
                                 if (kycDocsFlag.getData().getGrDocs().get(0).getPanExists()) {
-                                    kycScanningList.add(new KYCScanningModel(grName, "Gurrantor", "GPan", "FRONT", null, allDataAFDataModel.getFiGuarantors().get(0).getPanNo(), "8", "1", grDocs.get(0).getPanPath() == null ? false : true));
+                                    kycScanningList.add(new KYCScanningModel(grName, "Gurrantor", "GPan", "FRONT", null, allDataAFDataModel.getFiGuarantors().get(0).getPanNo(), "8", "1", grDocs.get(0).getPanPath() == null ? false : true,GPan));
                                     Log.d("TAG", "DatainObjectG:" + "Pan");
                                 }
                                 if (kycDocsFlag.getData().getGrDocs().get(0).getDrivingExists()) {
-                                    kycScanningList.add(new KYCScanningModel(grName, "Gurrantor", "GDL", "FRONT", null, allDataAFDataModel.getFiGuarantors().get(0).getDrivingLic(), "16", "1", grDocs.get(0).getDrivingPath() == null ? false : true));
+                                    kycScanningList.add(new KYCScanningModel(grName, "Gurrantor", "GDL", "FRONT", null, allDataAFDataModel.getFiGuarantors().get(0).getDrivingLic(), "16", "1", grDocs.get(0).getDrivingPath() == null ? false : true,GDrivingLicense));
                                     Log.d("TAG", "DatainObjectG:" + "Dl");
                                 }
                             }

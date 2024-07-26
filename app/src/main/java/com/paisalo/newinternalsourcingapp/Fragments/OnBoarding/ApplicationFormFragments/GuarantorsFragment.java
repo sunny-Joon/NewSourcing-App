@@ -11,6 +11,7 @@ import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidFullName;
 import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidName;
 import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidPan;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -351,9 +352,12 @@ public class GuarantorsFragment extends Fragment {
                             @Override
                             public void onClick(View v) {
                                 alertDialog.dismiss(); // Dismiss the AlertDialog
-                                IntentIntegrator scanIntegrator = new IntentIntegrator(getActivity());
+                                IntentIntegrator scanIntegrator = IntentIntegrator.forSupportFragment(GuarantorsFragment.this);
+
+                              //  IntentIntegrator scanIntegrator = new IntentIntegrator(requireActivity());
                                 scanIntegrator.setOrientationLocked(false);
                                 scanIntegrator.initiateScan(Collections.singleton("QR_CODE"));
+                                Log.d("TAG", "QRCODE: "+1);
                             }
                         });
 
@@ -393,33 +397,7 @@ public class GuarantorsFragment extends Fragment {
                         startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
 
                     }
-
-                    private File createImageFile() throws IOException {
-                        timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-                        String imageFileName = "JPEG_" + timeStamp + "_";
-                        File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-                        File image = File.createTempFile(
-                                imageFileName,  /* prefix */
-                                ".jpeg",         /* suffix */
-                                storageDir      /* directory */
-                        );
-                        Bitmap bitmap = Bitmap.createBitmap(256, 256, Bitmap.Config.ARGB_8888);
-
-                        FileOutputStream fos = new FileOutputStream(image);
-
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-
-                        fos.close();
-
-                        bitmap.recycle();
-
-                        currentPhotoPathBefWork = image.getAbsolutePath();
-                        return image;
-                    }
                 });
-
-
-
 
                 calendericon.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -462,8 +440,6 @@ public class GuarantorsFragment extends Fragment {
                     }
                 });
 
-
-
                 update = popupView.findViewById(R.id.updateGuarantor);
                 update.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -482,7 +458,6 @@ public class GuarantorsFragment extends Fragment {
                             } else {
                                 aadharID = etTextAadhar.getText().toString();
                             }
-
 
                             if (!isValidFullName(etTextName.getText().toString().isEmpty() ? "" : etTextName.getText().toString())) {
                                 etTextName.setError("Invalid Name");
@@ -505,7 +480,6 @@ public class GuarantorsFragment extends Fragment {
                                 dob = etTextDob.getText().toString();
                             }
 
-
                             if (spin_gender.getSelectedItem().toString().contains("-Select-")) {
                                 ((TextView) spin_gender.getSelectedView()).setError("Please select a Gender");
                                 allConditionsSatisfied = false;
@@ -519,7 +493,6 @@ public class GuarantorsFragment extends Fragment {
                             } else {
                                 gurName = etTextGuardian.getText().toString();
                             }
-
 
                             if (!isValidAddr(etTextAddress1.getText().toString().isEmpty() ? "" : etTextAddress1.getText().toString())) {
                                 etTextAddress1.setError("Invalid Address");
@@ -874,61 +847,6 @@ public class GuarantorsFragment extends Fragment {
                                         spin_relationwithborr.setSelection(1);
                                     }
                                     Log.d("TAG", "onResponse(relation): " + Relation);
-                                  //  String Relation1 =  adharDataModel.getRelation();
-                                  /*  if (Relation1 != null) {
-                                        if (Relation1.equals("Father")) {
-                                            String guardian1 = adharDataModel.getGuardianName();
-
-                                            etTextGuardian.setText(guardian1);
-
-                                            if (guardian1 != null) {
-                                                String[] nameParts = guardian1.split(" ");
-                                                if (nameParts.length >= 1) {
-                                                    etTextFatherFname.setText(nameParts[0]);
-                                                }
-                                                if (nameParts.length >= 2) {
-                                                    if (nameParts.length == 2) {
-                                                        editTextFatherFname.setText(nameParts[0]);
-                                                        editTextfatherlastname.setText(nameParts[1]);
-                                                    } else {
-                                                        StringBuilder middleNameBuilder = new StringBuilder();
-                                                        for (int i = 1; i < nameParts.length - 1; i++) {
-                                                            middleNameBuilder.append(nameParts[i]).append(" ");
-                                                        }
-                                                        editTextfathermiddlename.setText(middleNameBuilder.toString().trim());
-                                                    }
-                                                }
-                                                if (nameParts.length >= 3) {
-                                                    editTextfatherlastname.setText(nameParts[nameParts.length - 1]);
-                                                }
-                                            }
-                                        } else if (Relation1.equals("Husband")) {
-                                            String guardian2 = adharDataModel.getGuardianName();
-                                            if (guardian2 != null) {
-                                                String[] nameParts1 = guardian2.split(" ");
-                                                if (nameParts1.length >= 1) {
-                                                    editTextspousefirstname.setText(nameParts1[0]);
-                                                }
-                                                if (nameParts1.length >= 2) {
-                                                    if (nameParts1.length == 2) {
-                                                        editTextspousefirstname.setText(nameParts1[0]);
-                                                        editTextspouselastname.setText(nameParts1[1]);
-                                                    } else {
-                                                        StringBuilder middleNameBuilder = new StringBuilder();
-                                                        for (int i = 1; i < nameParts1.length - 1; i++) {
-                                                            middleNameBuilder.append(nameParts1[i]).append(" ");
-                                                        }
-                                                        editTextspousemiddlename.setText(middleNameBuilder.toString().trim());
-                                                    }
-                                                }
-                                                if (nameParts1.length >= 3) {
-                                                    editTextspouselastname.setText(nameParts1[nameParts1.length - 1]);
-                                                }
-                                            }
-                                        }
-                                        progressBar.dismiss();
-                                    }*/
-                                    //        borrower.isAadharVerified = "O";
 
                                 } else {
                                     Utils.alert(getContext(), "Please capture aadhaar back image!!");
@@ -942,9 +860,6 @@ public class GuarantorsFragment extends Fragment {
                                     String panno = adharDataModel.getPanNo().toString();
                                     Log.d("TAG", "onResponse: panno => " + panno);
                                     etTextPAN.setText(panno);
-                                    //    isgetPanwithOCR = true;
-                                    //  borrower.isAadharVerified = "O";
-                                    //  panaadharDOBMatched = true;
 
                                 } else {
                                     Toast.makeText(getContext(), "Please capture PAN Card on behalf sample", Toast.LENGTH_SHORT).show();
@@ -976,19 +891,20 @@ public class GuarantorsFragment extends Fragment {
             }
         });
     }
-
+    @SuppressLint("NotifyDataSetChanged")
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d("TAG", "onActivityResult: " + data + " // " + requestCode);
+            Log.d("TAG", "QRCODE2: "+  data + " // " + requestCode);
+
         if (requestCode == IntentIntegrator.REQUEST_CODE) {
             IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
             if (scanningResult != null) {
                 String scanContent = scanningResult.getContents();
                 String scanFormat = scanningResult.getFormatName();
-                Log.d("CheckXMLDATA3", "AadharData:->" + scanContent);
+                Log.d("TAG", "QRCODE3: "+ scanContent);
                 if (scanFormat != null) {
                     try {
-                        Log.d("TAG", "onActivityResult:rps" );
+                        Log.d("TAG", "QRCODE4: "+ scanContent);
                         setAadharContent(scanContent);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -1024,14 +940,12 @@ public class GuarantorsFragment extends Fragment {
     private void setAadharContent(String aadharDataString) throws Exception {
 
         if (aadharDataString.toUpperCase().contains("XML")) {
-            Log.d("TAG", "onActivityResult:rps1" );
+            Log.d("TAG", "QRCODE5: "+ aadharDataString);
 
-            Log.d("XML printing", "AadharData:->" + aadharDataString);
             //AadharData aadharData = AadharUtils.getAadhar(aadharDataString);
             AadharData aadharData = AadharUtils.getAadhar(AadharUtils.ParseAadhar(aadharDataString));
-            Log.d("TAG", "onActivityResult:rps2" );
 
-            Log.d("TAG", "setAadharContent: " + aadharData.isAadharVerified);
+            Log.d("TAG", "QRCODE5: "+ aadharData.isAadharVerified);
             if (aadharData.AadharId != null) {
             }
 
@@ -1055,7 +969,7 @@ public class GuarantorsFragment extends Fragment {
         } else {
 
             final BigInteger bigIntScanData = new BigInteger(aadharDataString, 10);
-            Log.e("testbigin======", "AadharData:->" + bigIntScanData);
+            Log.d("TAG", "QRCODE6: "+ bigIntScanData);
             // 2. Convert BigInt to Byte Array
             final byte byteScanData[] = bigIntScanData.toByteArray();
 
@@ -1065,6 +979,8 @@ public class GuarantorsFragment extends Fragment {
             // 4. Split the byte array using delimiter
             List<byte[]> parts = separateData(decompByteScanData);
             // Throw error if there are no parts
+            Log.d("TAG", "QRCODE7: "+ parts.toString());
+
             Log.e("Parts======11======> ", "part data =====> " + parts.toString());
             decodeData(parts);
             decodeSignature(decompByteScanData);
@@ -1145,6 +1061,8 @@ public class GuarantorsFragment extends Fragment {
 
     }
     protected void decodeData(List<byte[]> encodedData) throws ParseException {
+        Log.d("TAG", "QRCODE8: "+ "decodeData");
+
         Iterator<byte[]> i = encodedData.iterator();
         decodedData = new ArrayList<String>();
         while (i.hasNext()) {
@@ -1160,7 +1078,7 @@ public class GuarantorsFragment extends Fragment {
         Log.d("part data =====> ", "Parts======6======> " + decodedData.get(6));
         Log.d("part data =====> ", "Parts======7======> " + decodedData.get(7));
         Log.d("part data =====> ", "Parts======8======> " + decodedData.get(8));
-        Log.d("part data =====> ", "Parts======9=====> " + decodedData.get(9));
+        Log.d("part data =====> ", "Parts======9======> " + decodedData.get(9));
         Log.d("part data =====> ", "Parts======10=====> " + decodedData.get(10));
         Log.d("part data =====> ", "Parts======11=====> " + decodedData.get(11));
         Log.d("part data =====> ", "Parts======12=====> " + decodedData.get(12));

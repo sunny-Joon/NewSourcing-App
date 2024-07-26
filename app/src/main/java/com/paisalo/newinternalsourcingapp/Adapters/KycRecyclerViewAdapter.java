@@ -15,6 +15,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.paisalo.newinternalsourcingapp.ModelclassesRoom.KYCScanningModel;
 
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.KycDocsFlag.KycDocsFlagDataModel;
 import com.paisalo.newinternalsourcingapp.R;
 
 import java.util.List;
@@ -103,9 +104,12 @@ public class KycRecyclerViewAdapter extends RecyclerView.Adapter<KycRecyclerView
             }
             if(kycScanning.get(position).isUploaded()){
                 mainLinearLayout.setBackgroundColor(context.getResources().getColor(R.color.green));
+                imgViewKycItemLayout.setImageURI(Uri.parse(kycScanning.get(position).getImagePath().toString()));
             }else{
                 mainLinearLayout.setBackgroundColor(context.getResources().getColor(R.color.red));
             }
+
+
         }
     }
 }
