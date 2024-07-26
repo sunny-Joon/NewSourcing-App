@@ -126,12 +126,9 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
     int ckycNumberExist=0,otpVerified=0;
     private AlertDialog alertDialog;
-    AllDataAFDataModel allDataAFDataModel;
-    String timeStamp;
-    String isNameMatched = "0";
-    RangeCategoryAdapter rangeCategoryAdapter;
 
-    DatabaseClass databaseClass;
+    String isNameMatched = "0";
+
     boolean allConditionsSatisfied = true;
 
     EditText editTextAadhar;
@@ -161,7 +158,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
     TextView txtVDistrictName, txtCityName, txtVillageName, txtSubDistictName;
     TextView tilPanName,tilVoterName,tilDLName;
 
-    String AadharID, isAadharVerified, name, Fname, Mname, Lname, Age, DOB, guardian, gender, guardianRelatnWithBorrower, P_Add1, P_Add2, P_Add3, P_City,
+    String AadharID, name, Fname, Mname, Lname, Age, DOB, guardian, gender, guardianRelatnWithBorrower, P_Add1, P_Add2, P_Add3, P_City,
             P_State, P_Ph3, PanNO, DrivingLic, voterId, motherName, motherMiddleName, motherLastName, fatherName, fatherMiddleName, fatherLastName,
             F_Fname, F_Mname, F_Lname, isMarried, spouseFirstName, spouseMiddleName, spouseLastName, verifiedPanName = "", verifiedLicensename = "",
             verifiedVotername = "", villageCode, subDistCode, distCode, cityCode, stateCode, currentPhotoPathBefWork;
@@ -172,17 +169,13 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
     public static final int REQUEST_ADHAARFRONT_CAPTURE = 1002;
     public static final int REQUEST_ADHAARBACK_CAPTURE = 1003;
     private static final int REQUEST_PAN_CAPTURE = 1004;
-    private static final int REQUEST_IMAGE_CROP = 101;
-    private static final int REQUEST_ADHAARFRONT_CROP = 102;
-    private static final int REQUEST_ADHAARBACK_CROP = 103;
-    private static final int REQUEST_PAN_CROP = 104;
+
     Bitmap bitmap;
     File file, profileImageFile, adhaarFrontFile, adhaarBackFile, panFile;
     CustomProgressDialog customProgressDialog;
     ImageView  calendericon;
     LottieAnimationView aadhaarScanner, profilePic;;
 
-    boolean imageProcessed = false;
     List<VillageData> villageDataList = new ArrayList<>();
     List<CityData> cityDataList = new ArrayList<>();
     List<DistrictData> districtDataList = new ArrayList<>();
@@ -200,8 +193,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
     SubDistChooseListner listSubDistructInteraction;
     CityChooseListner cityChooseListner;
     List<String> GenderList = new ArrayList<>();
-
-   // List<FiExtra> list;
 
     List<RangeCategoryDataClass> stateDataList, maritalStatusList, relatnshipList, gendreDataList;
     List<String> RelationWithBorrowerList = new ArrayList<>();
@@ -370,100 +361,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             }
         });
 
-
-     /*   uidDataUid = getIntent().getStringExtra("uidDataUid") != null ? getIntent().getStringExtra("uidDataUid") : "";
-        poiName = getIntent().getStringExtra("poiName") != null ? getIntent().getStringExtra("poiName") : "";
-        poiDob = getIntent().getStringExtra("poiDob") != null ? getIntent().getStringExtra("poiDob") : "";
-        poiGender = getIntent().getStringExtra("poiGender") != null ? getIntent().getStringExtra("poiGender") : "";
-        poaCo = getIntent().getStringExtra("poaCo") != null ? getIntent().getStringExtra("poaCo") : "";
-        PoaLoc = getIntent().getStringExtra("PoaLoc") != null ? getIntent().getStringExtra("PoaLoc") : "";
-        // String poaCountry = getIntent().getStringExtra("poaCountry") != null ? getIntent().getStringExtra("poaCountry") : "";
-        poaDist = getIntent().getStringExtra("poaDist") != null ? getIntent().getStringExtra("poaDist") : "";
-        poaHouse = getIntent().getStringExtra("poaHouse") != null ? getIntent().getStringExtra("poaHouse") : "";
-        poaPc = getIntent().getStringExtra("poaPc") != null ? getIntent().getStringExtra("poaPc") : "";
-        poaState = getIntent().getStringExtra("poaState") != null ? getIntent().getStringExtra("poaState") : "";
-        poaStreet = getIntent().getStringExtra("poaStreet") != null ? getIntent().getStringExtra("poaStreet") : "";
-        poaVtc = getIntent().getStringExtra("poaVtc") != null ? getIntent().getStringExtra("poaVtc") : "";
-        uidDataPht = getIntent().getStringExtra("uidDataPht") != null ? getIntent().getStringExtra("uidDataPht") : "";
-
-
-        Log.d("TAG", "jsondata:121 "+uidDataUid+" // "+poiName +" // "+poiDob+" // "+poiGender+" // "+poaCo+" // "+PoaLoc+" // "+poaDist+" // "+poaHouse+" // "+poaPc+" // "+poaState+" // "+poaStreet+" // "+poaVtc+" // "+uidDataPht);
-        String pattern = "S/O:|W/O:|D/O:|C/O:|S/O|W/O|D/O|C/O";
-        poaCo = poaCo.replaceAll(pattern, "").trim();
-
-        String[] parts = poaCo.split(" ");
-        String firstName = "";
-        String secondName ="";
-        String thirdName = "";
-
-        if (parts.length == 1) {
-            firstName = parts[0];
-        } else if (parts.length == 2) {
-            firstName = parts[0];
-            thirdName = parts[1];
-        } else if (parts.length >= 3) {
-            firstName = parts[0];
-            secondName = parts[1];
-            thirdName = parts[2];
-        }
-
-        byte[] decodedBytes = Base64.decode(uidDataPht, Base64.DEFAULT);
-        File file = new File(getFilesDir(), "decoded_image.jpg");
-        try {
-            FileOutputStream outputStream = new FileOutputStream(file);
-            outputStream.write(decodedBytes);
-            outputStream.close();
-            Log.d("TAG", "File saved to: " + file.getAbsolutePath());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-        Log.d("TAG", "onCreate:bitmap "+bitmap);
-        if (bitmap != null) {
-            profilePic.setImageBitmap(bitmap);
-        }else {
-            Toast.makeText(this, "bitmat null", Toast.LENGTH_SHORT).show();
-        }
-        editTextAadhar.setText(uidDataUid);
-        editTextName.setText(poiName);
-        editTextDob.setText(poiDob);
-        if(poiGender != null) {
-            if (poiGender.equalsIgnoreCase("Male")) {
-                acspGender.setSelection(2);
-            } else if (poiGender.equalsIgnoreCase("Female")) {
-                acspGender.setSelection(1);
-            } else {
-                acspGender.setSelection(3);
-            }
-        }
-      //  editTextfatherlastname.setText(firstName);
-        editTextfathermiddlename.setText(secondName);
-        editTextfatherlastname.setText(thirdName);
-        editTextAddress1.setText(poaHouse+poaStreet);
-        editTextAddress2.setText(PoaLoc+poaVtc);
-        editTextAddress3.setText(poaDist);
-        // countey.setText(poaCountry);
-        editTextCity.setText(poaDist);
-        editTextPincode.setText(poaPc);
-
-        if (stateDataList == null) {
-            stateDataList = new ArrayList<>();
-        }
-
-        if (acspAadharState != null) {
-            int statePosition = 0;
-            for (int statePos = 0; statePos < stateDataList.size(); statePos++) {
-                if (stateDataList.get(statePos).descriptionEn.equals(poaState)) {
-                    statePosition = statePos;
-                    break;
-                }
-            }
-            acspAadharState.setSelection(statePosition);
-        } else {
-            Log.e("StateSelectionError", "acspAadharState is null.");
-        }*/
-
         panOcr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -492,16 +389,11 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             }
         });
 
-
-
             GenderList.add("MALE");
             GenderList.add("FEMALE");
             GenderList.add("OTHERS");
             CustomSpinnerAdapter adapter1 = new CustomSpinnerAdapter(KYCActivity.this, android.R.layout.simple_spinner_dropdown_item, GenderList);
             acspGender.setAdapter(adapter1);
-
-
-
 
         stateDataList = new ArrayList<>();
         RangeCategoryDataClass rangeCategoryDataClass = new RangeCategoryDataClass("--Select--", "--Select--", "--Select--", "--Select--", "--Select--", 0, "99");
@@ -1101,6 +993,8 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                 IntentIntegrator scanIntegrator = new IntentIntegrator(KYCActivity.this);
                 scanIntegrator.setOrientationLocked(false);
                 scanIntegrator.initiateScan(Collections.singleton("QR_CODE"));
+                Log.d("TAG", "QRCODE: "+1);
+
             }
         });
 
@@ -1380,17 +1274,20 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             }
         });
     }
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d("TAG", "onActivityResult: " + data + " // " + requestCode);
+        Log.d("TAG", "QRCODE2: "+  data + " // " + requestCode);
+
         if (requestCode == IntentIntegrator.REQUEST_CODE) {
             IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
             if (scanningResult != null) {
                 String scanContent = scanningResult.getContents();
                 String scanFormat = scanningResult.getFormatName();
-                Log.d("CheckXMLDATA3", "AadharData:->" + scanContent);
+                Log.d("TAG", "QRCODE3: "+ scanContent);
+
                 if (scanFormat != null) {
                     try {
+                        Log.d("TAG", "QRCODE4: "+ scanContent);
                         setAadharContent(scanContent);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -1434,12 +1331,13 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
     private void setAadharContent(String aadharDataString) throws Exception {
 
         if (aadharDataString.toUpperCase().contains("XML")) {
+            Log.d("TAG", "QRCODE5: "+ aadharDataString);
 
-            Log.d("XML printing", "AadharData:->" + aadharDataString);
             //AadharData aadharData = AadharUtils.getAadhar(aadharDataString);
             AadharData aadharData = AadharUtils.getAadhar(AadharUtils.ParseAadhar(aadharDataString));
 
-            Log.d("TAG", "setAadharContent: " + aadharData.isAadharVerified);
+            Log.d("TAG", "QRCODE5: "+ aadharData.isAadharVerified);
+
             if (aadharData.AadharId != null) {
             }
 
@@ -1463,7 +1361,8 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         } else {
 
             final BigInteger bigIntScanData = new BigInteger(aadharDataString, 10);
-            Log.e("testbigin======", "AadharData:->" + bigIntScanData);
+            Log.d("TAG", "QRCODE6: "+ bigIntScanData);
+
             // 2. Convert BigInt to Byte Array
             final byte byteScanData[] = bigIntScanData.toByteArray();
 
@@ -1473,6 +1372,8 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             // 4. Split the byte array using delimiter
             List<byte[]> parts = separateData(decompByteScanData);
             // Throw error if there are no parts
+            Log.d("TAG", "QRCODE7: "+ parts.toString());
+
             Log.e("Parts======11======> ", "part data =====> " + parts.toString());
             decodeData(parts);
             decodeSignature(decompByteScanData);
@@ -1553,6 +1454,8 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
     }
     protected void decodeData(List<byte[]> encodedData) throws ParseException {
+        Log.d("TAG", "QRCODE8: "+ "decodeData");
+
         Iterator<byte[]> i = encodedData.iterator();
         decodedData = new ArrayList<String>();
         while (i.hasNext()) {

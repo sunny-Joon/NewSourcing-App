@@ -23,8 +23,18 @@ public class KYCScanningModel {
     private File file;
 
     private String docId;
+    private String imagePath;
 
-    public KYCScanningModel(String name, String type, String docType, String remarks, File file, String docId,String checklistId,String GrNo,boolean isUploaded) {
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public KYCScanningModel(String name, String type, String docType, String remarks, File file, String docId, String checklistId, String GrNo, boolean isUploaded, String imagePath) {
         this.name = name;
         this.type = type;
         this.docType = docType;
@@ -34,6 +44,7 @@ public class KYCScanningModel {
         this.checklistId = checklistId;
         this.GrNo = GrNo;
         this.isUploaded = isUploaded;
+        this.imagePath =imagePath;
     }
 
     public String getGrNo() {
