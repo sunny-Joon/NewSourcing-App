@@ -105,7 +105,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
     private boolean isFABOpen = false;
     private FloatingActionButton fabMain, fabEmail, fabWhatsapp,fabChatBot;
   // String devid = "2234514145687247";
-   String deviceId = "";
+   String deviceId;
    int imei =0 ;
   // String devid = "2234514145687247",imei = "868368051227918";//GRST000223;
  // String devid = "4547494815494248",imei = "861556040245135"; //GRST003454
@@ -818,6 +818,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
 
     private void LoginAPi(String devid, String dbname, String imeino) {
         Log.d("TAG", "MyApp: "+ "Login Api Run");
+        devid ="2234514145687247";
         customProgressDialog.show();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
 

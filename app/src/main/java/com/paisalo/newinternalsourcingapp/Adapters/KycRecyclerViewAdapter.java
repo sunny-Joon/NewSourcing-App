@@ -3,6 +3,7 @@ package com.paisalo.newinternalsourcingapp.Adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
 import com.paisalo.newinternalsourcingapp.ModelclassesRoom.KYCScanningModel;
 
@@ -93,6 +95,7 @@ public class KycRecyclerViewAdapter extends RecyclerView.Adapter<KycRecyclerView
             tvKycItemLayoutType.setText(entry.getType());
             tvKycItemLayoutDocType.setText(entry.getDocType());
             tvKycItemLayoutRemarks.setText(entry.getRemarks());
+
             imgViewKycItemLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -100,21 +103,19 @@ public class KycRecyclerViewAdapter extends RecyclerView.Adapter<KycRecyclerView
                 }
             });
 
-            if (kycScanning.get(position).getFile()!=null){
+            if (entry.getFile()!=null){
                 docsCardView.setBackgroundColor(context.getResources().getColor(R.color.green));
-
-                String link = GlobalClass.convertBackslashesToSlashes(kycScanning.get(position).getFile().toString());
-                String fullPath = URL + link;
-                File file = new File(fullPath);
-                imgViewKycItemLayout.setImageURI(Uri.fromFile(file));
-
             }else{
                 docsCardView.setBackgroundColor(context.getResources().getColor(R.color.red));
-
             }
-            if(kycScanning.get(position).isUploaded()){
+            if(entry.isUploaded()){
                 mainLinearLayout.setBackgroundColor(context.getResources().getColor(R.color.green));
-                imgViewKycItemLayout.setImageURI(Uri.parse(kycScanning.get(position).getImagePath().toString()));
+                Log.d("TAG", "bind: "+URL+(entry.getImagePath().replaceAll("\\\\", "/")));
+                Glide.with(context)
+                        .load(URL+(entry.getImagePath().replaceAll("\\\\", "/")))
+                        .into(imgViewKycItemLayout);
+
+
             }else{
                 mainLinearLayout.setBackgroundColor(context.getResources().getColor(R.color.red));
             }

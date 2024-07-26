@@ -337,7 +337,7 @@ public class FirstEsignActivity extends AppCompatActivity {
 
         try {
             // Define the path where the file will be saved
-            File pdfFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "downloaded.pdf");
+            File pdfFile = new File(getBaseContext().getFilesDir(), "downloaded.pdf");
             Log.d("TAG", "displayPdf2: "+ pdfFile.getAbsolutePath() );
             if (pdfFile.exists() && pdfFile.isFile()) {
                 pdfFile.delete();
