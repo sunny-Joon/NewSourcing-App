@@ -73,7 +73,7 @@ public class SplashScreenPage extends AppCompatActivity {
 
     private void getAppUpdate(){
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<VersionCheck> call=apiInterface.VersionCheck(GlobalClass.dbname, BuildConfig.VERSION_NAME,"S",1);
+        Call<VersionCheck> call=apiInterface.VersionCheck(GlobalClass.dbname, BuildConfig.VERSION_NAME,"N",1);
         Log.d("TAG", "getAppUpdate: "+ BuildConfig.VERSION_NAME);
         call.enqueue(new Callback<VersionCheck>() {
             @Override
