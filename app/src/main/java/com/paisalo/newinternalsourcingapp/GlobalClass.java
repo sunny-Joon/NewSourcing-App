@@ -7,6 +7,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -45,6 +46,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -110,10 +112,25 @@ public class GlobalClass extends Application {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+
                 activity.finish();
             }
         });
-        builder.setCancelable(true);
+        builder.setCancelable(false);
+        builder.show();
+    }
+
+    public static void SubmitAlert1(final Activity activity, String title, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.setCancelable(false);
         builder.show();
     }
 
@@ -506,5 +523,23 @@ public class GlobalClass extends Application {
 
 
     }
+
+    public static <T> void setSharedPref(Context context, String key, T value) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String typeName = value.getClass().getSimpleName();
+        if (typeName.equals("String"))
+            preferences.edit().putString(key, (String) value).apply();
+        if (typeName.equals("Integer"))
+            preferences.edit().putInt(key, (Integer) value).apply();
+        if (typeName.equals("Long"))
+            preferences.edit().putLong(key, (Long) value).apply();
+        if (typeName.equals("Boolean"))
+            preferences.edit().putBoolean(key, (Boolean) value).apply();
+        if (typeName.equals("Float"))
+            preferences.edit().putFloat(key, (Float) value).apply();
+        if (typeName.equals("Set"))
+            preferences.edit().putStringSet(key, (Set<String>) value).apply();
+    }
+
 
 }
