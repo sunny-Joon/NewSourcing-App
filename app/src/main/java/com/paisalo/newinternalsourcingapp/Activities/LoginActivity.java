@@ -323,7 +323,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                     }
                     else if (GlobalClass.isValidUsername(username) && GlobalClass.isValidPassword(password)) {
                         LoginAPi(deviceId, BuildConfig.dbname, String.valueOf(imei));
-                        customProgressDialog.dismiss();
+                        customProgressDialog.show();
                     }
                     else {
                        Toast.makeText(LoginActivity.this, "Invalid credentials", Toast.LENGTH_SHORT).show();
@@ -818,6 +818,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
 
     private void LoginAPi(String devid, String dbname, String imeino) {
         Log.d("TAG", "MyApp: "+ "Login Api Run");
+        customProgressDialog.show();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
 
         Call<LoginModel> call = apiInterface.LoginApi(devid, dbname, imeino, getJsonOfUserIdPassword());
@@ -831,7 +832,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                 if (response.isSuccessful()) {
                     Log.d("TAG", "MyApp: "+ "Login Api Successful");
 
-                    //customProgressDialog.dismiss();
+                    customProgressDialog.dismiss();
                     LoginModel responseData = response.body();
                     if (responseData.getMessage().contains("Successfully")) {
 
@@ -858,14 +859,18 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                         LiveTokenApi();
 
                     } else {
-                     //   Toast.makeText(LoginActivity.this, "USERNAME AND PASSWORD INCORRECT !!", Toast.LENGTH_SHORT).show();
+                        customProgressDialog.dismiss();
+
+                        //   Toast.makeText(LoginActivity.this, "USERNAME AND PASSWORD INCORRECT !!", Toast.LENGTH_SHORT).show();
                        // GlobalClass.showToast(LoginActivity.this,5,responseData.getMessage());
                     // GlobalClass.SubmitAlert1(LoginActivity.this,"unsuccessfull",responseData.getMessage());
-                        GlobalClass.SubmitAlert1(LoginActivity.this,"UNSUCCESSFUL","Username & Password Incorrect !!");
+                        GlobalClass.SubmitAlert1(LoginActivity.this,"ATTENTION (" + BuildConfig.VERSION_NAME +")","Username or Password Incorrect !!");
 
                     }
                 } else {
-                  //  GlobalClass.showToast(LoginActivity.this,5,response.message());
+                    customProgressDialog.dismiss();
+
+                    //  GlobalClass.showToast(LoginActivity.this,5,response.message());
                     GlobalClass.SubmitAlert1(LoginActivity.this,"UNSUCCESSFUL",response.message());
 
                 }
@@ -873,7 +878,9 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
 
             @Override
             public void onFailure(Call<LoginModel> call, Throwable t) {
-                GlobalClass.showToast(LoginActivity.this,5,t.getMessage());
+                customProgressDialog.dismiss();
+
+               // GlobalClass.showToast(LoginActivity.this,5,t.getMessage());
             }
         });
     }
