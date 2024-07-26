@@ -541,5 +541,12 @@ public class GlobalClass extends Application {
             preferences.edit().putStringSet(key, (Set<String>) value).apply();
     }
 
+    public static String convertBackslashesToSlashes(String input) {
+        if (input == null) {
+            return null;
+        }
+        return input.replace("\\", "/");
+    }
+
 
 }
