@@ -1,5 +1,7 @@
 package com.paisalo.newinternalsourcingapp.Activities;
 
+import static com.paisalo.newinternalsourcingapp.Retrofit.ApiClient.BASE_URL;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
@@ -65,6 +67,7 @@ import com.paisalo.newinternalsourcingapp.Retrofit.ApiInterface;
 
 import com.paisalo.newinternalsourcingapp.Utils.CustomProgressDialog;
 
+import com.paisalo.newinternalsourcingapp.Utils.Utils;
 import com.paisalo.newinternalsourcingapp.databinding.ActivityLoginBinding;
 import com.paisalo.newinternalsourcingapp.location.GpsTracker;
 import java.text.SimpleDateFormat;
@@ -72,6 +75,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -84,18 +89,25 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
     CustomProgressDialog customProgressDialog;
     Spinner selectDatabase;
     ActivityLoginBinding binding;
-    String username, password,month = "";String year = "",stTarget_Popup="",image="" ,deviceId,choosedCreator;
+    String username, password,month = "";String year = "",stTarget_Popup="",image="" ,choosedCreator;
     Dialog dialogSearch;
+   // String deviceId;
     CreatorListAdapter adapter;
     String selectDatabase1;
     onListCReatorInteraction listCReatorInteraction;
+
+
+
 
     List<CreatorListModelData> list=new ArrayList<>();
     public static final String DATABASE_NAME = BuildConfig.APPLICATION_ID + ".DBNAME";
     boolean isPasswordVisible = false;
     private boolean isFABOpen = false;
     private FloatingActionButton fabMain, fabEmail, fabWhatsapp,fabChatBot;
-    String devid = "2234514145687247",imei = "868368051227918";//GRST000223;
+  // String devid = "2234514145687247";
+   String deviceId = "";
+   int imei =0 ;
+  // String devid = "2234514145687247",imei = "868368051227918";//GRST000223;
  // String devid = "4547494815494248",imei = "861556040245135"; //GRST003454
 
 
@@ -109,7 +121,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
             }
         }
         if (allPermissionsGranted) {
-           // getDeviceID();
+            getDeviceID();
             GpsTracker gpsTracker=new GpsTracker(getApplicationContext());
         } else {
             // If any permission is not granted, close the app
@@ -252,6 +264,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
         if (!checkPermissions()) {
             requestPermissions();
         } else {
+            getDeviceID();
             GpsTracker gpsTracker=new GpsTracker(getApplicationContext());
         }
 
@@ -285,34 +298,58 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
         binding.LoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                username = binding.etLoginUsername.getText().toString();
-                password = binding.etLoginPassword.getText().toString();
-                GlobalClass.Id = username;
-                customProgressDialog.show();
-              //  GlobalClass.showLottieAlertDialog(8,LoginActivity.this);
+                if (binding.etLoginUsername.getText().toString().trim().length() != 10) {
+                    binding.etLoginUsername.setError("Please enter correct UserName!!");
+                }
+                else if (binding.etLoginPassword.getText().toString().length() != 5) {
+                    binding.etLoginPassword.setError("Please enter correct Password!!");
+                }
+                else {
+                     username = binding.etLoginUsername.getText().toString();
+                     password = binding.etLoginPassword.getText().toString();
 
-                // Check if a database is selected before validating credentials
-                if (selectDatabase1.equalsIgnoreCase("--Select--")) {
-                    Toast.makeText(LoginActivity.this, "Select Database Name", Toast.LENGTH_SHORT).show();
-                } else if (GlobalClass.isValidUsername(username) && GlobalClass.isValidPassword(password)) {
-                    LoginAPi(devid, BuildConfig.dbname, imei);
-                   customProgressDialog.show();
-                } else {
-                    Toast.makeText(LoginActivity.this, "Invalid credentials", Toast.LENGTH_SHORT).show();
-                    customProgressDialog.dismiss();
-//                    GlobalClass.dismissLottieAlertDialog();
-//                    GlobalClass.showLottieAlertDialog(9,LoginActivity.this);
+                    if (!checkPermissions()) {
+                        requestPermissions();
+                    }else {
+                        getDeviceID();
+                    }
+
+                    GlobalClass.Id = username;
+                    customProgressDialog.show();
+
+                    if (selectDatabase1.equalsIgnoreCase("--Select--")) {
+                        Toast.makeText(LoginActivity.this, "Select Database Name", Toast.LENGTH_SHORT).show();
+                        customProgressDialog.dismiss();
+                    }
+                    else if (GlobalClass.isValidUsername(username) && GlobalClass.isValidPassword(password)) {
+                        LoginAPi(deviceId, BuildConfig.dbname, String.valueOf(imei));
+                        customProgressDialog.dismiss();
+                    }
+                    else {
+                       Toast.makeText(LoginActivity.this, "Invalid credentials", Toast.LENGTH_SHORT).show();
+                        customProgressDialog.dismiss();
+                      //  GlobalClass.SubmitAlert1(LoginActivity.this,"unsuccessfull","USERNAME AND PASSWORD INCORRECT !!");
+
+                    }
                 }
             }
         });
+
 
         //binding.btnLoginShareDeviceId.setEnabled(false);
         binding.btnLoginShareDeviceId.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if (!checkPermissions()) {
+                    requestPermissions();
+                }else {
+                    getDeviceID();
+                }
+
                 String A = binding.etLoginUsername.getText().toString();
                 if(A != null) {
-                    getDeviceID(A);
+                    getDeviceID();
                     if (deviceId != null) {
                         DeviceMappingRequests(A);
                     } else {
@@ -564,9 +601,9 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
     }
 
 
-    private void showPermissionAlertDialog() {
+   /* private void showPermissionAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("This app requires all permissions to function properly. Please grant all permissions to continue.")
+        builder.setMessage("USERNAME AND PASSWORD INCORRECT !!")
                 .setCancelable(false)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -576,7 +613,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                 });
         AlertDialog alert = builder.create();
         alert.show();
-    }
+    }*/
 
   /*  private boolean requestPermissions() {
         final boolean[] perMissionFlag = {false};
@@ -688,18 +725,37 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
         adapter.notifyDataSetChanged();
     }
     @SuppressLint("HardwareIds")
-    public void getDeviceID(String UserID) {
+    private void getDeviceID() {
+        imei = 0;
+        getDeviceIMEI();
 
+        Log.d("checkIDDD", deviceId + "");
+        if (deviceId.length() > 8) {
+
+            if (imei > 0) {
+                GlobalClass.setSharedPref(getBaseContext(), deviceId, deviceId);
+            }
+            GlobalClass.setSharedPref(getBaseContext(), BASE_URL, BuildConfig.BUILD_TYPE);
+
+        }
+    }
+
+    public void getDeviceIMEI() {
+
+//        deviceId = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
         String lastThreeChars = "";
 
         try {
-            if (UserID.trim().length() > 3) {
-                lastThreeChars = UserID.trim().substring(UserID.trim().length() - 3);
+            if (username.trim().length() > 3) {
+                lastThreeChars = username.trim().substring(username.trim().length() - 3);
             } else {
-                lastThreeChars = UserID;
+                lastThreeChars = username;
             }
         }catch (Exception e)
-        {}
+        {
+            //  Toast.makeText(this, "Please Enter User Id for getting device Id", Toast.LENGTH_SHORT).show();
+
+        }
         deviceId = lastThreeChars + //we make this look like a valid IMEI
                 Build.BOARD.length()%10+ Build.BRAND.length()%10 +
                 Build.CPU_ABI.length()%10 + Build.DEVICE.length()%10 +
@@ -709,9 +765,32 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                 Build.TAGS.length()%10 + Build.TYPE.length()%10 +
                 Build.USER.length()%10 ; //13 digits
 
-        Log.d("TAG", "DeviceMappingRequests: " + deviceId);
-        GlobalClass.DevId = deviceId;
+        Log.e("DirectoryDeviceID", deviceId + "");
+
+//        try {
+//            File dir = Utils.getFilePath("/", false);
+//
+//            Log.e("DirectoryDeviceID", dir + "");
+//            File file = new File(dir, "." + BuildConfig.ESIGN_APP + ".info");
+//            Log.e("FileLocation", file + "");
+//            OutputStream out = new FileOutputStream(file);
+//            out.write(deviceId.getBytes());
+//
+//            Log.e("DeviceIDWrite", Arrays.toString(deviceId.getBytes()) + "");
+//            Log.e("DeviceIDWrite0", deviceId + "");
+//            out.flush();
+//            out.close();
+//
+//            //Utils.writeBytesToFile(deviceId.getBytes(),file);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+        GlobalClass.setSharedPref(getBaseContext(), deviceId, deviceId);
+
+
     }
+
 /*
     private void handlePermissionException() {
         InstalledAppDetailsActivity(this);
@@ -779,10 +858,16 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                         LiveTokenApi();
 
                     } else {
-                        GlobalClass.showToast(LoginActivity.this,5,responseData.getMessage());
+                     //   Toast.makeText(LoginActivity.this, "USERNAME AND PASSWORD INCORRECT !!", Toast.LENGTH_SHORT).show();
+                       // GlobalClass.showToast(LoginActivity.this,5,responseData.getMessage());
+                    // GlobalClass.SubmitAlert1(LoginActivity.this,"unsuccessfull",responseData.getMessage());
+                        GlobalClass.SubmitAlert1(LoginActivity.this,"UNSUCCESSFUL","Username & Password Incorrect !!");
+
                     }
                 } else {
-                    GlobalClass.showToast(LoginActivity.this,5,response.message());
+                  //  GlobalClass.showToast(LoginActivity.this,5,response.message());
+                    GlobalClass.SubmitAlert1(LoginActivity.this,"UNSUCCESSFUL",response.message());
+
                 }
             }
 
