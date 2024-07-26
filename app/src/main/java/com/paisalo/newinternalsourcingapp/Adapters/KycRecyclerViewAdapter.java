@@ -13,11 +13,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.paisalo.newinternalsourcingapp.GlobalClass;
 import com.paisalo.newinternalsourcingapp.ModelclassesRoom.KYCScanningModel;
 
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.KycDocsFlag.KycDocsFlagDataModel;
 import com.paisalo.newinternalsourcingapp.R;
 
+import java.io.File;
 import java.util.List;
 
 public class KycRecyclerViewAdapter extends RecyclerView.Adapter<KycRecyclerViewAdapter.ViewHolder> {
@@ -83,6 +86,8 @@ public class KycRecyclerViewAdapter extends RecyclerView.Adapter<KycRecyclerView
         }
 
         public void bind(int position) {
+            String URL ="https://pdlmobilelending.paisalo.in:5320";
+
             KYCScanningModel entry = kycScanning.get(position);
             tvKycItemLayoutName.setText(entry.getName());
             tvKycItemLayoutType.setText(entry.getType());
@@ -97,7 +102,12 @@ public class KycRecyclerViewAdapter extends RecyclerView.Adapter<KycRecyclerView
 
             if (kycScanning.get(position).getFile()!=null){
                 docsCardView.setBackgroundColor(context.getResources().getColor(R.color.green));
-               imgViewKycItemLayout.setImageURI(Uri.fromFile(kycScanning.get(position).getFile()));
+
+                String link = GlobalClass.convertBackslashesToSlashes(kycScanning.get(position).getFile().toString());
+                String fullPath = URL + link;
+                File file = new File(fullPath);
+                imgViewKycItemLayout.setImageURI(Uri.fromFile(file));
+
             }else{
                 docsCardView.setBackgroundColor(context.getResources().getColor(R.color.red));
 
