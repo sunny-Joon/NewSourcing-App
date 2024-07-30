@@ -153,7 +153,7 @@ public interface ApiInterface {
     @Multipart
     @POST("OCR/DocVerifyforSpaceOCR")
     Call<AdharDataResponse> getAdharDataByOCR(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("imgType") String imgData, @Part MultipartBody.Part file);
-
+// done
     @GET("POSFI/getFiToEdit")
     Call<AllDataAFModel> getAllAFData(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("FiCode") String FiCode, @Query("Creator") String Creator);
 

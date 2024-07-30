@@ -28,7 +28,7 @@ public class ApiClient {
     private static Retrofit retrofit4 = null;
     private static Retrofit retrofit5 = null;
 
-    public static Retrofit getClient() {
+    public static Retrofit  getClient() {
         if (retrofit==null) {
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
             logging.setLevel(HttpLoggingInterceptor.Level.BODY);
