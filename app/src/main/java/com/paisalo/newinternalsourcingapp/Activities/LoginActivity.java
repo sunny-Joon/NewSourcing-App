@@ -4,10 +4,12 @@ import static com.paisalo.newinternalsourcingapp.GlobalClass.SubmitAlert;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.Manifest;
@@ -39,8 +41,16 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.airbnb.lottie.LottieAnimationView;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.gson.Gson;
+
 import com.google.gson.JsonObject;
+import com.paisalo.newinternalsourcingapp.Adapters.BranchCodesAdapter;
 import com.paisalo.newinternalsourcingapp.Adapters.CreatorListAdapter;
 import com.paisalo.newinternalsourcingapp.BuildConfig;
 import com.paisalo.newinternalsourcingapp.Entities.onListCReatorInteraction;
@@ -71,7 +81,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
-
+import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -80,7 +92,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
     private static final int PHONE_CALL_REQUEST=0;
 
     TextView versionset,btnTermCondition;
-
+    String token;
     CustomProgressDialog customProgressDialog;
     Spinner selectDatabase;
     ActivityLoginBinding binding;
@@ -186,6 +198,10 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
             PERMISSIONS.add(Manifest.permission.READ_EXTERNAL_STORAGE);
         }
+
+        FirebaseApp.initializeApp(this);
+        FirebaseMessaging.getInstance().setAutoInitEnabled(true);
+        requestFCMToken();
 
         getSupportActionBar().hide();
 
@@ -354,10 +370,40 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                         }
                     }else{
 
+                String A = binding.etLoginUsername.getText().toString();
+                if(A != null) {
+                    getDeviceID();
+                    if (deviceId != null) {
+                        DeviceMappingRequests(GlobalClass.Id);
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Device Id Not Found", Toast.LENGTH_SHORT).show();
+
                     }
                 }
             }
         });
+    }
+
+    private void requestFCMToken() {
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w("TAG", "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
+
+                        // Get new FCM registration token
+                        token = task.getResult();
+
+                        // Log and handle the token as required (e.g., send it to your server)
+                        Log.d("TAG", "FCM token: " + token);
+
+                        // You can also send the token to your server here if needed
+                        // sendTokenToServer(token);
+                    }
+                });
     }
 
     private void DeviceMappingRequests(String UserID){
@@ -376,6 +422,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
 
         dialogs.show();
 
+
         EditText name = dialogView.findViewById(R.id.nameET);
         EditText mobile = dialogView.findViewById(R.id.mobileET);
         EditText imei = dialogView.findViewById(R.id.imeiET);
@@ -386,15 +433,52 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
         TextView errorTextView = dialogView.findViewById(R.id.errorTextView);
         EditText branchcodes = dialogView.findViewById(R.id.branchcodes);
         Spinner spinnerReq = dialogView.findViewById(R.id.spinner);
+        RecyclerView RecviewBranchCode = dialogView.findViewById(R.id.RecviewBranchCode);
+
+        RecviewBranchCode.setLayoutManager(new GridLayoutManager(LoginActivity.this,3));
+        List<String> branchCodeList=new ArrayList<>();
+
+
+        branchcodes.addTextChangedListener(new TextWatcher() {
+            String regex = "[^\\D\\W]{3}";
+            Pattern pattern = Pattern.compile(regex);
+
+            // Create a Matcher object
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                Matcher matcher = pattern.matcher(charSequence);
+
+                if (charSequence.length()==3 && matcher.matches()){
+                    branchCodeList.add(branchcodes.getText().toString());
+                    branchcodes.setText("");
+                    if (branchCodeList.size()>0){
+                        BranchCodesAdapter branchCodesAdapter=new BranchCodesAdapter(LoginActivity.this,branchCodeList);
+                        RecviewBranchCode.setAdapter(branchCodesAdapter);
+                        branchCodesAdapter.notifyDataSetChanged();
+                    }
 
         deviceIds.setText(deviceId);
         userId.setText(UserID);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
         creators.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showCreatorSearchDialog(creators);
-                customProgressDialog.show();
+
             }
         });
 
@@ -533,7 +617,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
             }
         });
         recViewOfCreator.setLayoutManager(new LinearLayoutManager(this));
-
+        customProgressDialog.show();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<CreatorListModel> call=apiInterface.getCreatorList(GlobalClass.Token,GlobalClass.dbname);
         call.enqueue(new Callback<CreatorListModel>() {
@@ -548,13 +632,13 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                     CreatorListModel creatorListModel = response.body();
                     List<CreatorListModelData> creatorListModelData = creatorListModel.getData();
                     list.addAll(creatorListModelData);
-
                     adapter=new CreatorListAdapter(LoginActivity.this,list,dialogSearch,listCReatorInteraction);
                     recViewOfCreator.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 }else{
                     SubmitAlert(LoginActivity.this, "unsuccessful", response.message()+","+response.code());
                     Log.d("TAG", "onResponse: "+response.message());
+
                 }
 
 
@@ -563,7 +647,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
             @Override
             public void onFailure(Call<CreatorListModel> call, Throwable t) {
                 SubmitAlert(LoginActivity.this, "unsuccessful", t.getMessage());
-
+                customProgressDialog.dismiss();
             }
         });
 
@@ -605,115 +689,6 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
         requestPermissionLauncher.launch(permissionArr);
     }
 
-
-   /* private void showPermissionAlertDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("USERNAME AND PASSWORD INCORRECT !!")
-                .setCancelable(false)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // Close the app
-                        finish();
-                    }
-                });
-        AlertDialog alert = builder.create();
-        alert.show();
-    }*/
-
-  /*  private boolean requestPermissions() {
-        final boolean[] perMissionFlag = {false};
-        // below line is use to request permission in the current activity.
-        // this method is use to handle error in runtime permissions
-        Dexter.withActivity(this)
-                // below line is use to request the number of permissions which are required in our app.
-                .withPermissions(Manifest.permission.CAMERA,
-                        // below is the list of permissions
-                        Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.READ_PHONE_STATE)
-                // after adding permissions we are calling an with listener method.
-                .withListener(new MultiplePermissionsListener() {
-                    @Override
-                    public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
-                        // this method is called when all permissions are granted
-                        if (multiplePermissionsReport.areAllPermissionsGranted()) {
-                            // do you work now
-                            permissionCheck();
-                            perMissionFlag[0] =true;
-
-                        }
-                        // check for permanent denial of any permission
-                        if (multiplePermissionsReport.isAnyPermissionPermanentlyDenied()) {
-                            // permission is denied permanently, we will show user a dialog message.
-                            showSettingsDialog();
-                            perMissionFlag[0] =false;
-
-                        }
-                    }
-
-                    @Override
-                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> list, PermissionToken permissionToken) {
-                        // this method is called when user grants some permission and denies some of them.
-                        permissionToken.continuePermissionRequest();
-                    }
-                }).withErrorListener(error -> {
-                    // we are displaying a toast message for error message.
-                    Toast.makeText(getApplicationContext(), "Error occurred! ", Toast.LENGTH_SHORT).show();
-                    handlePermissionException();
-                    perMissionFlag[0] =false;
-
-                })
-                // below line is use to run the permissions on same thread and to check the permissions
-                .onSameThread().check();
-        return perMissionFlag[0];
-
-
-    }*/
-
- /*   private void permissionCheck() {
-        String[] permissions = {
-                Manifest.permission.CAMERA,Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION};
-        String rationale = "Please provide permission so that app can work smoothly ...";
-        Permissions.Options options = new Permissions.Options()
-                .setRationaleDialogTitle("Info")
-                .setSettingsDialogTitle("Warning");
-
-        Permissions.check(this*//*context*//*, permissions, rationale, options, new PermissionHandler() {
-            @Override
-            public void onGranted() {
-                // do your task.
-
-//                if (ActivityCompat.checkSelfPermission(ActivityLogin.this,
-//                        Manifest.permission.READ_PHONE_STATE)
-//                        != PackageManager.PERMISSION_GRANTED) {
-//                    handlePermissionException();
-//                }
-//                else {
-                getDeviceID();
-//                }
-
-                // If you have access to the external storage, do whatever you nee
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-//                    if (Environment.isExternalStorageManager()){
-//
-//                       getDeviceID();
-//
-//    // If you don't have access, launch a new activity to show the user the system's dialog
-//    // to allow access to the external storage
-//                    }else{
-//                      handlePermissionException();
-//                    }
-//                }
-
-            }
-
-            @Override
-            public void onDenied(Context context, ArrayList<String> deniedPermissions) {
-                // permission denied, block the feature.
-                //permissionCheck();
-                handlePermissionException();
-            }
-        });
-    }*/
 
     @SuppressLint("NotifyDataSetChanged")
     public void filter(String s) {
@@ -776,11 +751,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
         Log.d("TAG", "ImeiId6: "+deviceId);
 
         //GlobalClass.setSharedPref(getBaseContext(), deviceId, deviceId);
-
-
     }
-
-
 
     private void LoginAPi(String devid, String dbname) {
         Log.d("TAG", "MyApp: "+ "Login Api Run");
@@ -794,8 +765,6 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
 
             @Override
             public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
-
-
                 if (response.isSuccessful()) {
                     Log.d("TAG", "MyApp: "+ "Login Api Successful");
 
