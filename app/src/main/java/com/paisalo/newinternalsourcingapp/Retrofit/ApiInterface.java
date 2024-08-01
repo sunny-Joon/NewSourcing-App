@@ -76,7 +76,7 @@ public interface ApiInterface {
 
 
     @POST("Account/GetToken")
-    Call<LoginModel> LoginApi(@Header("devid") String devid, @Header("dbname") String dbname, @Header("imeino") String imeino, @Body JsonObject object);
+    Call<LoginModel> LoginApi(@Header("devid") String devid, @Header("dbname") String dbname,@Body JsonObject object);
 
     @GET("Master/GetRangeCategories")
     Call<RangeCategoryModel> RangeCategory(@Header("Authorization") String token, @Header("dbname") String dbName);

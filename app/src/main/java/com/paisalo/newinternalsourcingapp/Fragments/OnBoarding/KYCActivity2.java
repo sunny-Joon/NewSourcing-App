@@ -1,5 +1,7 @@
 package com.paisalo.newinternalsourcingapp.Fragments.OnBoarding;
 
+import static com.paisalo.newinternalsourcingapp.GlobalClass.SubmitAlert;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -12,10 +14,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.paisalo.newinternalsourcingapp.Activities.LoginActivity;
 import com.paisalo.newinternalsourcingapp.Adapters.CustomSpinnerAdapter;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
 import com.paisalo.newinternalsourcingapp.Modelclasses.FiExtra;
@@ -374,7 +378,6 @@ public class KYCActivity2 extends AppCompatActivity {
                     firstPageObject.setFiExtra(fiExtra);
 
                     Gson gson = new Gson();
-                    //     JsonObject jsonObject = gson.fromJson(gson.toJson(firstPageObject.toString()), JsonObject.class);
                     JsonObject jsonObject = gson.fromJson(firstPageObject.toString(), JsonObject.class);
 
                     Log.d("TAG", "FirstPageObject1: " + jsonObject);
@@ -394,7 +397,6 @@ public class KYCActivity2 extends AppCompatActivity {
 
                                 SaveFiModel saveFiModel = response1.body();
                                 SaveFiDataModel saveFiDataModel = saveFiModel.getData();
-
                                 String Message1 = saveFiDataModel.getFiCode().toString();
 
                                 if (Message1 != null) {
@@ -444,108 +446,77 @@ public class KYCActivity2 extends AppCompatActivity {
 //                                                                        CkycNoMODEL result = response.body();
 //                                                                        if (result != null) {
 //                                                                            Log.d("TAG", "onResponse1:ckyc1 " + result.getData());
-
-
-                                                            customProgressDialog.dismiss();
-                                                            FiCPopup fiCPopup = new FiCPopup("Your Ficode & Creator is Here", Message1 + " & " + GlobalClass.Creator);
-
-                                                            Log.d("TAG", "onResponse: "+ckycNumberExist);
-
 //                                                            if (ckycNumberExist.equals("1")) {
-                                                                Log.d("TAG", "onResponse5: "+ckycNumberExist);
-                                                                updateAdharWithCodeCreatorForCKCY(firstPageObject.getAadharID(), Message1, GlobalClass.Creator);
-                                                      //      }
+                                                            //      }
+                                                            ApiInterface apiInterface = ApiClient.getClient4().create(ApiInterface.class);
+                                                            Call<JsonObject> call = apiInterface.updateAdharWithCodeCreator(firstPageObject.getAadharID(), Message1, GlobalClass.Creator);
+                                                            call.enqueue(new Callback<JsonObject>() {
+                                                                @Override
+                                                                public void onResponse(Call<JsonObject> call, Response<JsonObject> response4) {
+                                                                    Log.d("TAG", "onResponse:ckycrps " + response4.body());
+                                                                    if(response4.isSuccessful()) {
+                                                                        customProgressDialog.dismiss();
+                                                                        FiCPopup fiCPopup = new FiCPopup("Your Ficode & Creator is Here", Message1 + " & " + GlobalClass.Creator);
+                                                                        fiCPopup.show(getSupportFragmentManager(), "CustomDialog");
+                                                                    }else{
+                                                                        customProgressDialog.dismiss();
+                                                                        SubmitAlert(KYCActivity2.this, "unsuccessful", response4.code()+","+response4.message());
+                                                                    }
+                                                                }
 
-                                                            fiCPopup.show(getSupportFragmentManager(), "CustomDialog");
-//                                                                        } else {
-//                                                                            Toast.makeText(KYCActivity2.this, "Failed", Toast.LENGTH_SHORT).show();
-//                                                                            Log.d("TAG", "onResponse1:ckyc2 Response body is null" + response.body());
-//                                                                        }
-//                                                                    } else {
-//                                                                        Toast.makeText(KYCActivity2.this, "Failed", Toast.LENGTH_SHORT).show();
-//                                                                        Log.d("TAG", "onResponse2:ckyc3 " + response.code());
-//                                                                    }
-//                                                                }
-//
-//                                                                @Override
-//                                                                public void onFailure(Call<CkycNoMODEL> call, Throwable t) {
-//                                                                    Log.d("TAG", "onFailure3: " + t.getMessage());
-//                                                                }
-//                                                            });
-
+                                                                @Override
+                                                                public void onFailure(Call<JsonObject> call, Throwable throwable) {
+                                                                    customProgressDialog.dismiss();
+                                                                    SubmitAlert(KYCActivity2.this, "unsuccessful", throwable.getMessage());
+                                                                }
+                                                            });
 
                                                         } else {
-                                                            Toast.makeText(KYCActivity2.this, "Failed", Toast.LENGTH_SHORT).show();
-                                                            Log.d("TAG", "onResponse3:ckyc2 Response body is null");
-
+                                                            customProgressDialog.dismiss();
+                                                            SubmitAlert(KYCActivity2.this, "Profile Pic Not Save", response3.code()+","+response3.message());
                                                         }
                                                     } else {
                                                         customProgressDialog.dismiss();
-                                                        Toast.makeText(KYCActivity2.this, "Failed", Toast.LENGTH_SHORT).show();
-                                                        Log.d("TAG", "onResponse4:ckyc2 Response body is null");
-
+                                                        SubmitAlert(KYCActivity2.this, "Profile Pic Not Saved", response3.code()+","+response3.message());
                                                     }
                                                 }
 
                                                 @Override
                                                 public void onFailure(Call<ProfilePicModel> call3, Throwable t) {
                                                     customProgressDialog.dismiss();
-                                                    Toast.makeText(KYCActivity2.this, "Network Issue", Toast.LENGTH_SHORT).show();
+                                                    SubmitAlert(KYCActivity2.this, "Profile Pic Not Saved", t.getMessage());
                                                 }
                                             });
 
 
                                         } else {
                                             customProgressDialog.dismiss();
-                                            Toast.makeText(KYCActivity2.this, "Failed", Toast.LENGTH_SHORT).show();
-                                            Log.d("TAG", "onResponse5:ckyc2 Response body is null");
-
+                                            SubmitAlert(KYCActivity2.this, "Verified Info Not Saved", responses2.code()+","+responses2.message());
                                         }
                                     }
 
                                     @Override
                                     public void onFailure(Call<SaveVerifiedInfo> call2, Throwable t) {
                                         customProgressDialog.dismiss();
-                                        Toast.makeText(KYCActivity2.this, "Network Issue", Toast.LENGTH_SHORT).show();
+                                        SubmitAlert(KYCActivity2.this, "Verified Info Failure", t.getMessage());
                                     }
                                 });
                             } else {
                                 customProgressDialog.dismiss();
-                                Toast.makeText(KYCActivity2.this, "Failed", Toast.LENGTH_SHORT).show();
-                                Log.d("TAG", "onResponse6:ckyc6 Response body is null");
-
-
+                                SubmitAlert(KYCActivity2.this, "KYC Not Saved", response1.code()+","+response1.message());
                             }
                         }
 
                         @Override
-                        public void onFailure(Call<SaveFiModel> call1, Throwable t) {
+                        public void onFailure(@NonNull Call<SaveFiModel> call1, @NonNull Throwable t) {
                             customProgressDialog.dismiss();
-                            Toast.makeText(KYCActivity2.this, "Network Issue", Toast.LENGTH_SHORT).show();
+                            SubmitAlert(KYCActivity2.this, "FiCode Not Generated", t.getMessage());
                         }
                     });
                 }
             }
         });
     }// onCreate Closed
-
-    private void updateAdharWithCodeCreatorForCKCY(String aadharid, String fiCode, String creator) {
-        Log.d("TAG", "updateAdharWithCodeCreatorForCKCY: "+aadharid+fiCode+creator);
-
-        ApiInterface apiInterface = ApiClient.getClient4().create(ApiInterface.class);
-        Call<JsonObject> call = apiInterface.updateAdharWithCodeCreator(aadharid, String.valueOf(fiCode), creator);
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                Log.d("TAG", "onResponse:ckycrps " + response.body());
-            }
-
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable throwable) {
-                Log.d("TAG", "onFailure: " + throwable.getMessage());
-            }
-        });
-    }
 
     private boolean calculations() {
         boolean A = true;
@@ -575,4 +546,3 @@ public class KYCActivity2 extends AppCompatActivity {
         return A;
     }
 }
-

@@ -36,7 +36,7 @@ public class LeaderBoardFragment extends Fragment {
 
     private LeaderBoardRecyclerViewAdapter leaderBoardRecyclerViewAdapter;
     FragmentLeaderBoardBinding binding;
-    float progress = 0.7f;
+    float progress = 0.0f;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

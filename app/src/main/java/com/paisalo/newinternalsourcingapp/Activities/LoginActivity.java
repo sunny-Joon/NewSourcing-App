@@ -1,6 +1,6 @@
 package com.paisalo.newinternalsourcingapp.Activities;
 
-import static com.paisalo.newinternalsourcingapp.Retrofit.ApiClient.BASE_URL;
+import static com.paisalo.newinternalsourcingapp.GlobalClass.SubmitAlert;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -21,7 +21,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.text.Editable;
@@ -41,7 +40,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.Adapters.CreatorListAdapter;
 import com.paisalo.newinternalsourcingapp.BuildConfig;
@@ -56,7 +54,6 @@ import com.paisalo.newinternalsourcingapp.ModelsRetrofit.LoginModels.FoImeiModel
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.LoginModels.FoModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.LoginModels.LoginModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.LoginModels.TokenDetailsModel;
-import com.paisalo.newinternalsourcingapp.ModelsRetrofit.ProfilePicModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.TargetIndexModels.ResponseModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.TargetIndexModels.TargetResponseModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.TopAdImageModels.ImageDataModel;
@@ -67,7 +64,6 @@ import com.paisalo.newinternalsourcingapp.Retrofit.ApiInterface;
 
 import com.paisalo.newinternalsourcingapp.Utils.CustomProgressDialog;
 
-import com.paisalo.newinternalsourcingapp.Utils.Utils;
 import com.paisalo.newinternalsourcingapp.databinding.ActivityLoginBinding;
 import com.paisalo.newinternalsourcingapp.location.GpsTracker;
 import java.text.SimpleDateFormat;
@@ -75,7 +71,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
-import java.util.UUID;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -91,7 +86,6 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
     ActivityLoginBinding binding;
     String username, password,month = "";String year = "",stTarget_Popup="",image="" ,choosedCreator;
     Dialog dialogSearch;
-   // String deviceId;
     CreatorListAdapter adapter;
     String selectDatabase1;
     onListCReatorInteraction listCReatorInteraction;
@@ -121,7 +115,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
             }
         }
         if (allPermissionsGranted) {
-            getDeviceID();
+          //  getDeviceID();
             GpsTracker gpsTracker=new GpsTracker(getApplicationContext());
         } else {
             // If any permission is not granted, close the app
@@ -184,7 +178,6 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-
         PERMISSIONS.add(   android.Manifest.permission.ACCESS_FINE_LOCATION);
         PERMISSIONS.add(   android.Manifest.permission.ACCESS_COARSE_LOCATION);
         PERMISSIONS.add(   android.Manifest.permission.CAMERA);
@@ -193,8 +186,6 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
             PERMISSIONS.add(Manifest.permission.READ_EXTERNAL_STORAGE);
         }
-
-
 
         getSupportActionBar().hide();
 
@@ -264,7 +255,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
         if (!checkPermissions()) {
             requestPermissions();
         } else {
-            getDeviceID();
+           // getDeviceID();
             GpsTracker gpsTracker=new GpsTracker(getApplicationContext());
         }
 
@@ -311,7 +302,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                     if (!checkPermissions()) {
                         requestPermissions();
                     }else {
-                        getDeviceID();
+                        getDEVICEID(username);
                     }
 
                     GlobalClass.Id = username;
@@ -322,7 +313,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                         customProgressDialog.dismiss();
                     }
                     else if (GlobalClass.isValidUsername(username) && GlobalClass.isValidPassword(password)) {
-                        LoginAPi(deviceId, BuildConfig.dbname, String.valueOf(imei));
+                        LoginAPi(deviceId, BuildConfig.dbname);
                         customProgressDialog.show();
                     }
                     else {
@@ -336,35 +327,41 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
         });
 
 
+
         //binding.btnLoginShareDeviceId.setEnabled(false);
         binding.btnLoginShareDeviceId.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                Log.d("TAG", "ImeiId1: ");
                 if (!checkPermissions()) {
+                    Log.d("TAG", "ImeiId2: ");
                     requestPermissions();
                 }else {
-                    getDeviceID();
-                }
+                    /*Log.d("TAG", "ImeiId3: ");
+                    getDeviceID();*/
+                    String A = binding.etLoginUsername.getText().toString();
+                    if(A != null) {
+                        Log.d("TAG", "ImeiId8: ");
 
-                String A = binding.etLoginUsername.getText().toString();
-                if(A != null) {
-                    getDeviceID();
-                    if (deviceId != null) {
-                        DeviceMappingRequests(A);
-                    } else {
-                        Toast.makeText(LoginActivity.this, "Device Id Not Found", Toast.LENGTH_SHORT).show();
+                        getDEVICEID(A);
+                        if (deviceId != null) {
+                            Log.d("TAG", "ImeiId9: ");
+
+                            DeviceMappingRequests(A);
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Device Id Not Found", Toast.LENGTH_SHORT).show();
+                        }
+                    }else{
+
                     }
-                }else{
-
                 }
             }
         });
     }
 
     private void DeviceMappingRequests(String UserID){
-        Log.d("TAG", "DeviceMappingRequests: " + UserID);
-
+        Log.d("TAG", "ImeiId10: "+ UserID);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
         View dialogView = getLayoutInflater().inflate(R.layout.mappingpopup_layout, null);
@@ -383,14 +380,14 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
         EditText mobile = dialogView.findViewById(R.id.mobileET);
         EditText imei = dialogView.findViewById(R.id.imeiET);
         EditText imeiET2 = dialogView.findViewById(R.id.imeiET2);
-        TextView deviceId = dialogView.findViewById(R.id.deviceIdET);
+        TextView deviceIds = dialogView.findViewById(R.id.deviceIdET);
         TextView userId = dialogView.findViewById(R.id.userIDET);
         TextView creators = dialogView.findViewById(R.id.selectcreator);
         TextView errorTextView = dialogView.findViewById(R.id.errorTextView);
         EditText branchcodes = dialogView.findViewById(R.id.branchcodes);
         Spinner spinnerReq = dialogView.findViewById(R.id.spinner);
 
-        deviceId.setText(GlobalClass.DevId);
+        deviceIds.setText(deviceId);
         userId.setText(UserID);
 
         creators.setOnClickListener(new View.OnClickListener() {
@@ -413,7 +410,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                 String Mobile = mobile.getText().toString();
                 String Imei = imei.getText().toString();
                 String Imei2 = imeiET2.getText().toString();
-                String DeviceID = deviceId.getText().toString();
+                String DeviceID = deviceIds.getText().toString();
                 String UserID = userId.getText().toString();
                 String Creator = creators.getText().toString();
                 String branchcode = branchcodes.getText().toString();
@@ -430,10 +427,9 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                     jsonObject.addProperty( "imeI_no2", Imei2);
                     jsonObject.addProperty( "userId", UserID);
                     jsonObject.addProperty( "mapBranch", branchcodes.getText().toString());
-                    jsonObject.addProperty( "latitude", String.valueOf(gpsTracker.getLatitude()));
-                    jsonObject.addProperty( "longitude", String.valueOf(gpsTracker.getLongitude()));
+                    jsonObject.addProperty( "latitude", String.valueOf(GpsTracker.getLatitude()));
+                    jsonObject.addProperty( "longitude", String.valueOf(GpsTracker.getLatitude()));
                     Log.d("TAG", "onClick: "+jsonObject);
-
 
                     ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
                     Call<ImeiMappingModel> call=apiInterface.getImeiMappingReq(GlobalClass.Token,GlobalClass.dbname,jsonObject);
@@ -448,24 +444,24 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                                 customProgressDialog.dismiss();
                                 Log.d("TAG", "onResponseimei: "+response.body().getMessage().toString());
                                 ImeiMappingModel imeiMappingModel = response.body();
-                                if(imeiMappingModel.getMessage().contains("Data inserted Successfully")) {
+                                if(imeiMappingModel.getMessage().contains("Get Record Successfully")) {
                                     Log.d("TAG", "onResponseimei: " + "Successfully Inserted");
                                     dialogs.dismiss();
-                                }
-                                else {
+                                }else {
                                     Log.d("TAG", "onResponseimei: " + response.code());
-
-                                    Toast.makeText(LoginActivity.this, "Network Error", Toast.LENGTH_SHORT).show();
+                                    customProgressDialog.dismiss();
+                                    Toast.makeText(LoginActivity.this, response.code(), Toast.LENGTH_SHORT).show();
                                 }
                             }else{
-                                Log.d("TAG", "onResponseimei: " + "Not Successfully Inserted");
+                                SubmitAlert(LoginActivity.this, "unsuccessful", + response.code() + response.message());
+                                customProgressDialog.dismiss();
 
-                                Toast.makeText(LoginActivity.this, response.code(), Toast.LENGTH_SHORT).show();
                             }
                         }
 
                         @Override
                         public void onFailure(Call<ImeiMappingModel> call, Throwable t) {
+                            customProgressDialog.dismiss();
                             Toast.makeText(LoginActivity.this, "Network Error", Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -473,6 +469,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
 
                 } else {
                     Log.d("Error","MSG" + error);
+                    customProgressDialog.dismiss();
                     errorTextView.setText(error);
                 }
 
@@ -520,6 +517,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
     }
 
     private void showCreatorSearchDialog(TextView creators) {
+        Log.d("TAG", "ImeiIdcreator: ");
 
         dialogSearch=new Dialog(LoginActivity.this);
         dialogSearch.setContentView(R.layout.dialog_searchable_spinner);
@@ -541,8 +539,11 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
         call.enqueue(new Callback<CreatorListModel>() {
             @Override
             public void onResponse(Call<CreatorListModel> call, Response<CreatorListModel> response) {
+                Log.d("TAG", "ImeiIdcreator1: ");
 
                 if(response.isSuccessful()){
+                    Log.d("TAG", "ImeiIdcreator2: ");
+
                     customProgressDialog.dismiss();
                     CreatorListModel creatorListModel = response.body();
                     List<CreatorListModelData> creatorListModelData = creatorListModel.getData();
@@ -551,6 +552,9 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                     adapter=new CreatorListAdapter(LoginActivity.this,list,dialogSearch,listCReatorInteraction);
                     recViewOfCreator.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
+                }else{
+                    SubmitAlert(LoginActivity.this, "unsuccessful", response.message()+","+response.code());
+                    Log.d("TAG", "onResponse: "+response.message());
                 }
 
 
@@ -558,6 +562,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
 
             @Override
             public void onFailure(Call<CreatorListModel> call, Throwable t) {
+                SubmitAlert(LoginActivity.this, "unsuccessful", t.getMessage());
 
             }
         });
@@ -724,10 +729,11 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
         adapter.filterList(creatorModels);
         adapter.notifyDataSetChanged();
     }
-    @SuppressLint("HardwareIds")
+  /*  @SuppressLint("HardwareIds")
     private void getDeviceID() {
+        Log.d("TAG", "ImeiId4: ");
         imei = 0;
-        getDeviceIMEI();
+        getDEVICEID();
 
         Log.d("checkIDDD", deviceId + "");
         if (deviceId.length() > 8) {
@@ -738,23 +744,25 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
             GlobalClass.setSharedPref(getBaseContext(), BASE_URL, BuildConfig.BUILD_TYPE);
 
         }
-    }
+    }*/
 
-    public void getDeviceIMEI() {
+    public void getDEVICEID(String username) {
+        Log.d("TAG", "ImeiId5: ");
 
 //        deviceId = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
         String lastThreeChars = "";
 
         try {
             if (username.trim().length() > 3) {
+                Log.d("TAG", "ImeiId5a: ");
+
                 lastThreeChars = username.trim().substring(username.trim().length() - 3);
             } else {
+                Log.d("TAG", "ImeiId5b: ");
                 lastThreeChars = username;
             }
         }catch (Exception e)
         {
-            //  Toast.makeText(this, "Please Enter User Id for getting device Id", Toast.LENGTH_SHORT).show();
-
         }
         deviceId = lastThreeChars + //we make this look like a valid IMEI
                 Build.BOARD.length()%10+ Build.BRAND.length()%10 +
@@ -765,64 +773,22 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                 Build.TAGS.length()%10 + Build.TYPE.length()%10 +
                 Build.USER.length()%10 ; //13 digits
 
-        Log.e("DirectoryDeviceID", deviceId + "");
+        Log.d("TAG", "ImeiId6: "+deviceId);
 
-//        try {
-//            File dir = Utils.getFilePath("/", false);
-//
-//            Log.e("DirectoryDeviceID", dir + "");
-//            File file = new File(dir, "." + BuildConfig.ESIGN_APP + ".info");
-//            Log.e("FileLocation", file + "");
-//            OutputStream out = new FileOutputStream(file);
-//            out.write(deviceId.getBytes());
-//
-//            Log.e("DeviceIDWrite", Arrays.toString(deviceId.getBytes()) + "");
-//            Log.e("DeviceIDWrite0", deviceId + "");
-//            out.flush();
-//            out.close();
-//
-//            //Utils.writeBytesToFile(deviceId.getBytes(),file);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
-        GlobalClass.setSharedPref(getBaseContext(), deviceId, deviceId);
+        //GlobalClass.setSharedPref(getBaseContext(), deviceId, deviceId);
 
 
     }
 
-/*
-    private void handlePermissionException() {
-        InstalledAppDetailsActivity(this);
-        System.exit(0);
-    }*/
-
-  /*  private void InstalledAppDetailsActivity(LoginActivity activityLogin) {
-
-        if (activityLogin == null) {
-            return;
-        }
-
-        Intent intent = new Intent();
-        //intent.setAction(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
-        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-        Uri uri = Uri.fromParts("package", getApplicationContext().getPackageName(), null);
-        intent.setData(uri);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-        startActivity(intent);
-
-    }*/
 
 
-    private void LoginAPi(String devid, String dbname, String imeino) {
+    private void LoginAPi(String devid, String dbname) {
         Log.d("TAG", "MyApp: "+ "Login Api Run");
         devid ="2234514145687247";
         customProgressDialog.show();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
 
-        Call<LoginModel> call = apiInterface.LoginApi(devid, dbname, imeino, getJsonOfUserIdPassword());
+        Call<LoginModel> call = apiInterface.LoginApi(devid, dbname, getJsonOfUserIdPassword());
 
         call.enqueue(new Callback<LoginModel>() {
 
@@ -1051,10 +1017,10 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
         String phoneNumberWithCountryCode ="";
         switch (num){
             case 1:
-                phoneNumberWithCountryCode = "919258297452";
+                phoneNumberWithCountryCode = "918595847059";
                 break;
             case 2:
-                phoneNumberWithCountryCode = "918595847059";
+                phoneNumberWithCountryCode = "919258297452";
                 break;
             case 3:
                 phoneNumberWithCountryCode = "919258297453";
@@ -1075,13 +1041,13 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
         String phoneNumber ="";
         switch (num){
             case 1:
-                phoneNumber = "tel:919258297452";
+                phoneNumber = "tel:8595847059";
                 break;
             case 2:
-                phoneNumber = "tel:918595847059";
+                phoneNumber = "tel:9258297452";
                 break;
             case 3:
-                phoneNumber = "tel:919258297453";
+                phoneNumber = "tel:9258297453";
                 break;
         }
 
@@ -1098,10 +1064,10 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
         String phoneNumber ="";
         switch (num){
             case 1:
-                phoneNumber = "919258297452";
+                phoneNumber = "918595847059";
                 break;
             case 2:
-                phoneNumber = "918595847059";
+                phoneNumber = "919258297452";
                 break;
             case 3:
                 phoneNumber = "919258297453";

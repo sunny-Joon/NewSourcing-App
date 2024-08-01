@@ -218,11 +218,6 @@
         private void leaderboardList() {
             Log.d("TAG", "onCreateView:zz1 "+ "Call Successfull");
 
-            /*Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("https://erpservice.paisalo.in:980/PDL.Mobile.API/")
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-            ApiInterface apiInterface = retrofit.create(ApiInterface.class);*/
             ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
             Call<LeaderboardModel> call = apiInterface.getLeaderboardData(GlobalClass.Token,GlobalClass.dbname);
             call.enqueue(new Callback<LeaderboardModel>() {

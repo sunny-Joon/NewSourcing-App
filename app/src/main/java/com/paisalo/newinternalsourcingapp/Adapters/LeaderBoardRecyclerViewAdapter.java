@@ -90,7 +90,11 @@ public class LeaderBoardRecyclerViewAdapter extends RecyclerView.Adapter<LeaderB
         public void bind(LeaderboardEntry entry) {
             snoTextView.setText(entry.getsno());
             nameTextView.setText(entry.getuserName());
-            scoreTextView.setText(entry.getpoints());
+            if(entry.getpoints().length()>4){
+                scoreTextView.setText(entry.getpoints().toString().substring(0, entry.getpoints().toString().length() - 3) + " K");
+            }else {
+                scoreTextView.setText(entry.getpoints());
+            }
         }
     }
 }
