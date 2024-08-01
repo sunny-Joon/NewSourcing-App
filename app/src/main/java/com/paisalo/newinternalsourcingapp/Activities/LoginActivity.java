@@ -103,8 +103,6 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
     onListCReatorInteraction listCReatorInteraction;
 
 
-
-
     List<CreatorListModelData> list=new ArrayList<>();
     public static final String DATABASE_NAME = BuildConfig.APPLICATION_ID + ".DBNAME";
     boolean isPasswordVisible = false;
@@ -190,10 +188,10 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        PERMISSIONS.add(   android.Manifest.permission.ACCESS_FINE_LOCATION);
-        PERMISSIONS.add(   android.Manifest.permission.ACCESS_COARSE_LOCATION);
-        PERMISSIONS.add(   android.Manifest.permission.CAMERA);
-        PERMISSIONS.add(   Manifest.permission.READ_PHONE_STATE);
+        PERMISSIONS.add(android.Manifest.permission.ACCESS_FINE_LOCATION);
+        PERMISSIONS.add(android.Manifest.permission.ACCESS_COARSE_LOCATION);
+        PERMISSIONS.add(android.Manifest.permission.CAMERA);
+        PERMISSIONS.add(Manifest.permission.READ_PHONE_STATE);
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
             PERMISSIONS.add(Manifest.permission.READ_EXTERNAL_STORAGE);
@@ -205,10 +203,10 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
 
         getSupportActionBar().hide();
 
-        versionset= findViewById(R.id.versionset);
+        versionset = findViewById(R.id.versionset);
         versionset.setText(BuildConfig.VERSION_NAME);
-        selectDatabase= findViewById(R.id.selectDatabase);
-        btnTermCondition= findViewById(R.id.btnTermCondition);
+        selectDatabase = findViewById(R.id.selectDatabase);
+        btnTermCondition = findViewById(R.id.btnTermCondition);
         LottieAnimationView view = findViewById(R.id.view);
 
         fabMain = findViewById(R.id.fab_main);
@@ -230,7 +228,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
 
                 Log.d("TAG", "sendEmail: ");
                 Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-                        "mailto","itsupport@gmail.com", null));
+                        "mailto", "itsupport@gmail.com", null));
                 startActivity(Intent.createChooser(emailIntent, "Send email..."));
             }
         });
@@ -244,9 +242,11 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
         fabChatBot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this,ChatActivity.class);
-                startActivity(intent);            }
+                Intent intent = new Intent(LoginActivity.this, ChatActivity.class);
+                startActivity(intent);
+            }
         });
+
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -265,26 +265,26 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
             }
         });
 
-    //    customProgressDialog = new CustomProgressDialog(this);
+        //    customProgressDialog = new CustomProgressDialog(this);
 
         customProgressDialog = new CustomProgressDialog(LoginActivity.this);
         if (!checkPermissions()) {
             requestPermissions();
         } else {
-           // getDeviceID();
-            GpsTracker gpsTracker=new GpsTracker(getApplicationContext());
+            // getDeviceID();
+            GpsTracker gpsTracker = new GpsTracker(getApplicationContext());
         }
 
         ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(LoginActivity.this, R.array.selectDatabase, android.R.layout.simple_spinner_item);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         selectDatabase.setAdapter(adapter1);
 
-        listCReatorInteraction=LoginActivity.this;
+        listCReatorInteraction = LoginActivity.this;
 
         btnTermCondition.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this,ActivityTermAndCondition.class);
+                Intent intent = new Intent(LoginActivity.this, ActivityTermAndCondition.class);
                 startActivity(intent);
             }
         });
@@ -307,17 +307,15 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
             public void onClick(View view) {
                 if (binding.etLoginUsername.getText().toString().trim().length() != 10) {
                     binding.etLoginUsername.setError("Please enter correct UserName!!");
-                }
-                else if (binding.etLoginPassword.getText().toString().length() != 5) {
+                } else if (binding.etLoginPassword.getText().toString().length() != 5) {
                     binding.etLoginPassword.setError("Please enter correct Password!!");
-                }
-                else {
-                     username = binding.etLoginUsername.getText().toString();
-                     password = binding.etLoginPassword.getText().toString();
+                } else {
+                    username = binding.etLoginUsername.getText().toString();
+                    password = binding.etLoginPassword.getText().toString();
 
                     if (!checkPermissions()) {
                         requestPermissions();
-                    }else {
+                    } else {
                         getDEVICEID(username);
                     }
 
@@ -327,22 +325,18 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                     if (selectDatabase1.equalsIgnoreCase("--Select--")) {
                         Toast.makeText(LoginActivity.this, "Select Database Name", Toast.LENGTH_SHORT).show();
                         customProgressDialog.dismiss();
-                    }
-                    else if (GlobalClass.isValidUsername(username) && GlobalClass.isValidPassword(password)) {
+                    } else if (GlobalClass.isValidUsername(username) && GlobalClass.isValidPassword(password)) {
                         LoginAPi(deviceId, BuildConfig.dbname);
                         customProgressDialog.show();
-                    }
-                    else {
-                       Toast.makeText(LoginActivity.this, "Invalid credentials", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Invalid credentials", Toast.LENGTH_SHORT).show();
                         customProgressDialog.dismiss();
-                      //  GlobalClass.SubmitAlert1(LoginActivity.this,"unsuccessfull","USERNAME AND PASSWORD INCORRECT !!");
+                        //  GlobalClass.SubmitAlert1(LoginActivity.this,"unsuccessfull","USERNAME AND PASSWORD INCORRECT !!");
 
                     }
                 }
             }
         });
-
-
 
         //binding.btnLoginShareDeviceId.setEnabled(false);
         binding.btnLoginShareDeviceId.setOnClickListener(new View.OnClickListener() {
@@ -353,13 +347,12 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                 if (!checkPermissions()) {
                     Log.d("TAG", "ImeiId2: ");
                     requestPermissions();
-                }else {
+                } else {
                     /*Log.d("TAG", "ImeiId3: ");
                     getDeviceID();*/
                     String A = binding.etLoginUsername.getText().toString();
-                    if(A != null) {
+                    if (!A.isEmpty()) {
                         Log.d("TAG", "ImeiId8: ");
-
                         getDEVICEID(A);
                         if (deviceId != null) {
                             Log.d("TAG", "ImeiId9: ");
@@ -368,16 +361,6 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                         } else {
                             Toast.makeText(LoginActivity.this, "Device Id Not Found", Toast.LENGTH_SHORT).show();
                         }
-                    }else{
-
-                String A = binding.etLoginUsername.getText().toString();
-                if(A != null) {
-                    getDeviceID();
-                    if (deviceId != null) {
-                        DeviceMappingRequests(GlobalClass.Id);
-                    } else {
-                        Toast.makeText(LoginActivity.this, "Device Id Not Found", Toast.LENGTH_SHORT).show();
-
                     }
                 }
             }
@@ -435,6 +418,9 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
         Spinner spinnerReq = dialogView.findViewById(R.id.spinner);
         RecyclerView RecviewBranchCode = dialogView.findViewById(R.id.RecviewBranchCode);
 
+        deviceIds.setText(deviceId);
+        userId.setText(UserID);
+
         RecviewBranchCode.setLayoutManager(new GridLayoutManager(LoginActivity.this,3));
         List<String> branchCodeList=new ArrayList<>();
 
@@ -462,9 +448,6 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                         RecviewBranchCode.setAdapter(branchCodesAdapter);
                         branchCodesAdapter.notifyDataSetChanged();
                     }
-
-        deviceIds.setText(deviceId);
-        userId.setText(UserID);
                 }
             }
 
@@ -755,7 +738,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
 
     private void LoginAPi(String devid, String dbname) {
         Log.d("TAG", "MyApp: "+ "Login Api Run");
-        devid ="2234514145687247";
+       // devid ="2234514145687247";
         customProgressDialog.show();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
 
