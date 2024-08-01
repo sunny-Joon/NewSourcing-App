@@ -178,7 +178,6 @@
                 android:id="@+id/IncentiveTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="5,00,000"
                 android:textSize="14dp"
                 android:textColor="@color/white"
                 android:textStyle="bold"

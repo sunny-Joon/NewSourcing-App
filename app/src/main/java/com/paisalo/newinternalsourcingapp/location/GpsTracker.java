@@ -42,8 +42,8 @@ public class GpsTracker extends Service implements LocationListener {
     // flag for GPS status
     boolean canGetLocation = false;
 
-    Location location; // location
-    double latitude; // latitude
+    static Location location; // location
+    static double latitude; // latitude
     double longitude; // longitude
 
     // The minimum distance to change Updates in meters
@@ -193,11 +193,10 @@ public class GpsTracker extends Service implements LocationListener {
        return isGPSEnabled;
     }
 
-    public double getLatitude(){
+    public static double getLatitude(){
         //onNewLocation();
         if(location != null){
             latitude = location.getLatitude();
-            GlobalClass.Latitude = latitude;
         }
 
         // return latitude
@@ -209,7 +208,6 @@ public class GpsTracker extends Service implements LocationListener {
        // onNewLocation();
         if(location != null){
             longitude = location.getLongitude();
-            GlobalClass.Longitude = longitude;
         }
         // return longitude
         return longitude;

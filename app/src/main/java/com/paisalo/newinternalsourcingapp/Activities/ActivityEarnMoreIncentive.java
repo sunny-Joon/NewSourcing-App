@@ -24,8 +24,8 @@ public class ActivityEarnMoreIncentive extends AppCompatActivity {
         On_disbursing = findViewById(R.id.On_disbursing);
         achieved = findViewById(R.id.achieved);
 
-        earnedIncentive = 5100;
-        doneFiles =51;
+        earnedIncentive = 0;
+        doneFiles =0;
         Intent intent = getIntent();
         if (intent != null) {
             String target = intent.getStringExtra("TvTarget_Screen");
