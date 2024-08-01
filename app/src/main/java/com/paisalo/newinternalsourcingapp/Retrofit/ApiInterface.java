@@ -368,11 +368,11 @@ public interface ApiInterface {
                               @Field("username") String username,
                               @Field("password") String password);
 
-
+//
     @FormUrlEncoded
     @POST("{subUrl}") // CallBack APi
     Call<ResponseBody> postEntityEsign(@Field("msg") String msg, @Field("obj") String obj,@Path("subUrl")String subUrl);
-
+//
 
     @POST("api/docsESignPvn/AcceptESign") // Replace with your actual endpoint
     Call<ResponseBody> postEntityESignSubmit(@Header("Authorization") String token,
@@ -390,6 +390,7 @@ public interface ApiInterface {
 
     @POST("Crif/InitilizeCrif")
     Call<JsonObject> generateCrifForVehicle(@Body JsonObject jsonObject);
+
     @POST("Crif/GetBREDetails")
     Call<BREResponse> getBREStatus(@Query("creator") String creator, @Query("ficode") String ficode);
 
