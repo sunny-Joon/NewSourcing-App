@@ -1863,10 +1863,17 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                                     Toast.makeText(KYCActivity.this, "DL Verified", Toast.LENGTH_SHORT).show();
                                     dl_Checkbox.setClickable(false);
 
-                                    tilDLName.setVisibility(View.VISIBLE);
-                                    tilDLName.setText(response.body().getData().getData().getData().getName().toString());
-                                    tilDLName.setTextColor(getResources().getColor(R.color.green));
+                                   try {
+                                       tilDLName.setVisibility(View.VISIBLE);
+                                       tilDLName.setText("Not Found");
+                                       tilDLName.setTextColor(getResources().getColor(R.color.green));
 
+                                   }catch (Exception e){
+                                       tilDLName.setVisibility(View.VISIBLE);
+                                       tilDLName.setText(response.body().getData().getData().getData().getName().toString());
+                                       tilDLName.setTextColor(getResources().getColor(R.color.green));
+
+                                   }
 
                                 } else {
                                     customProgressDialog.dismiss();
@@ -1964,10 +1971,19 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                             verifiedPanName = panVerificationModel.getData().getData().getData().getName();
 
                             tilPanName.setVisibility(View.VISIBLE);
-                            tilPanName.setText(response.body().getData().getData().getData().getName().toString());
-                            tilPanName.setTextColor(getResources().getColor(R.color.green));
 
-                            pan_Checkbox.setClickable(false);
+
+                          try {
+                              tilPanName.setText(response.body().getData().getData().getData().getName().toString());
+                              tilPanName.setTextColor(getResources().getColor(R.color.green));
+
+                              pan_Checkbox.setClickable(false);
+                          }catch (Exception e){
+                              tilPanName.setText("Not Found");
+                              tilPanName.setTextColor(getResources().getColor(R.color.green));
+
+                              pan_Checkbox.setClickable(false);
+                          }
                         }else {
 
                             customProgressDialog.dismiss();
@@ -2028,8 +2044,14 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                             voterId_Checkbox.setClickable(false);
 
                             tilVoterName.setVisibility(View.VISIBLE);
-                            tilVoterName.setText(response.body().getData().getData().getData().getName().toString());
-                            tilVoterName.setTextColor(getResources().getColor(R.color.green));
+                            try {
+                                tilVoterName.setText(response.body().getData().getData().getData().getName().toString());
+                                tilVoterName.setTextColor(getResources().getColor(R.color.green));
+                            }catch (Exception e){
+                                tilVoterName.setText("Not Found");
+                                tilVoterName.setTextColor(getResources().getColor(R.color.green));
+                            }
+
 
 
                         }else {
@@ -2201,6 +2223,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
         if (!isValidMName(editTextCity.getText().toString().isEmpty() ? " " : editTextCity.getText().toString())) {
             editTextCity.setError("Invalid City");
+
             Log.d("TAG", "onClickTAG8: " + "creating Json");
             focusOnView(editTextCity);
             allConditionsSatisfied = false;
