@@ -19,7 +19,6 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.artifex.mupdfdemo.MuPDFFragment;
 import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.Adapters.CustomAdapter;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
