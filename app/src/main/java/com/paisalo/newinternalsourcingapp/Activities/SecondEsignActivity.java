@@ -130,6 +130,7 @@ public class SecondEsignActivity extends AppCompatActivity {
                    .build();
 
            ApiInterface apiInterface = retrofit2.create(ApiInterface.class);
+           customProgressDialog.show();
            Call<ResponseBody> call = apiInterface.DownloadDocSecondEsign(GlobalClass.LiveToken,jsonObject,"gzip,deflate,compress",GlobalClass.DevId,GlobalClass.DATABASE_NAME,GlobalClass.Imei);
            Log.d("TAG", "onClickList:3 ");
 
@@ -152,18 +153,16 @@ public class SecondEsignActivity extends AppCompatActivity {
                           // GlobalClass.dismissLottieAlertDialog();
                            customProgressDialog.dismiss();
                            SubmitAlert(SecondEsignActivity.this, "Error", "Document Not Download");
-
                            Log.d("TAG", "onResponse2: " + "null");
 
                        }else{
+                           Log.d("TAG", "onClickList:11 ");
                            String path = written.getAbsolutePath();
                            Log.d("TAG", "onResponse2: " + path);
-
                            Intent intent = new Intent(SecondEsignActivity.this, FirstEsignActivity.class);
                            // Add data to the intent
                            intent.putExtra("SecondEsign", path);
                            intent.putExtra(GlobalClass.ESIGN_GUARANTOR, borrower);
-
                            startActivity(intent);
 
                            /*Fragment frag = MuPDFFragment.newInstance(path, false);
@@ -173,8 +172,6 @@ public class SecondEsignActivity extends AppCompatActivity {
                            customProgressDialog.dismiss();
 
                        }
-
-
                    }else{
                        Log.d("TAG", "onClickList:8 ");
                      //  GlobalClass.dismissLottieAlertDialog();

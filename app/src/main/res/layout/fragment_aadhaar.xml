@@ -59,7 +59,7 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="match_parent"
                     android:textColor="@color/white"
                     android:layout_weight="1"
                     android:text="Aadhaar Id"
@@ -70,7 +70,7 @@
                 <TextView
                     android:id="@+id/aadhaarid"
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="match_parent"
                     android:textColor="@color/white"
                     android:text="Aadhaar Id"
                     android:layout_weight="1"
@@ -84,7 +84,7 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="match_parent"
                     android:textColor="@color/white"
                     android:layout_weight="1"
                     android:text="AGE"
@@ -95,7 +95,7 @@
                 <TextView
                     android:id="@+id/aadhaarAge"
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="match_parent"
                     android:textColor="@color/white"
                     android:text="Aadhaar Id"
                     android:layout_weight="1"
@@ -109,7 +109,7 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="match_parent"
                     android:textColor="@color/white"
                     android:layout_weight="1"
                     android:text="Gendre"
@@ -120,7 +120,7 @@
                 <TextView
                     android:id="@+id/aadhaarGendre"
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="match_parent"
                     android:textColor="@color/white"
                     android:text="Aadhaar Id"
                     android:layout_weight="1"
@@ -134,7 +134,7 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="match_parent"
                     android:textColor="@color/white"
                     android:layout_weight="1"
                     android:text="D.O.B"
@@ -155,11 +155,11 @@
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="match_parent"
                     android:textColor="@color/white"
                     android:layout_weight="1"
                     android:text="Guardian Name"
@@ -170,7 +170,7 @@
                 <TextView
                     android:id="@+id/aadhaarGuardian"
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="match_parent"
                     android:textColor="@color/white"
                     android:text="Aadhaar Id"
                     android:layout_weight="1"
@@ -184,7 +184,7 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="match_parent"
                     android:textColor="@color/white"
                     android:layout_weight="1"
                     android:text="Mobile"
@@ -195,7 +195,7 @@
                 <TextView
                     android:id="@+id/aadhaarmobile"
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="match_parent"
                     android:textColor="@color/white"
                     android:text="Aadhaar Id"
                     android:layout_weight="1"
@@ -227,7 +227,7 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="match_parent"
                     android:textColor="@color/white"
                     android:layout_weight="1"
                     android:text="PAN no."
@@ -238,7 +238,7 @@
                 <TextView
                     android:id="@+id/aadhaarPAN"
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="match_parent"
                     android:textColor="@color/white"
                     android:text=""
                     android:layout_weight="1"
@@ -252,7 +252,7 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="match_parent"
                     android:textColor="@color/white"
                     android:layout_weight="1"
                     android:text="Driving License"
@@ -263,7 +263,7 @@
                 <TextView
                     android:id="@+id/aadhaarDrivingLicense"
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="match_parent"
                     android:textColor="@color/white"
                     android:text="Aadhaar Id"
                     android:layout_weight="1"
@@ -277,7 +277,7 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="match_parent"
                     android:textColor="@color/white"
                     android:layout_weight="1"
                     android:text="Address"
@@ -302,7 +302,7 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="match_parent"
                     android:textColor="@color/white"
                     android:layout_weight="1"
                     android:text="PinCode"
@@ -327,7 +327,7 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="match_parent"
                     android:textColor="@color/white"
                     android:layout_weight="1"
                     android:text="City"
@@ -338,7 +338,7 @@
                 <TextView
                     android:id="@+id/aadhaarCity"
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="match_parent"
                     android:textColor="@color/white"
                     android:text="Aadhaar Id"
                     android:layout_weight="1"
@@ -352,7 +352,7 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="match_parent"
                     android:textColor="@color/white"
                     android:layout_weight="1"
                     android:text="State"
@@ -363,7 +363,7 @@
                 <TextView
                     android:id="@+id/aadhaarState"
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="match_parent"
                     android:textColor="@color/white"
                     android:text="Aadhaar Id"
                     android:layout_weight="1"
