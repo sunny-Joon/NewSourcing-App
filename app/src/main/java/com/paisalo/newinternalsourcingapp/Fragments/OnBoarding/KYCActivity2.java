@@ -503,7 +503,7 @@ public class KYCActivity2 extends AppCompatActivity {
                                 });
                             } else {
                                 customProgressDialog.dismiss();
-                                SubmitAlert(KYCActivity2.this, "KYC Not Saved", response1.code()+","+response1.message());
+                                SubmitAlert(KYCActivity2.this, "KYC Not Saved", response1.code()+",/n "+response1.body().getMessage());
                             }
                         }
 

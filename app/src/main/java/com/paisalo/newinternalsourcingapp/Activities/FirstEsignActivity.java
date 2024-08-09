@@ -33,7 +33,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-
+import com.artifex.mupdfdemo.MuPDFFragment;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
@@ -180,15 +180,17 @@ public class FirstEsignActivity extends AppCompatActivity {
                                     //GlobalClass.dismissLottieAlertDialog();
                                     customProgressDialog.dismiss();
                                 } else {
+                                    Log.d("TAG", "onResponse2: " + "null123");
+
                                     String path = written.getAbsolutePath();
 
-//                                    fm = getSupportFragmentManager();
-//                                    FragmentTransaction ft = fm.beginTransaction();
-//
-//                                    Fragment frag = MuPDFFragment.newInstance(path, false);
-//                                    ft.add(R.id.pdfview, frag);
-//
-//                                    ft.commit();
+                                    fm = getSupportFragmentManager();
+                                    FragmentTransaction ft = fm.beginTransaction();
+
+                                    Fragment frag = MuPDFFragment.newInstance(path, false);
+                                    ft.add(R.id.pdfview, frag);
+
+                                    ft.commit();
                                    // GlobalClass.dismissLottieAlertDialog();
                                     customProgressDialog.dismiss();
                                 }

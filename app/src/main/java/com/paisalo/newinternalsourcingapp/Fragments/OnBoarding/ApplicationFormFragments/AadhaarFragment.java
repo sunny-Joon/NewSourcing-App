@@ -204,7 +204,7 @@ public class AadhaarFragment extends Fragment {
             aadhaarAge.setText(allDataAFDataModel.getAge().toString());
             aadhaarGendre.setText(allDataAFDataModel.getGender());
             aadhaarDOB.setText(allDataAFDataModel.getDob());
-            aadhaarGuardian.setText(allDataAFDataModel.getfFname());
+            aadhaarGuardian.setText(allDataAFDataModel.getfFname()+" "+allDataAFDataModel.getfMname()+" "+allDataAFDataModel.getfLname());
             aadhaarmobile.setText(allDataAFDataModel.getpPh3());
             aadhaarPAN.setText(allDataAFDataModel.getPanNO());
             aadhaarDrivingLicense.setText(allDataAFDataModel.getDrivingLic());

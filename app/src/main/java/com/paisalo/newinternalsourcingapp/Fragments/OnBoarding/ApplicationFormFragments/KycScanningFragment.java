@@ -335,7 +335,7 @@ public class KycScanningFragment extends Fragment implements OnItemClickListener
             public void onResponse(Call<KycScanningModel> call, Response<KycScanningModel> response) {
 
                 if (response.isSuccessful()) {
-                    Log.d("TAG", "onResponse: " + response.body().getMessage());
+                    Log.d("TAG", "onResponse:123 " + response.body().getMessage());
                     KycScanningModel kycScanningModel = response.body();
                     KycScanningDataModel kycScanningDataModel = kycScanningModel.getData();
                     if (kycScanningDataModel.getIsOSV()) {

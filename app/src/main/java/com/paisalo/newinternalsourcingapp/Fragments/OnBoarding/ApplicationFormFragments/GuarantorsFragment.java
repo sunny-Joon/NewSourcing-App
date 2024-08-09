@@ -149,7 +149,7 @@ public class GuarantorsFragment extends Fragment {
     FloatingActionButton gurrantorFormButton;
     AllDataAFDataModel allDataAFDataModel;
     ArrayList<FiGuarantor> gurrantorList;
-
+    String DOB;
     List<FiGuarantor> list;
     EditText etTextAadhar, etTextName, etTextAge, etTextDob, etTextGuardian, etTextAddress1, etTextAddress2, etTextAddress3, etTextCity, etTextPincode, etTextMobile, etTextvoterid, etTextPAN, etdrivingLicense;
     Spinner spin_gender, spin_state, spin_relationwithborr;
@@ -737,11 +737,13 @@ public class GuarantorsFragment extends Fragment {
                                     String dob = (String) adharDataModel.getDob();
                                     Log.d("TAG", "onResponse:dob " + dob);
 
-                                    try {
-                                        dob=formatDate(dob, "dd/MM/yyyy", "yyyy-MM-dd");
-                                    } catch (ParseException e) {
-                                        throw new RuntimeException(e);
+                                    String formattedDate = GlobalClass.formatDateString(dob);
+                                    if (formattedDate != null) {
+                                        etTextDob.setText(formattedDate);
+                                    } else {
+                                        etTextDob.setText(""); // Or handle the error case as needed
                                     }
+
 
 
                                     etTextDob.setText(dob);
@@ -1118,7 +1120,12 @@ public class GuarantorsFragment extends Fragment {
             Log.e("TAG", "Error parsing date: " + e.getMessage(), e);
         }
 
-
+        String formattedDate = GlobalClass.formatDateString(dob);
+        if (formattedDate != null) {
+            etTextDob.setText(formattedDate);
+        } else {
+            etTextDob.setText(""); // Or handle the error case as needed
+        }
 
 
 /*
@@ -1135,7 +1142,13 @@ public class GuarantorsFragment extends Fragment {
             etTextDob.setEnabled(true);
             Log.d("TAG", "Parts======dobnull=====>  " + etTextDob.getText().toString());
         } else {
-            etTextDob.setText(decodedData.get(4 - inc));
+            String formattedDate3 = GlobalClass.formatDateString(decodedData.get(4 - inc));
+            if (formattedDate != null) {
+                etTextDob.setText(formattedDate);
+            } else {
+                etTextDob.setText(""); // Or handle the error case as needed
+            }
+            //    editTextDob.setText(decodedData.get(4 - inc));
             Log.d("TAG", "Parts======dob=====>  " + etTextDob.getText().toString());
         }
 
@@ -1509,7 +1522,19 @@ public class GuarantorsFragment extends Fragment {
         jsonGuarantor.addProperty("aadharID", guarantor.getAadharID());
         jsonGuarantor.addProperty("name", guarantor.getName());
         jsonGuarantor.addProperty("age", guarantor.getAge());
-        jsonGuarantor.addProperty("dob",guarantor.getDob());
+
+
+            String temp = etTextDob.getText().toString();
+            String formattedDate = GlobalClass.formatDateString2(temp,"yyyy-MM-dd");
+            if (formattedDate != null) {
+                DOB = formattedDate;
+
+                Log.d("TAG", "drivinglicenseDOBjson: "+ DOB);
+                Log.d("TAG", "drivinglicenseDOBjson: "+ formattedDate);
+            }
+
+
+        jsonGuarantor.addProperty("dob",DOB);
         jsonGuarantor.addProperty("gender", guarantor.getGender());
         jsonGuarantor.addProperty("gurName", guarantor.getGurName());
         jsonGuarantor.addProperty("perAdd1", guarantor.getPerAdd1());

@@ -173,8 +173,6 @@ public class PersonalDetailsFragment extends Fragment {
         adapter11.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         isBorrowerBlindSpinner.setAdapter(adapter11);
 
-
-
         
         if (allDataAFDataModel != null) {
             fiCode = allDataAFDataModel.getCode().toString();
