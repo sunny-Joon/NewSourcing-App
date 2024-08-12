@@ -93,7 +93,7 @@ dependencies {
 
     implementation 'com.loopj.android:android-async-http:1.4.9'
 
-  /*  implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.+'*/
+    /*  implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.+'*/
 
     implementation files('libs/isgpaymediatorbank-release.aar')
 
@@ -111,11 +111,8 @@ dependencies {
     //lottie-animations
     implementation "com.airbnb.android:lottie:6.4.0"
 
-}
-
-dependencies {
     implementation platform('com.google.firebase:firebase-bom:33.1.2')
     implementation 'com.google.firebase:firebase-analytics'
-
+    implementation project(':mupdf-viewer-library')
 }
 
