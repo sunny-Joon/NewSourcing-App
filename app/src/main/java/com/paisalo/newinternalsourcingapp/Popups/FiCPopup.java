@@ -28,6 +28,14 @@ public class FiCPopup extends DialogFragment {
                     }
                 });
 
-        return builder.create();
+       // return builder.create();
+        Dialog dialog = builder.create();
+
+        dialog.setCanceledOnTouchOutside(false);
+
+        // Prevent the dialog from being canceled by pressing the back button
+        setCancelable(false);
+
+        return dialog;
     }
 }

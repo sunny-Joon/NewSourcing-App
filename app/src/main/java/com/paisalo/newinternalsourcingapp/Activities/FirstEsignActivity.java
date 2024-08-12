@@ -118,14 +118,13 @@ public class FirstEsignActivity extends AppCompatActivity {
                     tvESignGuardian.setText(borrower.getfFname().toString());
                     tvESignMobile.setText(borrower.getpPh3().toString());
                 }
-//                fm = getSupportFragmentManager();
-//                FragmentTransaction ft = fm.beginTransaction();
-//
-//                Fragment frag = MuPDFFragment.newInstance(path, false);
-//                ft.add(R.id.pdfview, frag);
-//
-//
-//                ft.commit();
+                fm = getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+
+               /* Fragment frag = MuPDFFragment.newInstance(path, false);
+                ft.add(R.id.pdfview, frag);*/
+
+                ft.commit();
             } else {
                 borrower = (PendingESignFI) intent.getSerializableExtra(GlobalClass.ESIGN_BORROWER);
                 if (borrower != null) {
@@ -182,13 +181,14 @@ public class FirstEsignActivity extends AppCompatActivity {
                                 } else {
                                     String path = written.getAbsolutePath();
 
-//                                    fm = getSupportFragmentManager();
-//                                    FragmentTransaction ft = fm.beginTransaction();
-//
-//                                    Fragment frag = MuPDFFragment.newInstance(path, false);
-//                                    ft.add(R.id.pdfview, frag);
-//
-//                                    ft.commit();
+                                    fm = getSupportFragmentManager();
+                                    FragmentTransaction ft = fm.beginTransaction();
+                                    Log.d("TAG", "onResponsePAth: "+ path);
+
+                                    /*Fragment frag = MuPDFFragment.newInstance(path, false);
+                                    ft.add(R.id.pdfview, frag);*/
+
+                                    ft.commit();
                                    // GlobalClass.dismissLottieAlertDialog();
                                     customProgressDialog.dismiss();
                                 }
