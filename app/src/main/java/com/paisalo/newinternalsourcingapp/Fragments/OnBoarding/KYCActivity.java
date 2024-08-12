@@ -520,9 +520,10 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         pan_Checkbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                pan_Checkbox.setChecked(false);
+
                 if (basicDetailsFound()) {
                     if (editTextPAN.getText().toString().trim().length() == 10) {
-                        pan_Checkbox.setChecked(false);
                         panVerification("pancard", editTextPAN.getText().toString(), "");
 
                     } else {
@@ -544,6 +545,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         voterId_Checkbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                voterId_Checkbox.setChecked(false);
 
                 if (basicDetailsFound()) {
                     if (editTextvoterIdKyc.getText().toString().trim().length() < 5 || editTextvoterIdKyc.length() > 16) {
@@ -1079,16 +1081,17 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                                     String name = (String) adharDataModel.getName();
                                     editTextName.setText(name);
 
-                                    String dob = (String) adharDataModel.getDob();
-                                    Log.d("TAG", "onResponse:dob " + dob);
+                                    if(adharDataModel.getDob() != null) {
+                                        String dob = (String) adharDataModel.getDob();
+                                        Log.d("TAG", "onResponse:dob " + dob);
+                                        String formattedDate = GlobalClass.formatDateString(dob);
 
-
-                                    String formattedDate = GlobalClass.formatDateString(dob);
-                                    if (formattedDate != null) {
-                                        editTextDob.setText(formattedDate);
+                                        if (GlobalClass.formatDateString(dob) != null) {
+                                            editTextDob.setText(formattedDate);
                                         } else {
-                                        editTextDob.setText(""); // Or handle the error case as needed
+                                            editTextDob.setText(""); // Or handle the error case as needed
                                         }
+                                    }
 
                                   //  editTextDob.setText(dob);
 
@@ -2020,6 +2023,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
     }
     private void voterIdVerification(String ID, String IDno, String dob) {
+        voterId_Checkbox.setChecked(false);
         customProgressDialog.show();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<VoterIdVerificationModel> call = apiInterface.getvoterIDVerified(GlobalClass.Token, BuildConfig.dbname, createJson(ID, IDno, dob));
@@ -2049,11 +2053,9 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                                 tilVoterName.setTextColor(getResources().getColor(R.color.green));
                             }catch (Exception e){
                                 tilVoterName.setText("Not Found");
+                                voterId_Checkbox.setChecked(false);
                                 tilVoterName.setTextColor(getResources().getColor(R.color.green));
                             }
-
-
-
                         }else {
                             customProgressDialog.dismiss();
                             Toast.makeText(KYCActivity.this, "Not Verified", Toast.LENGTH_SHORT).show();
@@ -2062,19 +2064,20 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                             tilVoterName.setVisibility(View.VISIBLE);
                             tilVoterName.setText("Voter not Verify");
                             tilVoterName.setTextColor(getResources().getColor(R.color.black));
-
+                            voterId_Checkbox.setChecked(false);
 
                         }
-
                     } else {
                         customProgressDialog.dismiss();
+                        voterId_Checkbox.setChecked(false);
+                        tilVoterName.setText("Voter not Verify");
                         Toast.makeText(KYCActivity.this, "Invalid Voter ID", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     customProgressDialog.dismiss();
                     Log.d("TAG", "onResponseID: " + response.code());
                     voterId_Checkbox.setChecked(false);
-                    Toast.makeText(KYCActivity.this, "Invalid ID", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(KYCActivity.this, response.code()+","+response.message(), Toast.LENGTH_SHORT).show();
 
                 }
             }

@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.paisalo.newinternalsourcingapp.Activities.FirstEsignActivity;
 import com.paisalo.newinternalsourcingapp.Activities.LoginActivity;
 import com.paisalo.newinternalsourcingapp.Adapters.CustomSpinnerAdapter;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
@@ -244,86 +245,85 @@ public class KYCActivity2 extends AppCompatActivity {
 
                 boolean allConditionsSatisfied = true;
 
-                if (!calculations()) {
+                if (loanAmount.getText().toString().isEmpty()) {
+                    loanAmount.setError("Invalid loanAmount");
                     allConditionsSatisfied = false;
                 } else {
-                    if (loanAmount.getText().toString().isEmpty()) {
-                        loanAmount.setError("Invalid loanAmount");
+                    loanamount = Integer.parseInt(loanAmount.getText().toString());
+                    if (loanduration.getSelectedItem().toString().contains("-Select-")) {
+                        Toast.makeText(KYCActivity2.this, "Please select loan duration", Toast.LENGTH_SHORT).show();
                         allConditionsSatisfied = false;
                     } else {
-                        loanamount = Integer.parseInt(loanAmount.getText().toString());
-                        if (loanduration.getSelectedItem().toString().contains("-Select-")) {
-                            ((TextView) loanduration.getSelectedView()).setError("Please select a loanduration");
+                        loanDuration = Integer.parseInt(loanduration.getSelectedItem().toString());
+                        if (businessdetail.getSelectedItem().toString().contains("-Select-")) {
+                            Toast.makeText(KYCActivity2.this, "Please select business detail", Toast.LENGTH_SHORT).show();
                             allConditionsSatisfied = false;
                         } else {
-                            loanDuration = Integer.parseInt(loanduration.getSelectedItem().toString());
-                            if (businessdetail.getSelectedItem().toString().contains("-Select-")) {
-                                ((TextView) businessdetail.getSelectedView()).setError("Please select a businessdetail");
+                            businessDetails = businessdetail.getSelectedItem().toString();
+                            if (selectbank.getSelectedItem().toString().contains("-Select-")) {
+                                Toast.makeText(KYCActivity2.this, "Please select bank", Toast.LENGTH_SHORT).show();
                                 allConditionsSatisfied = false;
                             } else {
-                                businessDetails = businessdetail.getSelectedItem().toString();
-                                if (selectbank.getSelectedItem().toString().contains("-Select-")) {
-                                    ((TextView) selectbank.getSelectedView()).setError("Please select a selectbank");
+                                selectedBank = selectbank.getSelectedItem().toString();
+                                if (loanpurpose.getSelectedItem().toString().contains("-Select-")) {
+                                    Toast.makeText(KYCActivity2.this, "Please select a Loan Purpose", Toast.LENGTH_SHORT).show();
                                     allConditionsSatisfied = false;
                                 } else {
-                                    selectedBank = selectbank.getSelectedItem().toString();
-                                    if (loanpurpose.getSelectedItem().toString().contains("-Select-")) {
-                                        ((TextView) loanpurpose.getSelectedView()).setError("Please select a loanpurpose");
+                                    loanPurpose = loanpurpose.getSelectedItem().toString();
+                                    if (expensemonthly.getText().toString().isEmpty()) {
+                                        expensemonthly.setError("Invalid expensemonthly");
                                         allConditionsSatisfied = false;
                                     } else {
-                                        loanPurpose = loanpurpose.getSelectedItem().toString();
-                                        if (expensemonthly.getText().toString().isEmpty()) {
-                                            expensemonthly.setError("Invalid expensemonthly");
+                                        expense = Integer.parseInt(expensemonthly.getText().toString());
+                                        if (monthlyincome.getText().toString().isEmpty()) {
+                                            monthlyincome.setError("Invalid monthlyincome");
                                             allConditionsSatisfied = false;
                                         } else {
-                                            expense = Integer.parseInt(expensemonthly.getText().toString());
-                                            if (monthlyincome.getText().toString().isEmpty()) {
-                                                monthlyincome.setError("Invalid monthlyincome");
+                                            monthlyIncome = Integer.parseInt(monthlyincome.getText().toString());
+                                            if (futureincome.getText().toString().isEmpty()) {
+                                                futureincome.setError("Invalid futureincome");
                                                 allConditionsSatisfied = false;
                                             } else {
-                                                monthlyIncome = Integer.parseInt(monthlyincome.getText().toString());
-                                                if (futureincome.getText().toString().isEmpty()) {
-                                                    futureincome.setError("Invalid futureincome");
+                                                futureIncome = Integer.parseInt(futureincome.getText().toString());
+                                                if (agricultureincome.getText().toString().isEmpty()) {
+                                                    agricultureincome.setError("Invalid agricultureincome");
                                                     allConditionsSatisfied = false;
                                                 } else {
-                                                    futureIncome = Integer.parseInt(futureincome.getText().toString());
-                                                    if (agricultureincome.getText().toString().isEmpty()) {
-                                                        agricultureincome.setError("Invalid agricultureincome");
+                                                    agricultureIncome = Integer.parseInt(agricultureincome.getText().toString());
+                                                    if (pensionincome.getText().toString().isEmpty()) {
+                                                        pensionincome.setError("Invalid pensionincome");
                                                         allConditionsSatisfied = false;
                                                     } else {
-                                                        agricultureIncome = Integer.parseInt(agricultureincome.getText().toString());
-                                                        if (pensionincome.getText().toString().isEmpty()) {
-                                                            pensionincome.setError("Invalid pensionincome");
+                                                        pensionIncome = Integer.parseInt(pensionincome.getText().toString());
+                                                        if (interestincome.getText().toString().isEmpty()) {
+                                                            interestincome.setError("Invalid interestincome");
                                                             allConditionsSatisfied = false;
                                                         } else {
-                                                            pensionIncome = Integer.parseInt(pensionincome.getText().toString());
-                                                            if (interestincome.getText().toString().isEmpty()) {
-                                                                interestincome.setError("Invalid interestincome");
+                                                            interestIncome = Integer.parseInt(interestincome.getText().toString());
+                                                            if (otherincome.getText().toString().isEmpty()) {
+                                                                otherincome.setError("Invalid otherincome");
                                                                 allConditionsSatisfied = false;
                                                             } else {
-                                                                interestIncome = Integer.parseInt(interestincome.getText().toString());
-                                                                if (otherincome.getText().toString().isEmpty()) {
-                                                                    otherincome.setError("Invalid otherincome");
+                                                                otherIncome = Integer.parseInt(otherincome.getText().toString());
+                                                                if (earningmemberincome.getText().toString().isEmpty()) {
+                                                                    earningmemberincome.setError("Invalid earningmemberincome");
                                                                     allConditionsSatisfied = false;
                                                                 } else {
-                                                                    otherIncome = Integer.parseInt(otherincome.getText().toString());
-                                                                    if (earningmemberincome.getText().toString().isEmpty()) {
-                                                                        earningmemberincome.setError("Invalid earningmemberincome");
+                                                                    earningMemberIncome = Integer.parseInt(earningmemberincome.getText().toString());
+                                                                    if (earningmembertype.getSelectedItem().toString().contains("-Select-")) {
+                                                                        Toast.makeText(KYCActivity2.this, "Please select a earningmembertype", Toast.LENGTH_SHORT).show();
                                                                         allConditionsSatisfied = false;
                                                                     } else {
-                                                                        earningMemberIncome = Integer.parseInt(earningmemberincome.getText().toString());
-                                                                        if (earningmembertype.getSelectedItem().toString().contains("-Select-")) {
-                                                                            ((TextView) earningmembertype.getSelectedView()).setError("Please select a earningmembertype");
+                                                                        earningMemberType = earningmembertype.getSelectedItem().toString();
+                                                                        if (occuption.getSelectedItem().toString().contains("-Select-")) {
+                                                                            Toast.makeText(KYCActivity2.this, "Please select a occuption", Toast.LENGTH_SHORT).show();
                                                                             allConditionsSatisfied = false;
                                                                         } else {
-                                                                            earningMemberType = earningmembertype.getSelectedItem().toString();
-                                                                            if (occuption.getSelectedItem().toString().contains("-Select-")) {
-                                                                                ((TextView) occuption.getSelectedView()).setError("Please select a occuption");
-                                                                                allConditionsSatisfied = false;
-                                                                            } else {
-                                                                                occupation = occuption.getSelectedItem().toString();
-                                                                            }
+                                                                            occupation = occuption.getSelectedItem().toString();
                                                                         }
+                                                                    }
+                                                                    if (!calculations()) {
+                                                                        allConditionsSatisfied = false;
                                                                     }
                                                                 }
                                                             }
@@ -455,9 +455,12 @@ public class KYCActivity2 extends AppCompatActivity {
                                                                 public void onResponse(Call<JsonObject> call, Response<JsonObject> response4) {
                                                                     Log.d("TAG", "onResponse:ckycrps " + response4.body());
                                                                     if(response4.isSuccessful()) {
+                                                                       /* FiCPopup fiCPopup = new FiCPopup("Your Ficode & Creator is Here", Message1 + " & " + GlobalClass.Creator);
+                                                                        fiCPopup.show(getSupportFragmentManager(), "CustomDialog");*/
+                                                                        SubmitAlert(KYCActivity2.this, "Your Ficode & Creator is Here", Message1 + " & " + GlobalClass.Creator);
                                                                         customProgressDialog.dismiss();
-                                                                        FiCPopup fiCPopup = new FiCPopup("Your Ficode & Creator is Here", Message1 + " & " + GlobalClass.Creator);
-                                                                        fiCPopup.show(getSupportFragmentManager(), "CustomDialog");
+                                                                        
+
                                                                     }else{
                                                                         customProgressDialog.dismiss();
                                                                         SubmitAlert(KYCActivity2.this, "unsuccessful", response4.code()+","+response4.message());
@@ -523,24 +526,31 @@ public class KYCActivity2 extends AppCompatActivity {
         int maxLoanAmt = 300000;
         String maxLoanAmtStr = "Three lacks";
         Log.d("TAG", "updateBorrower: " + GlobalClass.Creator);
-        if (GlobalClass.Creator.toLowerCase().startsWith("vh")) {
-            maxLoanAmt = 1000000;
-            maxLoanAmtStr = "Ten lacks";
-        }
-        if (Objects.equals(selectedBank, "SBI") && Integer.parseInt(monthlyincome.getText().toString()) > 25000) {
-            Utils.showSnakbar(findViewById(android.R.id.content), "Income is more for SBI");
-            A = false;
-        } else if (Integer.parseInt(loanAmount.getText().toString().trim()) > maxLoanAmt || Integer.parseInt(loanAmount.getText().toString().trim()) < 5000) {
-            loanAmount.setError("Please Enter Loan Amount Less than " + maxLoanAmtStr + " and Greater than 5 thousand");
-            Utils.showSnakbar(findViewById(android.R.id.content), "Please enter Loan Amount Less than " + maxLoanAmtStr + " and Greater than 5 thousand");
-            A = false;
-        } else if (!GlobalClass.Creator.startsWith("VH") && ((Double.parseDouble(monthlyincome.getText().toString().trim()))) < (0.15 * Double.parseDouble(loanAmount.getText().toString().trim()))) {
-            monthlyincome.setError("Income should be greater than 15% of Loan Amount");
-            Utils.showSnakbar(findViewById(android.R.id.content), "Income should be greater than 15% of Loan Amount");
-            A = false;
-        } else if (!GlobalClass.Creator.startsWith("VH") && ((Double.parseDouble(monthlyincome.getText().toString().trim())) * 0.25) > Double.parseDouble(expensemonthly.getText().toString().trim())) {
-            expensemonthly.setError("Expense should be greater than 25 % of Income");
-            Utils.showSnakbar(findViewById(android.R.id.content), "Expense should be greater than 25 % of Income");
+        String monthlyIncomeStr = monthlyincome.getText().toString().trim();
+        String loanAmountStr = loanAmount.getText().toString().trim();
+        String expenseMonthlyStr = expensemonthly.getText().toString().trim();
+        if (!monthlyIncomeStr.isEmpty() && !loanAmountStr.isEmpty() && !expenseMonthlyStr.isEmpty()) {
+            if (GlobalClass.Creator.toLowerCase().startsWith("vh")) {
+                maxLoanAmt = 1000000;
+                maxLoanAmtStr = "Ten lacks";
+            }
+            if (Objects.equals(selectedBank, "SBI") && Integer.parseInt(monthlyincome.getText().toString()) > 25000) {
+                Utils.showSnakbar(findViewById(android.R.id.content), "Income is more for SBI");
+                A = false;
+            } else if (Integer.parseInt(loanAmount.getText().toString().trim()) > maxLoanAmt || Integer.parseInt(loanAmount.getText().toString().trim()) < 5000) {
+                loanAmount.setError("Please Enter Loan Amount Less than " + maxLoanAmtStr + " and Greater than 5 thousand");
+                Utils.showSnakbar(findViewById(android.R.id.content), "Please enter Loan Amount Less than " + maxLoanAmtStr + " and Greater than 5 thousand");
+                A = false;
+            } else if (!GlobalClass.Creator.startsWith("VH") && ((Double.parseDouble(monthlyincome.getText().toString().trim()))) < (0.15 * Double.parseDouble(loanAmount.getText().toString().trim()))) {
+                monthlyincome.setError("Income should be greater than 15% of Loan Amount");
+                Utils.showSnakbar(findViewById(android.R.id.content), "Income should be greater than 15% of Loan Amount");
+                A = false;
+            } else if (!GlobalClass.Creator.startsWith("VH") && ((Double.parseDouble(monthlyincome.getText().toString().trim())) * 0.25) > Double.parseDouble(expensemonthly.getText().toString().trim())) {
+                expensemonthly.setError("Expense should be greater than 25 % of Income");
+                Utils.showSnakbar(findViewById(android.R.id.content), "Expense should be greater than 25 % of Income");
+                A = false;
+            }
+        }else{
             A = false;
         }
         return A;
