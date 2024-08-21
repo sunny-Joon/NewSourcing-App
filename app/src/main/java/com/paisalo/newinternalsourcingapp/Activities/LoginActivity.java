@@ -203,8 +203,6 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
         FirebaseMessaging.getInstance().setAutoInitEnabled(true);
         requestFCMToken();
 
-      //  getSupportActionBar().hide();
-
         versionset = findViewById(R.id.versionset);
         versionset.setText(BuildConfig.VERSION_NAME);
         selectDatabase = findViewById(R.id.selectDatabase);
