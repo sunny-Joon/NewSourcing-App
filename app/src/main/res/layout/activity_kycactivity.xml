@@ -86,7 +86,7 @@ android:id="@+id/ScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Name *"
+            android:text="@string/name"
             android:textColor="@color/white"
             android:textSize="@dimen/heading" />
 
@@ -140,7 +140,7 @@ android:id="@+id/ScrollView"
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Age *"
+                    android:text="@string/aadhar_age"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="@dimen/heading" />
@@ -173,7 +173,7 @@ android:id="@+id/ScrollView"
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Date Of Birth *"
+                    android:text="@string/aadhar_dob"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="@dimen/heading" />
@@ -218,7 +218,7 @@ android:id="@+id/ScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Gender *"
+            android:text="@string/aadhar_gender"
             android:textColor="@color/white"
             android:textSize="@dimen/heading" />
 
@@ -250,7 +250,7 @@ android:id="@+id/ScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Guardian *"
+            android:text="@string/Guardian"
             android:textColor="@color/white"
             android:textSize="@dimen/heading" />
 
@@ -273,7 +273,7 @@ android:id="@+id/ScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Realationship with Borrower *"
+            android:text="@string/relationshioWithBorrower"
             android:textColor="@color/white"
             android:textSize="@dimen/heading" />
 
@@ -297,7 +297,7 @@ android:id="@+id/ScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Address1 *"
+            android:text="@string/aadhar_address1"
             android:textColor="@color/white"
             android:textSize="@dimen/heading" />
 
@@ -320,7 +320,7 @@ android:id="@+id/ScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Address2 *"
+            android:text="@string/aadhar_address2"
             android:textColor="@color/white"
             android:textSize="@dimen/heading" />
 
@@ -343,7 +343,7 @@ android:id="@+id/ScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Address3 *"
+            android:text="@string/aadhar_address3"
             android:textColor="@color/white"
             android:textSize="@dimen/heading" />
 
@@ -378,7 +378,7 @@ android:id="@+id/ScrollView"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:textColor="@color/white"
-                    android:text="City Name"
+                    android:text="@string/aadhar_city"
                     android:textSize="@dimen/heading" />
 
                 <androidx.cardview.widget.CardView
@@ -408,7 +408,7 @@ android:id="@+id/ScrollView"
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Pin Code *"
+                    android:text="@string/pincode"
                     android:layout_marginTop="8dp"
                     android:textAlignment="center"
                     android:textColor="@color/white"
@@ -437,7 +437,7 @@ android:id="@+id/ScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="State Name *"
+            android:text="@string/state"
             android:textColor="@color/white"
             android:textSize="@dimen/heading" />
 
@@ -475,7 +475,7 @@ android:id="@+id/ScrollView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
-                    android:text="City"
+                    android:text="@string/aadhar_city"
                     android:textColor="@color/white"
                     android:textSize="15dp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -528,7 +528,7 @@ android:id="@+id/ScrollView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
-                    android:text="District"
+                    android:text="@string/district"
                     android:textColor="@color/white"
                     android:textSize="15dp" />
 
@@ -579,7 +579,7 @@ android:id="@+id/ScrollView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
-                    android:text="Sub_District"
+                    android:text="@string/sub_district"
                     android:textColor="@color/white"
                     android:textSize="15dp" />
 
@@ -624,7 +624,7 @@ android:id="@+id/ScrollView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
-                    android:text="Village"
+                    android:text="@string/village"
                     android:textColor="@color/white"
                     android:textSize="15dp" />
 
@@ -661,7 +661,7 @@ android:id="@+id/ScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Mobile No *"
+            android:text="@string/mobile"
             android:textColor="@color/white"
             android:textSize="@dimen/heading" />
 
@@ -704,7 +704,7 @@ android:id="@+id/ScrollView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Permament Account PAN No *"
+                android:text="@string/applicant_pan"
                 android:textColor="@color/white"
                 android:textSize="@dimen/heading" />
 
@@ -761,7 +761,7 @@ android:id="@+id/ScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Driving license *"
+            android:text="@string/applicant_driving_license"
             android:textColor="@color/white"
             android:textSize="@dimen/heading" />
 
@@ -805,7 +805,7 @@ android:id="@+id/ScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Voter Id *"
+            android:text="@string/applicant_voter"
             android:textColor="@color/white"
             android:textSize="@dimen/heading" />
 
@@ -850,7 +850,7 @@ android:id="@+id/ScrollView"
             android:layout_height="wrap_content"
 
             android:layout_marginTop="8dp"
-            android:text="Mother First Name *"
+            android:text="@string/mother_first_name"
             android:textColor="@color/white"
             android:textSize="@dimen/heading" />
 
@@ -884,7 +884,7 @@ android:id="@+id/ScrollView"
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Mother Middle Name*"
+                    android:text="@string/mother_middle_name"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="@dimen/heading" />
@@ -915,7 +915,7 @@ android:id="@+id/ScrollView"
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Mother Last Name*"
+                    android:text="@string/mother_last_name"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="@dimen/heading" />
@@ -943,7 +943,7 @@ android:id="@+id/ScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Father First Name *"
+            android:text="@string/father_first_name"
             android:textColor="@color/white"
             android:textSize="@dimen/heading" />
 
@@ -976,7 +976,7 @@ android:id="@+id/ScrollView"
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Father Middle Name*"
+                    android:text="@string/father_middle_name"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="@dimen/heading" />
@@ -1007,7 +1007,7 @@ android:id="@+id/ScrollView"
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Father Last Name*"
+                    android:text="@string/father_last_name"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="@dimen/heading" />
@@ -1035,7 +1035,7 @@ android:id="@+id/ScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Marital Status *"
+            android:text="@string/applicant_marital_status"
             android:textColor="@color/white"
             android:textSize="@dimen/heading" />
 
@@ -1069,7 +1069,7 @@ android:id="@+id/ScrollView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Spouse First Name *"
+                    android:text="@string/spouse_first_name"
                     android:textColor="@color/white"
                     android:textSize="@dimen/heading" />
 
@@ -1102,7 +1102,7 @@ android:id="@+id/ScrollView"
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Spouse Middle Name*"
+                            android:text="@string/spouse_middle_name"
                             android:textAlignment="center"
                             android:textColor="@color/white"
                             android:textSize="@dimen/heading" />
@@ -1133,7 +1133,7 @@ android:id="@+id/ScrollView"
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Spouse Last Name*"
+                            android:text="@string/spouse_last_name"
                             android:textAlignment="center"
                             android:textColor="@color/white"
                             android:textSize="@dimen/heading" />
@@ -1168,7 +1168,7 @@ android:id="@+id/ScrollView"
             android:layout_gravity="center"
             android:layout_marginTop="8dp"
             android:backgroundTint="@color/white"
-            android:text="Submit"
+            android:text="@string/submit"
             android:textColor="@color/red"
             android:textSize="@dimen/heading"
             android:textStyle="bold" />

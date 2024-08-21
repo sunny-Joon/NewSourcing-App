@@ -43,11 +43,11 @@
         <item>@string/sister</item>
     </string-array>
 
-    <array name="issuetypedata">
+   <!-- <array name="issuetypedata">
         <item>New User Mapping</item>
         <item>Login Issue</item>
         <item>Update or mapping with Branch</item>
-    </array>
+    </array>-->
 
     <array name="lenderType">
         <item>--Select--</item>
@@ -150,7 +150,7 @@
         <item>Audit</item>
     </string-array>
 
-    <array name="emiReasons">
+  <!--  <array name="emiReasons">
         <item>"Medical Issue"</item>
         <item>"Door Closed"</item>
         <item>"Family Expense"</item>
@@ -158,7 +158,7 @@
         <item>"Call not Received"</item>
         <item>"Don't have money"</item>
         <item>"Others"</item>
-    </array>
+    </array>-->
 
     <string-array name="choice_array">
         <item>Choose from Gallery</item>
