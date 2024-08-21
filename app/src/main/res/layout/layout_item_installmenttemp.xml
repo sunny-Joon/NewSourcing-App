@@ -24,7 +24,7 @@
         app:layout_constraintStart_toEndOf="@id/cbItemInstallmentSelected"
         app:layout_constraintEnd_toStartOf="@+id/tvItemInstallmentDueAmount"
         app:layout_constraintBottom_toBottomOf="@id/cbItemInstallmentSelected"
-        android:text="DueDate"
+        android:text="@string/dueDate"
         android:layout_width="0dp"
         android:layout_height="wrap_content" />
 
@@ -36,7 +36,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/cbItemInstallmentSelected"
-        android:text="Amount"
+        android:text="@string/amount"
         android:textColor="@color/black"
         android:gravity="end"
         android:layout_width="0dp"

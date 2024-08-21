@@ -29,7 +29,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:padding="10dp"
-                    android:text="Support 1"
+                    android:text="@string/support1"
                     android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold"/>
@@ -84,7 +84,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:padding="10dp"
-                    android:text="Support 2"
+                    android:text="@string/support2"
                     android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold"/>
@@ -137,7 +137,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:padding="10dp"
-                    android:text="Support 3"
+                    android:text="@string/support3"
                     android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold"/>

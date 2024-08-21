@@ -32,7 +32,7 @@
         android:textColor="@color/white"
         android:textSize="@dimen/heading"
         android:fontFamily="@font/visbycfregular"
-        android:text="name"/>
+        android:text="@string/name"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -49,7 +49,7 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/heading"
                     android:fontFamily="@font/visbycfregular"
-                    android:text="gender"/>
+                    android:text="@string/aadhar_gender"/>
 
                 <TextView
                     android:id="@+id/memage"
@@ -60,7 +60,7 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/heading"
                     android:fontFamily="@font/visbycfregular"
-                    android:text="age"/>
+                    android:text="@string/aadhar_age"/>
 
 
             </LinearLayout>
@@ -80,7 +80,7 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/heading"
                     android:fontFamily="@font/visbycfregular"
-                    android:text="education"/>
+                    android:text="@string/education"/>
 
                 <TextView
                     android:id="@+id/memhealth"
@@ -91,7 +91,7 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/heading"
                     android:fontFamily="@font/visbycfregular"
-                    android:text="Health"/>
+                    android:text="@string/health"/>
 
 
             </LinearLayout>
@@ -111,7 +111,7 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/heading"
                     android:fontFamily="@font/visbycfregular"
-                    android:text="schooltype"/>
+                    android:text="@string/school_type"/>
 
                 <TextView
                     android:id="@+id/membusiness"
@@ -122,7 +122,7 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/heading"
                     android:fontFamily="@font/visbycfregular"
-                    android:text="business"/>
+                    android:text="@string/business"/>
 
 
             </LinearLayout>
@@ -142,7 +142,7 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/heading"
                     android:fontFamily="@font/visbycfregular"
-                    android:text="relationship"/>
+                    android:text="@string/relationship"/>
 
                 <TextView
                     android:id="@+id/membusinesstype"
@@ -153,7 +153,7 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/heading"
                     android:fontFamily="@font/visbycfregular"
-                    android:text="businesstype"/>
+                    android:text="@string/business_type"/>
 
 
             </LinearLayout>
@@ -173,7 +173,7 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/heading"
                     android:fontFamily="@font/visbycfregular"
-                    android:text="income"/>
+                    android:text="@string/income"/>
 
                 <TextView
                     android:id="@+id/memincometype"
@@ -184,7 +184,7 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/heading"
                     android:fontFamily="@font/visbycfregular"
-                    android:text="incometype"/>
+                    android:text="@string/income_type"/>
 
 
             </LinearLayout>

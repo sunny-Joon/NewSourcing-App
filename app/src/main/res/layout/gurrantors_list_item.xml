@@ -53,7 +53,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Father/Spouse"
+                    android:text="@string/father_spouse"
                     android:textColor="@color/white"
                     android:textSize="@dimen/heading"
                     android:fontFamily="@font/visbycfregular" />
@@ -61,7 +61,7 @@
                     android:id="@+id/fatherOrSpouseTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Father/Spouse"
+                    android:text="@string/father_spouse"
                     android:textColor="@color/white"
                     android:textSize="@dimen/heading"
                     android:fontFamily="@font/visbycfregular"/>
@@ -75,7 +75,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Aadhaar Id"
+                    android:text="@string/aadhar_id"
                     android:layout_weight="1"
                     android:textColor="@color/white"
                     android:textSize="@dimen/heading"
@@ -97,7 +97,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Mobile"
+                    android:text="@string/mobile"
                     android:layout_weight="1"
                     android:textColor="@color/white"
                     android:textSize="@dimen/heading"
@@ -119,7 +119,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="GR No."
+                    android:text="@string/grno"
                     android:layout_weight="1"
                     android:textColor="@color/white"
                     android:textSize="@dimen/heading"
@@ -136,7 +136,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ID"
+                    android:text="@string/id"
                     android:gravity="center"
                     android:layout_weight="1"
                     android:textColor="@color/white"
@@ -161,7 +161,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="Address"
+                    android:text="@string/address"
                     android:textColor="@color/white"
                     android:textSize="@dimen/heading"
                     android:fontFamily="@font/visbycfregular" />

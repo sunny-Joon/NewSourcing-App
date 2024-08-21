@@ -26,7 +26,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Aadhar_id"
+            android:text="@string/aadhar_id"
             android:textColor="@color/red"
             android:textSize="@dimen/heading" />
 
@@ -75,7 +75,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Name *"
+            android:text="@string/name"
             android:textColor="@color/red"
             android:textSize="@dimen/heading" />
 
@@ -122,7 +122,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Age *"
+                    android:text="@string/aadhar_age"
                     android:textColor="@color/red"
                     android:textSize="@dimen/heading" />
 
@@ -154,7 +154,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Date Of Birth *"
+                    android:text="@string/aadhar_dob"
                     android:textColor="@color/red"
                     android:textSize="@dimen/heading" />
 
@@ -188,7 +188,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Gender *"
+            android:text="@string/aadhar_gender"
             android:layout_marginTop="8dp"
             android:textColor="@color/red"
             android:textSize="@dimen/heading"
@@ -211,7 +211,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"            
-            android:text="Guardian *"
+            android:text="@string/guarantor"
             android:textColor="@color/red"
             android:textSize="@dimen/heading"/>
 
@@ -235,7 +235,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Address1 *"
+            android:text="@string/aadhar_address1"
             android:layout_marginTop="8dp"
             android:textColor="@color/red"
             android:textSize="@dimen/heading"/>
@@ -259,7 +259,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Address2 *"
+            android:text="@string/aadhar_address2"
             android:layout_marginTop="8dp"
             android:textColor="@color/red"
             android:textSize="@dimen/heading"/>
@@ -285,7 +285,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Address3 *"
+            android:text="@string/aadhar_address3"
             android:layout_marginTop="8dp"
             android:textColor="@color/red"
             android:textSize="@dimen/heading" />
@@ -320,7 +320,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="City *"
+                    android:text="@string/aadhar_city"
                     android:textColor="@color/red"
                     android:textSize="@dimen/heading" />
 
@@ -351,7 +351,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Pin Code *"
+                    android:text="@string/pincode"
                     android:textColor="@color/red"
                     android:textSize="@dimen/heading" />
 
@@ -380,7 +380,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="State Name *"
+            android:text="@string/aadhar_state"
             android:textColor="@color/red"
             android:textSize="@dimen/heading" />
         
@@ -400,7 +400,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Mobile No *"
+            android:text="@string/mobile"
             android:layout_marginTop="8dp"
             android:textColor="@color/red"
             android:textSize="@dimen/heading"/>
@@ -426,7 +426,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Voter Id *"
+            android:text="@string/applicant_voter"
             android:textColor="@color/red"
             android:textSize="@dimen/heading"/>
 
@@ -451,7 +451,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Permament Account PAN No *"
+            android:text="@string/applicant_pan"
             android:textColor="@color/red"
             android:textSize="@dimen/heading"/>
 
@@ -476,7 +476,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Driving license *"
+            android:text="@string/applicant_driving_license"
             android:textColor="@color/red"
             android:textSize="@dimen/heading"/>
 
@@ -526,7 +526,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Relationship With Borrower *"
+            android:text="@string/relationshioWithBorrower"
             android:textColor="@color/red"
             android:textSize="@dimen/heading"/>
 
@@ -556,7 +556,7 @@
                 android:layout_weight="1"
                 android:layout_marginHorizontal="2dp"
                 android:backgroundTint="@color/red"
-                android:text="UPDATE"
+                android:text="@string/update"
                 android:textSize="10dp" />
 
             <Button
@@ -566,7 +566,7 @@
                 android:layout_weight="1"
                 android:layout_marginHorizontal="2dp"
                 android:backgroundTint="@color/red"
-                android:text="DELETE"
+                android:text="@string/delete"
                 android:textSize="10dp" />
 
         </LinearLayout>

@@ -46,7 +46,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:textColor="@color/white"
-                    android:text="Name"
+                    android:text="@string/name"
                     android:textSize="@dimen/heading"
                     android:gravity="center_vertical"
                     android:fontFamily="@font/visbycfregular"/>
@@ -62,7 +62,7 @@
                     android:layout_height="match_parent"
                     android:textColor="@color/white"
                     android:layout_weight="1"
-                    android:text="Aadhaar Id"
+                    android:text="@string/aadhar_id"
                     android:textSize="@dimen/heading"
                     android:gravity="center_vertical"
                     android:fontFamily="@font/visbycfregular"/>
@@ -87,7 +87,7 @@
                     android:layout_height="match_parent"
                     android:textColor="@color/white"
                     android:layout_weight="1"
-                    android:text="AGE"
+                    android:text="@string/aadhar_age"
                     android:textSize="@dimen/heading"
                     android:gravity="center_vertical"
                     android:fontFamily="@font/visbycfregular"/>
@@ -112,7 +112,7 @@
                     android:layout_height="match_parent"
                     android:textColor="@color/white"
                     android:layout_weight="1"
-                    android:text="Gendre"
+                    android:text="@string/aadhar_gender"
                     android:textSize="@dimen/heading"
                     android:gravity="center_vertical"
                     android:fontFamily="@font/visbycfregular"/>
@@ -137,7 +137,7 @@
                     android:layout_height="match_parent"
                     android:textColor="@color/white"
                     android:layout_weight="1"
-                    android:text="D.O.B"
+                    android:text="@string/aadhar_dob"
                     android:textSize="@dimen/heading"
                     android:gravity="center_vertical"
                     android:fontFamily="@font/visbycfregular"/>
@@ -162,7 +162,7 @@
                     android:layout_height="match_parent"
                     android:textColor="@color/white"
                     android:layout_weight="1"
-                    android:text="Guardian Name"
+                    android:text="@string/guardian"
                     android:textSize="@dimen/heading"
                     android:gravity="center_vertical"
                     android:fontFamily="@font/visbycfregular"/>
@@ -187,7 +187,7 @@
                     android:layout_height="match_parent"
                     android:textColor="@color/white"
                     android:layout_weight="1"
-                    android:text="Mobile"
+                    android:text="@string/mobile"
                     android:textSize="@dimen/heading"
                     android:gravity="center_vertical"
                     android:fontFamily="@font/visbycfregular"/>
@@ -230,7 +230,7 @@
                     android:layout_height="match_parent"
                     android:textColor="@color/white"
                     android:layout_weight="1"
-                    android:text="PAN no."
+                    android:text="@string/panno"
                     android:textSize="@dimen/heading"
                     android:gravity="center_vertical"
                     android:fontFamily="@font/visbycfregular"/>
@@ -255,7 +255,7 @@
                     android:layout_height="match_parent"
                     android:textColor="@color/white"
                     android:layout_weight="1"
-                    android:text="Driving License"
+                    android:text="@string/applicant_driving_license"
                     android:textSize="@dimen/heading"
                     android:gravity="center_vertical"
                     android:fontFamily="@font/visbycfregular"/>
@@ -280,7 +280,7 @@
                     android:layout_height="match_parent"
                     android:textColor="@color/white"
                     android:layout_weight="1"
-                    android:text="Address"
+                    android:text="@string/address"
                     android:textSize="@dimen/heading"
                     android:gravity="center_vertical"
                     android:fontFamily="@font/visbycfregular"/>
@@ -305,7 +305,7 @@
                     android:layout_height="match_parent"
                     android:textColor="@color/white"
                     android:layout_weight="1"
-                    android:text="PinCode"
+                    android:text="@string/pincode"
                     android:textSize="@dimen/heading"
                     android:gravity="center_vertical"
                     android:fontFamily="@font/visbycfregular"/>
@@ -330,7 +330,7 @@
                     android:layout_height="match_parent"
                     android:textColor="@color/white"
                     android:layout_weight="1"
-                    android:text="City"
+                    android:text="@string/aadhar_city"
                     android:textSize="@dimen/heading"
                     android:gravity="center_vertical"
                     android:fontFamily="@font/visbycfregular"/>
@@ -355,7 +355,7 @@
                     android:layout_height="match_parent"
                     android:textColor="@color/white"
                     android:layout_weight="1"
-                    android:text="State"
+                    android:text="@string/state"
                     android:textSize="@dimen/heading"
                     android:gravity="center_vertical"
                     android:fontFamily="@font/visbycfregular"/>
@@ -400,7 +400,7 @@
                     android:layout_height="match_parent"
                     android:textSize="@dimen/titleheading"
                     android:textColor="@color/red"
-                    android:text="LOAN AMOUNT"
+                    android:text="@string/loanamount"
                     android:textStyle="bold"
                     android:layout_weight="1"
                     android:gravity="center"/>
@@ -426,7 +426,7 @@
             android:id="@+id/addressCheckBox"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:text="Is current address same as Aadhaar"
+            android:text="@string/iscurrunt"
             android:layout_marginHorizontal="16dp"
             android:textSize="@dimen/heading"
             android:fontFamily="@font/visbycfregular"/>
@@ -451,7 +451,7 @@
                     <EditText
                         android:id="@+id/Address1"
                         android:layout_width="match_parent"
-                        android:hint="Address1"
+                        android:hint="@string/aadhar_address1"
                         android:inputType="textCapCharacters
 "
                         android:layout_height="45dp"/>
@@ -467,7 +467,7 @@
                     <EditText
                         android:id="@+id/Address2"
                         android:layout_width="match_parent"
-                        android:hint="Address2"
+                        android:hint="@string/aadhar_address2"
                         android:inputType="textCapCharacters
 "
                         android:layout_height="45dp"/>
@@ -483,7 +483,7 @@
                     <EditText
                         android:id="@+id/Address3"
                         android:layout_width="match_parent"
-                        android:hint="Address3"
+                        android:hint="@string/aadhar_address3"
                         android:inputType="textCapCharacters
 "
                         android:layout_height="45dp"/>
@@ -522,7 +522,7 @@
                         <EditText
                             android:id="@+id/city"
                             android:layout_width="match_parent"
-                            android:hint="City"
+                            android:hint="@string/aadhar_city"
                             android:inputType="textCapCharacters
 "
                             android:layout_height="45dp"/>
@@ -541,7 +541,7 @@
                     <EditText
                         android:id="@+id/pinCode"
                         android:layout_width="match_parent"
-                        android:hint="Pin Code"
+                        android:hint="@string/pincode"
                         android:inputType="number"
                         android:layout_height="45dp"/>
 
@@ -558,7 +558,7 @@
             android:textColor="@color/white"
             android:layout_margin="16dp"
             android:textSize="@dimen/heading"
-            android:text="Submit"/>
+            android:text="@string/submit"/>
 
     </LinearLayout>
 
