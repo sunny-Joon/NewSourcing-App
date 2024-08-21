@@ -33,7 +33,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Term And Conditions"
+                android:text="@string/terms_amp_conditions"
                 android:textColor="@color/black"
                 android:textSize="12dp"
                 android:textStyle="bold" />
@@ -41,36 +41,35 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="• You can refer friends but not faimly"
+                android:text="@string/tnc1"
                 android:textColor="@color/black"
                 android:textSize="12dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="• You can refer 2 friends every 6 months"
+                android:text="@string/tnc2"
                 android:textColor="@color/black"
                 android:textSize="12dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="• You will receive your first incentive on referral"
+                android:text="@string/tnc3"
                 android:textColor="@color/black"
                 android:textSize="12dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="• You will receive another incentive when your referral
-completes 6 months with paisalo."
+                android:text="@string/tnc4"
                 android:textColor="@color/black"
                 android:textSize="12dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="• You will receive another incentive when your referral completes 1 year with paisalo."
+                android:text="@string/tnc5"
                 android:textColor="@color/black"
                 android:textSize="12dp" />
 
@@ -90,7 +89,7 @@ completes 6 months with paisalo."
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="Get assured benefits"
+                android:text="@string/tnc6"
                 android:textColor="@color/black"
                 android:textSize="12dp"
                 android:textStyle="bold" />
@@ -130,7 +129,7 @@ completes 6 months with paisalo."
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text=" earn ₹500 cash as your friends gets approved   by  Paisalo."
+                    android:text="@string/tnc7"
                     android:textColor="@color/black"
                     android:textSize="12dp" />
             </LinearLayout>
@@ -175,7 +174,7 @@ completes 6 months with paisalo."
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:fontFamily=""
-                    android:text=" earn cash upto ₹1000 a month Your friends too get ₹500 on loan disbursal."
+                    android:text="@string/tnc8"
                     android:textColor="@color/black"
                     android:textSize="12dp" />
             </LinearLayout>
@@ -189,7 +188,7 @@ completes 6 months with paisalo."
             android:backgroundTint="@color/white"
             android:textColor="@color/black"
             android:layout_marginTop="12dp"
-            android:text="Refer Now"
+            android:text="@string/refer_now"
             />
 
 

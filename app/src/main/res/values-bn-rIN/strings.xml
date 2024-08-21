@@ -1,0 +1,789 @@
+<resources>
+    <string name="app_name">New Internal Sourcing App</string>
+    <string name="title_home">হোম</string>
+    <string name="title_leaderboard">লিডারবোর্ড</string>
+    <string name="title_notifications">বিজ্ঞপ্তি</string>
+    <string name="hello_blank_fragment">হ্যালো ব্ল্যাঙ্ক ফ্র্যাগমেন্ট</string>
+    <string name="nav_open">খুলুন</string>
+    <string name="nav_close">বন্ধ করুন</string>
+
+    <string name="mother_first_name">মায়ের প্রথম নাম</string>
+    <string name="mother_middle_name">মায়ের মধ্যের নাম</string>
+    <string name="mother_last_name">মায়ের শেষ নাম</string>
+
+    <string name="father_first_name">বাবার প্রথম নাম</string>
+    <string name="father_middle_name">বাবার মধ্যের নাম</string>
+    <string name="father_last_name">বাবার শেষ নাম</string>
+
+    <string name="spouse_first_name">স্বামী/স্ত্রীর প্রথম নাম</string>
+    <string name="spouse_middle_name">স্বামী/স্ত্রীর মধ্যের নাম</string>
+    <string name="spouse_last_name">স্বামী/স্ত্রীর শেষ নাম</string>
+
+
+    <string name="expense_monthly">ব্যয় (মাসিক)</string>
+    <string name="future_income">ভবিষ্যতের আয় (বার্ষিক)</string>
+    <string name="agriculture_income">কৃষি আয় (বার্ষিক)</string>
+    <string name="earning_member_type">আয়কারী সদস্যের প্রকার</string>
+    <string name="select_bank">ব্যাংক নির্বাচন করুন</string>
+    <string name="loan_duration_month">ঋণের মেয়াদ (মাস)</string>
+    <string name="term_and_conditions"><b><u>অনলাইন পেমেন্টের জন্য শর্তাবলী - PAISALO DIGITAL LTD</u></b> \n
+    NBFC এর নাম: <b>PAISALO DIGITAL LTD</b>\n\tCSC POCKET 52 CR PARK NEAR POLICE STATION \n\tNEW DELHI -110019\n\tWWW.PAISALO.IN
+    \n\n<b>অনলাইন চার্জ পেমেন্ট:</b>
+    এই অনলাইন পেমেন্ট সিস্টেমটি PAISALO DIGITAL LTD দ্বারা প্রদান করা হয়। PAISALO DIGITAL LTD সময়ে সময়ে এই শর্তগুলি আপডেট করতে পারে এবং কোনও পরিবর্তন তাৎক্ষণিকভাবে এই পোর্টালে প্রদর্শিত হবে। দয়া করে নিশ্চিত করুন যে আপনি বর্তমান শর্তগুলি জানেন। PAISALO DIGITAL LTD এর দেশের নিবাস ভারত এবং আইনি এখতিয়ার নতুন দিল্লি, ভারত।
+
+    অনলাইন পেমেন্ট সুবিধা ব্যবহারের আগে এই শর্তাবলী সাবধানে পড়ুন। এই ওয়েবসাইটে অনলাইন পেমেন্ট সুবিধা ব্যবহার করা মানে আপনি এই শর্তগুলি গ্রহণ করেছেন। আপনি যদি এই শর্তগুলি গ্রহণ না করেন তবে এই সুবিধাটি ব্যবহার করবেন না।
+    \n
+    সমস্ত পেমেন্ট নিম্নলিখিত শর্তাবলীর অধীন:\n
+    * আইডি এবং অনন্য পাসওয়ার্ড দিয়ে লগ ইন করার সময় আইটেমের বিবরণ আপনার জন্য নির্দিষ্ট।\n
+    * সমস্ত চার্জ ভারতীয় রুপি দ্বারা উদ্ধৃত।\n
+    * PAISALO DIGITAL LTD যে কোনও সময় চার্জ পরিবর্তন করার অধিকার সংরক্ষণ করে।\n
+    * আপনার পেমেন্ট PAISALO DIGITAL LTD এর অ্যাকাউন্টে সাধারণত দুই কর্মদিবসের মধ্যে পৌঁছাবে।\n
+    * ভুল অ্যাকাউন্ট নম্বর বা ভুল বিবরণ দ্বারা PAISALO DIGITAL LTD এর সঠিক অ্যাকাউন্টে পেমেন্ট না পৌঁছানোর জন্য আমরা দায়ী হতে পারি না। নেট ব্যাংকিং/ক্রেডিট/ডেবিট কার্ড সরবরাহকারী দ্বারা যদি পেমেন্ট প্রত্যাখ্যাত হয় বা অস্বীকৃত হয় তবে আমরা দায়ী হতে পারি না।\n
+    * যদি ব্যাংকার/কার্ড সরবরাহকারী পেমেন্ট প্রত্যাখ্যান করে, PAISALO DIGITAL LTD এই তথ্য আপনাকে জানাতে কোনও বাধ্যবাধকতা নেই।\n
+    * এটি আপনার (গ্রাহক) জন্য আপনার ব্যাংক/ক্রেডিট/ডেবিট কার্ড সরবরাহকারীর সাথে পরীক্ষা করা যে পেমেন্ট আপনার অ্যাকাউন্ট থেকে কেটে নেওয়া হয়েছে।\n
+    * কোনো পরিস্থিতিতেই, PAISALO DIGITAL LTD এই সাইট বা কোনো সাইটের সাথে সংযুক্ত সাইটের ব্যবহারের জন্য বা এই সাইটের ব্যবহারের ফলস্বরূপ যে কোনও ক্ষতির জন্য দায়ী হবে না, যেহেতু এটি ওয়ারেন্টি, চুক্তি, টর্ট বা অন্য কোনও আইনি তত্ত্বের ভিত্তিতে এবং এই ধরনের ক্ষতির সম্ভাবনার বিষয়ে পরামর্শ দেওয়া হয়েছে কিনা।\n
+    \n<b>রিফান্ড নীতি:</b>
+    রিফান্ড, যদি প্রযোজ্য হয়, ব্যবস্থাপনার বিচারের ভিত্তিতে, শুধুমাত্র মূল লেনদেনের জন্য ব্যবহৃত নেট ব্যাংকিং/ডেবিট/ক্রেডিট কার্ডের উৎস অনুযায়ী করা হবে। সন্দেহের অবকাশের জন্য, এই নীতিতে কিছুই PAISALO DIGITAL LTD কে চার্জ (অথবা এর অংশ) ফেরত দেওয়ার জন্য প্রয়োজনীয় করবে না, যতক্ষণ না সেই চার্জ (অথবা এর অংশ) অনলাইন পেমেন্ট মোডের মাধ্যমে গ্রাহক দ্বারা আগে পরিশোধ করা হয় এবং PAISALO DIGITAL LTD এর অ্যাকাউন্টে জমা হয়েছে এবং ব্যবস্থাপনার অনুমোদন রয়েছে। ফেরত দেওয়া পরিমাণ ৭ কর্মদিবসের মধ্যে উৎস অ্যাকাউন্টে জমা করা হবে।\n
+    \n<b>বাতিল এবং ফেরত নীতি:</b>
+    বাতিল এবং ফেরত, যদি প্রযোজ্য হয়, ব্যবস্থাপনার বিচারের ভিত্তিতে, শুধুমাত্র মূল লেনদেনের জন্য ব্যবহৃত নেট ব্যাংকিং/ডেবিট/ক্রেডিট কার্ডের উৎস অনুযায়ী করা হবে। সন্দেহের অবকাশের জন্য, এই নীতিতে কিছুই PAISALO DIGITAL LTD কে চার্জ (অথবা এর অংশ) বাতিল এবং ফেরত দেওয়ার জন্য প্রয়োজনীয় করবে না, যতক্ষণ না সেই চার্জ (অথবা এর অংশ) অনলাইন পেমেন্ট মোডের মাধ্যমে গ্রাহক দ্বারা আগে পরিশোধ করা হয় এবং PAISALO DIGITAL LTD এর অ্যাকাউন্টে জমা হয়েছে এবং ব্যবস্থাপনার অনুমোদন রয়েছে। বাতিল এবং ফেরত প্রক্রিয়াটি ২০ কর্মদিবস পর্যন্ত সময় নিবে।
+    গোপনীয়তা নীতি
+    এই গোপনীয়তা নীতি PAISALO DIGITAL LTD এর কাছে অনলাইনে প্রদানকৃত সমস্ত ফি, দেনা, চার্জ এবং সম্পর্কিত পেমেন্টগুলির জন্য প্রযোজ্য। কখনও কখনও, আমরা নির্দিষ্ট গোপনীয়তা নোটিশ পোস্ট করতে পারি বিস্তারিত ব্যাখ্যার জন্য। যদি আপনার এই গোপনীয়তা নীতি সম্পর্কে কোনও প্রশ্ন থাকে, দয়া করে আমাদের ইমেল DELHI@PAISALO.IN এর মাধ্যমে যোগাযোগ করুন।
+    আমাদের গোপনীয়তা নীতির পরিবর্তন
+    PAISALO DIGITAL LTD সম্পূর্ণ অধিকার সংরক্ষণ করে এই গোপনীয়তা বিবৃতি যে কোনও সময় এবং কোনও কারণ ছাড়াই পরিবর্তন/সংষ্কার/অপসারণ করতে। এখানে যা কিছু রয়েছে তা PAISALO DIGITAL LTD এবং ওয়েবসাইট দর্শকদের বা যে কোনও ধরনের চিহ্নিতকরণ তথ্য সরবরাহকারীদের মধ্যে একটি চুক্তি/অচুক্তি তৈরির উদ্দেশ্যে নয়।
+    \n\n<b>DND নীতি:</b>
+    যদি আপনি আমাদের পক্ষ থেকে কোনও অতিরিক্ত এসএমএস/ইমেল সতর্কতা/যোগাযোগ বন্ধ করতে চান, আপনাকে কেবল একটি ইমেল পাঠাতে হবে DELHI@PAISALO.IN আপনার নিবন্ধিত মোবাইল নম্বর সহ এবং আপনি ‘সতর্কতা তালিকা’ থেকে বাদ পড়বেন।
+    যোগাযোগ ইমেল <i>DELHI@PAISALO.IN</i>
+    \n\n<b>পেমেন্টের শর্তাবলী:</b>\n
+    1. পেমেন্ট গেটওয়ে মারফত অনলাইন পেমেন্টের জন্য প্রযোজ্য চার্জ, কর গ্রাহক দ্বারা বহন করা হবে।\n
+        2. এই সেবার মাধ্যমে প্রক্রিয়া করা কোনও গ্রাহকের ব্যর্থ লেনদেনের ক্ষেত্রে, লেনদেন চার্জ বাদ দিয়ে পরিমাণ ফেরত দেওয়া হবে।</string>
+
+    <string name="terms_amp_conditions"><i><u>শর্তাবলী</u></i></string>
+
+    <string name="branch">শাখা</string>
+    <string name="area">এলাকা</string>
+    <string name="centre">কেন্দ্র</string>
+    <string name="group">গ্রুপ</string>
+    <string name="date">তারিখ</string>
+    <string name="verificationLevel1">যাচাইকরণ স্তর ১</string>
+    <string name="verificationLevel2">যাচাইকরণ স্তর ২</string>
+    <string name="verificationLevel3">যাচাইকরণ স্তর ৩</string>
+    <string name="verificationLevel4">যাচাইকরণ স্তর ৪</string>
+    <string name="verificationLevel5">যাচাইকরণ স্তর ৫</string>
+    <string name="verificationLevel6">যাচাইকরণ স্তর ৬</string>
+    <string name="verificationLevel7">যাচাইকরণ স্তর ৭</string>
+    <string name="ggt">জিজিটি দিন একটি তারিখ</string>
+    <string name="customerName">গ্রাহকের নাম</string>
+    <string name="sendAreaOffice">এলাকা অফিসে পাঠানো</string>
+    <string name="receivedAreaOffice">এলাকা অফিসে প্রাপ্তির তারিখ</string>
+    <string name="debtOfficeReceivedDate">ঋণ অফিসে প্রাপ্তির তারিখ</string>
+    <string name="opc">ওপিসির পূর্ণ রূপ প্রয়োজন</string>
+    <string name="settlementPeriod">পুনঃপরিশোধ সময়কাল সাপ্তাহিক</string>
+    <string name="houseVerificationDate">বাসস্থানের যাচাইকরণ তারিখ</string>
+    <string name="grtDate">জিআরটি তারিখ</string>
+    <string name="customer">গ্রাহক</string>
+    <string name="office_address">ব্যবসায়িক স্থানের ঠিকানা</string>
+
+    <string name="residing_with">বসবাসকারী</string>
+    <string name="family">পারিবারিক</string>
+    <string name="separately">আলাদাভাবে</string>
+
+    <string name="mother_hv">মা</string>
+    <string name="father_hv">বাবা</string>
+
+    <string name="applicant_status">আবেদকের অবস্থা</string>
+    <string name="Not_Handicapped">অক্ষম নয়</string>
+
+    <string name="interviewee_name">সাক্ষাৎকারপ্রাপ্ত ব্যক্তির নাম</string>
+    <string name="interviewee_age">সাক্ষাৎকারপ্রাপ্ত ব্যক্তির বয়স</string>
+    <string name="intervieweeRelation">আবেদকের সাথে সাক্ষাৎকারপ্রাপ্ত ব্যক্তির সম্পর্ক</string>
+    <string name="spouse">স্বামী/স্ত্রী</string>
+    <string name="parents">বাবা/মা</string>
+    <string name="siblings">ভাই/বোন</string>
+    <string name="husband">স্বামী</string>
+    <string name="father">বাবা</string>
+    <string name="brother">ভাই</string>
+    <string name="wife">স্ত্রী</string>
+    <string name="mother">মা</string>
+    <string name="sister">বোন</string>
+
+    <string name="notRented">বাসস্থান ভাড়া দেওয়া হয়নি</string>
+    <string name="residence_type">বাসস্থানের প্রকার</string>
+    <string name="pucca">পাকা</string>
+    <string name="kaccha">কাঁচা</string>
+    <string name="residental_stability">বাসস্থান স্থিতিশীলতা (বছর)</string>
+    <string name="distance_ApplicantToDealer">আবেদকের বাসা থেকে শাখা/ডিলার পয়েন্ট পর্যন্ত দূরত্ব (কিমি)</string>
+    <string name="time_ApplicantToDealer">শাখা/ডিলারের স্থান থেকে আবেদকের বাসায় পৌঁছাতে প্রয়োজনীয় সময় (মিনিট)</string>
+    <string name="businessExperience">বর্তমান ব্যবসায় মোট অভিজ্ঞতা (বছরে)</string>
+    <string name="businessExpenditure">ব্যবসার মোট মাসিক ব্যয়</string>
+    <string name="expectedIncome">পেসালো থেকে প্রস্তাবিত ঋণের পরে প্রস্তাবিত নিট মাসিক আয়</string>
+    <string name="houseExpenditure">মোট মাসিক গৃহস্থালির খরচ</string>
+    <string name="familyNetIncome">পারিবারিক অন্যান্য সদস্যদের নিট মাসিক আয়</string>
+    <string name="relationWithApplicant">আবেদকের সাথে অন্যান্য উপার্জনকারী সদস্যের সম্পর্ক</string>
+    <string name="reference1">রেফারেন্স ব্যক্তির নাম ১</string>
+    <string name="reference_PhoneNo">ফোন নম্বর</string>
+    <string name="reference2">রেফারেন্স ব্যক্তির নাম ২</string>
+    <string name="neighbourhood_verification">পাড়ার বাসিন্দাদের কাছ থেকে আবেদকের প্রতিক্রিয়া</string>
+    <string name="good">ভাল</string>
+    <string name="bad">খারাপ</string>
+    <string name="dontKnow">জানিনা</string>
+    <string name="Address">ব্যবসায়িক স্থানের ঠিকানা</string>
+
+
+    <string name="verification">ভেরিফিকেশন</string>
+    <string name="point1"> &#9733; নিম্ন (বিন্দু) কেন্দ্রিক আবাসিক বস্তুগত ভেরিফিকেশন</string>
+    <string name="point1.1"> আবাসিক মানদণ্ড অনুযায়ী বাড়ির ছাদ ও দেয়ালের প্রকার।</string>
+    <string name="point1.2"> গ্রাহক অনুমোদিত/অভিনন্দিত এলাকায় বসবাস করে।</string>
+    <string name="point1.3"> CPF সেকশন/বিভাগে বর্ণিত আবাসিক তথ্য অনুযায়ী জীবনযাপন (অত্যন্ত নিম্ন, নিম্ন, নিম্ন-মধ্যবিত্ত শ্রেণী)।</string>
+    <string name="point2">&#9733; ঋণ আবেদনপত্র, CPF এবং গ্রাহক পরিচিতি কাগজপত্রের ভেরিফিকেশন</string>
+    <string name="point2.1"> CPF এ সঠিক ডাকঠিকানা লেখা হয়েছে কিনা পরীক্ষা করুন।</string>
+    <string name="point2.2"> ফটো আইডেন্টিটি কার্ডের মূল পরিচয়পত্রের সাথে মিলিয়ে দেখুন।</string>
+    <string name="point2.3"> বর্তমান আবাসের ঠিকানার ভেরিফিকেশন মূল প্রমাণপত্রের সাথে মিলিয়ে করুন।</string>
+    <string name="point2.4"> গ্রাহক এবং তার স্বামী/স্ত্রীয়ের বয়সের প্রমাণ মূল কপির সাথে মিলিয়ে ভেরিফিকেশন করুন।</string>
+    <string name="point2.5"> চেক করুন যে স্থায়ী ঠিকানার পূর্ণ বিবরণ এবং পিনকোড CPF এ পূরণ করা হয়েছে কিনা।</string>
+    <string name="point2.6"> ঐ ফর্মের ভেরিফাইড কপি মূল কপির সাথে মিলিয়ে সিল করুন এবং সই করুন।</string>
+    <string name="point3">&#9733; পূর্ববর্তী ঋণের ব্যবহার এবং উপস্থিতি (যদি পুরোনো গ্রাহক হয়)</string>
+    <string name="point3.1"> গ্রাহক কি পূর্ববর্তী ঋণের ব্যবহার সেই উদ্দেশ্যে করেছে যার জন্য ঋণ নেওয়া হয়েছিল?</string>
+    <string name="point3.2">&#9670; গ্রাহকের ঋণ ব্যবহারের শতাংশ উল্লেখ করুন।</string>
+    <string name="point3.3"> সেন্টার মিটিংয়ে অনুপস্থিতির কারণ পরীক্ষা করুন।</string>
+    <string name="point3.4"> পেমেন্ট ডিফল্ট/বিলম্বের কারণগুলির সঠিকতা পরীক্ষা করুন। যদি ইচ্ছাকৃত হয় তবে এই গ্রাহকের ক্ষেত্রে এগোবেন না।</string>
+    <string name="point4">&#9733; নতুন ঋণের উদ্দেশ্য</string>
+    <string name="point4.1"> চেক করুন নতুন ঋণের উদ্দেশ্য গ্রাহকের ব্যবহারের সাথে সম্পর্কিত কিনা বা আয় বাড়ানোর কাজের জন্য।</string>
+    <string name="point4.2"> চেক করুন যে আবেদনকৃত পরিমাণ ঐ উদ্দেশ্য পূরণের জন্য উপযুক্ত কিনা।</string>
+    <string name="point4.3"> গ্রাহকের স্বামী/স্ত্রী/পুত্র কি ঐ উদ্দেশ্যে ঋণ আবেদন সম্পর্কে জানে?</string>
+    <string name="point4.4"> (শাখা ঋণ নীতির অনুসারে প্রযোজ্য)</string>
+    <string name="point5">&#9733; ব্যবসা এবং আয়ের ভেরিফিকেশন</string>
+    <string name="point5.1"> ঋণের উদ্দেশ্য কি গ্রাহকের ব্যবসার জন্য যুক্তিসঙ্গত/উপযুক্ত? (স্বামী/স্ত্রী/পুত্রের ব্যবসার ঋণের উদ্দেশ্যের সাথে সম্পর্কিত কিনা? যেখানে প্রযোজ্য)</string>
+    <string name="point5.2"> চেক করুন গ্রাহকের ব্যবসা কি আমাদের সম্পর্ককে প্রভাবিত করবে?</string>
+    <string name="point5.3"> গ্রাহকের কাছে আবেদনকৃত ঋণের পরিমাণ ফেরতের জন্য যথেষ্ট ফেরত দেওয়ার ক্ষমতা আছে কিনা?</string>
+    <string name="point5.4"> গ্রাহক প্রোফাইল ফর্মের সাথে বাড়ির নগদ প্রবাহ এবং উদ্বৃত্ত অংশের গণনা মিলিয়ে দেখুন।</string>
+    <string name="point5.5"> গ্রাহক দ্বারা প্রদত্ত আয় ব্যয় তথ্য গ্রাহক প্রোফাইল ফর্মে দেওয়া বিবরণে মেলে কিনা?</string>
+    <string name="point5.6"> সকল ঋণের জন্য গ্রাহকের ব্যবসার ভেরিফিকেশন আবশ্যক (রু. 35000/- এর বেশি সকল ঋণের জন্য ব্যবসা স্থলে এই অংশ পূরণ করুন।</string>
+    <string name="point6">&#9733; গ্রুপ গ্যারান্টি</string>
+    <string name="point6.1"> গ্রাহক কি গত বছরগুলিতে তার গ্রুপ সদস্যদের সহায়তা করেছে?</string>
+    <string name="point6.2"> ঋণের জন্য আবেদন করার সময় কেউ কি কমিশনের দাবি করেছে?</string>
+    <string name="point6.3"> গ্রাহক কি গ্রুপ মেল্ট করার জন্য সম্মত কিনা (তবে প্রযোজ্য হলে, মেল্টিং পেপার আবেদনপত্রের সাথে সংযুক্ত আছে।)</string>
+    <string name="point6.4"> গ্রুপে রক্ত সম্পর্কিত আত্মীয়দের জন্য পরীক্ষা (নীতির মতে সংজ্ঞায়িত)।</string>
+    <string name="point6.5"> চেক করুন গ্রাহক কি বিমা দাবি সম্পর্কিত প্রক্রিয়া বোঝে।</string>
+    <string name="point7">&#9733; বাহ্যিক ঋণ</string>
+    <string name="point7.1"> নিশ্চিত করুন যে গ্রাহক প্রোফাইল ফর্মে বাহ্যিক ঋণ সম্পর্কিত তথ্য গ্রাহকের ঋণ দায়ের সাথে মেলে।</string>
+    <string name="point7.2"> গ্রাহক কি বোঝে যে ক্রেডিট ব্যুরোর প্রভাব কি যদি সে পেমেন্ট ডিফল্ট করে তবে ভবিষ্যতে ঋণ পাবে না?</string>
+    <string name="point7.3"> জিজ্ঞাসা করুন যে কি ঋণের পরিমাণ বেশি বা গ্রুপে পারস্পরিক ঋণ রয়েছে? সঙ্কলন ভিডিওর উদাহরণ পুনরাবৃত্তি করুন।</string>
+    <string name="point7.4"> নিশ্চিত করুন গ্রাহকের মোট ঋণ রু. 50000/- এর বেশি নয় এবং এক।</string>
+    <string name="locationVerifier"> বাসস্থান যাচাইকারী।</string>
+    <string name="houseVerificationInstructions"> বাসস্থান যাচাইয়ের নির্দেশিকা \n
+    1. বাসস্থান যাচাই গ্রাহক প্রোফাইল ফর্মের সাথে গ্রাহকের বাসভবনে গিয়ে করতে হবে।\n
+    2. বাসস্থান যাচাই গ্রাহক প্রোফাইল ফর্মের সাথে গ্রাহকের বাসভবনে গিয়ে করতে হবে।\n
+    3. ঋণ আবেদনপত্র গ্রুপ মেল্টিং পেপার (যদি প্রযোজ্য হয়), শপথ পত্র এবং ছায়া কপি 01. পরিচয় পত্র 02. ঠিকানার প্রমাণ 03. আয়ের প্রমাণ\n
+    4. গ্রাহককে চিহ্নিত করুন এবং গ্রাহকের সই করান এবং গ্রাহকের ফটো এবং KYC কাগজপত্রে সিল করুন।\n
+    5. সকল ফর্মে গ্রাহকের সই এবং সমস্ত তথ্য নিশ্চিত করুন। আবেদনপত্রে গ্রাহকের সইয়ের ভেরিফিকেশন করুন (যদি প্রযোজ্য হয়)।\n
+    6. বাড়ির পরিদর্শন চেকলিস্টের সংশ্লিষ্ট কলামে গ্রাহকের নাম উল্লেখ করুন।</string>
+    <string name="officeVerificationReport"> ব্যবসা স্থল যাচাইয়ের রিপোর্ট</string>
+    <string name="report.1"> ব্যবসা স্থলের পরিদর্শন করা হয়েছে</string>
+    <string name="report.2"> যেখানে ব্যবসা স্থল কার্যক্রমের পরিধির বাইরে (সেখানে যাচাই পরিবারের সদস্য, গ্রুপ সদস্য এবং প্রতিবেশীদের মাধ্যমে নিশ্চিত করুন) DM এর অনুমোদনের মেইল সংযুক্ত রয়েছে।</string>
+    <string name="report.3"> ব্যবসা স্থলের বিবরণ (নিজস্ব ভাড়া বা লিজে)</string>
+    <string name="report.4"> কত বছর ধরে ব্যবসা চলছে</string>
+    <string name="report.5"> ব্যবসার মৌসুমি প্রকৃতির ভেরিফিকেশন করুন এবং নিশ্চিত করুন যে গ্রাহকের কাছে মৌসুমী সময়ের জন্য যথাযথ নগদ প্রবাহ আছে যাতে তিনি আমাদের ঋণ সময়মতো পরিশোধ করতে পারে।</string>
+    <string name="report.6"> মালামাল (স্টক) যাচাই করা হয়েছে যেখানে প্রযোজ্য।</string>
+    <string name="report.7"> আনুমানিক মাসিক বিক্রি (টাকায়) (বা বিক্রির কোন রেকর্ড দিয়ে যাচাই করুন অথবা গ্রাহকের সাথে আলোচনা মাধ্যমে)</string>
+    <string name="report.8"> ব্যবসা থেকে আনুমানিক মাসিক আয় (টাকায়)</string>
+    <string name="report.9"> নিশ্চিত করুন যে আবেদনকৃত পরিমাণ ঋণের উদ্দেশ্যের সাথে সামঞ্জস্যপূর্ণ।</string>
+
+
+    <string name="choose_scheme_prompt">একটি স্কিম নির্বাচন করুন</string>
+    <string name="apply">স্কিম প্রয়োগ করুন</string>
+
+    <string name="imageTitle">আবেদনকারীর সাথে বাড়ির ছবি তুলুন</string>
+
+    <string name="aadhar_id">আধার আইডি *</string>
+    <string name="aadhar_name">নাম</string>
+    <string name="aadhar_age">বয়স</string>
+    <string name="aadhar_dob">জন্মতারিখ</string>
+    <string name="aadhar_father_spouse">অভিভাবক</string>
+    <string name="aadhar_address">ঠিকানা</string>
+    <string name="aadhar_address1">ঠিকানা1</string>
+    <string name="aadhar_address2">ঠিকানা2</string>
+    <string name="aadhar_address3">ঠিকানা3</string>
+    <string name="aadhar_city">শহর</string>
+    <string name="aadhar_state">রাজ্য</string>
+    <string name="aadhar_pin">পিন</string>
+    <string name="aadhar_gender">লিঙ্গ</string>
+    <string name="relationshioWithBorrower">ঋণগ্রহীতার সাথে সম্পর্ক</string>
+
+    <string name="borrower">ঋণগ্রহীতা</string>
+    <string name="loan_detail_download_doc">ডকুমেন্ট ডাউনলোড করুন</string>
+    <string name="applicant_name">আবেদনকারীর নাম</string>
+    <string name="applicant_father_spouse">পিতা / স্বামী / স্ত্রী</string>
+    <string name="applicant_address">ঠিকানা</string>
+    <string name="applicant_mobile">মোবাইল</string>
+    <string name="applicant_monthly_income">মাসিক আয়</string>
+    <string name="applicant_caste">জাতি</string>
+    <string name="applicant_religion">ধর্ম</string>
+    <string name="applicant_marital_status">বৈবাহিক অবস্থা</string>
+    <string name="applicant_dependents">নির্ভরশীল (বয়স্ক)</string>
+    <string name="applicant_children">শিশু</string>
+    <string name="applicant_school_going_children">বিদ্যালয়ে যাওয়া শিশু</string>
+    <string name="applicant_child_monthly_spends">শিশুদের মাসিক খরচ</string>
+    <string name="applicant_pan">পেন নম্বর</string>
+    <string name="applicant_pan_name">পেন নম্বরের উপর নাম</string>
+    <string name="applicant_voter">ভোটার আইডি</string>
+    <string name="Guardian">অভিভাবক</string>
+    <string name="applicant_driving_license">ড্রাইভিং লাইসেন্স</string>
+    <string name="applicant_present_residence_owner">বর্তমান বাড়ির মালিক</string>
+    <string name="applicant_house_rent">বাড়ির ভাড়া (হাজার)</string>
+    <string name="applicant_residence_duration">বছর ধরে বসবাস করছে</string>
+
+    <array name="emiReasons">
+        <item>"মেডিক্যাল সমস্যা"</item>
+        <item>"দরজা বন্ধ"</item>
+        <item>"পরিবারের খরচ"</item>
+        <item>"কাল পরিশোধ করবেন"</item>
+        <item>"কল পাওয়া যায়নি"</item>
+        <item>"টাকা নেই"</item>
+        <item>"অন্যান্য"</item>
+    </array>
+
+    <string-array name="choice_array">
+        <item>গ্যালারি থেকে বেছে নিন</item>
+        <item>ছবি তুলুন</item>
+    </string-array>
+
+    <array name="banktypedata">
+        <item>SBI</item>
+        <item>BOB</item>
+        <item>UCO</item>
+    </array>
+
+    <array name="issuetypedata">
+        <item>নতুন ব্যবহারকারী ম্যাপিং</item>
+        <item>লগইন সমস্যা</item>
+        <item>ব্রাঞ্চের সাথে আপডেট বা ম্যাপিং</item>
+    </array>
+
+
+    <array name="loanduration">
+        <item>"--Select--"</item>
+        <item>"12"</item>
+        <item>"18"</item>
+        <item>"24"</item>
+        <item>"30"</item>
+        <item>"36"</item>
+        <item>"42"</item>
+        <item>"48"</item>
+    </array>
+
+
+    <!-- Login Page -->
+    <string name="version" translatable="false">সংস্করণ ১.১</string>
+    <string name="login_page">লগইন পেজ</string>
+    <string name="enter_user_id">ব্যবহারকারী আইডি প্রবেশ করুন</string>
+    <string name="usernameInst">ব্যবহারকারীর নাম কমপক্ষে ১০ অক্ষরের হওয়া উচিত</string>
+    <string name="enter_password">পাসওয়ার্ড প্রবেশ করুন</string>
+    <string name="passwordInst">পাসওয়ার্ড কমপক্ষে ৫ অক্ষরের হওয়া উচিত</string>
+    <string name="login">লগইন</string>
+    <string name="share_device_id">ডিভাইস আইডি শেয়ার করুন</string>
+    <string name="terms_and_conditions">শর্তাবলী</string>
+
+    <!-- Home Page -->
+    <string name="home_page">হোম পেজ</string>
+    <string name="monthly">মাসিক</string>
+    <string name="disbursement_target">বিতরণ লক্ষ্য</string>
+    <string name="tap_to_calculate_incentive">ইনসেনটিভ গণনা করতে ট্যাপ করুন</string>
+    <string name="people_earn_more_incentive">গণনা হচ্ছে...</string>
+    <string name="earn_more_incentive">আরও ইনসেনটিভ অর্জন করুন</string>
+    <string name="ab_Rukna_Nahi">এবি রুকনা নয়</string>
+    <string name="home">হোম</string>
+    <string name="leaderboard">লিডারবোর্ড</string>
+    <string name="incentive">ইনসেনটিভ</string>
+    <string name="profile">প্রোফাইল</string>
+
+    <!-- OnBoarding -->
+    <string name="onboarding">অনবোর্ডিং</string>
+    <string name="kyc">কেওয়াইসি</string>
+    <string name="application_form">আবেদন ফর্ম</string>
+    <string name="collection">সংগ্রহ</string>
+    <string name="esign">ই-সাইন</string>
+    <string name="housevisit">বাড়ি পরিদর্শন</string>
+    <string name="select_manager">ম্যানেজার নির্বাচন করুন</string>
+    <string name="search_by_group_code">গ্রুপ কোড দ্বারা অনুসন্ধান করুন</string>
+    <string name="place_group_code">স্থান/গ্রুপ কোড</string>
+    <string name="search">অনুসন্ধান করুন...</string>
+
+    <!-- Schemes -->
+    <string name="umeed">উমীদ</string>
+    <string name="first_time_borrower">প্রথমবার ঋণগ্রহীতা</string>
+    <string name="pragati">প্রগতি</string>
+    <string name="second_time_borrower">দ্বিতীয়বার ঋণগ্রহীতা</string>
+    <string name="vikas">বিকাশ</string>
+    <string name="third_time_borrower">তৃতীয়বার ঋণগ্রহীতা</string>
+    <string name="udaan">উড়ান</string>
+    <string name="apply_scheme">স্কিম প্রয়োগ করুন</string>
+
+    <!-- Financial Info -->
+    <string name="monthly_income">মাসিক আয়</string>
+    <string name="monthly_expense">খরচ (মাসিক)</string>
+
+    <string name="pension_income">পেনশন আয় (বার্ষিক)</string>
+    <string name="interest_income">সুদের আয় (বার্ষিক)</string>
+    <string name="other_income">অন্যান্য আয় (বার্ষিক)</string>
+
+    <string name="earning_member_income">অর্জনকারী সদস্যের আয়</string>
+    <string name="loanamount">ঋণ পরিমাণ</string>
+    <string name="business_detail">ব্যবসার বিস্তারিত</string>
+    <string name="occupation">পেশা</string>
+    <string name="loanduration">ঋণের সময়কাল (মাস)</string>
+
+    <string name="save_data">ডেটা সংরক্ষণ করুন</string>
+    <string name="e_sign_loan_application">ই-সাইন ঋণ আবেদন</string>
+
+    <!-- Co-Borrower Info -->
+    <string name="father_spouse">পিতা/স্বামী/স্ত্রী</string>
+    <string name="fi_code">এফআই কোড</string>
+    <string name="mobile">মোবাইল</string>
+    <string name="creator">সৃষ্টিকর্তা</string>
+    <string name="address">ঠিকানা</string>
+
+    <!-- Loan Application -->
+    <string name="esigning">ই-সাইনিং</string>
+    <string name="borrower_name">ঋণগ্রহীতার নাম</string>
+    <string name="guardian">অভিভাবক :</string>
+    <string name="aadharid">আধার আইডি</string>
+    <string name="proceed">অগ্রসর হোন</string>
+    <string name="ok">ঠিক আছে</string>
+
+    <!-- Aadhar Data -->
+    <string name="aadhar_data">আধার ডেটা</string>
+    <string name="personal_details">ব্যক্তিগত বিস্তারিত</string>
+    <string name="email_id">ইমেল আইডি</string>
+    <string name="caste">জাতি</string>
+    <string name="religion">ধর্ম</string>
+    <string name="place_of_birth">জন্মস্থান</string>
+    <string name="present_house_owner">বর্তমান বাড়ির মালিক</string>
+    <string name="house_rent">বাড়ির ভাড়া (হাজার)</string>
+    <string name="residing_years">বছর ধরে বসবাস করছে</string>
+    <string name="family_members">পরিবারের সদস্য সংখ্যা</string>
+    <string name="adult_documents">নথির সংখ্যা (বয়স্ক)</string>
+
+    <!-- Financial Info 2 -->
+    <string name="financial_info">আর্থিক তথ্য</string>
+    <string name="bank_account_type">ব্যাংক অ্যাকাউন্ট প্রকার</string>
+    <string name="bank_account_number">ব্যাংক অ্যাকাউন্ট নম্বর</string>
+    <string name="account_opening_date">অ্যাকাউন্ট খোলার তারিখ</string>
+    <string name="bank_ifsc">ব্যাংক আইএফএসসি</string>
+    <string name="rental_income">ভাড়ার আয়</string>
+    <string name="rent_expense">ভাড়া খরচ</string>
+    <string name="food_expense">খাদ্য খরচ</string>
+    <string name="education_expense">শিক্ষা খরচ</string>
+    <string name="health_expense">স্বাস্থ্য খরচ</string>
+    <string name="travel_expense">ভ্রমণ খরচ</string>
+    <string name="entertainment_expense">বিনোদন খরচ</string>
+    <string name="other_expense">অন্যান্য খরচ</string>
+    <string name="house_type">বাড়ির প্রকার</string>
+    <string name="roof_type">ছাদের প্রকার</string>
+    <string name="personal_toilet">ব্যক্তিগত টয়লেট</string>
+
+    <!-- Family Members Income -->
+    <string name="family_members_income">পারিবারিক সদস্যদের আয়</string>
+    <string name="member_name">পারিবারিক সদস্যের নাম</string>
+    <string name="relationship">সম্পর্ক</string>
+    <string name="health">স্বাস্থ্য</string>
+    <string name="education">শিক্ষা</string>
+    <string name="school_type">বিদ্যালয়ের প্রকার</string>
+    <string name="business">ব্যবসা</string>
+    <string name="business_type">ব্যবসার প্রকার</string>
+    <string name="income">আয়</string>
+    <string name="income_type">আয়ের প্রকার</string>
+    <string name="add_update">যোগ করুন/আপডেট করুন</string>
+    <string name="delete">মুছুন</string>
+
+    <!-- Family Borrowings -->
+    <string name="family_borrowings">পারিবারিক ঋণ</string>
+    <string name="lender_name">ঋণদাতার নাম</string>
+    <string name="lender_type">ঋণদাতার প্রকার</string>
+    <string name="mfi_loan">এমএফআই/ঋণ ব্যবহারকারী</string>
+    <string name="loan_reason">ঋণের কারণ</string>
+    <string name="emi_amount">ইএমআই পরিমাণ</string>
+    <string name="balance_amount">ব্যালেন্স পরিমাণ</string>
+
+    <!-- Guarantors -->
+    <string name="guarantors">গ্যারান্টর</string>
+
+
+    <!-- KYC Scanning -->
+    <string name="kyc_scanning">কেওয়াইসি স্ক্যানিং</string>
+    <string name="borrower_aadhar_front">ঋণগ্রহীতার আধার সামনের পৃষ্ঠা</string>
+    <string name="borrower_aadhar_back">ঋণগ্রহীতার আধার পেছনের পৃষ্ঠা</string>
+    <string name="pan_card_borrower">প্যান কার্ড ঋণগ্রহীতার</string>
+    <string name="borrower_bank_passbook">ঋণগ্রহীতার ব্যাংক পাসবুক</string>
+    <string name="co_borrower_aadhar_front">সহ-ঋণগ্রহীতার আধার সামনের পৃষ্ঠা</string>
+    <string name="co_borrower_aadhar_back">সহ-ঋণগ্রহীতার আধার পেছনের পৃষ্ঠা</string>
+
+    <!-- Loan Documentation -->
+    <string name="case_location">মামলার স্থান</string>
+    <string name="fm_name">এফএম নাম</string>
+    <string name="sanctioned_amount">অনুমোদিত পরিমাণ</string>
+    <string name="loan_period">ঋণের সময়কাল</string>
+    <string name="interest_rate">সুদের হার</string>
+    <string name="document_download">ডকুমেন্ট ডাউনলোড</string>
+    <string name="esign_as">ই-সাইন হিসেবে</string>
+
+    <!-- Home Visit -->
+    <string name="home_visit">বাড়ি পরিদর্শন</string>
+    <string name="applicantname">আবেদনকারীর নাম</string>
+    <string name="loanpurpose">ঋণের উদ্দেশ্য</string>
+    <string name="applicantstatus">আবেদনকারীর অবস্থা</string>
+    <string name="current_occupation">বর্তমান পেশা</string>
+    <string name="residence_ownership">বাসস্থানের মালিকানা</string>
+    <string name="fill_form">ফর্ম পূরণ করুন</string>
+    <string name="click_image">ছবি তুলুন</string>
+    <string name="submit_home_visit">বাড়ি পরিদর্শন জমা দিন</string>
+
+    <!-- Collection -->
+    <string name="branch_code_creator">শাখার কোড/সৃষ্টিকর্তা</string>
+    <string name="emi_paying">ইএমআই পরিশোধ</string>
+    <string name="fixedamount">স্থির পরিমাণ</string>
+    <string name="lump_sumamount">মোট পরিমাণ</string>
+    <string name="vehicle_receipt">যানবাহন রসিদ</string>
+    <string name="utr_no">ইউটিআর নং</string>
+    <string name="receipt_no">রসিদ নং</string>
+    <string name="enter_emi_amount">ইএমআই পরিমাণ প্রবেশ করুন</string>
+    <string name="enter_processing">প্রসেসিং প্রবেশ করুন</string>
+    <string name="enter_other_charges">অন্যান্য চার্জ প্রবেশ করুন</string>
+    <string name="lump_sum_max">মোট পরিমাণ (সর্বাধিক)</string>
+    <string name="sundry">বিভিন্ন : </string>
+    <string name="selected">নির্বাচিত : </string>
+    <string name="total">মোট : </string>
+    <string name="Collect">সংগ্রহ করুন</string>
+    <string name="paid_by_fm">ফিল্ড এম.</string>
+    <string name="Cancel">বাতিল করুন</string>
+    <string name="emi_not_paying">ইএমআই পরিশোধ করছে না</string>
+    <string name="reason_for_not_paying">ইএমআই পরিশোধ না করার কারণ</string>
+    <string name="promising_date">প্রতিশ্রুতির তারিখ</string>
+    <string name="submit">জমা দিন</string>
+
+    <string name="latLong">অক্ষাংশ দ্রাঘিমা!</string>
+    <string name="in">মধ্যে</string>
+    <string name="out">বাহিরে</string>
+    <string name="locality">স্থানীয়তা</string>
+    <string name="state">রাজ্য</string>
+    <string name="country">দেশ</string>
+    <string name="pincode">পিনকোড</string>
+    <string name="district">জেলা</string>
+    <string name="my_Address">আমার ঠিকানা</string>
+    <string name="sub_district">উপজেলা</string>
+    <string name="village">গ্রাম</string>
+
+    <string name="add">যোগ করুন</string>
+    <string name="update">আপডেট করুন</string>
+    <string name="guarantor_title">গ্যারান্টর</string>
+    <string name="guarantor_title_select">গ্যারান্টর নির্বাচন করুন</string>
+    <string name="e_signing">ই-সাইনিং</string>
+    <string name="e_sign_take">স্বাক্ষর নিন</string>
+    <string name="Search_by_FI_Code">এফআই কোড দ্বারা অনুসন্ধান করুন</string>
+    <string name="loan_applications">ঋণ আবেদন</string>
+    <string name="loan_application_submit">ঋণ আবেদন জমা দিন</string>
+    <string name="loan_application_submit_kyc">কেওয়াইসি জমা দিন</string>
+    <string name="loan_submitted_apps">জমা দেওয়া ফাইলসমূহ</string>
+    <string name="old_borrower_re_ekyc">পুরোনো ঋণগ্রহীতার পুনরায় ই-কেওয়াইসি</string>
+    <string name="landOwnership">জমির মালিকানা</string>
+    <string name="checkboxHouseVisit">উপরের তথ্য সঠিক হলে এই বাক্সটি চেক করুন।</string>
+
+    <!-- Activity Loan Details -->
+    <string name="loan_detail_case_location">মামলার স্থান</string>
+    <string name="FM_Name">এফএম নাম :</string>
+    <string name="periodOfLoan">ঋণের সময়কাল :</string>
+    <string name="interest_Rate">সুদের হার :</string>
+    <string name="download_Document">ডকুমেন্ট ডাউনলোড</string>
+
+    <!-- Activity Morpho recharge -->
+    <string name="branch_Code">শাখার কোড:</string>
+    <string name="enter_Device_Serial_Number">ডিভাইস সিরিয়াল নম্বর প্রবেশ করুন</string>
+    <string name="recharge">রিচার্জ</string>
+
+    <!-- Choose Scheme dialog -->
+    <string name="select_a_Scheme">একটি স্কিম নির্বাচন করুন</string>
+
+    <!-- Dialog Searchable Spinner -->
+    <string name="selectCreator">সৃষ্টিকর্তা নির্বাচন করুন</string>
+
+    <!-- eSign popup -->
+    <string name="selectprocess">প্রক্রিয়া নির্বাচন করুন</string>
+    <string name="loan_application">ঋণ আবেদন</string>
+    <string name="loan_documentation">ঋণ ডকুমেন্টেশন</string>
+
+    <!-- eSign popup -->
+    <string name="receipts">রসিদ : </string>
+
+    <!-- layout loan app extra -->
+    <string name="applicant_future_income">আবেদনকারীর ভবিষ্যতের আয় : </string>
+
+    <string name="applicant_family_occupation">আবেদনকারীর পরিবারিক পেশা : </string>
+
+
+    <!--fragment borrowerfinance-->
+    <string name="income_Details">আয় বিস্তারিত :</string>
+    <string name="expense_Details">ব্যয় বিস্তারিত :</string>
+
+    <!--fragment borrower finance-->
+    <string name="expenses_in_Rent">ভাড়া খরচ</string>
+    <string name="expenses_for_Food">খাদ্য খরচ</string>
+    <string name="expenses_for_Education">শিক্ষার খরচ</string>
+    <string name="expenses_for_Health">স্বাস্থ্য খরচ</string>
+    <string name="expenses_for_Travelling">ভ্রমণের খরচ</string>
+    <string name="expenses_for_Entertainment">বিনোদনের খরচ</string>
+    <string name="any_Other_Expenses">অন্যান্য খরচ</string>
+    <string name="house_Detail">বাড়ির বিস্তারিত</string>
+    <string name="living_with_spouse">স্বামী/স্ত্রীসহ বসবাস</string>
+
+    <!--fragment borrower personal-->
+    <string name="special_Ability">বিশেষ ক্ষমতা</string>
+    <string name="special_Social_Category">বিশেষ সামাজিক শ্রেণী</string>
+    <string name="educational_Code">শিক্ষাগত কোড</string>
+    <string name="pan_applied">PAN আবেদন করা হয়েছে</string>
+    <string name="is_borrower_blind">ঋণগ্রহীতার দৃষ্টি প্রতিবন্ধী কি?</string>
+    <string name="years_in_Business">ব্যবসায় বছর সংখ্যা</string>
+
+    <!--fragment borrower personal additional-->
+    <string name="land_Hold">ভূমির অধিকার (একর)</string>
+    <string name="annual_Income">বার্ষিক আয়</string>
+    <string name="visually_Impaired">দৃষ্টিহীন</string>
+    <string name="form60_Transaction_Date">ফর্ম ৬০ লেনদেন তারিখ</string>
+    <string name="form60_Submission_Date">ফর্ম ৬০ জমা দেওয়ার তারিখ</string>
+    <string name="mother_Title">মায়ের শিরোনাম</string>
+    <string name="mother_Maiden_Name">মায়ের মেয়ের নাম</string>
+    <string name="spouse_Title">স্বামী/স্ত্রীর শিরোনাম</string>
+
+    <string name="applicant_Title">আবেদনকারীর শিরোনাম</string>
+    <string name="occupation_Type">পেশার ধরন</string>
+    <string name="reservation_Category">সংরক্ষণ শ্রেণী</string>
+    <string name="father_Title">বাবার শিরোনাম</string>
+
+    <!--fragment Leaderboard-->
+    <string name="current_progress">বর্তমান অগ্রগতি</string>
+    <string name="bharat_leaderboard"><b>ভরত</b> \nলিডারবোর্ড</string>
+
+    <!--profile-->
+    <string name="designation">পদবী</string>
+
+    <!--Incentive popup-->
+    <string name="calculating_comission">কমিশন হিসাব করা হচ্ছে</string>
+    <string name="more_disbursement">আরও বিতরণ\nআরও প্রণোদনা</string>
+
+    <!--item processing fee-->
+    <string name="data">ডেটা</string>
+
+    <string name="consent_1"><b>আমি এখানে NSDL e-Gov কে Paisalo Digital Limited-এর পক্ষ থেকে নিম্নলিখিত অনুমোদন দিচ্ছি-</b>\n
+    ১. আমার Aadhaar বিস্তারিত ঋণ নথি ই-স্বাক্ষর এবং Aadhaar Authentication সিস্টেমের মাধ্যমে আমার পরিচয় যাচাই করার জন্য ব্যবহার করতে এবং Aadhaar (Targeted Delivery of Financial and other Subsidies, Benefits and Services) Act, 2016 এবং এর সাথে সংশ্লিষ্ট বিধি ও প্রবিধান অনুযায়ী অন্যান্য উদ্দেশ্যে ব্যবহার করতে।
+    ২. আমার Aadhaar OTP বা বায়োমেট্রিকের মাধ্যমে যাচাই করার জন্য ব্যবহার করতে এবং Aadhaar Authentication সিস্টেমের মাধ্যমে আমার e-KYC প্রাপ্তির জন্য আমার ছবি এবং ডেমোগ্রাফিক বিস্তারিত (নাম, লিঙ্গ, জন্মতারিখ এবং ঠিকানা) ব্যবহার করতে।
+    ৩. আমি বুঝতে পারি যে NSDL e-Gov দ্বারা প্রদান করা ব্যক্তিগত পরিচয় ডেটার নিরাপত্তা এবং গোপনীয়তা নিশ্চিত করা হয় এবং UIDAI দ্বারা সময় সময় গাইডলাইনে উল্লেখিত সময় পর্যন্ত NSDL e-Gov দ্বারা সংরক্ষিত হবে।
+    ৪. আমি বুঝতে পেরেছি যে কোম্পানি দ্বারা ই-স্বাক্ষরের পরে ঋণ নথির কপি ডাউনলোড করার সিস্টেম। আমি সুবিধামত সময়ে ঋণ নথির কপি ডাউনলোড করব।
+</string>
+    <string name="consent_2">আমি এখানে NSDL e-Gov কে Paisalo Digital Limited-এর পক্ষ থেকে নিম্নলিখিত অনুমোদন দিচ্ছি-
+    <br />
+    <ol>
+        <li>আমার Aadhaar বিস্তারিত <b>ঋণ নথি ই-স্বাক্ষর</b> এবং Aadhaar Authentication সিস্টেমের মাধ্যমে আমার পরিচয় যাচাই করার জন্য ব্যবহার করতে এবং Aadhaar (Targeted Delivery of Financial and other Subsidies, Benefits and Services) Act, 2016 এবং এর সাথে সংশ্লিষ্ট বিধি ও প্রবিধান অনুযায়ী অন্যান্য উদ্দেশ্যে ব্যবহার করতে।
+        </li>
+        <li>আমার Aadhaar OTP বা বায়োমেট্রিকের মাধ্যমে যাচাই করার জন্য ব্যবহার করতে এবং Aadhaar Authentication সিস্টেমের মাধ্যমে আমার e-KYC প্রাপ্তির জন্য আমার ছবি এবং ডেমোগ্রাফিক বিস্তারিত (নাম, লিঙ্গ, জন্মতারিখ এবং ঠিকানা) ব্যবহার করতে।
+        </li>
+        <li>আমি বুঝতে পারি যে NSDL e-Gov দ্বারা প্রদান করা ব্যক্তিগত পরিচয় ডেটার নিরাপত্তা এবং গোপনীয়তা নিশ্চিত করা হয় এবং UIDAI দ্বারা সময় সময় গাইডলাইনে উল্লেখিত সময় পর্যন্ত NSDL e-Gov দ্বারা সংরক্ষিত হবে।
+        </li>
+        <li>আমি বুঝতে পেরেছি যে কোম্পানি দ্বারা ই-স্বাক্ষরের পরে ঋণ নথির কপি ডাউনলোড করার সিস্টেম। আমি সুবিধামত সময়ে ঋণ নথির কপি ডাউনলোড করব।
+        </li>
+    </ol>
+</string>
+
+    <!--layout Dashboard-->
+    <string name="home_welcome">স্বাগতম সোর্সিং অ্যাপে</string>
+    <string name="home_menu_desc">মেনু অ্যাক্সেস করতে উপরের-বাঁয়ের মেনু আইকনে ট্যাপ করুন</string>
+
+    <!--layout dialog new family member-->
+    <string name="family_Member_Name">পরিবার সদস্যের নাম</string>
+
+    <!--layout dialog new loan detail-->
+    <string name="loan_used_by">ঋণ ব্যবহৃত</string>
+    <string name="reason_For_Loan">ঋণের কারণ</string>
+    <string name="is_MFI">এটি MFI কি?</string>
+
+    <!--layout dialog pre closure-->
+    <string name="case_code">মামলা কোড</string>
+    <string name="pre_closure_amount">প্রি-ক্লোজার পরিমাণ</string>
+
+    <!--layout item installment-->
+    <string name="dueDate">নির্ধারিত তারিখ</string>
+    <string name="amount">পরিমাণ</string>
+
+    <!--layoutitem loan app kyc upload-->
+    <string name="upload_kyc_and_document">KYC এবং নথি আপলোড করুন</string>
+    <string name="document_remarks">মন্তব্য</string>
+
+    <string name="manager_name">ম্যানেজার নাম</string>
+    <string name="manager_code">ম্যানেজার কোড</string>
+    <string name="manager_area_name">এলাকা</string>
+    <string name="manager_area_code">এলাকা কোড</string>
+
+    <!--progress_bar_dialog-->
+    <string name="please_wait">অনুগ্রহ করে অপেক্ষা করুন.. :</string>
+
+    <!--personal_data_new-->
+    <string name="land_hold">ভূমির অধিকার (একর) :</string>
+    <string name="special_ability">বিশেষ ক্ষমতা :</string>
+    <string name="special_social_category">বিশেষ সামাজিক শ্রেণী :</string>
+    <string name="educational_code">শিক্ষাগত কোড :</string>
+    <string name="annual_income">বার্ষিক আয় :</string>
+    <string name="is_borrower_handicap">ঋণগ্রহীতার প্রতিবন্ধী কি? :</string>
+    <string name="form60_transaction_date">ফর্ম ৬০ লেনদেন তারিখ :</string>
+    <string name="form60_submission_date">ফর্ম ৬০ জমা দেওয়ার তারিখ :</string>
+    <string name="Mother_title">মায়ের শিরোনাম :</string>
+    <string name="mother_maiden_name">মায়ের মেয়ের নাম :</string>
+    <string name="spouse_title">স্বামী/স্ত্রীর শিরোনাম :</string>
+    <string name="other_than_agriculture_income">কৃষির বাইরে আয় :</string>
+    <string name="years_in_business">ব্যবসায় বছর সংখ্যা :</string>
+
+    <!--operation_item_card-->
+    <string name="check_mandatory_process_of_identifying_and_verifying.">পরিচয় যাচাই এবং শনাক্তকরণের বাধ্যতামূলক প্রক্রিয়া পরীক্ষা করুন। :</string>
+
+    <!--new_expence_modified-->
+    <string name="any_other_expenses">অন্যান্য খরচ :</string>
+    <string name="house_details">বাড়ির বিস্তারিত :</string>
+
+    <!--mappingpopup_layout.xml-->
+    <string name="device_id">ডিভাইস আইডি :</string>
+    <string name="user_id">ব্যবহারকারী আইডি :</string>
+    <string name="imei_no.1">IMEI নং ১ :</string>
+    <string name="imei_no.2">IMEI নং ২ :</string>
+
+    <!--layout_select_with_refresh.xml-->
+    <string name="manager_select_title">ম্যানেজার নির্বাচন করুন</string>
+
+    <!--layout_processingfee.xml-->
+    <string name="processing_fee_emi">প্রসেসিং ফি EMI</string>
+
+    <!--layout_login.xml-->
+    <string name="login_username">ব্যবহারকারীর নাম</string>
+    <string name="login_password">পাসওয়ার্ড</string>
+    <string name="login_sign_in">সাইন ইন</string>
+
+    <!--layout_loan_app_personal.xml-->
+    <string name="applicant_family_members">পারিবারিক সদস্য সংখ্যা</string>
+
+    <!--layout_loan_app_guarantor.xml-->
+
+    <!--layout_loan_app_finance.xml-->
+    <string name="disbursement_scheme">বিতরণ স্কিম</string>
+    <string name="applicant_bank_account_type">ব্যাংক অ্যাকাউন্টের ধরন</string>
+    <string name="applicant_bank_account_number">ব্যাংক অ্যাকাউন্ট নম্বর</string>
+    <string name="accountholded">অ্যাকাউন্ট খোলার তারিখ</string>
+    <string name="applicant_bank_ifsc">ব্যাংক IFSC</string>
+    <string name="applicant_bank_account_date">ব্যাংক অ্যাকাউন্ট খোলার তারিখ</string>
+
+    <!--layout_loan_app_extra_income_service.xml-->
+    <string name="applicant_family_occupation_employer_type">নিয়োগকারীর ধরন</string>
+    <string name="applicant_family_occupation_service_employer">নিয়োগকর্তার নাম</string>
+
+    <!--layout_loan_app_extra_income_other.xml-->
+    <string name="applicant_family_occupation_other">অন্যান্য (বর্ণনা করুন)</string>
+
+
+    <!--layout_loan_app_extra_income_business.xml-->
+    <string name="applicant_family_business_owner_shop">দোকান মালিকের ধরন</string>
+    <string name="applicant_family_occupation_business_type">ব্যবসার ধরন</string>
+
+    <!--layout_loan_app_extra_income_agriculture.xml-->
+    <string name="applicant_family_occupation_agriculture_land_ownership">ভূমি অধিকার</string>
+    <string name="applicant_family_occupation_agriculture_land_type">ভূমির ধরন</string>
+
+    <!--layout_loan_app_aadhar_new.xml-->
+    <string name="business_details">ব্যবসার বিস্তারিত</string>
+    <string name="address_different_from_aadhar">বর্তমান ঠিকানা Aadhaar থেকে আলাদা কি?</string>
+
+    <!--layout_item_two_line.xml-->
+    <string name="rupees">রুপি</string>
+    <string name="acres">একর</string>
+
+    <string name="Receipts">রসিদ</string>
+    <string name="title_activity_collection_details">তারিখের জন্য সংগ্রহ বিবরণ</string>
+    <string name="document_name">নথির নাম</string>
+    <string name="request_type">অনুরোধের ধরন</string>
+    <string name="capture_photo_kyc">ফটো ক্যাপচার করুন</string>
+    <string name="upload_photo_kyc">ফটো আপলোড করুন</string>
+
+    <string name="language">ভাষা / भाषा</string>
+    <string name="english">ইংরেজি</string>
+    <string name="hindi">হিন্দি</string>
+    <string name="bengali">বেঙ্গালি</string>
+    <string name="reload_data">ডেটা পুনরায় লোড করুন</string>
+    <string name="action_settings">সেটিংস</string>
+
+    <string name="collection_details">সংগ্রহের বিস্তারিত</string>
+    <string name="action_update_options">আপডেট অপশন</string>
+    <string name="action_send_db_backup">ডিবি ব্যাকআপ পাঠান</string>
+    <string name="action_restore_backup">ব্যাকআপ পুনরুদ্ধার করুন</string>
+    <string name="loan_financing">ঋণ অর্থায়ন</string>
+    <string name="loan_detail_doc_download_failed">নথি ডাউনলোড ব্যর্থ হয়েছে। আবার চেষ্টা করুন</string>
+    <string name="loan_detail_doc_download_success">নথি সফলভাবে ডাউনলোড হয়েছে</string>
+    <string name="loan_detail">ঋণ বিস্তারিত</string>
+    <string name="navigation_drawer_open">নেভিগেশন ড্রয়ার খুলুন</string>
+    <string name="navigation_drawer_close">নেভিগেশন ড্রয়ার বন্ধ করুন</string>
+    <string name="pre_close_case">কেস প্রি-ক্লোজার</string>
+
+    <string name="lump_sum_amount">এককালীন পরিমাণ</string>
+    <string name="hindiconfirmation">আপনি কি নিশ্চিত যে ঋণগ্রহীতার কাছ থেকে নিচের পরিমাণ সংগ্রহ করছেন?</string>
+    <string name="hindiqr">দেওয়া QR কোডটি স্ক্যান করুন এবং গ্রাহক দ্বারা প্রদত্ত পরিমাণের পরে স্ট্যাটাস প্রাপ্ত করুন।</string>
+    <string name="imageupload">যদি QR কোডে পেমেন্ট সফল হয়েছে কিন্তু স্ট্যাটাস পাওয়া যাচ্ছে না, তাহলে লেনদেন আইডি সহ স্ক্রীনশট আপলোড করুন।</string>
+    <string name="name">নাম</string>
+
+    <string name="family_income">পারিবারিক আয়</string>
+    <string name="installments">কিস্তি</string>
+    <string name="paid_installments">পরিশোধিত কিস্তি</string>
+    <string name="search_by_smcode">SM কোড দ্বারা অনুসন্ধান করুন</string>
+    <string name="excellent">চমৎকার</string>
+    <string name="very_bad">খুব খারাপ</string>
+    <string name="average">গড়</string>
+    <string name="your_score">আপনার স্কোর:</string>
+    <string name="eligible_amount">যোগ্য পরিমাণ:</string>
+    <string name="sorry">দুঃখিত!!</string>
+    <string name="not_eligible">আপনি ঋণের জন্য যোগ্য নন!!</string>
+    <string name="try_again">আবার চেষ্টা করুন</string>
+    <string name="customer_list">গ্রাহক তালিকা</string>
+    <string name="tnc1">• আপনি বন্ধুদের উল্লেখ করতে পারেন কিন্তু পরিবারের সদস্যদের নয়</string>
+    <string name="tnc2">• আপনি প্রতি ৬ মাসে ২ জন বন্ধুকে উল্লেখ করতে পারেন</string>
+    <string name="tnc3">• রেফারেলের মাধ্যমে আপনি প্রথম প্রণোদনা পাবেন</string>
+    <string name="tnc4">• যখন আপনার উল্লেখ করা ব্যক্তি ৬ মাস পূর্ণ করবে তখন আপনি আরও একটি প্রণোদনা পাবেন</string>
+    <string name="tnc5">• যখন আপনার উল্লেখ করা ব্যক্তি ১ বছর পূর্ণ করবে তখন আপনি আরও একটি প্রণোদনা পাবেন</string>
+    <string name="tnc6">নিশ্চিত সুবিধা পান</string>
+    <string name="tnc7">আপনার বন্ধুর Paisalo দ্বারা অনুমোদিত হলে ₹500 নগদ উপার্জন করুন</string>
+    <string name="tnc8">আপনার বন্ধুরা ঋণ গ্রহণ করলে প্রতি মাসে ₹1000 পর্যন্ত নগদ উপার্জন করুন এবং আপনার বন্ধুরা ঋণ বিতরণে ₹500 পাবে।</string>
+    <string name="refer_now">এখনই উল্লেখ করুন</string>
+    <string name="refer_frnd">এখনই উল্লেখ করুন ক্লিক করে লিঙ্ক সহ বার্তা এবং আপনার অনন্য রেফারেল কোড কপি করুন</string>
+    <string name="refer_msg">এসএমএস, হোয়াটসঅ্যাপ, ফেসবুক বা ইমেইলের মাধ্যমে আপনার বন্ধুদের কাছে বার্তা পাঠান।</string>
+    <string name="refer_form">আপনার বন্ধুকে আপনার রেফারেল কোড সহ ফর্ম পূরণ করতে বলুন এবং পুরস্কৃত হতে প্রস্তুত থাকুন।</string>
+    <string name="how_refer">কিভাবে বন্ধু উল্লেখ করে উপার্জন করবেন?</string>
+    <string name="visit_type">পরিদর্শনের ধরণ</string>
+    <string name="enter_case_code">কেস কোড (SM কোড) লিখুন</string>
+    <string name="manager_list">ম্যানেজার তালিকা</string>
+    <string name="Date">তারিখ</string>
+    <string name="refferal_code">আপনার রেফারেল কোড</string>
+    <string name="total_referrred_friends">মোট উল্লেখ করা বন্ধু</string>
+    <string name="total_cashback_earned">মোট ক্যাশব্যাক উপার্জন</string>
+    <string name="upload_reciept">রসিদ আপলোড করুন</string>
+    <string name="click_adhaar_front">আধার সামনের দিক ক্লিক করুন</string>
+    <string name="click_adhaar_back">আধার পেছনের দিক ক্লিক করুন</string>
+    <string name="scan_by_QR_code">QR কোড দ্বারা স্ক্যান করুন</string>
+    <string name="select_installments">এক বা একাধিক কিস্তি নির্বাচন করুন</string>
+    <string name="late_paymentinterest">বিলম্বিত পেমেন্ট সুদ</string>
+    <string name="total_payment">মোট পেমেন্ট</string>
+    <string name="ficode_creator">Fi কোড/সৃষ্টিকর্তা</string>
+    <string name="enter_account_number">অনুগ্রহ করে অ্যাকাউন্ট নম্বর পুনরায় লিখুন</string>
+    <string name="enter_here">এখানে লিখুন</string>
+    <string name="confirmation">নিশ্চিতকরণ</string>
+    <string name="interest_amt">সুদ পরিমাণ-</string>
+    <string name="qr_code_payment">QR কোড পেমেন্ট</string>
+    <string name="get_status">স্ট্যাটাস পান</string>
+    <string name="upload_image">ছবি আপলোড করুন</string>
+    <string name="qr_payment_received">QR পেমেন্ট গৃহীত হয়েছে</string>
+    <string name="lonee">ঋণগ্রহীতা</string>
+    <string name="loan_emi">ঋণ EMI</string>
+
+
+    <string name="AUA_Key">VQA0AEUAYgByAGsANQB6AGcAVwA3AHEAMgBwAFAAYwB2ADUAUABNAHcATQB6AEUAMgBiAHAAUwBBAC8AdwBVAEwALwBEADMAOABZAEcAZwB6ADMAaABRAHIAegBqAGEANQBRAGIAMQBPAEEAZAB3AEoARwBkAEYAZgBuAG0AUwBKADMAMgBaAGoAVwBDAE4ALwBRAE4ARwA1AEMARgBjAEoAOAB2AGgAbgBCAHYAMwBjADYAeABoAGkAaQA4AEsAdQB5AE4AMQArAGcASgBBAC8AOABOAG0AYQBjAGoAMQB5AFMAeABPAEUAMAA4ADcAMgBIADkAMgA4AGkAbwA2AA==</string>
+
+</resources>

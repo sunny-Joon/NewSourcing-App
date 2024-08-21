@@ -25,7 +25,7 @@
                 <TextView
                     android:textSize="16dp"
                     android:textColor="@color/white"
-                    android:text="QR CODE PAYMENT"
+                    android:text="@string/qr_code_payment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
@@ -95,7 +95,7 @@
             android:id="@+id/button_saveEmi"
             android:layout_weight="1"
             android:textStyle="bold"
-            android:text="Get Status"
+            android:text="@string/get_status"
             android:textColor="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -112,7 +112,7 @@
             android:layout_gravity="center"
             android:id="@+id/button_Closedialog"
             android:layout_weight="1"
-            android:text="Upload Image"
+            android:text="@string/upload_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 

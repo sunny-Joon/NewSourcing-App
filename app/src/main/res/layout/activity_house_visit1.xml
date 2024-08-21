@@ -53,7 +53,7 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/visbycfregular"
                         android:gravity="center|start"
-                        android:text="Applicant Name"
+                        android:text="@string/applicant_name"
                         android:textColor="@color/darkred"
                         android:textSize="@dimen/heading" />
 
@@ -88,7 +88,7 @@
                         android:layout_margin="10dp"
                         android:layout_weight="1"
                         android:gravity="center|start"
-                        android:text="Marital Status"
+                        android:text="@string/applicant_marital_status"
                         android:textColor="@color/darkred" />
 
                     <TextView
@@ -123,7 +123,7 @@
                         android:layout_margin="10dp"
                         android:layout_weight="1"
                         android:gravity="center|start"
-                        android:text="Loan Amount"
+                        android:text="@string/loanamount"
                         android:textColor="@color/darkred" />
 
                     <TextView
@@ -158,7 +158,7 @@
                         android:layout_margin="10dp"
                         android:layout_weight="1"
                         android:gravity="center|start"
-                        android:text="Loan Purpose"
+                        android:text="@string/loanpurpose"
                         android:textColor="@color/darkred" />
 
                     <TextView
@@ -193,7 +193,7 @@
                         android:layout_margin="10dp"
                         android:layout_weight="1"
                         android:gravity="center|start"
-                        android:text="Loan Duration"
+                        android:text="@string/loan_duration_month"
                         android:textColor="@color/darkred" />
 
                     <TextView
@@ -228,7 +228,7 @@
                         android:layout_margin="10dp"
                         android:layout_weight="1"
                         android:gravity="center|start"
-                        android:text="Applicant Status"
+                        android:text="@string/applicantstatus"
                         android:textColor="@color/darkred" />
 
                     <TextView
@@ -262,7 +262,7 @@
                         android:layout_gravity="center"
                         android:layout_margin="10dp"
                         android:layout_weight="1"
-                        android:text="Current Occupation"
+                        android:text="@string/current_occupation"
                         android:textColor="@color/darkred" />
 
                     <TextView
@@ -297,7 +297,7 @@
                         android:layout_margin="10dp"
                         android:layout_weight="1"
                         android:gravity="center|start"
-                        android:text="Occupation Type"
+                        android:text="@string/occupation_Type"
                         android:textColor="@color/darkred" />
 
                     <TextView
@@ -332,7 +332,7 @@
                         android:layout_margin="10dp"
                         android:layout_weight="1"
                         android:gravity="center|start"
-                        android:text="Land Ownership"
+                        android:text="@string/landOwnership"
                         android:textColor="@color/darkred" />
 
                     <TextView
@@ -367,7 +367,7 @@
                         android:layout_margin="10dp"
                         android:layout_weight="1"
                         android:gravity="center|start"
-                        android:text="Residence Ownership"
+                        android:text="@string/residence_ownership"
                         android:textColor="@color/darkred" />
 
                     <TextView
@@ -389,7 +389,7 @@
                 android:layout_height="wrap_content"
 
                 android:button="@drawable/customcheckbox_grey_green"
-                android:text="Check this box,If above information is correct."
+                android:text="@string/checkboxHouseVisit"
                 android:textColor="@color/white" />
 
             <Button
@@ -397,7 +397,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_gravity="center"
-                android:text="Fill Form"
+                android:text="@string/fill_form"
                 android:textColor="@color/red"
                 android:textSize="20dp"
                 android:textStyle="bold"

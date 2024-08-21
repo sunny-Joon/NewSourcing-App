@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:gravity="center"
-                android:text="Your refrrral code"
+                android:text="@string/refferal_code"
                 android:textColor="@color/black" />
 
             <TextView
@@ -78,7 +78,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:layout_marginBottom="5dp"
-                            android:text="Total referrred friends"
+                            android:text="@string/total_referrred_friends"
                             android:textColor="@color/white"/>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -110,7 +110,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:layout_marginBottom="5dp"
-                            android:text="Total cashback earned"
+                            android:text="@string/total_cashback_earned"
                             android:textColor="@color/white"/>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -134,8 +134,7 @@
             android:backgroundTint="@color/white"
             android:textColor="@color/black"
             android:layout_marginTop="10dp"
-            android:text="Refer Now"
-            />
+            android:text="@string/refer_now"/>
 
     </LinearLayout>
 

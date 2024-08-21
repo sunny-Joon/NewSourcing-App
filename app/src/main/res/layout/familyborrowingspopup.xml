@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Lender Name"
+        android:text="@string/lender_name"
         android:textColor="@color/red" />
 
     <androidx.cardview.widget.CardView
@@ -21,7 +21,7 @@
             android:id="@+id/LenderName"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:hint="Lender Name"
+            android:hint="@string/lender_name"
             android:inputType="textCapCharacters
 "
             android:padding="10dp" />
@@ -31,7 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="Lender Type"
+        android:text="@string/lender_type"
         android:textColor="@color/red" />
 
     <androidx.cardview.widget.CardView
@@ -54,7 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="Loan Used "
+        android:text="@string/loan_used_by"
         android:textColor="@color/red" />
 
     <androidx.cardview.widget.CardView
@@ -72,7 +72,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="Reason For Loan"
+        android:text="@string/reason_For_Loan"
         android:textColor="@color/red" />
 
     <androidx.cardview.widget.CardView
@@ -101,7 +101,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Loan Amount "
+                android:text="@string/loanamount"
                 android:textAlignment="center"
                 android:textColor="@color/red" />
 
@@ -123,7 +123,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="EMI Amount "
+                android:text="@string/emi_amount"
                 android:textAlignment="center"
                 android:textColor="@color/red" />
 
@@ -154,7 +154,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="Balance Amount"
+                android:text="@string/balance_amount"
                 android:textAlignment="center"
                 android:textColor="@color/red" />
 
@@ -185,7 +185,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="Is MFI"
+                android:text="@string/is_MFI"
                 android:textAlignment="center"
                 android:textColor="@color/red" />
 
@@ -220,7 +220,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:backgroundTint="@color/red"
-            android:text="ADD/UPDATE" />
+            android:text="@string/add_update" />
 
         <Button
             android:id="@+id/deleteBorrowings"
@@ -229,7 +229,7 @@
             android:layout_marginHorizontal="2dp"
             android:layout_weight="1"
             android:backgroundTint="@color/red"
-            android:text="DELETE" />
+            android:text="@string/delete" />
 
         <Button
             android:id="@+id/cancelBorrowings"
@@ -237,7 +237,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:backgroundTint="@color/red"
-            android:text="CANCEL" />
+            android:text="@string/Cancel" />
 
     </LinearLayout>
 </LinearLayout>

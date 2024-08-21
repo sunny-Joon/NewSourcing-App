@@ -18,7 +18,7 @@
         android:layout_below="@id/progressBarCircular"
         android:layout_centerHorizontal="true"
         android:paddingTop="8dp"
-        android:text="Please Wait..."
+        android:text="@string/please_wait"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@android:color/black" />
 
