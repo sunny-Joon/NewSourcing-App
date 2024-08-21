@@ -84,9 +84,7 @@
             android:layout_height="wrap_content"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <!--In textview we will be adding the text that i have
-                added earlier in strings.xml file.This is simply the
-                the content to be scrolled -->
+
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

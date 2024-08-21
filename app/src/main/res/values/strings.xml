@@ -8,8 +8,17 @@
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>
     <string name="mother_first_name">Mother First Name</string>
+    <string name="mother_middle_name">Mother Middle Name</string>
+    <string name="mother_last_name">Mother Last Name</string>
+
     <string name="father_first_name">Father First Name</string>
+    <string name="father_middle_name">Father Middle Name</string>
+    <string name="father_last_name">Father Last Name</string>
+
     <string name="spouse_first_name">Spouse First Name</string>
+    <string name="spouse_middle_name">Spouse Middle Name</string>
+    <string name="spouse_last_name">Spouse Last Name</string>
+
     <string name="expense_monthly">Expense(monthly)</string>
     <string name="future_income">Future Income(Annual)</string>
     <string name="agriculture_income">Agriculture Income(Annual)</string>
@@ -179,6 +188,9 @@ Contact Email <i>DELHI@PAISALO.IN</i>
     <string name="report.8"> व्यापार से अनुमानित मासिक आय (रुपयों में)</string>
     <string name="report.9"> यह सुनिचित करें कि आवेदित राशि ऋण के उदेश्य के अनुकूल है।</string>
 
+    <string name="choose_scheme_prompt">एक योजना चुनें</string>
+    <string name="apply">योजना लागू करें</string>
+
     <string name="imageTitle">आवेदक के साथ घर की तस्वीर खींचें</string>
 
     <string name="aadhar_id">Aadhar Id *</string>
@@ -220,43 +232,43 @@ Contact Email <i>DELHI@PAISALO.IN</i>
     <string name="applicant_residence_duration">Residing for (Years)</string>
 
 
-    <!--    <array name="emiReasons">-->
-    <!--        <item>"Medical Issue"</item>-->
-    <!--        <item>"Door Closed"</item>-->
-    <!--        <item>"Family Expense"</item>-->
-    <!--        <item>"Pay Tomorrow"</item>-->
-    <!--        <item>"Call not Received"</item>-->
-    <!--        <item>"Don't have money"</item>-->
-    <!--        <item>"Others"</item>-->
-    <!--    </array>-->
+        <array name="emiReasons">
+            <item>"Medical Issue"</item>
+            <item>"Door Closed"</item>
+            <item>"Family Expense"</item>
+            <item>"Pay Tomorrow"</item>
+            <item>"Call not Received"</item>
+            <item>"Don't have money"</item>
+            <item>"Others"</item>
+        </array>
 
-    <!--    <string-array name="choice_array">-->
-    <!--        <item>Choose from Gallery</item>-->
-    <!--        <item>Take a Photo</item>-->
-    <!--    </string-array>-->
+        <!--<string-array name="choice_array">
+            <item>Choose from Gallery</item>
+            <item>Take a Photo</item>
+        </string-array>-->
 
-    <!--    <array name="banktypedata">-->
-    <!--        <item>SBI</item>-->
-    <!--        <item>BOB</item>-->
-    <!--        <item>UCO</item>-->
-    <!--    </array>-->
+        <array name="banktypedata">
+            <item>SBI</item>
+            <item>BOB</item>
+            <item>UCO</item>
+        </array>
 
-    <!--    <array name="issuetypedata">-->
-    <!--        <item>New User Mapping</item>-->
-    <!--        <item>Login Issue</item>-->
-    <!--        <item>Update or mapping with Branch</item>-->
-    <!--    </array>-->
+        <array name="issuetypedata">
+            <item>New User Mapping</item>
+            <item>Login Issue</item>
+            <item>Update or mapping with Branch</item>
+        </array>
 
-    <!--    <array name="loanduration">-->
-    <!--        <item>"&#45;&#45;Select&#45;&#45;"</item>-->
-    <!--        <item>"12"</item>-->
-    <!--        <item>"18"</item>-->
-    <!--        <item>"24"</item>-->
-    <!--        <item>"30"</item>-->
-    <!--        <item>"36"</item>-->
-    <!--        <item>"42"</item>-->
-    <!--        <item>"48"</item>-->
-    <!--    </array>-->
+        <array name="loanduration">
+            <item>"--Select--"</item>
+            <item>"12"</item>
+            <item>"18"</item>
+            <item>"24"</item>
+            <item>"30"</item>
+            <item>"36"</item>
+            <item>"42"</item>
+            <item>"48"</item>
+        </array>
 
 
     <!-- Login Page -->
@@ -535,7 +547,7 @@ Contact Email <i>DELHI@PAISALO.IN</i>
     <string name="form60_Transaction_Date">Form60 Transaction Date</string>
     <string name="form60_Submission_Date">Form60 Submission Date</string>
     <string name="mother_Title">Mother Title</string>
-    <string name="mother_Maiden_Name">Mother Maiden Name</string>
+    <string name="mother_Maiden_Name">Mother Middle Name</string>
     <string name="spouse_Title">Spouse Title</string>
 
     <string name="applicant_Title">Applicant Title</string>
@@ -641,7 +653,7 @@ Contact Email <i>DELHI@PAISALO.IN</i>
     <string name="form60_transaction_date">Form60 Transaction Date : </string>
     <string name="form60_submission_date">Form60 Submission Date : </string>
     <string name="Mother_title">Mother Title : </string>
-    <string name="mother_maiden_name">Mother Maiden Name : </string>
+    <string name="mother_maiden_name">Mother Middle Name : </string>
     <string name="spouse_title">Spouse Title : </string>
     <string name="other_than_agriculture_income">Other Than Agriculture Income : </string>
     <string name="years_in_business">Years in Business : </string>
@@ -748,7 +760,21 @@ Contact Email <i>DELHI@PAISALO.IN</i>
     <string name="hindiqr">दिए गए QR कोड को स्कैन करें और ग्राहक द्वारा किए गए भुगतान के बाद स्थिति(Status) प्राप्त करें।</string>
     <string name="imageupload">यदि क्यूआर कोड पर भुगतान सफल हो गया है लेकिन स्थिति नहीं मिल रही है तो लेनदेन आईडी के साथ स्क्रीनशॉट अपलोड करें।</string>
     <string name="name">NAME</string>
+    
+    <string name="family_income">FAMILY INCOME</string>
+    <string name="installments">Installments</string>
+    <string name="paid_installments">Paid Installments</string>
+    <string name="search_by_smcode">SEARCH BY SMCODE</string>
+    <string name="excellent">Excellent</string>
+    <string name="very_bad">Very Bad</string>
+    <string name="average">Average</string>
+    <string name="your_score">Your Score: </string>
+    <string name="eligible_amount">Eligible Amount: </string>
+    <string name="sorry">Sorry!!</string>
+    <string name="not_eligible">You are not eligible for loan!!</string>
+    <string name="try_again">TRY AGAIN</string>
 
     <string name="AUA_Key">VQA0AEUAYgByAGsANQB6AGcAVwA3AHEAMgBwAFAAYwB2ADUAUABNAHcATQB6AEUAMgBiAHAAUwBBAC8AdwBVAEwALwBEADMAOABZAEcAZwB6ADMAaABRAHIAegBqAGEANQBRAGIAMQBPAEEAZAB3AEoARwBkAEYAZgBuAG0AUwBKADMAMgBaAGoAVwBDAE4ALwBRAE4ARwA1AEMARgBjAEoAOAB2AGgAbgBCAHYAMwBjADYAeABoAGkAaQA4AEsAdQB5AE4AMQArAGcASgBBAC8AOABOAG0AYQBjAGoAMQB5AFMAeABPAEUAMAA4ADcAMgBIADkAMgA4AGkAbwA2AA==</string>
+
 
 </resources>

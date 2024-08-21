@@ -56,7 +56,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="right"
-                    android:text="Ver: "
+                    android:text="@string/version"
                     android:textColor="@color/black" />
 
                 <TextView
@@ -99,7 +99,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
-                android:text="Enter User ID"
+                android:text="@string/enter_user_id"
                 android:textColor="@color/purple_700"
                 android:textSize="15dp" />
 
@@ -144,7 +144,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="5dp"
-                android:text="User Name must be atleast 10 character"
+                android:text="@string/usernameInst"
                 android:textColor="@color/purple_700"
                 android:textSize="12dp" />
 
@@ -156,7 +156,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
-                android:text="Enter Password"
+                android:text="@string/enter_password"
                 android:textColor="@color/purple_700"
 
                 android:textSize="15dp" />
@@ -211,7 +211,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="5dp"
-                android:text="Password must be at least 5 character"
+                android:text="@string/passwordInst"
 
                 android:textColor="@color/purple_700"
                 android:textSize="12dp" />
@@ -224,7 +224,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="50dp"
                 android:layout_marginEnd="20dp"
-                android:text="Login"
+                android:text="@string/login"
                 android:textColor="@color/white"
                 android:textSize="18dp" />
 
@@ -249,7 +249,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
-                        android:text="Share Device Id"
+                        android:text="@string/share_device_id"
                         android:textAlignment="center"
                         android:textColor="@color/purple_700"
                         android:textSize="13dp"
@@ -271,7 +271,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginEnd="20dp"
-                        android:text="Term &amp; Conditions"
+                        android:text="@string/terms_amp_conditions"
                         android:textColor="@color/purple_700"
                         android:textSize="13dp"
                         android:textStyle="bold" />

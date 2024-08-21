@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/visbycfregular"
         android:gravity="center"
-        android:text="Application Form"
+        android:text="@string/application_form"
         android:textColor="@color/white"
         android:layout_marginBottom="40dp"
         android:textSize="@dimen/bigheading"
@@ -64,7 +64,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="Aadhaar"
+                        android:text="@string/aadhar_data"
                         android:gravity="center_vertical"
                         android:paddingStart="40dp"
                         android:fontFamily="@font/visbycfbold"
@@ -103,7 +103,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
-                        android:text="Personal Details"
+                        android:text="@string/personal_details"
                         android:gravity="center_vertical"
                         android:paddingStart="40dp"
                         android:fontFamily="@font/visbycfbold"
@@ -143,7 +143,7 @@
                         android:layout_height="45dp"
                         android:gravity="center_vertical"
                         android:paddingStart="40dp"
-                        android:text="Financial Info"
+                        android:text="@string/financial_info"
                         android:fontFamily="@font/visbycfbold"
                         android:textSize="@dimen/subheading"
                         android:layout_weight=".5"/>
@@ -180,7 +180,7 @@
                         android:layout_height="45dp"
                         android:gravity="center_vertical"
                         android:paddingStart="40dp"
-                        android:text="Family Income"
+                        android:text="@string/family_income"
                         android:fontFamily="@font/visbycfbold"
                         android:textSize="@dimen/subheading"
                         android:layout_weight=".5"/>
@@ -217,7 +217,7 @@
                         android:layout_height="45dp"
                         android:gravity="center_vertical"
                         android:paddingStart="40dp"
-                        android:text="Borrowings"
+                        android:text="@string/family_borrowings"
                         android:fontFamily="@font/visbycfbold"
                         android:textSize="@dimen/subheading"
                         android:layout_weight=".5"/>
@@ -253,7 +253,7 @@
                         android:layout_height="45dp"
                         android:gravity="center_vertical"
                         android:paddingStart="40dp"
-                        android:text="Guarantors"
+                        android:text="@string/guarantors"
                         android:fontFamily="@font/visbycfbold"
                         android:textSize="@dimen/subheading"
                         android:layout_weight=".5"/>
@@ -290,7 +290,7 @@
                         android:layout_height="45dp"
                         android:gravity="center_vertical"
                         android:paddingStart="40dp"
-                        android:text="KYC Scanning"
+                        android:text="@string/kyc_scanning"
                         android:fontFamily="@font/visbycfbold"
                         android:textSize="@dimen/subheading"
                         android:layout_weight=".5"/>

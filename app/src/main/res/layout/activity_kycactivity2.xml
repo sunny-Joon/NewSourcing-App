@@ -2,8 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/red"
-    >
+    android:background="@color/red">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,7 +26,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
-                    android:text="Monthly Income *"
+                    android:text="@string/monthly_income"
                     android:textColor="@color/white"
                     android:textSize="@dimen/heading"/>
 
@@ -56,7 +55,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Expense(monthly) *"
+                    android:text="@string/monthly_expense"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="@dimen/heading"/>
@@ -96,7 +95,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
-                    android:text="Future Income(Annual) *"
+                    android:text="@string/future_income"
                     android:textColor="@color/white"
                     android:textSize="@dimen/subheading"/>
 
@@ -126,7 +125,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Agriculture Income(monthly) *"
+                    android:text="@string/agriculture_income"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="12dp"/>
@@ -166,7 +165,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
-                    android:text="Pension Income(Annual) *"
+                    android:text="@string/pension_income"
                     android:textColor="@color/white"
                     android:textSize="@dimen/subheading"/>
 
@@ -196,7 +195,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Interest Income(Annual) *"
+                    android:text="@string/interest_income"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="@dimen/subheading"/>
@@ -258,7 +257,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
-                    android:text="Earning Member Type*"
+                    android:text="@string/earning_member_type"
                     android:textColor="@color/white"
                     android:textSize="@dimen/subheading"/>
 
@@ -287,7 +286,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Earning Member Income*"
+                    android:text="@string/earning_member_income"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="@dimen/subheading"/>
@@ -324,7 +323,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Loan Amount *"
+            android:text="@string/loanamount"
             android:layout_marginTop="8dp"
             android:textColor="@color/white"
             android:textSize="@dimen/subheading"/>
@@ -358,7 +357,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
-                    android:text="Business Detail*"
+                    android:text="@string/business_detail"
                     android:textColor="@color/white"
                     android:textSize="@dimen/subheading"/>
 
@@ -387,7 +386,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Loan Purose*"
+                    android:text="@string/loanpurpose"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="@dimen/subheading"/>
@@ -412,7 +411,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Occupation *"
+            android:text="@string/occupation"
             android:layout_marginTop="8dp"
             android:textColor="@color/white"
             android:textSize="@dimen/subheading"/>
@@ -444,7 +443,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
-                    android:text="Loan Duration(month)*"
+                    android:text="@string/loan_duration_month"
                     android:textColor="@color/white"
                     android:textSize="@dimen/subheading"/>
 
@@ -473,7 +472,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Select Bank*"
+                    android:text="@string/select_bank"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="@dimen/subheading"/>
@@ -503,7 +502,7 @@
             android:layout_marginTop="5dp"
             android:textColor="@color/red"
             android:backgroundTint="@color/white"
-            android:text="SAVE DATA" />
+            android:text="@string/save_data" />
 
     </LinearLayout>
 </ScrollView>
