@@ -11,6 +11,8 @@ import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidFullName;
 import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidName;
 import static com.paisalo.newinternalsourcingapp.GlobalClass.isValidPan;
 
+import static cz.msebera.android.httpclient.util.TextUtils.isEmpty;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -34,6 +36,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -124,7 +128,7 @@ import java.util.zip.GZIPInputStream;
 
 public class GuarantorsFragment extends Fragment {
     protected static final int VTC_INDEX = 15;
-
+    private Calendar calendar;
     protected static final byte SEPARATOR_BYTE = (byte) 255;
     protected ArrayList<String> decodedData;
     protected String signature, email, mobile;
@@ -255,6 +259,26 @@ public class GuarantorsFragment extends Fragment {
                 gender_List.add(selectOption);
                 state_List.add(selectOption);
                 relationwithborr_List.add(selectOption);
+
+                etTextDob.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        String input = s.toString();
+                        if (!input.isEmpty()) {
+                            etTextAge.setText(String.valueOf(GlobalClass.calculateAge(input)));
+                        }
+                    }
+                });
 
 
 
@@ -398,7 +422,7 @@ public class GuarantorsFragment extends Fragment {
 
                     }
                 });
-
+                calendar = Calendar.getInstance();
                 calendericon.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -406,38 +430,38 @@ public class GuarantorsFragment extends Fragment {
                     }
 
                     private void showDatePickerDialog() {
-                        Calendar calendar = Calendar.getInstance();
                         int year = calendar.get(Calendar.YEAR);
                         int month = calendar.get(Calendar.MONTH);
                         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-                        DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(android.widget.DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
-                                String selectedDate = String.format("%04d-%02d-%02d", selectedYear, selectedMonth + 1, selectedDay);
+                                //   String selectedDate = String.format("%04d-%02d-%02d", selectedYear, selectedMonth + 1, selectedDay);
+                                String selectedDate = String.format("%02d/%02d/%04d", selectedDay, selectedMonth + 1, selectedYear);
                                 etTextDob.setText(selectedDate);
-                                calculateAge(selectedYear, selectedMonth, selectedDay);
-                                //   progressBar.incrementProgressBy(1);
+                               //  calculateAge(selectedYear, selectedMonth, selectedDay);
+                               // progressBar.incrementProgressBy(1);
                             }
                         }, year, month, day);
 
                         datePickerDialog.show();
                     }
 
-                    private void calculateAge(int selectedYear, int selectedMonth, int selectedDay) {
-                        Calendar dobCalendar = Calendar.getInstance();
-                        dobCalendar.set(selectedYear, selectedMonth, selectedDay);
-
-                        Calendar currentCalendar = Calendar.getInstance();
-
-                        int age = currentCalendar.get(Calendar.YEAR) - dobCalendar.get(Calendar.YEAR);
-
-                        if (currentCalendar.get(Calendar.DAY_OF_YEAR) < dobCalendar.get(Calendar.DAY_OF_YEAR)) {
-                            age--;
-                        }
-
-                        etTextAge.setText(String.valueOf(age));
-                    }
+//                    private void calculateAge(int selectedYear, int selectedMonth, int selectedDay) {
+//                        Calendar dobCalendar = Calendar.getInstance();
+//                        dobCalendar.set(selectedYear, selectedMonth, selectedDay);
+//
+//                        Calendar currentCalendar = Calendar.getInstance();
+//
+//                        int age = currentCalendar.get(Calendar.YEAR) - dobCalendar.get(Calendar.YEAR);
+//
+//                        if (currentCalendar.get(Calendar.DAY_OF_YEAR) < dobCalendar.get(Calendar.DAY_OF_YEAR)) {
+//                            age--;
+//                        }
+//
+//                        etTextAge.setText(String.valueOf(age));
+//                    }
                 });
 
                 update = popupView.findViewById(R.id.updateGuarantor);
@@ -644,6 +668,7 @@ public class GuarantorsFragment extends Fragment {
                         public void onResponse(Call<KycUpdateModel> call, Response<KycUpdateModel> response) {
                             Log.d("TAG", "GurrantorLog: " + response.body());
                             if (response.isSuccessful()) {
+                                Toast.makeText(getActivity(), "Gurrantor Detail updated successfully!", Toast.LENGTH_SHORT).show();
                                 Log.d("TAG", "GurrantorLog: " + response.body());
                                 Log.d("TAG", "GurrantorLog: " + response.body().getMessage().toString());
                               //  SubmitAlert(getActivity(), "success", "Data set Successfully");
@@ -661,6 +686,7 @@ public class GuarantorsFragment extends Fragment {
                                         if (response3.isSuccessful()) {
                                             ProfilePicModel profilePicModel = response3.body();
                                             Toast.makeText(getActivity(), "Profile picture updated successfully!", Toast.LENGTH_SHORT).show();
+
                                             SubmitAlert(getActivity(), "success", "Data set Successfully");
                                             getActivity().finish();
                                         } else {
@@ -1538,8 +1564,8 @@ public class GuarantorsFragment extends Fragment {
         jsonGuarantor.addProperty("gender", guarantor.getGender());
         jsonGuarantor.addProperty("gurName", guarantor.getGurName());
         jsonGuarantor.addProperty("perAdd1", guarantor.getPerAdd1());
-        jsonGuarantor.addProperty("perAdd2", guarantor.getPerAdd2());
-        jsonGuarantor.addProperty("perAdd3", guarantor.getPerAdd3());
+        jsonGuarantor.addProperty("perAdd2", isEmpty(guarantor.getPerAdd2()) ? "" : guarantor.getPerAdd2());
+        jsonGuarantor.addProperty("perAdd3", isEmpty(guarantor.getPerAdd3()) ? "" : guarantor.getPerAdd3());
         jsonGuarantor.addProperty("perCity", guarantor.getPerCity());
         jsonGuarantor.addProperty("p_Pin", guarantor.getpPin());
         jsonGuarantor.addProperty("p_StateID", guarantor.getpStateID());
@@ -1548,6 +1574,7 @@ public class GuarantorsFragment extends Fragment {
         jsonGuarantor.addProperty("panNo", guarantor.getPanNo());
         jsonGuarantor.addProperty("drivingLic", guarantor.getDrivingLic());
         jsonGuarantor.addProperty("relation", guarantor.getRelation());
+
         jsonGuarantor.addProperty("grNo", guarantor.getGrNo());
         jsonGuarantor.addProperty("gurInitials", "");
         jsonGuarantor.addProperty("corrAddr", 0);
@@ -1569,7 +1596,7 @@ public class GuarantorsFragment extends Fragment {
         jsonGuarantor.addProperty("resPh1", "");
         jsonGuarantor.addProperty("resPh2", "");
         jsonGuarantor.addProperty("resPh3", "");
-        jsonGuarantor.addProperty("resFax", "");
+        jsonGuarantor.addProperty("resFax", guarantor.getRelation());
         jsonGuarantor.addProperty("resMob1", "");
         jsonGuarantor.addProperty("resMob2", "");
         jsonGuarantor.addProperty("perFax", "");
