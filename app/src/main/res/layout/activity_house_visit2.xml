@@ -102,7 +102,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:hint="@string/area"
-                                
+
 
                                 android:inputType="textCapCharacters
 "
@@ -155,7 +155,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:hint="@string/centre"
-                                
+
 
                                 android:inputType="textCapCharacters
 "
@@ -201,7 +201,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:hint="@string/group"
-                                
+
 
                                 android:inputType="textCapCharacters
 "
@@ -281,7 +281,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_weight="1"
-                        
+
 
                         android:hint="@string/interviewee_name"
                         android:inputType="textCapCharacters
@@ -344,9 +344,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="@color/darkred"
                         android:fontFamily="@font/visbycfregular"
                         android:gravity="center"
-                        android:background="@color/darkred"
                         android:text="@string/intervieweeRelation"
                         android:textColor="@color/white"
                         android:textSize="@dimen/heading" />
@@ -380,10 +380,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:fontFamily="@font/visbycfregular"
-                        android:gravity="center"                  android:paddingStart="10dp"
-                        android:text="@string/residence_type"
                         android:background="@color/darkred"
+                        android:fontFamily="@font/visbycfregular"
+                        android:gravity="center"
+                        android:paddingStart="10dp"
+                        android:text="@string/residence_type"
                         android:textColor="@color/white"
                         android:textSize="@dimen/heading" />
 
@@ -414,13 +415,13 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:textSize="@dimen/heading"
-                        android:fontFamily="@font/visbycfregular"
-                        android:background="@color/darkred"
                         android:layout_weight="1"
+                        android:background="@color/darkred"
+                        android:fontFamily="@font/visbycfregular"
+                        android:gravity="center"
                         android:text="@string/residental_stability"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/heading" />
 
                     <Spinner
                         android:id="@+id/residental_stability"
@@ -455,9 +456,9 @@
                         android:fontFamily="@font/visbycfregular"
                         android:gravity="center_vertical"
                         android:paddingStart="10dp"
-                        android:textSize="@dimen/heading"
                         android:text="@string/distance_ApplicantToDealer"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/heading" />
 
                     <EditText
                         android:id="@+id/distance_ApplicantToDealer"
@@ -489,10 +490,10 @@
                         android:background="@color/darkred"
                         android:fontFamily="@font/visbycfregular"
                         android:gravity="center_vertical"
-                        android:textSize="@dimen/heading"
                         android:paddingStart="10dp"
                         android:text="@string/time_ApplicantToDealer"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/heading" />
 
                     <EditText
                         android:id="@+id/time_ApplicantToDealer"
@@ -555,10 +556,10 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_weight="1"
                         android:background="@color/darkred"
                         android:fontFamily="@font/visbycfregular"
                         android:gravity="center_vertical"
-                        android:layout_weight="1"
                         android:paddingStart="10dp"
                         android:text="@string/report.8"
                         android:textColor="@color/white" />
@@ -567,8 +568,8 @@
                         android:id="@+id/approxMonthlyIncome"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:inputType="number"
                         android:layout_weight="1"
+                        android:inputType="number"
                         android:textSize="15dp" />
 
                 </LinearLayout>
@@ -591,19 +592,19 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_weight="1"
                         android:background="@color/darkred"
                         android:fontFamily="@font/visbycfregular"
                         android:gravity="center_vertical"
                         android:paddingStart="10dp"
-                        android:layout_weight="1"
                         android:text="@string/businessExperience"
                         android:textColor="@color/white" />
 
                     <Spinner
                         android:id="@+id/businessExperience"
                         android:layout_width="match_parent"
-                        android:layout_weight="1"
                         android:layout_height="match_parent"
+                        android:layout_weight="1"
                         android:hint="@string/residing_with"
                         android:textSize="15sp" />
 
@@ -638,7 +639,7 @@
                         android:id="@+id/businessExpenditure"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
-                        
+
                         android:inputType="number"
                         android:textSize="15dp" />
 
@@ -673,7 +674,7 @@
                         android:id="@+id/expectedIncome"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
-                        
+
 
                         android:inputType="number"
                         android:textSize="15dp" />
@@ -710,7 +711,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:inputType="number"
-                        
+
 
                         android:textSize="15dp" />
 
@@ -745,7 +746,7 @@
                         android:id="@+id/familyNetIncome"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
-                        
+
 
                         android:inputType="number"
                         android:textSize="15dp" />
@@ -770,11 +771,11 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_weight="1"
                         android:background="@color/darkred"
                         android:fontFamily="@font/visbycfregular"
                         android:gravity="center_vertical"
                         android:paddingStart="10dp"
-                        android:layout_weight="1"
                         android:text="@string/relationWithApplicant"
                         android:textColor="@color/white" />
 
@@ -857,8 +858,8 @@
                             android:id="@+id/reference_PhoneNo1"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
-                            android:maxLength="10"
                             android:inputType="number"
+                            android:maxLength="10"
                             android:textSize="15dp" />
 
 
@@ -935,8 +936,8 @@
                             android:id="@+id/reference_PhoneNo2"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
-                            android:maxLength="10"
                             android:inputType="number"
+                            android:maxLength="10"
                             android:textSize="15dp" />
 
                     </LinearLayout>
@@ -961,11 +962,11 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_weight="1"
                         android:background="@color/darkred"
                         android:fontFamily="@font/visbycfregular"
                         android:gravity="center_vertical"
                         android:paddingStart="10dp"
-                        android:layout_weight="1"
                         android:text="@string/neighbourhood_verification"
                         android:textColor="@color/white" />
 
@@ -993,10 +994,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/darkred"
+                    android:fontFamily="@font/visbycfbold"
                     android:gravity="center"
                     android:text="@string/verification"
                     android:textColor="@color/white"
-                    android:fontFamily="@font/visbycfbold"
                     android:textSize="@dimen/bigheading" />
 
             </androidx.cardview.widget.CardView>
@@ -1026,9 +1027,9 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:padding="10dp"
                         android:background="@color/white"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:padding="10dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -1041,23 +1042,23 @@
 
                         <CheckBox
                             android:id="@+id/buildType"
-                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:button="@drawable/custom_checkbox"
                             android:text="@string/point1.1" />
 
                         <CheckBox
                             android:id="@+id/approvedLocation"
-                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:button="@drawable/custom_checkbox"
                             android:text="@string/point1.2" />
 
                         <CheckBox
                             android:id="@+id/cpfCriteria"
-                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:button="@drawable/custom_checkbox"
                             android:text="@string/point1.3" />
                     </LinearLayout>
 
@@ -1090,9 +1091,9 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="10dp"
                         android:background="@color/white"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:padding="10dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -1105,44 +1106,44 @@
 
                         <CheckBox
                             android:id="@+id/cpfAddressVerification"
-                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:button="@drawable/custom_checkbox"
                             android:text="@string/point2.1" />
 
                         <CheckBox
                             android:id="@+id/IdVerification"
-                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:button="@drawable/custom_checkbox"
                             android:text="@string/point2.2" />
 
                         <CheckBox
                             android:id="@+id/addressVerification"
-                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:button="@drawable/custom_checkbox"
                             android:text="@string/point2.3" />
 
                         <CheckBox
                             android:id="@+id/ageVerification"
-                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:button="@drawable/custom_checkbox"
                             android:text="@string/point2.4" />
 
                         <CheckBox
                             android:id="@+id/cpfRecentAddressVerification"
-                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:button="@drawable/custom_checkbox"
                             android:text="@string/point2.5" />
 
                         <CheckBox
                             android:id="@+id/stampOnPhotocopy"
-                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:button="@drawable/custom_checkbox"
                             android:text="@string/point2.6" />
                     </LinearLayout>
 
@@ -1175,9 +1176,9 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="10dp"
                         android:background="@color/white"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:padding="10dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -1190,9 +1191,9 @@
 
                         <CheckBox
                             android:id="@+id/lastLoanVerification"
-                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:button="@drawable/custom_checkbox"
                             android:text="@string/point3.1" />
 
                         <TextView
@@ -1208,22 +1209,22 @@
                             android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="15dp"
-                            
+
 
                             android:inputType="number" />
 
                         <CheckBox
                             android:id="@+id/absentReason"
-                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:button="@drawable/custom_checkbox"
                             android:text="@string/point3.3" />
 
                         <CheckBox
                             android:id="@+id/repaymentFault"
-                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:button="@drawable/custom_checkbox"
                             android:text="@string/point3.4" />
 
                     </LinearLayout>
@@ -1258,9 +1259,9 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="10dp"
                         android:background="@color/white"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:padding="10dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -1273,23 +1274,23 @@
 
                         <CheckBox
                             android:id="@+id/reasonVerification"
-                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:button="@drawable/custom_checkbox"
                             android:text="@string/point4.1" />
 
                         <CheckBox
                             android:id="@+id/isAppliedAmountAppropriate"
-                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:button="@drawable/custom_checkbox"
                             android:text="@string/point4.2" />
 
                         <CheckBox
                             android:id="@+id/familyAwareness"
-                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:button="@drawable/custom_checkbox"
                             android:text="@string/point4.3" />
 
                         <TextView
@@ -1330,9 +1331,9 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="10dp"
                         android:background="@color/white"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:padding="10dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -1345,44 +1346,44 @@
 
                         <CheckBox
                             android:id="@+id/loanRelatedToBusiness"
-                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:button="@drawable/custom_checkbox"
                             android:text="@string/point5.1" />
 
                         <CheckBox
                             android:id="@+id/IsBusinessAppropriate"
-                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:button="@drawable/custom_checkbox"
                             android:text="@string/point5.2" />
 
                         <CheckBox
                             android:id="@+id/repayEligibility"
-                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:button="@drawable/custom_checkbox"
                             android:text="@string/point5.3" />
 
                         <CheckBox
                             android:id="@+id/surplusVerification"
-                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:button="@drawable/custom_checkbox"
                             android:text="@string/point5.4" />
 
                         <CheckBox
                             android:id="@+id/incomeVerification"
-                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:button="@drawable/custom_checkbox"
                             android:text="@string/point5.5" />
 
                         <CheckBox
                             android:id="@+id/businessVerification"
-                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:button="@drawable/custom_checkbox"
                             android:text="@string/point5.6" />
 
                     </LinearLayout>
@@ -1417,9 +1418,9 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="10dp"
                         android:background="@color/white"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:padding="10dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -1432,37 +1433,37 @@
 
                         <CheckBox
                             android:id="@+id/supportiveToGroup"
-                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:button="@drawable/custom_checkbox"
                             android:text="@string/point6.1" />
 
                         <CheckBox
                             android:id="@+id/comissionDemand"
-                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:button="@drawable/custom_checkbox"
                             android:text="@string/point6.2" />
 
                         <CheckBox
                             android:id="@+id/groupReadyToVilay"
-                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:button="@drawable/custom_checkbox"
                             android:text="@string/point6.3" />
 
                         <CheckBox
                             android:id="@+id/groupHasBloodRelation"
-                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:button="@drawable/custom_checkbox"
                             android:text="@string/point6.4" />
 
                         <CheckBox
                             android:id="@+id/understandsInsurance"
-                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:button="@drawable/custom_checkbox"
                             android:text="@string/point6.5" />
 
                     </LinearLayout>
@@ -1497,9 +1498,9 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="10dp"
                         android:background="@color/white"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:padding="10dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -1512,30 +1513,30 @@
 
                         <CheckBox
                             android:id="@+id/verifyExternalLoan"
-                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:button="@drawable/custom_checkbox"
                             android:text="@string/point7.1" />
 
                         <CheckBox
                             android:id="@+id/understandsFaultPolicy"
-                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:button="@drawable/custom_checkbox"
                             android:text="@string/point7.2" />
 
                         <CheckBox
                             android:id="@+id/IsLoanAmountAppropriate"
-                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:button="@drawable/custom_checkbox"
                             android:text="@string/point7.3" />
 
                         <CheckBox
                             android:id="@+id/toatlDebtUnderLimit"
-                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:button="@drawable/custom_checkbox"
                             android:text="@string/point7.4" />
 
                     </LinearLayout>
@@ -1591,51 +1592,51 @@
 
                         <CheckBox
                             android:id="@+id/workingPlaceVerification"
-                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:button="@drawable/custom_checkbox"
                             android:text="@string/report.1" />
 
                         <CheckBox
                             android:id="@+id/IsWorkingPlaceValid"
-                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:button="@drawable/custom_checkbox"
                             android:text="@string/report.2" />
 
                         <CheckBox
                             android:id="@+id/workingPlacedescription"
-                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:button="@drawable/custom_checkbox"
                             android:text="@string/report.3" />
 
                         <CheckBox
                             android:id="@+id/workExperience"
-                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:button="@drawable/custom_checkbox"
                             android:text="@string/report.4" />
 
                         <CheckBox
                             android:id="@+id/seasonDependency"
-                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:button="@drawable/custom_checkbox"
                             android:text="@string/report.5" />
 
                         <CheckBox
                             android:id="@+id/stockVerification"
-                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:button="@drawable/custom_checkbox"
                             android:text="@string/report.6" />
 
                         <CheckBox
                             android:id="@+id/sufficientAmount"
-                            android:button="@drawable/custom_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:button="@drawable/custom_checkbox"
                             android:text="@string/report.9" />
 
                     </LinearLayout>
@@ -1701,12 +1702,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/darkred"
+                        android:fontFamily="@font/visbycfbold"
                         android:gravity="center"
                         android:padding="10dp"
                         android:text="@string/imageTitle"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/heading"
-                        android:fontFamily="@font/visbycfbold"/>
+                        android:textSize="@dimen/heading" />
 
                 </androidx.cardview.widget.CardView>
 
@@ -1716,8 +1717,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:background="@color/darkred"
                 android:layout_weight="1.2"
+                android:background="@color/darkred"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="5dp">
 

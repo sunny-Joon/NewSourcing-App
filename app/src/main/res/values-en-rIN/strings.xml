@@ -60,138 +60,137 @@ Contact Email <i>DELHI@PAISALO.IN</i>
 </string>
     <string name="terms_amp_conditions"><i><u>terms &amp; conditions</u></i></string>
 
-    <string name="branch"> शाखा</string>
-    <string name="area"> क्षेत्र</string>
-    <string name="centre"> केन्द्र</string>
-    <string name="group"> समूह</string>
-    <string name="date"> दिनांक</string>
-    <string name="verificationLevel1"> सत्यापन स्तर 1</string>
-    <string name="verificationLevel2"> सत्यापन स्तर 2</string>
-    <string name="verificationLevel3"> सत्यापन स्तर 3</string>
-    <string name="verificationLevel4"> सत्यापन स्तर 4</string>
-    <string name="verificationLevel5"> सत्यापन स्तर 5</string>
-    <string name="verificationLevel6"> सत्यापन स्तर 6</string>
-    <string name="verificationLevel7"> सत्यापन स्तर 7</string>
-    <string name="ggt"> जीजीटी दिवस एक दिनांक</string>
-    <string name="customerName"> ग्राहक का नाम</string>
-    <string name="sendAreaOffice"> क्षेत्रीय कार्यालय भेजा</string>
-    <string name="receivedAreaOffice"> क्षेत्रीय कार्या प्राप्ति दिनांक</string>
-    <string name="debtOfficeReceivedDate"> ऋण विभाग को प्राप्ति दिनांक</string>
-    <string name="opc"> कओपीएस की फुल फॉर्म चाहिए</string>
-    <string name="settlementPeriod"> पुनर्भुगतान आवृति साप्ताहिक</string>
-    <string name="houseVerificationDate"> निवास गृह की जाँच की तिथि</string>
-    <string name="grtDate"> जीआरटी दिनाक</string>
-    <string name="customer"> ग्राहक</string>
-    <string name="office_address"> व्यापार स्थल का पता</string>
+    <string name="branch">Branch</string>
+    <string name="area">Area</string>
+    <string name="centre">Centre</string>
+    <string name="group">Group</string>
+    <string name="date">Date</string>
+    <string name="verificationLevel1">Verification Level 1</string>
+    <string name="verificationLevel2">Verification Level 2</string>
+    <string name="verificationLevel3">Verification Level 3</string>
+    <string name="verificationLevel4">Verification Level 4</string>
+    <string name="verificationLevel5">Verification Level 5</string>
+    <string name="verificationLevel6">Verification Level 6</string>
+    <string name="verificationLevel7">Verification Level 7</string>
+    <string name="ggt">GGT Day One Date</string>
+    <string name="customerName">Customer Name</string>
+    <string name="sendAreaOffice">Sent to Regional Office</string>
+    <string name="receivedAreaOffice">Received at Regional Office Date</string>
+    <string name="debtOfficeReceivedDate">Received Date at Debt Department</string>
+    <string name="opc">Full Form of KOPS Required</string>
+    <string name="settlementPeriod">Repayment Frequency Weekly</string>
+    <string name="houseVerificationDate">House Verification Date</string>
+    <string name="grtDate">GRT Date</string>
+    <string name="customer">Customer</string>
+    <string name="office_address">Business Address</string>
 
-    <string name="residing_with"> रहने वाले</string>
-    <string name="family"> परिवार</string>
-    <string name="separately"> अलग से</string>
+    <string name="residing_with">Residing With</string>
+    <string name="family">Family</string>
+    <string name="separately">Separately</string>
 
     <string name="mother_hv">Mother</string>
     <string name="father_hv">Father</string>
 
-    <string name="applicant_status"> आवेदक की स्थिति</string>
-    <string name="Not_Handicapped"> विकलांग नहीं</string>
+    <string name="applicant_status">Applicant Status</string>
+    <string name="Not_Handicapped">Not Handicapped</string>
 
-    <string name="interviewee_name"> साक्षात्कार किये गये व्यक्ति का नाम</string>
-    <string name="interviewee_age"> साक्षात्कार किये गये व्यक्ति की आयु</string>
-    <string name="intervieweeRelation"> आवेदक के साथ साक्षात्कार किये गये व्यक्ति का संबंध</string>
-    <string name="spouse"> जीवनसाथी</string>
-    <string name="parents"> पिता/माता</string>
-    <string name="siblings"> भाई/बहन</string>
-    <string name="husband"> पति</string>
-    <string name="father"> पिता</string>
-    <string name="brother"> भाई</string>
-    <string name="wife"> पत्नी</string>
-    <string name="mother"> माता</string>
-    <string name="sister"> बहन</string>
+    <string name="interviewee_name">Name of Interviewed Person</string>
+    <string name="interviewee_age">Age of Interviewed Person</string>
+    <string name="intervieweeRelation">Relation of Interviewed Person with Applicant</string>
+    <string name="spouse">Spouse</string>
+    <string name="parents">Father/Mother</string>
+    <string name="siblings">Brother/Sister</string>
+    <string name="husband">Husband</string>
+    <string name="father">Father</string>
+    <string name="brother">Brother</string>
+    <string name="wife">Wife</string>
+    <string name="mother">Mother</string>
+    <string name="sister">Sister</string>
 
-    <string name="notRented"> मकान किराये पर नहीं है</string>
-    <string name="residence_type"> निवास का प्रकार</string>
-    <string name="pucca"> पक्का</string>
-    <string name="kaccha"> कच्चा</string>
-    <string name="residental_stability"> आवासीय स्थिरता (वर्ष)</string>
-    <string name="distance_ApplicantToDealer"> आवेदक के निवास से शाखा/डीलर बिंदु तक की दूरी (किमी में)</string>
-    <string name="time_ApplicantToDealer"> शाखा/डीलर के स्थान से आवेदक के निवास तक पहुंचने के लिए आवश्यक समय(मिनट)</string>
-    <string name="businessExperience"> वर्तमान व्यवसाय में कुल अनुभव (वर्षों में)</string>
-    <string name="businessExpenditure"> व्यवसाय का कुल मासिक व्यय</string>
-    <string name="expectedIncome"> पैसालो से प्रस्तावित ऋण के बाद प्रस्तावित शुद्ध मासिक आय</string>
-    <string name="houseExpenditure"> कुल मासिक घरेलू खर्च</string>
-    <string name="familyNetIncome"> परिवार के अन्य सदस्यों की शुद्ध मासिक आय</string>
-    <string name="relationWithApplicant"> आवेदक के साथ अन्य कमाने वाले सदस्य का संबंध</string>
-    <string name="reference1"> संदर्भ व्यक्ति का नाम 1</string>
-    <string name="reference_PhoneNo"> फोन नंबर</string>
-    <string name="reference2"> संदर्भ व्यक्ति का नाम 2</string>
-    <string name="neighbourhood_verification"> आस-पास के निवासियों से आवेदक की प्रतिक्रिया</string>
-    <string name="good"> अच्छा</string>
-    <string name="bad"> खराब</string>
-    <string name="dontKnow"> पता नहीं</string>
-    <string name="Address">व्यवसाय स्थान का पता</string>
+    <string name="notRented">House is not Rented</string>
+    <string name="residence_type">Type of Residence</string>
+    <string name="pucca">Pucca</string>
+    <string name="kaccha">Kaccha</string>
+    <string name="residental_stability">Residential Stability (Years)</string>
+    <string name="distance_ApplicantToDealer">Distance from Applicants Residence to Branch/Dealer Point (in km)</string>
+    <string name="time_ApplicantToDealer">Time Required to Reach from Branch/Dealer to Applicants Residence (minutes)</string>
+    <string name="businessExperience">Total Experience in Current Business (in years)</string>
+    <string name="businessExpenditure">Total Monthly Business Expenditure</string>
+    <string name="expectedIncome">Proposed Net Monthly Income After Proposed Loan</string>
+    <string name="houseExpenditure">Total Monthly Household Expenditure</string>
+    <string name="familyNetIncome">Net Monthly Income of Other Family Members</string>
+    <string name="relationWithApplicant">Relation of Other Earning Member with Applicant</string>
+    <string name="reference1">Reference Person Name 1</string>
+    <string name="reference_PhoneNo">Phone Number</string>
+    <string name="reference2">Reference Person Name 2</string>
+    <string name="neighbourhood_verification">Feedback from Neighbors About the Applicant</string>
+    <string name="good">Good</string>
+    <string name="bad">Bad</string>
+    <string name="dontKnow">Dont Know</string>
+    <string name="Address">Business Location Address</string>
 
-    <string name="verification"> सत्यापन</string>
-    <string name="point1"> &#9733; निम्न (बिन्दु) केन्द्रित आवासीय भौतिक सत्यापन</string>
-    <string name="point1.1"> आवासीय मानदण्डों के अनुसार घर की छत व दीवारों का प्रकार।</string>
-    <string name="point1.2"> ग्राहक स्वीकृत / अनुमोदित क्षेत्र में रहता है।</string>
-    <string name="point1.3"> सीपीएफ अनुभाग / सैक्शनमें वर्णित आवासीय सूचना के अनुसार जीवन शैली (अति निम्न, निम्न, निम्न मध्यवर्गीय श्रेणी)।</string>
-    <string name="point2">&#9733; ऋण आवेदनपत्र, सीपी एवम् अपने ग्राहक को जानिये पेपर्स का सत्यापन</string>
-    <string name="point2.1"> सीपीएफ में सही डाक का पता लिखा है का सत्यापन करें।</string>
-    <string name="point2.2"> फोटो पहचान पत्र का मूल पहचान पत्र से सत्यापन करें।</string>
-    <string name="point2.3"> वर्तमान आवास से पते का सत्यापन मूल प्रमाण से मिलाकर करें।</string>
-    <string name="point2.4"> ग्राहक व उसके पति / पत्नी की आयु प्रमाण का मूल प्रति से मिलाकर सत्यापन करें।</string>
-    <string name="point2.5"> जांच करें कि क्या स्थायी पता का पूरा विवरण तथा पिनकोड सी पी एफ में भरा गया है।</string>
-    <string name="point2.6"> उक्त फार्म के सत्यापित किये गये छाया प्रतियों पर मूल प्रति से मिलान किया की मुहर लगायें तथाहस्ताक्षर करें।</string>
-    <string name="point3">&#9733; पिछले ऋण का उपयोग तथा उपस्थिति (यदि पुराना ग्राहक है)</string>
-    <string name="point3.1"> क्या ग्राहक ने पिछले ऋण का उपयोग उसी प्रयोजन के लिये किया जिसके लिये लिया गया था?</string>
-    <string name="point3.2">&#9670; ग्राह के लिये ऋण उपयोग के प्रतिशत का उल्लेख करें।</string>
-    <string name="point3.3"> सेन्टर मीटिंग से अनुपस्थिति के कारणों की जांच करें।</string>
-    <string name="point3.4"> भुगतान दोष / देरी के कारणों की सत्यता की जांच करें। यदि ये इरादतन हो तो इस ग्राहक के केस में आगे न बढ़ें।</string>
-    <string name="point4">&#9733; नए ऋण का उद्देश्य </string>
-    <string name="point4.1"> चैक करें कि नये ऋण का उद्देश्य उपभोग सम्बन्धी है या आय बढ़ाने सम्बन्धी कार्य के लिये।</string>
-    <string name="point4.2"> चैक करे कि आवेदित राशि उक्त उद्देश्यपूर्ति के लिये उचित है।</string>
-    <string name="point4.3"> क्या ग्राहक के पति / पत्नी /पुत्र को उक्त प्रयोजन के लिये ऋण आवेदन के बारे में पता है?</string>
-    <string name="point4.4"> (शाखा ऋण नीति के अनुसार लागू)</string>
-    <string name="point5">&#9733; व्यवसाय एवम् आय का सत्यापन</string>
-    <string name="point5.1"> क्या ऋण का उद्देश्य ग्राहक के व्यवसाय के लिये युक्तिसंगत / उपयुक्त है ? (पति / पत्नी / पुत्र का व्यवसाय ऋण उद्देश्य से सम्बन्धित है ? जहाँ भी लागू हो)</string>
-    <string name="point5.2"> जाच करें कि क्या ग्राहक का व्यवसाय हमारे सम्बन्धों को प्रभावित करने वाला है?</string>
-    <string name="point5.3"> क्या ग्राहक के पास आवेदित ऋण राशि के पुनर्भुगतान हेतु पर्याप्त पुनर्भुगतान क्षमता है?</string>
-    <string name="point5.4"> ग्राहक प्रोफाइल प्रारूप से घर के नकदी प्रवाह और अधिशेष खंड की गणना का मिलान करें।</string>
-    <string name="point5.5"> क्या ग्राहक द्वारा उपलब्ध कराई गयी आय व्यय की सूचना ग्राहक प्रोफाइल प्रारूप में दिये गये विवरण से मिलती है?</string>
-    <string name="point5.6"> सभी ऋणों के लिये ग्राहक के व्यवसाय का सत्यापन अनिवार्य है (रु. 35000/- से अधिक के सभी ऋणों के लिये व्यवसाय स्थल पर इस भाग को भरें।</string>
-    <string name="point6">&#9733; समूह गारण्टी</string>
-    <string name="point6.1"> क्या ग्राहक ने अपने समूह सदस्यों का पिछले वर्षों में समर्थन किया है?</string>
-    <string name="point6.2">ऋण के लिये आवेदन करते समय क्या किसी ने कमीशन की मांग की।</string>
-    <string name="point6.3"> क्या ग्राहक समूह विलय के लिये सहमत है (तभी लागू जब विलयपत्र आवेदन पत्र के साथ संलग्न किया गया है।)।</string>
-    <string name="point6.4"> समूह में खून के रिश्तेदार के लिये जांच (नीति के रूप में परिभाषित)।</string>
-    <string name="point6.5"> चैक करें कि क्या ग्राहक बीमा दावा सम्बन्धी प्रक्रिया समझता है।</string>
-    <string name="point7">&#9733; बाहरी ऋण</string>
-    <string name="point7.1"> सत्यापित करें कि ग्राहक प्रोफाइल फार्म में बाहरी ऋण सम्बन्धी दी गयी सूचना से ग्राहक की ऋण उधारी मिलती है। </string>
-    <string name="point7.2"> क्या ग्राहक उस पर क्रेडिट ब्यूरो के प्रभाव को समझता है कि यदि उसने भुगतान दोष किया तो उसे भविष्य में ऋण नहीं मिलेगा?</string>
-    <string name="point7.3"> यह पूछे कि क्या क्षमता से अधिक ऋण है या समूह में आपसी उधारी है? संकल्प वीडियों का उदाहरण दोहराये।</string>
-    <string name="point7.4"> सुनिश्चित करे कि ग्राहक की कुल उधारी रु. 50000/- से अधिक नहीं है और एक।</string>
-    <string name="locationVerifier"> निवास गृह की जांच करने वाला।</string>
-    <string name="houseVerificationInstructions"> निवास गृह जांच सम्बन्धी अनुदेश \n
-        1. निवास गृह की जांच सम्बन्धित ग्राहक के साथ ग्राहक प्रोफाईल फार्म के साथ उसके निवास पर जाकर की जानी चाहिए।\n
-        2. निवास गृह की जांच सम्बन्धित ग्राहक के साथ ग्राहक प्रोफाईल फार्म के साथ उसके निवास पर जाकर की जानी चाहिए।\n
-        3. ऋण आवेदन पत्र समूह विलय पत्र (यदि लागू हो तो), वचन घोषणा पत्र तथा छाया प्रतियाँ 01. पहचान पत्र 02. पते का प्रमाण 03. आय का प्रमाण/n
-        4. ग्राहक को पहचानिये तथा फोटोग्राफ पर ग्राहक के हस्ताक्षर कराइये तथा ग्राहक के फोटोग्राफ तथा के०वाई०सी० पेपर्स पर मुहर लगाइये।\n
-        5. सभी फॉर्म पर ग्राहक के हस्ताक्षर तथा सभी तथ्य सुनिश्चित करें। आवेदन पत्र पर ग्राहक के हस्ताक्षरों का सत्यापन करें (यदि लागू हो)।\n
-        6. गृह निरीक्षण जांच सूची के सम्बन्धित कॉलम में ग्राहक का नाम का उल्लेख करें।</string>
-    <string name="officeVerificationReport"> व्यापार स्थल के सत्यापन की रिपोर्ट</string>
-    <string name="report.1"> व्यापार स्थल का निरीक्षण किया</string>
-    <string name="report.2"> जहां कही व्यापार स्थल कार्य करने वाली परिधि के बाहर है (वहां सत्यापन परिवार के सदस्यों, समूह सदस्यों व पड़ोसियों के माध्यम से सुनिश्चित करें) डी० एम० के अनुमोदन की मेल संलग्न है।</string>
-    <string name="report.3"> व्यापार स्थल का विवरण (अपना किराये पर या लीज़ पर)</string>
-    <string name="report.4"> कितने वर्षों से व्यापार में है</string>
-    <string name="report.5"> व्यापार का मौसमी स्वरूप का सत्यापन करें तथा यह सुनिश्चित करे कि ग्राहक के पास में मौसम समय के लिये समुचित नकदी प्रवाह उपलब्ध है जिससे वह हमारे ऋण का समय से भुगतान कर सके।</string>
-    <string name="report.6"> माल (स्टाक) का सत्यापन किया जहाँ कही लागू हो।</string>
-    <string name="report.7"> अनुमानित मासिक बिक्री (रुपयों में)(या तो सेल का कोई रिकार्ड है उससे सत्यापन करें या ग्राहक से विचार विमर्श के माध्यम से) </string>
-    <string name="report.8"> व्यापार से अनुमानित मासिक आय (रुपयों में)</string>
-    <string name="report.9"> यह सुनिचित करें कि आवेदित राशि ऋण के उदेश्य के अनुकूल है।</string>
+    <string name="verification">Verification</string>
+    <string name="point1"> &#9733; Residential Physical Verification Focused on Below Points</string>
+    <string name="point1.1">Type of Roof and Walls of House as per Residential Standards.</string>
+    <string name="point1.2">Customer Lives in Approved/Authorized Area.</string>
+    <string name="point1.3">Lifestyle as per Residential Information Described in CPF Section (Ultra Low, Low, Lower Middle Class Category).</string>
+    <string name="point2">&#9733; Verification of Loan Application Form, CPF, and KYC Papers</string>
+    <string name="point2.1">Verify if Correct Postal Address is Written in CPF.</string>
+    <string name="point2.2">Verify Photo Identification Document with Original ID.</string>
+    <string name="point2.3">Verify Address from Current Residence with Original Proof.</string>
+    <string name="point2.4">Verify Age Proof of Customer and Spouse with Original Copies.</string>
+    <string name="point2.5">Check if Permanent Address Details and PIN Code are Filled in CPF.</string>
+    <string name="point2.6">Match Verified Copies of Forms with Original Copies, Stamp, and Signature.</string>
+    <string name="point3">&#9733; Use and Presence of Previous Loan (if old customer)</string>
+    <string name="point3.1">Did the Customer Use the Previous Loan for the Purpose it was Taken?</string>
+    <string name="point3.2">&#9670; Mention Percentage of Loan Utilization by Customer.</string>
+    <string name="point3.3">Check Reasons for Absence from Center Meetings.</string>
+    <string name="point3.4">Verify Reasons for Payment Defaults/Delays. If Intentional, Do Not Proceed with this Customers Case.</string>
+    <string name="point4">&#9733; Purpose of New Loan</string>
+    <string name="point4.1">Check if Purpose of New Loan is Consumption Related or Income Increasing Activity.</string>
+    <string name="point4.2">Check if Requested Amount is Appropriate for the Purpose.</string>
+    <string name="point4.3">Is the Customer’s Spouse/Child Aware of the Loan Application Purpose?</string>
+    <string name="point4.4">(Applicable as per Branch Loan Policy)</string>
+    <string name="point5">&#9733; Business and Income Verification</string>
+    <string name="point5.1">Is the Loan Purpose Rational/Appropriate for Customer’s Business? (Is Spouse/Child’s Business Related to Loan Purpose? Where Applicable)</string>
+    <string name="point5.2">Check if Customer’s Business Affects Our Relations.</string>
+    <string name="point5.3">Does the Customer Have Sufficient Repayment Capacity for the Requested Loan Amount?</string>
+    <string name="point5.4">Match Home Cash Flow and Surplus Calculation from Customer Profile Format.</string>
+    <string name="point5.5">Does the Income Expense Information Provided by Customer Match with Details in Customer Profile Format?</string>
+    <string name="point5.6">Verification of Customers Business is Mandatory for All Loans (Fill This Section at Business Location for Loans Above Rs. 35,000/-)</string>
+    <string name="point6">&#9733; Group Guarantee</string>
+    <string name="point6.1">Has the Customer Supported Group Members in Previous Years?</string>
+    <string name="point6.2">Did Anyone Request a Commission While Applying for the Loan?</string>
+    <string name="point6.3">Is the Customer Agreeable to Group Merging (Applicable Only if Merger Document is Attached with Application)?</string>
+    <string name="point6.4">Check for Blood Relatives in the Group (As Defined by Policy).</string>
+    <string name="point6.5">Check if the Customer Understands the Insurance Claim Process.</string>
+    <string name="point7">&#9733; External Loans</string>
+    <string name="point7.1">Verify if Customer’s Loan Borrowings Match the Information Provided in Customer Profile Form.</string>
+    <string name="point7.2">Does the Customer Understand the Impact of Credit Bureau on Future Loans if Payment Defaults Occur?</string>
+    <string name="point7.3">Ask if There is Excessive Borrowing or Mutual Borrowing in the Group? Repeat Example of Resolution Videos.</string>
+    <string name="point7.4">Ensure Customer’s Total Borrowings Do Not Exceed Rs. 50,000/-.</string>
+    <string name="locationVerifier">Residence Verifier</string>
+    <string name="houseVerificationInstructions">Instructions for Residence Verification \n
+    1. Residence Verification Should Be Done at the Customer’s Residence with Customer Profile Form.\n
+    2. Residence Verification Should Be Done at the Customer’s Residence with Customer Profile Form.\n
+    3. Loan Application Form, Group Merger Letter (if applicable), Vow Declaration, and Photocopies 01. Identification Document 02. Address Proof 03. Income Proof/n
+    4. Identify the Customer, Obtain Signatures on Photograph, and Stamp Customer’s Photograph and KYC Papers.\n
+    5. Ensure Signatures on All Forms and Confirm All Facts. Verify Signatures on Application Form (if applicable).\n
+    6. Mention Customer’s Name in the Relevant Column of Home Inspection Checklist.</string>
+    <string name="officeVerificationReport">Business Location Verification Report</string>
+    <string name="report.1">Business location inspected</string>
+    <string name="report.2">Where the business location is outside the operating perimeter (ensure verification through family members, group members, and neighbors) with DMs approval mail attached.</string>
+    <string name="report.3">Business location details (Owned, Rented, or Leased)</string>
+    <string name="report.4">Number of years in business</string>
+    <string name="report.5">Verify the seasonal nature of the business and ensure the customer has adequate cash flow for seasonal times to make timely loan payments.</string>
+    <string name="report.6">Stock verification where applicable.</string>
+    <string name="report.7">Estimated monthly sales (in rupees) (Verify with sales records or through discussion with the customer)</string>
+    <string name="report.8">Estimated monthly income from the business (in rupees)</string>
+    <string name="report.9">Ensure that the applied loan amount is appropriate for the purpose of the loan.</string>
 
-    <string name="choose_scheme_prompt">एक योजना चुनें</string>
-    <string name="apply">योजना लागू करें</string>
-
-    <string name="imageTitle">आवेदक के साथ घर की तस्वीर खींचें</string>
+    <string name="choose_scheme_prompt">Choose a scheme</string>
+    <string name="apply">Apply for the scheme</string>
+    <string name="imageTitle">Take a picture of the applicant with their home</string>
 
     <string name="aadhar_id">Aadhar Id *</string>
     <string name="aadhar_name">Name</string>
@@ -232,43 +231,43 @@ Contact Email <i>DELHI@PAISALO.IN</i>
     <string name="applicant_residence_duration">Residing for (Years)</string>
 
 
-        <array name="emiReasons">
-            <item>"Medical Issue"</item>
-            <item>"Door Closed"</item>
-            <item>"Family Expense"</item>
-            <item>"Pay Tomorrow"</item>
-            <item>"Call not Received"</item>
-            <item>"Don't have money"</item>
-            <item>"Others"</item>
-        </array>
+    <array name="emiReasons">
+        <item>"Medical Issue"</item>
+        <item>"Door Closed"</item>
+        <item>"Family Expense"</item>
+        <item>"Pay Tomorrow"</item>
+        <item>"Call not Received"</item>
+        <item>"Don't have money"</item>
+        <item>"Others"</item>
+    </array>
 
-        <!--<string-array name="choice_array">
-            <item>Choose from Gallery</item>
-            <item>Take a Photo</item>
-        </string-array>-->
+    <string-array name="choice_array">
+        <item>Choose from Gallery</item>
+        <item>Take a Photo</item>
+    </string-array>
 
-        <array name="banktypedata">
-            <item>SBI</item>
-            <item>BOB</item>
-            <item>UCO</item>
-        </array>
+    <array name="banktypedata">
+        <item>SBI</item>
+        <item>BOB</item>
+        <item>UCO</item>
+    </array>
 
-        <array name="issuetypedata">
-            <item>New User Mapping</item>
-            <item>Login Issue</item>
-            <item>Update or mapping with Branch</item>
-        </array>
+    <array name="issuetypedata">
+        <item>New User Mapping</item>
+        <item>Login Issue</item>
+        <item>Update or mapping with Branch</item>
+    </array>
 
-        <array name="loanduration">
-            <item>"--Select--"</item>
-            <item>"12"</item>
-            <item>"18"</item>
-            <item>"24"</item>
-            <item>"30"</item>
-            <item>"36"</item>
-            <item>"42"</item>
-            <item>"48"</item>
-        </array>
+    <array name="loanduration">
+        <item>"--Select--"</item>
+        <item>"12"</item>
+        <item>"18"</item>
+        <item>"24"</item>
+        <item>"30"</item>
+        <item>"36"</item>
+        <item>"42"</item>
+        <item>"48"</item>
+    </array>
 
 
     <!-- Login Page -->
@@ -547,7 +546,7 @@ Contact Email <i>DELHI@PAISALO.IN</i>
     <string name="form60_Transaction_Date">Form60 Transaction Date</string>
     <string name="form60_Submission_Date">Form60 Submission Date</string>
     <string name="mother_Title">Mother Title</string>
-    <string name="mother_Maiden_Name">Mother Middle Name</string>
+    <string name="mother_Maiden_Name">Mother Maiden Name</string>
     <string name="spouse_Title">Spouse Title</string>
 
     <string name="applicant_Title">Applicant Title</string>
@@ -653,7 +652,7 @@ Contact Email <i>DELHI@PAISALO.IN</i>
     <string name="form60_transaction_date">Form60 Transaction Date : </string>
     <string name="form60_submission_date">Form60 Submission Date : </string>
     <string name="Mother_title">Mother Title : </string>
-    <string name="mother_maiden_name">Mother Middle Name : </string>
+    <string name="mother_maiden_name">Mother Maiden Name : </string>
     <string name="spouse_title">Spouse Title : </string>
     <string name="other_than_agriculture_income">Other Than Agriculture Income : </string>
     <string name="years_in_business">Years in Business : </string>
@@ -756,11 +755,13 @@ Contact Email <i>DELHI@PAISALO.IN</i>
     <string name="pre_close_case">Case Pre-Closure</string>
 
     <string name="lump_sum_amount">Lump Sum Amount</string>
-    <string name="hindiconfirmation">क्या आप निश्चित रूप से उधारकर्ता से नीचे दी गई राशि वसूल रहे हैं?</string>
-    <string name="hindiqr">दिए गए QR कोड को स्कैन करें और ग्राहक द्वारा किए गए भुगतान के बाद स्थिति(Status) प्राप्त करें।</string>
-    <string name="imageupload">यदि क्यूआर कोड पर भुगतान सफल हो गया है लेकिन स्थिति नहीं मिल रही है तो लेनदेन आईडी के साथ स्क्रीनशॉट अपलोड करें।</string>
+    <string name="hindiconfirmation">Are you sure you are collecting the amount mentioned below from the borrower?</string>
+    <string name="hindiqr">Scan the provided QR code and get the status after the payment is made by the customer.</string>
+    <string name="imageupload">If the payment is successful via the QR code but the status is not received, please upload a screenshot with the transaction ID.</string>
+
     <string name="name">NAME</string>
-    
+
+
     <string name="family_income">FAMILY INCOME</string>
     <string name="installments">Installments</string>
     <string name="paid_installments">Paid Installments</string>
@@ -813,9 +814,6 @@ Contact Email <i>DELHI@PAISALO.IN</i>
     <string name="lonee">Lonee </string>
     <string name="loan_emi">Loan EMI </string>
 
-
-
     <string name="AUA_Key">VQA0AEUAYgByAGsANQB6AGcAVwA3AHEAMgBwAFAAYwB2ADUAUABNAHcATQB6AEUAMgBiAHAAUwBBAC8AdwBVAEwALwBEADMAOABZAEcAZwB6ADMAaABRAHIAegBqAGEANQBRAGIAMQBPAEEAZAB3AEoARwBkAEYAZgBuAG0AUwBKADMAMgBaAGoAVwBDAE4ALwBRAE4ARwA1AEMARgBjAEoAOAB2AGgAbgBCAHYAMwBjADYAeABoAGkAaQA4AEsAdQB5AE4AMQArAGcASgBBAC8AOABOAG0AYQBjAGoAMQB5AFMAeABPAEUAMAA4ADcAMgBIADkAMgA4AGkAbwA2AA==</string>
-
 
 </resources>

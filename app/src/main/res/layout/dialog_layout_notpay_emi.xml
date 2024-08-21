@@ -7,7 +7,7 @@
     android:orientation="vertical">
     <TextView
         android:layout_width="match_parent"
-        android:text="Reason for not Paying EMI"
+        android:text="@string/reason_for_not_paying"
         android:gravity="center_vertical"
         android:textSize="15dp"
         android:paddingStart="8dp"
@@ -40,7 +40,7 @@
                     <EditText
                         android:id="@+id/tietPromisingDate"
                         android:enabled="false"
-                        android:hint="Promising Date"
+                        android:hint="@string/promising_date"
                         android:textColor="@color/black"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -68,7 +68,7 @@
             android:id="@+id/saveDataForEMINOTPAY"
             android:layout_marginTop="8dp"
             android:layout_gravity="center_horizontal"
-            android:text="Submit"
+            android:text="@string/submit"
             android:textColor="@color/white"
             android:backgroundTint="@color/red"
             android:layout_width="match_parent"

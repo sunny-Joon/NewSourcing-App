@@ -35,7 +35,7 @@
                     android:id="@+id/customerNameTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="User Name"
+                    android:text="@string/login_username"
                     android:textSize="@dimen/heading"
                     android:layout_marginStart="5dp"
                     android:fontFamily="@font/visbycfregular"
@@ -52,7 +52,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Guardian"
+                    android:text="@string/Guardian"
                     android:textColor="@color/white"
                     android:textSize="@dimen/heading"
                     android:fontFamily="@font/visbycfregular" />
@@ -74,7 +74,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Mobile"
+                    android:text="@string/mobile"
                     android:layout_weight="1"
                     android:textColor="@color/white"
                     android:textSize="@dimen/heading"
@@ -96,7 +96,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Total Payment"
+                    android:text="total_payment"
                     android:layout_weight="1"
                     android:textColor="@color/white"
                     android:textSize="@dimen/heading"
@@ -118,7 +118,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="FiCode/Creator"
+                    android:text="@string/ficode_creator"
                     android:layout_weight="1"
                     android:textColor="@color/white"
                     android:textSize="@dimen/heading"
@@ -142,7 +142,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="Address"
+                    android:text="@string/address"
                     android:textColor="@color/white"
                     android:textSize="@dimen/heading"
                     android:fontFamily="@font/visbycfregular" />

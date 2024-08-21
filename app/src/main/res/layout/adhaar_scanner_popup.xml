@@ -21,23 +21,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:layout_margin="25dp"
-                android:text="Click Adhaar Front" />
+                android:text="@string/click_adhaar_front" />
 
             <Button
                 android:id="@+id/adhaarBack"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:layout_margin="25dp"
-                android:text="Click Adhaar Back" />
+                android:text="@string/click_adhaar_back" />
 
             <Button
                 android:id="@+id/scanQrCode"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:layout_margin="25dp"
-                android:text="Scan By QR Code" />
-
-
+                android:text="@string/scan_by_QR_code" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

@@ -35,7 +35,7 @@
                     android:id="@+id/lenderNameTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="User Name"
+                    android:text="@string/login_username"
                     android:textSize="@dimen/heading"
                     android:layout_marginStart="5dp"
                     android:fontFamily="@font/visbycfregular"
@@ -52,7 +52,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Lender Type"
+                    android:text="@string/lender_type"
                     android:textColor="@color/white"
                     android:textSize="@dimen/heading"
                     android:fontFamily="@font/visbycfregular" />
@@ -74,7 +74,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Reason For Loan"
+                    android:text="@string/reason_For_Loan"
                     android:layout_weight="1"
                     android:textColor="@color/white"
                     android:textSize="@dimen/heading"
@@ -96,7 +96,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Is MFI"
+                    android:text="@string/is_MFI"
                     android:layout_weight="1"
                     android:textColor="@color/white"
                     android:textSize="@dimen/heading"
@@ -118,7 +118,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Lonee"
+                    android:text="@string/lonee"
                     android:layout_weight="1"
                     android:textColor="@color/white"
                     android:textSize="@dimen/heading"
@@ -142,7 +142,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Loan Amount"
+                    android:text="@string/loanamount"
                     android:layout_weight="1"
                     android:textColor="@color/white"
                     android:textSize="@dimen/heading"
@@ -166,7 +166,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Loan EMI"
+                    android:text="@string/loan_emi"
                     android:textColor="@color/white"
                     android:textSize="@dimen/heading"
                     android:fontFamily="@font/visbycfregular" />
@@ -192,7 +192,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Balance"
+                    android:text="@string/balance_amount"
                     android:textColor="@color/white"
                     android:textSize="@dimen/heading"
                     android:fontFamily="@font/visbycfregular" />

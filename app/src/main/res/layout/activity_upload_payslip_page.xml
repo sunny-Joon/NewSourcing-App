@@ -26,7 +26,7 @@
         android:backgroundTint="@color/red"
         android:textColor="@color/white"
         android:layout_height="wrap_content"
-        android:text="Upload Reciept"
+        android:text="@string/upload_reciept"
         android:layout_marginTop="16dp"/>
 
     <!-- ImageView to show the selected image -->
@@ -43,6 +43,6 @@
         android:id="@+id/btnSubmit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Submit"
+        android:text="@string/submit"
         android:layout_marginTop="16dp"/>
 </LinearLayout>

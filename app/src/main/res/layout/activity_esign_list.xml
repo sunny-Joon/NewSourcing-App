@@ -23,7 +23,7 @@
 
             android:layout_height="wrap_content"
             android:paddingStart="10dp"
-            android:queryHint="Search"
+            android:queryHint="@string/search"
             android:iconifiedByDefault="false" />
 
     </androidx.cardview.widget.CardView>
