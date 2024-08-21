@@ -22,7 +22,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginTop="20dp"
-            android:text="Device ID"
+            android:text="@string/device_id"
             android:textColor="@color/white"
             android:textSize="15dp" />
 
@@ -56,7 +56,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
-            android:text="User Id"
+            android:text="@string/user_id"
             android:textColor="@color/white"
             android:textSize="15dp" />
 
@@ -91,7 +91,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
-            android:text="Request Type"
+            android:text="@string/request_type"
             android:textColor="@color/white"
             android:textSize="15dp" />
         <androidx.cardview.widget.CardView
@@ -116,7 +116,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
-            android:text="Creator"
+            android:text="@string/creator"
             android:textColor="@color/white"
             android:textSize="15dp" />
         <androidx.cardview.widget.CardView
@@ -145,7 +145,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
-            android:text="Branch Codes (001,002,003 etc.)"
+            android:text="@string/branch_Code"
             android:textColor="@color/white"
             android:textSize="15dp" />
         <androidx.cardview.widget.CardView
@@ -185,7 +185,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
-            android:text="Name"
+            android:text="@string/name"
             android:textColor="@color/white"
             android:textSize="15dp" />
 
@@ -217,7 +217,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
-            android:text="Mobile"
+            android:text="@string/mobile"
             android:textColor="@color/white"
             android:textSize="15dp" />
 
@@ -251,7 +251,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
-            android:text="IMEI NO. 1"
+            android:text="@string/imei_no.1"
             android:textColor="@color/white"
             android:textSize="15dp" />
 
@@ -285,7 +285,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
-            android:text="IMEI No. 2"
+            android:text="@string/imei_no.2"
             android:textColor="@color/white"
             android:textSize="15dp" />
 
@@ -340,7 +340,7 @@
                 android:layout_gravity="left"
                 android:backgroundTint="@color/darkred"
                 android:textColor="@color/white"
-                android:text="Cancel" />
+                android:text="@string/cancel" />
 
             <Button
                 android:id="@+id/saveButton"
@@ -351,7 +351,7 @@
                 android:layout_gravity="right"
                 android:layout_marginLeft="15dp"
                 android:textColor="@color/white"
-                android:text="Save" />
+                android:text="@string/save" />
 
         </LinearLayout>
 

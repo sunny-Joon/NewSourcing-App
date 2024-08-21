@@ -23,7 +23,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="to"
+        android:text="@string/to"
         android:fontFamily="@font/visbycfregular"
         android:textColor="@color/white"
         android:gravity="center"
@@ -32,7 +32,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Paisalo Digital"
+        android:text="@string/paisalo"
         android:textColor="@color/white"
         android:gravity="center"
         android:textStyle="bold"
@@ -42,7 +42,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="SWIPE TO START EARNING"
+        android:text="@string/left"
         android:textColor="@color/white"
         android:gravity="center"
         android:layout_marginTop="100dp"

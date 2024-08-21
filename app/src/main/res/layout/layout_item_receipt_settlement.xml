@@ -43,7 +43,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Receipt Date"
+        android:text="@string/receipt_no"
         android:gravity="end"
         android:textSize="12sp"
         android:visibility="visible" />

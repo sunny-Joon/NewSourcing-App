@@ -609,7 +609,7 @@ Contact Email <i>DELHI@PAISALO.IN</i>
     </string>
 
     <!--layout Dashboard-->
-    <string name="home_welcome">Welcome to Sourcing App</string>
+    <string name="home_welcome">Welcome</string>
     <string name="home_menu_desc">Tap top-left menu icon to access Menu</string>
 
     <!--layout dialog new family member-->
@@ -773,6 +773,64 @@ Contact Email <i>DELHI@PAISALO.IN</i>
     <string name="sorry">Sorry!!</string>
     <string name="not_eligible">You are not eligible for loan!!</string>
     <string name="try_again">TRY AGAIN</string>
+
+    //rps
+    <string name="support1">Support 1</string>
+    <string name="support2">Support 2</string>
+    <string name="support3">Support 3</string>
+    <string name="verifyotp">Verify OTP</string>
+    <string name="verify">Verify</string>
+    <string name="enterotphere">Enter OTP Here</string>
+    <string name="firstesign">First Esign</string>
+    <string name="secondesign">Second Esign</string>
+    <string name="latepaymentinterest">Late Payment Interest</string>
+    <string name="helo">Hello</string>
+    <string name="grno">GR No.</string>
+    <string name="id">ID</string>
+    <string name="to">To</string>
+    <string name="paisalo">Paisalo Digital</string>
+    <string name="left">SWIPE TO START EARNING</string>
+    <string name="punchin">PUNCH IN</string>
+    <string name="punchout">PUNCH OUT</string>
+    <string name="addressdetails">Address Details</string>
+    <string name="getqrdetatils">Get QR Payment Details</string>
+    <string name="getcollectindetatils">Get Collection Report</string>
+    <string name="refernow">Refer Now</string>
+    <string name="nooffaimlymember">No Of Family Members</string>
+    <string name="complete">50% COMPLETED</string>
+    <string name="submitgurrantor">Submit Gurrantor</string>
+    <string name="faimlymemberincome">Faimly Member Income</string>
+    <string name="submitborrower">Submit Borrower</string>
+    <string name="panno">PAN No.</string>
+    <string name="iscurrunt">Is current address same as Aadhaar</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <string name="AUA_Key">VQA0AEUAYgByAGsANQB6AGcAVwA3AHEAMgBwAFAAYwB2ADUAUABNAHcATQB6AEUAMgBiAHAAUwBBAC8AdwBVAEwALwBEADMAOABZAEcAZwB6ADMAaABRAHIAegBqAGEANQBRAGIAMQBPAEEAZAB3AEoARwBkAEYAZgBuAG0AUwBKADMAMgBaAGoAVwBDAE4ALwBRAE4ARwA1AEMARgBjAEoAOAB2AGgAbgBCAHYAMwBjADYAeABoAGkAaQA4AEsAdQB5AE4AMQArAGcASgBBAC8AOABOAG0AYQBjAGoAMQB5AFMAeABPAEUAMAA4ADcAMgBIADkAMgA4AGkAbwA2AA==</string>
 

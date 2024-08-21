@@ -53,7 +53,7 @@
             android:fontFamily="@font/visbycfregular"
             android:gravity="left|center_vertical"
             android:text="Sunny Joon"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="@dimen/heading" />
 
         <TextView
@@ -65,7 +65,7 @@
             android:fontFamily="@font/visbycfregular"
             android:gravity="center_vertical|right"
             android:text="10000"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="@dimen/heading" />
     </LinearLayout>
 

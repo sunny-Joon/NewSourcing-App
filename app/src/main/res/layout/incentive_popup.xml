@@ -27,7 +27,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/visbycfregular"
                     android:gravity="center"
-                    android:text="CALCULATING COMISSION"
+                    android:text="@string/calculating_comission"
                     android:textSize="@dimen/titleheading" />
 
                 <pl.droidsonroids.gif.GifImageView
@@ -43,7 +43,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/visbycfregular"
                     android:gravity="center"
-                    android:text="MORE DISBURSEMENT\nMORE INCENTIVE"
+                    android:text="@string/more_disbursement"
                     android:textSize="@dimen/titleheading" />
 
             </LinearLayout>

@@ -20,7 +20,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Email Id"
+                android:text="@string/email_id"
                 android:textSize="@dimen/heading"
                 android:layout_marginTop="8dp"
                 android:textColor="@color/white"
@@ -42,7 +42,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Caste"
+                android:text="@string/caste"
                 android:textSize="@dimen/heading"
                 android:layout_marginTop="8dp"
                 android:textColor="@color/white"
@@ -63,7 +63,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Religion"
+                android:text="@string/applicant_religion"
                 android:textSize="@dimen/heading"
                 android:layout_marginTop="8dp"
                 android:textColor="@color/white"
@@ -84,7 +84,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Place Of Birth"
+                android:text="@string/place_of_birth"
                 android:textSize="@dimen/heading"
                 android:layout_marginTop="8dp"
                 android:textColor="@color/white"
@@ -107,7 +107,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Present House Owner"
+                android:text="@string/present_house_owner"
                 android:textSize="@dimen/heading"
                 android:layout_marginTop="8dp"
                 android:textColor="@color/white"
@@ -128,7 +128,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Residing for"
+                android:text="@string/applicant_residence_duration"
                 android:textSize="@dimen/heading"
                 android:layout_marginTop="8dp"
                 android:textColor="@color/white"
@@ -151,7 +151,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="No Of Family Members"
+                android:text="@string/nooffaimlymember"
                 android:textSize="@dimen/heading"
                 android:layout_marginTop="8dp"
                 android:textColor="@color/white"
@@ -173,7 +173,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Land Hold (Acres)"
+                android:text="@string/land_Hold"
                 android:textSize="@dimen/heading"
                 android:layout_marginTop="8dp"
                 android:textColor="@color/white"
@@ -195,7 +195,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Special Ability"
+                android:text="@string/special_Ability"
                 android:textSize="@dimen/heading"
                 android:layout_marginTop="8dp"
                 android:textColor="@color/white"
@@ -217,7 +217,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Special Social Category"
+                android:text="@string/special_social_category"
                 android:textSize="@dimen/heading"
                 android:layout_marginTop="8dp"
                 android:textColor="@color/white"
@@ -239,7 +239,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Educational Code"
+                android:text="@string/educational_Code"
                 android:textSize="@dimen/heading"
                 android:layout_marginTop="8dp"
                 android:textColor="@color/white"
@@ -260,7 +260,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="PAN Applied"
+                android:text="@string/pan_applied"
                 android:textSize="@dimen/heading"
                 android:layout_marginTop="8dp"
                 android:textColor="@color/white"
@@ -291,7 +291,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Years In Business"
+                android:text="@string/years_in_Business"
                 android:textSize="@dimen/heading"
                 android:layout_marginTop="8dp"
                 android:textColor="@color/white"
@@ -315,7 +315,7 @@
                 android:id="@+id/submitpersonalInfo"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:text="submit"
+                android:text="@string/submit"
                 android:layout_margin="16dp"
                 android:textSize="@dimen/heading"
                 android:fontFamily="@font/visbycfbold"

@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:layout_margin="10dp"
-        android:text="Submit Borrower"/>
+        android:text="@string/submitborrower"/>
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

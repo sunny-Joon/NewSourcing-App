@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/visbycfregular"
         android:gravity="center"
-        android:text="Onboarding"
+        android:text="@string/onboarding"
         android:textColor="@color/white"
         android:layout_marginBottom="40dp"
         android:textSize="@dimen/vbigheading"
@@ -64,7 +64,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="KYC"
+                        android:text="@string/kyc"
                         android:gravity="center_vertical"
                         android:paddingStart="40dp"
                         android:fontFamily="@font/visbycfbold"
@@ -102,7 +102,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="70dp"
-                        android:text="E SIGN"
+                        android:text="@string/esign"
                         android:gravity="center_vertical"
                         android:paddingStart="40dp"
                         android:fontFamily="@font/visbycfbold"
@@ -142,7 +142,7 @@
                         android:layout_height="70dp"
                         android:gravity="center_vertical"
                         android:paddingStart="40dp"
-                        android:text="APPLICATION FORM"
+                        android:text="@string/application_form"
                         android:fontFamily="@font/visbycfbold"
                         android:textSize="@dimen/subheading"
                         android:layout_weight=".5"/>
@@ -179,7 +179,7 @@
                         android:layout_height="70dp"
                         android:gravity="center_vertical"
                         android:paddingStart="40dp"
-                        android:text="HOUSE VISIT"
+                        android:text="@string/housevisit"
                         android:fontFamily="@font/visbycfbold"
                         android:textSize="@dimen/subheading"
                         android:layout_weight=".5"/>
@@ -217,7 +217,7 @@
                         android:layout_height="70dp"
                         android:gravity="center_vertical"
                         android:paddingStart="40dp"
-                        android:text="Visit Report"
+                        android:text="@string/housevisit"
                         android:fontFamily="@font/visbycfbold"
                         android:textSize="@dimen/subheading"
                         android:layout_weight=".5"/>
