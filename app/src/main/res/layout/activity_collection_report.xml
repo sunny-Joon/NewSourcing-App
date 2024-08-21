@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/search"
-        android:hint="search  by smcode"
+        android:hint="@string/Search_by_FI_Code"
         android:padding="12dp"
         android:maxLength="10"
         android:layout_marginEnd="20dp"
@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="2.5"
         android:layout_marginEnd="5dp"
-        android:text="Submit"/>
+        android:text="@string/submit"/>
 
 </LinearLayout>
 
@@ -63,7 +63,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Installment"
+                android:text="@string/installments"
                 android:textSize="15dp"
                 android:layout_weight="1"
                 android:textColor="@color/white"
@@ -118,7 +118,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Paid Installment"
+                    android:text="@string/paid_installments"
                     android:textSize="15dp"
                     android:layout_weight="1"
                     android:textColor="@color/white"

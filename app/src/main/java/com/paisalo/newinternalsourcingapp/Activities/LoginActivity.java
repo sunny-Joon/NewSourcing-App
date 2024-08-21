@@ -20,6 +20,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -30,6 +31,8 @@ import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -101,7 +104,6 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
     CreatorListAdapter adapter;
     String selectDatabase1;
     onListCReatorInteraction listCReatorInteraction;
-
 
     List<CreatorListModelData> list=new ArrayList<>();
     public static final String DATABASE_NAME = BuildConfig.APPLICATION_ID + ".DBNAME";
@@ -200,8 +202,6 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
         FirebaseApp.initializeApp(this);
         FirebaseMessaging.getInstance().setAutoInitEnabled(true);
         requestFCMToken();
-
-       // getSupportActionBar().hide();
 
         versionset = findViewById(R.id.versionset);
         versionset.setText(BuildConfig.VERSION_NAME);
@@ -366,6 +366,72 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
             }
         });
     }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_language, menu);
+        return true;
+    }
+
+    private void setLocale(String languageCode) {
+        Locale locale = new Locale(languageCode);
+        Locale.setDefault(locale);
+
+        Configuration config = new Configuration();
+        config.setLocale(locale);
+        getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        boolean retVal;
+        switch (item.getItemId()) {
+            case R.id.action_language_english:
+                setLocale("en");
+                Log.d("TAG", "onOptionsItemSelected: English selected");
+                recreate();
+                retVal = true;
+                break;
+            case R.id.action_language_hindi:
+                setLocale("hi");
+                Log.d("TAG", "onOptionsItemSelected: Hindi selected");
+                recreate();
+                retVal = true;
+                break;
+            case R.id.action_language_bengali:
+                setLocale("bn");
+                Log.d("TAG", "onOptionsItemSelected: Bengali selected");
+                recreate();
+                retVal = true;
+                break;
+            case R.id.action_sourcing_update:
+                retVal = true;
+                String url = "https://erpservice.paisalo.in:980/PDL.Mobile.Api/api/ApkApp/paisaloSourcingApp";
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+                break;
+            case R.id.action_nsdl_update:
+                retVal = true;
+                String url1 = "https://erpservice.paisalo.in:980/PDL.Mobile.Api/api/ApkApp/AndroidNSDL";
+                Intent i1 = new Intent(Intent.ACTION_VIEW);
+                i1.setData(Uri.parse(url1));
+                startActivity(i1);
+                break;
+            case R.id.action_rdSer_update:
+                retVal = true;
+                String url2 = "https://erpservice.paisalo.in:980/PDL.Mobile.Api/api/ApkApp/AndroidRDService";
+                Intent i2 = new Intent(Intent.ACTION_VIEW);
+                i2.setData(Uri.parse(url2));
+                startActivity(i2);
+                break;
+            default:
+                retVal = super.onOptionsItemSelected(item);
+        }
+        return retVal;
+    }
+
 
     private void requestFCMToken() {
         FirebaseMessaging.getInstance().getToken()

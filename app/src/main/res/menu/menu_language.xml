@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:title="@string/language"
+        android:iconTint="#ffffff"
+        android:icon="@drawable/language_ic"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:title="@string/english"
+                android:id="@+id/action_language_english" />
+            <item
+                android:title="@string/hindi"
+                android:id="@+id/action_language_hindi" />
+            <item
+                android:title="@string/bengali"
+                android:id="@+id/action_language_bengali" />
+        </menu>
+    </item>
+
+    <item
+        android:title="Update App"
+        android:iconTint="#ffffff"
+        android:icon="@drawable/ic_threedots"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:title="Update Sourcing App"
+                android:id="@+id/action_sourcing_update" />
+
+            <item
+                android:title="Update NSDL App"
+                android:id="@+id/action_nsdl_update" />
+            <item
+                android:title="Update RD Service App"
+                android:id="@+id/action_rdSer_update" />
+
+
+
+
+        </menu>
+    </item>
+</menu>
