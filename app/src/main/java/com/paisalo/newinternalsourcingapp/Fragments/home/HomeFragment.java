@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.preference.PreferenceManager;
@@ -12,7 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -47,6 +50,7 @@ public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
     private Dialog popupDialog;
     ImageView imageView;
+    VideoView videoView;
     static String month = "",year = "";
     String image,stTarget_Popup;
     boolean flag=false;
@@ -71,6 +75,8 @@ public class HomeFragment extends Fragment {
         binding.backgroundImageView.setVisibility(View.GONE);
 
         imageView = root.findViewById(R.id.imageTop);
+        videoView = root.findViewById(R.id.videoViewBanner);
+
         GifImageView upside = root.findViewById(R.id.upside);
         GifImageView downside = root.findViewById(R.id.downside);
 
@@ -271,14 +277,45 @@ public class HomeFragment extends Fragment {
         });
 
     }
-    private void set_image(String image) {
 
-        Glide.with(this)
-                .load(image)
-                .placeholder(R.drawable.image)
-                .error(R.drawable.image)
-                .into(imageView);
+    private void set_image(String image) {
+        Log.e("imagetypeDATA--- ",image);
+        if(image.length()>3){
+            String imagetype=image.substring(image.length() - 3);
+            Log.e("imagetype--- ",imagetype);
+            if(imagetype.equalsIgnoreCase("mp4")){
+                videoView.setVisibility(View.VISIBLE);
+                imageView.setVisibility(View.GONE);
+                Uri uri = Uri.parse(image);
+                videoView.setVideoURI(uri);
+                MediaController mediaController = new MediaController(getActivity());
+                mediaController.setAnchorView(videoView);
+                mediaController.setMediaPlayer(videoView);
+                videoView.setMediaController(mediaController);
+                videoView.start();
+            }else{
+                videoView.setVisibility(View.GONE);
+                imageView.setVisibility(View.VISIBLE);
+                Glide.with(this)
+                        .load(image)
+                        .placeholder(R.drawable.bannerp) // Placeholder image while loading (optional)
+                        .error(R.drawable.bannerp) // Image to display in case of error loading the URL (optional)
+                        .into(imageView);
+            }
+        }else{
+            videoView.setVisibility(View.GONE);
+            imageView.setVisibility(View.VISIBLE);
+            Glide.with(this)
+                    .load(image)
+                    .placeholder(R.drawable.bannerp) // Placeholder image while loading (optional)
+                    .error(R.drawable.bannerp) // Image to display in case of error loading the URL (optional)
+                    .into(imageView);
+        }
+
+
     }
+
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
