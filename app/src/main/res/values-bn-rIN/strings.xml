@@ -782,7 +782,34 @@
     <string name="qr_payment_received">QR পেমেন্ট গৃহীত হয়েছে</string>
     <string name="lonee">ঋণগ্রহীতা</string>
     <string name="loan_emi">ঋণ EMI</string>
-
+    <string name="support1">সহায়তা ১</string>
+    <string name="support2">সহায়তা ২</string>
+    <string name="support3">সহায়তা ৩</string>
+    <string name="verifyotp">OTP যাচাই করুন</string>
+    <string name="verify">যাচাই করুন</string>
+    <string name="enterotphere">এখানে OTP লিখুন</string>
+    <string name="firstesign">প্রথম ই-সাইন</string>
+    <string name="secondesign">দ্বিতীয় ই-সাইন</string>
+    <string name="latepaymentinterest">বিলম্বিত পেমেন্ট সুদ</string>
+    <string name="helo">হ্যালো</string>
+    <string name="grno">GR নম্বর</string>
+    <string name="id">আইডি</string>
+    <string name="to">প্রতি</string>
+    <string name="paisalo">পাইসালো ডিজিটাল</string>
+    <string name="left">উপার্জন শুরু করতে সোয়াইপ করুন</string>
+    <string name="punchin">পাঞ্চ ইন</string>
+    <string name="punchout">পাঞ্চ আউট</string>
+    <string name="addressdetails">ঠিকানার বিবরণ</string>
+    <string name="getqrdetatils">QR পেমেন্টের বিবরণ পান</string>
+    <string name="getcollectindetatils">সংগ্রহ প্রতিবেদন পান</string>
+    <string name="refernow">এখনই উল্লেখ করুন</string>
+    <string name="nooffaimlymember">পরিবারের সদস্য সংখ্যা</string>
+    <string name="complete">৫০% সম্পন্ন হয়েছে</string>
+    <string name="submitgurrantor">জামিনদার জমা দিন</string>
+    <string name="faimlymemberincome">পরিবারের সদস্যের আয়</string>
+    <string name="submitborrower">ঋণগ্রহীতা জমা দিন</string>
+    <string name="panno">প্যান নম্বর</string>
+    <string name="iscurrunt">বর্তমান ঠিকানা আধারের মতো কি</string>
 
     <string name="AUA_Key">VQA0AEUAYgByAGsANQB6AGcAVwA3AHEAMgBwAFAAYwB2ADUAUABNAHcATQB6AEUAMgBiAHAAUwBBAC8AdwBVAEwALwBEADMAOABZAEcAZwB6ADMAaABRAHIAegBqAGEANQBRAGIAMQBPAEEAZAB3AEoARwBkAEYAZgBuAG0AUwBKADMAMgBaAGoAVwBDAE4ALwBRAE4ARwA1AEMARgBjAEoAOAB2AGgAbgBCAHYAMwBjADYAeABoAGkAaQA4AEsAdQB5AE4AMQArAGcASgBBAC8AOABOAG0AYQBjAGoAMQB5AFMAeABPAEUAMAA4ADcAMgBIADkAMgA4AGkAbwA2AA==</string>
 

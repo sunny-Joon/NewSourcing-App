@@ -797,6 +797,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                 Build.TAGS.length()%10 + Build.TYPE.length()%10 +
                 Build.USER.length()%10 ; //13 digits
 
+        deviceId = "2234514145687247";
         Log.d("TAG", "ImeiId6: "+deviceId);
 
         //GlobalClass.setSharedPref(getBaseContext(), deviceId, deviceId);
@@ -946,8 +947,10 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
     private void getTargetApi() {
 
         Calendar calendar = Calendar.getInstance();
-        month = new SimpleDateFormat("MMM", Locale.getDefault()).format(calendar.getTime());
-        year = new SimpleDateFormat("yyyy", Locale.getDefault()).format(calendar.getTime());
+// Use a fixed locale, e.g., Locale.ENGLISH
+        month = new SimpleDateFormat("MMM", Locale.ENGLISH).format(calendar.getTime());
+        year = new SimpleDateFormat("yyyy", Locale.ENGLISH).format(calendar.getTime());
+
 
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<TargetResponseModel> call = apiInterface.getTarget(GlobalClass.Token,GlobalClass.dbname,GlobalClass.Id, String.valueOf(month), String.valueOf(year));
