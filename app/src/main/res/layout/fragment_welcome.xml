@@ -13,7 +13,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Welcome"
+        android:text="@string/home_welcome"
         android:fontFamily="@font/visbycfregular"
         android:textColor="@color/white"
         android:gravity="center"

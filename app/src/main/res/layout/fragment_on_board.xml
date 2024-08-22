@@ -217,7 +217,7 @@
                         android:layout_height="70dp"
                         android:gravity="center_vertical"
                         android:paddingStart="40dp"
-                        android:text="@string/housevisit"
+                        android:text="@string/visitrepost"
                         android:fontFamily="@font/visbycfbold"
                         android:textSize="@dimen/subheading"
                         android:layout_weight=".5"/>
