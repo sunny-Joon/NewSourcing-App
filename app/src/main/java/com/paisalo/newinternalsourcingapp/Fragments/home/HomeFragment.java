@@ -75,8 +75,8 @@ public class HomeFragment extends Fragment {
         GifImageView downside = root.findViewById(R.id.downside);
 
         Calendar calendar = Calendar.getInstance();
-        month = new SimpleDateFormat("MMM", Locale.getDefault()).format(calendar.getTime());
-        year = new SimpleDateFormat("yyyy", Locale.getDefault()).format(calendar.getTime());
+        month = new SimpleDateFormat("MMM", Locale.ENGLISH).format(calendar.getTime());
+        year = new SimpleDateFormat("yyyy", Locale.ENGLISH).format(calendar.getTime());
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         image = sharedPreferences.getString("image", "");
