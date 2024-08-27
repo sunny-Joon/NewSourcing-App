@@ -1002,6 +1002,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
             public void onFailure(Call<TargetResponseModel> call, Throwable t) {
                 GlobalClass.showToast(LoginActivity.this,5,t.getMessage());
 
+
             }
         });
     }
