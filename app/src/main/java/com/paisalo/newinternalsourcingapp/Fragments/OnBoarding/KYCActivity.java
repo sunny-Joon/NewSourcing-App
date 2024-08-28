@@ -70,6 +70,7 @@ import com.paisalo.newinternalsourcingapp.Entities.ScanAadhaar.AadharUtils;
 import com.paisalo.newinternalsourcingapp.Entities.SubDistChooseListner;
 import com.paisalo.newinternalsourcingapp.Entities.VillageChooseListner;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
+import com.paisalo.newinternalsourcingapp.Modelclasses.AdharExitsModel;
 import com.paisalo.newinternalsourcingapp.Modelclasses.FiExtra;
 import com.paisalo.newinternalsourcingapp.Modelclasses.FiJsonObject;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.GetAllApplicationFormDataModels.AllDataAFDataModel;
@@ -221,7 +222,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
     FiJsonObject jsonData;
     ScrollView scrollView;
     String foCode, creator, areaCode;
-
+    int aadhar_status=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -497,26 +498,30 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
             public void onClick(View view) {
                 dl_Checkbox.setChecked(false);
                 if (editTextDob.getText().toString().trim().length() > 9) {
-
                     if (editTextdrivingLicense.getText().toString().trim().length() < 5 || editTextdrivingLicense.length() > 15) {
-                        // tilDL_Name.setVisibility(View.GONE);
-                        editTextdrivingLicense.setError(" Driving License  Should be between 5 to 15 digits");
+                        editTextdrivingLicense.setError("Driving License Should be between 5 to 15 digits");
                         tilDLName.setVisibility(View.GONE);
                     } else {
-                        String dateOB = GlobalClass.formatDateString2(editTextDob.getText().toString(),"yyyy/MM/dd");
-                        Log.d("TAG", "drivinglicenseDOB: "+ editTextDob.getText().toString());
-                        Log.d("TAG", "drivinglicenseDOB: "+ dateOB);
+                        IsAaadharExits(new AadharStatusCallback() {
+                            @Override
+                            public void onResult(boolean exists) {
+                                if (exists) {
+                                    showKYCFailedDialog();
+                                } else {
+                                    String dateOB = GlobalClass.formatDateString2(editTextDob.getText().toString(),"yyyy/MM/dd");
+                                    Log.d("TAG", "drivinglicenseDOB: "+ editTextDob.getText().toString());
+                                    Log.d("TAG", "drivinglicenseDOB: "+ dateOB);
+                                    dlVerification("drivinglicense", editTextdrivingLicense.getText().toString(),dateOB );                        }
 
-                        dlVerification("drivinglicense", editTextdrivingLicense.getText().toString(),dateOB );
-
+                            }
+                        });
                     }
-
                 } else {
                     Toast.makeText(KYCActivity.this, "Please enter Date of Birth", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
+
         pan_Checkbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -524,7 +529,18 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
                 if (basicDetailsFound()) {
                     if (editTextPAN.getText().toString().trim().length() == 10) {
-                        panVerification("pancard", editTextPAN.getText().toString(), "");
+
+
+                        IsAaadharExits(new AadharStatusCallback() {
+                            @Override
+                            public void onResult(boolean exists) {
+                                if (exists) {
+                                    showKYCFailedDialog();
+                                } else {
+                                    panVerification("pancard", editTextPAN.getText().toString(), "");
+                                }
+                            }
+                        });
 
                     } else {
                         tilPanName.setVisibility(View.GONE);
@@ -533,14 +549,9 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
                 }else {
                     Utils.alert(KYCActivity.this,"Please fill all basic details of borrower\nlike AadhaarId, Name,DOB,Gender etc then verify Voter ID");
-
                 }
-
             }
         });
-
-
-
 
         voterId_Checkbox.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -552,8 +563,19 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                         tilVoterName.setVisibility(View.GONE);
                         editTextvoterIdKyc.setError("Voter Id  Should be between 5 to 15 digits");
                     } else {
-                        voterIdVerification("voterid", editTextvoterIdKyc.getText().toString(), "");
 
+
+
+                        IsAaadharExits(new AadharStatusCallback() {
+                            @Override
+                            public void onResult(boolean exists) {
+                                if (exists) {
+                                    showKYCFailedDialog();
+                                } else {
+                                    voterIdVerification("voterid", editTextvoterIdKyc.getText().toString(), "");
+                                }
+                            }
+                        });
                         if (ckycNumberExist != 1) {
                             getCkycByPanorVoter(editTextPAN, editTextvoterIdKyc, 3);
                         }
@@ -566,6 +588,9 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
             }
         });
+
+
+
 
         editTextMobile.addTextChangedListener(new TextWatcher() {
             @Override
@@ -778,6 +803,62 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         });
 
     }//On Create Close
+
+    private void showKYCFailedDialog() {
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(KYCActivity.this)
+                .setTitle("KYC Validation Failed")
+                .setMessage("Entered Aadhaar Number already taken loan or case in process. Kindly Check and re-try.")
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setCancelable(false);
+        androidx.appcompat.app.AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+    private void IsAaadharExits(AadharStatusCallback callback){
+        customProgressDialog.show();
+        ApiInterface apiInterface=ApiClient.getClient4().create(ApiInterface.class);
+
+        Call<AdharExitsModel> call = apiInterface.getadharexit(editTextAadhar.getText().toString());
+        Log.d("TAG", "onResponse:rps5 " + call);
+        call.enqueue(new Callback<AdharExitsModel>() {
+            @Override
+            public void onResponse(Call<AdharExitsModel> call, Response<AdharExitsModel> response) {
+                customProgressDialog.dismiss();
+                if (response.isSuccessful() && response.body() != null) {
+                    Log.d("TAG", "onResponse:rps4 " + response.message());
+                    AdharExitsModel adharExitsModel = response.body();
+                    if (adharExitsModel.getData()) {
+                        Log.d("TAG", "onResponse:rps01 " + response.message());
+
+                        callback.onResult(true); // Aadhaar exists
+                    } else {
+                        Log.d("TAG", "onResponse:rps00 " + response.message());
+
+                        callback.onResult(false); // Aadhaar does not exist
+                    }
+                } else {
+                    Log.d("TAG", "onResponse:rps2 " + response.code());
+                    callback.onResult(false);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AdharExitsModel> call, Throwable t) {
+                customProgressDialog.dismiss();
+                Log.d("TAG", "onFailure:rps1 " + t.getMessage());
+                callback.onResult(false);
+            }
+        });
+    }
+
+    public interface AadharStatusCallback {
+        void onResult(boolean exists);
+    }
+
 
     private void getMobileOTP(String mobileNumber,CheckBox mobileCheckBox) {
         customProgressDialog.show();

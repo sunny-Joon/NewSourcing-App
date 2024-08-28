@@ -2,6 +2,7 @@ package com.paisalo.newinternalsourcingapp.Retrofit;
 
 import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.Entities.CkycNoMODEL;
+import com.paisalo.newinternalsourcingapp.Modelclasses.AdharExitsModel;
 import com.paisalo.newinternalsourcingapp.Modelclasses.AppAttendance;
 import com.paisalo.newinternalsourcingapp.Modelclasses.EmiCollectionModels.CollectionReportModel;
 import com.paisalo.newinternalsourcingapp.Modelclasses.PosInstRcv;
@@ -417,6 +418,7 @@ public interface ApiInterface {
     @GET("PDL.SMS.API/api/Sms/SendOtp")
     Call<JsonObject> verifyOTP(@Query("MobileNo") String MobileNo,@Query("Otp") String Otp);
 
-
+    @GET("UserMobile/ValidateFiExists")
+    public Call<AdharExitsModel> getadharexit(@Query("aadharid") String aadharid);
 
 }
