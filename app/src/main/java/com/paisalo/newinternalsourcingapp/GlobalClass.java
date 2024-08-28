@@ -248,10 +248,6 @@ public class GlobalClass extends Application {
     }
 
     public static boolean isValidPan(String pan) {
-        if (pan.isEmpty()) {
-            return true;
-        }
-
         String regex = "[A-Z]{5}[0-9]{4}[A-Z]{1}";
         Pattern pattern = Pattern.compile(regex);
         return pattern.matcher(pan).matches();
