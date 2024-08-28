@@ -1868,12 +1868,12 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
                                    try {
                                        tilDLName.setVisibility(View.VISIBLE);
-                                       tilDLName.setText("Not Found");
+                                       tilDLName.setText(response.body().getData().getData().getData().getName().toString());
                                        tilDLName.setTextColor(getResources().getColor(R.color.green));
 
                                    }catch (Exception e){
                                        tilDLName.setVisibility(View.VISIBLE);
-                                       tilDLName.setText(response.body().getData().getData().getData().getName().toString());
+                                       tilDLName.setText("Not Found");
                                        tilDLName.setTextColor(getResources().getColor(R.color.green));
 
                                    }
