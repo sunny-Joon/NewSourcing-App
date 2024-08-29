@@ -621,8 +621,8 @@ public class FiJsonObject implements Serializable {
                 "\"P_City\": \"" + pCity + "\"," +
                 "\"P_Pin\": " + pPin + "," +
                 "\"P_Ph3\": \"" + pPh3 + "\"," +
-                "\"PanNO\": \"" + panNO + "\"," +
-                "\"DrivingLic\": \"" + drivingLic + "\"," +
+                "\"PanNO\": " + (panNO != null ? "\"" + panNO + "\"" : null) + "," +
+                "\"DrivingLic\": " + (drivingLic != null ? "\"" + drivingLic + "\"" : null) + "," +
                 "\"voterId\": " + (VoterId != null ? "\"" + VoterId + "\"" : null) + "," +
                 "\"F_Fname\": \"" + fFname + "\"," +
                 "\"F_Mname\": " + (fMname != null ? "\"" + fMname + "\"" : null) + "," +
@@ -654,7 +654,5 @@ public class FiJsonObject implements Serializable {
                 "\"fiExtra\": " + (fiExtra != null ? fiExtra.toString() : null) +
                 "}";
     }
-
-
 
 }
