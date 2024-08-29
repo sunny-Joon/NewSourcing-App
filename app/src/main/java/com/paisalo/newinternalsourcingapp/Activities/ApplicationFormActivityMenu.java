@@ -237,7 +237,7 @@ public class ApplicationFormActivityMenu extends AppCompatActivity   {
                                 Log.d("TAG", "onResponse: "+ "address");
                                 aadhaarCheckBox.setChecked(true);
                             }
-                            if (allDataAFDataModel.getFiExtra() != null &&  !allDataAFDataModel.getFiExtra().getEmaiLID().isEmpty()){
+                            if (allDataAFDataModel.getFiExtra() != null &&  allDataAFDataModel.getFiExtra().getEmaiLID() != null){
                                 personaldetailCheckBox.setChecked(true);
                                 Log.d("TAG", "onResponse: "+ allDataAFDataModel.getFiExtra().getEmaiLID().toString());
                             }else {

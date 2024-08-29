@@ -1565,12 +1565,13 @@ public class GuarantorsFragment extends Fragment {
         jsonGuarantor.addProperty("p_Pin", guarantor.getpPin());
         jsonGuarantor.addProperty("p_StateID", guarantor.getpStateID());
         jsonGuarantor.addProperty("perMob1", guarantor.getPerMob1());
-        jsonGuarantor.addProperty("voterID", guarantor.getVoterID());
-        jsonGuarantor.addProperty("panNo", guarantor.getPanNo());
-        jsonGuarantor.addProperty("drivingLic", guarantor.getDrivingLic());
+        jsonGuarantor.addProperty("voterID", isEmpty(guarantor.getVoterID()) ? "" :guarantor.getVoterID()
+        );
+        jsonGuarantor.addProperty("panNo", isEmpty(guarantor.getPanNo()) ? "" :guarantor.getPanNo());
+        jsonGuarantor.addProperty("drivingLic", isEmpty(guarantor.getDrivingLic()) ? "" :guarantor.getDrivingLic());
         jsonGuarantor.addProperty("relation", guarantor.getRelation());
 
-        jsonGuarantor.addProperty("grNo", guarantor.getGrNo());
+        jsonGuarantor.addProperty("grNo", 1);
         jsonGuarantor.addProperty("gurInitials", "");
         jsonGuarantor.addProperty("corrAddr", 0);
         jsonGuarantor.addProperty("firmName", "");
