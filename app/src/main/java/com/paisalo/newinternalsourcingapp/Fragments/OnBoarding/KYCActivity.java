@@ -221,7 +221,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
     FiExtra fiExtra;
     FiJsonObject jsonData;
     ScrollView scrollView;
-    String foCode, creator, areaCode;
+    String foCode, creator, areaCode,SCHEME_TAG;
     int aadhar_status=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -233,6 +233,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         customProgressDialog = new CustomProgressDialog(this);
 
         Intent intent = getIntent();
+        SCHEME_TAG = intent.getStringExtra("SCHEME_TAG");
         foCode = intent.getStringExtra("foCode");
         creator = intent.getStringExtra("creator");
         areaCode = intent.getStringExtra("areaCode");
@@ -2669,6 +2670,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                         Log.d("TAG", "onResponse: " + new Gson().toJson(jsonData));
                         Intent intent = new Intent(KYCActivity.this, KYCActivity2.class);
 //                        intent.putExtra("jsonData", jsonData);
+                        intent.putExtra("SCHEME_TAG", SCHEME_TAG);
                         intent.putExtra("jsonData", jsonData.toString());
                         intent.putExtra("fiExtra", fiExtra);
                         intent.putExtra("vName", name);

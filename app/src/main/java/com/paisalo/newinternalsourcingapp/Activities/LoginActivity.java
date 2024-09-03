@@ -797,7 +797,8 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                 Build.TAGS.length()%10 + Build.TYPE.length()%10 +
                 Build.USER.length()%10 ; //13 digits
 
-        deviceId = "2234514145687247";
+        deviceId = "2234514145687247";//GRST000223
+        deviceId = "0002496575477244";//GRST002000
         Log.d("TAG", "ImeiId6: "+deviceId);
 
         //GlobalClass.setSharedPref(getBaseContext(), deviceId, deviceId);
@@ -805,7 +806,6 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
 
     private void LoginAPi(String devid, String dbname) {
         Log.d("TAG", "MyApp: "+ "Login Api Run");
-        devid ="2234514145687247";
         customProgressDialog.show();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
 
@@ -831,6 +831,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                       //  GlobalClass.Imei = "868368051227918";
                         GlobalClass.DevId = tokenDetailsModel.getDeviceSrNo().toString();
                         GlobalClass.UserName = foModel.get(0).getFoName().toString();
+                        GlobalClass.Password = password.toString();
                         GlobalClass.Creator = foModel.get(0).getCreator().toString();
                         GlobalClass.AreaCode = foModel.get(0).getAreaCd().toString();
                         GlobalClass.Tag = foModel.get(0).getTag().toString();

@@ -77,7 +77,7 @@ public class FragmentCollectionSettlement extends AbsCollectionFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         PosInstRcv submitData = dueData;
                         submitData.setPayFlag("S");
-                        saveDeposit(submitData);
+                    //    saveDeposit(submitData);
                         dialog.dismiss();
 
                     }
@@ -109,7 +109,7 @@ public class FragmentCollectionSettlement extends AbsCollectionFragment {
     }
 
 
-    private void saveDeposit(PosInstRcv instRcv) {
+   /* private void saveDeposit(PosInstRcv instRcv) {
 
         Gson gson =new Gson();
         JsonObject jsonObject= gson.fromJson(instRcv.toString(), JsonObject.class);
@@ -131,7 +131,7 @@ public class FragmentCollectionSettlement extends AbsCollectionFragment {
                 Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
-    }
+    }*/
 
 
     public void refreshData() {

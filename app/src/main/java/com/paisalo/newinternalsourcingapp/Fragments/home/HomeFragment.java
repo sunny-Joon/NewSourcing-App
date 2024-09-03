@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
@@ -74,6 +75,7 @@ public class HomeFragment extends Fragment {
         View root = binding.getRoot();
         binding.backgroundImageView.setVisibility(View.GONE);
 
+        Toast.makeText(getActivity(), "STarting", Toast.LENGTH_LONG).show();
         imageView = root.findViewById(R.id.imageTop);
         videoView = root.findViewById(R.id.videoViewBanner);
 

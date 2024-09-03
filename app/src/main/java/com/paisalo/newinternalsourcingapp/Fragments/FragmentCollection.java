@@ -57,6 +57,7 @@ import com.paisalo.newinternalsourcingapp.Modelclasses.PosInstRcvNew;
 import com.paisalo.newinternalsourcingapp.Modelclasses.QRCollStatus;
 import com.paisalo.newinternalsourcingapp.Modelclasses.SmCode_DateModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.Collection.CustomerListDataModel;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.CollectionTokenModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.QrUrlData;
 import com.paisalo.newinternalsourcingapp.R;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiClient;
@@ -86,16 +87,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class FragmentCollection extends AbsCollectionFragment {
     private static final String ARG_DB_NAME = "param1";
     private static final String ARG_DB_DESC = "param2";
-    private String mDbName;
-    private String mDbDesc;
+    private String mDbName,SchmCode,SMCode,mDbDesc,collectionToken;
     private ListView lv;
     private boolean isDialogActive;
     private int collectionAmount;
     private int latePmtIntAmt;
     private boolean isProcessingEMI=false;
     String userid;
-    private String SchmCode;
-    private String SMCode;
     GpsTracker gpsTracker;
     Dialog dialogConfirm;
     Dialog dialogQrcode;
@@ -140,6 +138,7 @@ public class FragmentCollection extends AbsCollectionFragment {
         dialogQrcodePayment = new Dialog(getContext());
         refresh=  view.findViewById(R.id.refresh);
 
+        LiveTokenCollection();
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -215,6 +214,43 @@ public class FragmentCollection extends AbsCollectionFragment {
         });
         return view;
     }
+
+    private void LiveTokenCollection() {
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.connectTimeout(1, TimeUnit.MINUTES);
+        httpClient.readTimeout(1,TimeUnit.MINUTES);
+        httpClient.addInterceptor(logging);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://agra.Paisalo.in:8444/PLServicev82/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(httpClient.build())
+                .build();
+        ApiInterface apiInterface=retrofit.create(ApiInterface.class);
+        Call<CollectionTokenModel> call = apiInterface.LiveTokenCollection(GlobalClass.DevId,"SBIPDLCOL",
+                GlobalClass.Imei,"application/json","application/x-www-form-urlencoded","application/json","111","password",GlobalClass.Id,GlobalClass.Password);
+
+        call.enqueue(new Callback<CollectionTokenModel>() {
+            @Override
+            public void onResponse(Call<CollectionTokenModel> call, Response<CollectionTokenModel> response) {
+                if(response.isSuccessful()){
+                    Log.d("TAG", "collectionTokenModel: "+"collectionTokenModel");
+                    CollectionTokenModel collectionTokenModel = response.body();
+                    collectionToken = "Bearer "+collectionTokenModel.getAccessToken().toString();
+
+                }else {
+                    Toast.makeText(getActivity(), response.code()+","+response.message(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CollectionTokenModel> call, Throwable t) {
+                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     public  void DialogForEMINotPaying(Context context,AdapterView<?> parent,int position) {
         AdapterDueData adapterDueData = (AdapterDueData) parent.getAdapter();
         final CustomerListDataModel dueData = (CustomerListDataModel) adapterDueData.getItem(position);
@@ -850,8 +886,19 @@ public class FragmentCollection extends AbsCollectionFragment {
         Log.d("TAG", "saveRecipetNewAmount: " +dueData.getCaseCode() + " "+ dueData.getCreator()+ " "+dueData.getDb()+ " "+GlobalClass.Imei +(totCollectAmt - latePmtIntAmt) +
                 " "+ new Date()+ " "+dueData.getFoCode()+ " "+dueData.getCustName()+ " "+dueData.getPartyCd()+ " "+latePmtIntAmt+ " "+"E");
 
-        ApiInterface apiInterface=ApiClient.getClient().create(ApiInterface.class);
-        Call<JsonObject> call=apiInterface.insertRcDistributionNew(instRcv,GlobalClass.Token,GlobalClass.dbname,GlobalClass.Id);
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.connectTimeout(1, TimeUnit.MINUTES);
+        httpClient.readTimeout(1,TimeUnit.MINUTES);
+        httpClient.addInterceptor(logging);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://pdlpay.paisalo.in:946/PDL.SourcingApp.Api/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(httpClient.build())
+                .build();
+        ApiInterface apiInterface=retrofit.create(ApiInterface.class);
+        Call<JsonObject> call=apiInterface.insertRcDistributionNew(instRcv,GlobalClass.dbname,GlobalClass.Id);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -974,6 +1021,9 @@ public class FragmentCollection extends AbsCollectionFragment {
     }
 
     private void saveDeposit(String SchmCode, CustomerListDataModel dueData, int collectedAmount, int latePmtAmount, String depBy) {
+        if(collectionToken ==null || collectionToken.isEmpty()){
+            LiveTokenCollection();
+        }
         PosInstRcv instRcv = new PosInstRcv();
         instRcv.setCaseCode(dueData.getCaseCode());
         instRcv.setCreator(dueData.getCreator());
@@ -986,12 +1036,24 @@ public class FragmentCollection extends AbsCollectionFragment {
         instRcv.setPartyCd(dueData.getPartyCd());
         instRcv.setInterestAmt(latePmtAmount);
         instRcv.setPayFlag(depBy);
+      /*  Gson gson =new Gson();
+        JsonObject jsonObject= gson.fromJson(instRcv.toString(), JsonObject.class);*/
 
-        Gson gson =new Gson();
-        JsonObject jsonObject= gson.fromJson(instRcv.toString(), JsonObject.class);
-
-        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        Call<Void> call = apiService.saveDeposit(GlobalClass.Token,GlobalClass.dbname,jsonObject);
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.connectTimeout(1, TimeUnit.MINUTES);
+        httpClient.readTimeout(1,TimeUnit.MINUTES);
+        httpClient.addInterceptor(logging);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://agra.Paisalo.in:8444/PLServicev82/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(httpClient.build())
+                .build();
+        ApiInterface apiInterface=retrofit.create(ApiInterface.class);
+      //  ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        Call<Void> call = apiInterface.saveDeposit(collectionToken,GlobalClass.DevId,"SBIPDLCOL",
+                GlobalClass.Imei,"application/json","application/x-www-form-urlencoded","application/json",instRcv);
 
         call.enqueue(new Callback<Void>() {
             @Override
