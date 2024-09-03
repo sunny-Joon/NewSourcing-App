@@ -110,6 +110,7 @@ public class KYCActivity2 extends AppCompatActivity {
         Log.d("TAG", "onCreateeee: " + fiExtra);
 
         String vName = intent.getStringExtra("vName");
+        String SCHEME_TAG = intent.getStringExtra("SCHEME_TAG");
         String vPanName = intent.getStringExtra("vPanName");
         String vVoterIdName = intent.getStringExtra("vVoterIdName");
         String vLicName = intent.getStringExtra("vLicName");
@@ -457,8 +458,43 @@ public class KYCActivity2 extends AppCompatActivity {
                                                                     if(response4.isSuccessful()) {
                                                                        /* FiCPopup fiCPopup = new FiCPopup("Your Ficode & Creator is Here", Message1 + " & " + GlobalClass.Creator);
                                                                         fiCPopup.show(getSupportFragmentManager(), "CustomDialog");*/
-                                                                        SubmitAlert(KYCActivity2.this, "Your Ficode & Creator is Here", Message1 + " & " + GlobalClass.Creator);
-                                                                        customProgressDialog.dismiss();
+
+                                                                            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+                                                                            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+                                                                            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+                                                                            httpClient.connectTimeout(1, TimeUnit.MINUTES);
+                                                                            httpClient.readTimeout(1,TimeUnit.MINUTES);
+                                                                            httpClient.addInterceptor(logging);
+                                                                            Retrofit retrofit = new Retrofit.Builder()
+                                                                                    .baseUrl("https://erpservice.paisalo.in:980/PDL.Mobile.API/api/")
+                                                                                    .addConverterFactory(GsonConverterFactory.create())
+                                                                                    .client(httpClient.build())
+                                                                                    .build();
+
+                                                                            JsonObject jsonObject=new JsonObject();
+                                                                            jsonObject.addProperty("FiCode",String.valueOf(Message1));
+                                                                            jsonObject.addProperty("Creator",GlobalClass.Creator);
+                                                                            jsonObject.addProperty("SchemeCode",SCHEME_TAG);
+                                                                            ApiInterface apiInterface=retrofit.create(ApiInterface.class);
+                                                                            Call<JsonObject> callscheme=apiInterface.saveSchemeForVH(jsonObject);
+                                                                        callscheme.enqueue(new Callback<JsonObject>() {
+                                                                                @Override
+                                                                                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                                                                                    if (response.isSuccessful()){
+                                                                                        if (response.body().get("statusCode").getAsInt()==200){
+                                                                                            SubmitAlert(KYCActivity2.this, "Your Ficode & Creator is Here", Message1 + " & " + GlobalClass.Creator);
+                                                                                            customProgressDialog.dismiss();                                                                                        }else{
+                                                                                            Toast.makeText(KYCActivity2.this, "Something went wrong!!\nScheme VH", Toast.LENGTH_SHORT).show();
+                                                                                        }
+                                                                                    }
+                                                                                }
+
+                                                                                @Override
+                                                                                public void onFailure(Call<JsonObject> call, Throwable t) {
+                                                                                    Toast.makeText(KYCActivity2.this, "Failure!!\nScheme VH", Toast.LENGTH_SHORT).show();
+
+                                                                                }
+                                                                            });
                                                                         
 
                                                                     }else{

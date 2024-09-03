@@ -151,7 +151,7 @@ public class ActivityCollection extends AppCompatActivity {
 
 
                         populateFragments();
-                        refreshSettlement();
+                      //  refreshSettlement();
                         if (fragmentCollection != null)
                             fragmentCollection.refreshData();
                     }

@@ -12,6 +12,7 @@ import com.paisalo.newinternalsourcingapp.ModelsRetrofit.AccountDetails_Model;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.BorrowerListModels.BorrowerListModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.BreResponseModels.BREResponse;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.Collection.CustomerListModel;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.CollectionTokenModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.CreatorListModels.CreatorListModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.DownloadEsignXml;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.EsignListModels.EsignListModel;
@@ -298,9 +299,17 @@ public interface ApiInterface {
                                            @Body JsonObject jsonObject);
     @POST("InstCollection/SaveReceipt")//working
     Call<JsonObject> insertRcDistributionNew(@Body PosInstRcvNew jsonObject,
-                                             @retrofit2.http.Header("Authorization") String token,
-                                             @retrofit2.http.Header("dbname") String dbName,
-                                             @retrofit2.http.Header("userid") String userid);
+                                             @Header("dbname") String dbname,
+                                             @Header("userid") String userid);
+    @POST("POSDATA/instcollection/savereceipt")
+    Call<Void> saveDeposit(@Header("Authorization") String token,
+                           @Header("devid") String devid,
+                           @Header("dbname") String dbname,
+                           @Header("imeino") String imeino,
+                           @Header("access") String access,
+                           @Header("content-type") String content,
+                           @Header("Accept") String Accept,
+                           @Body PosInstRcv instRcv);
 
     @POST("InstCollection/UpdateQrRcCollection")//working
     Call<JsonObject> insertQRPayment(@Body QRCollStatus jsonObject,
@@ -328,10 +337,7 @@ public interface ApiInterface {
                                 @retrofit2.http.Header("dbname") String dbName,
                                 @Body JsonObject jsonObject);
 
-    @GET("InstCollection/SaveReceipt")
-    Call<Void> saveDeposit(@retrofit2.http.Header("Authorization") String token,
-                                @retrofit2.http.Header("dbname") String dbName,
-                                @Body JsonObject jsonObject);
+
 
     @GET("POSFI/getFiUploadedDocs")
     Call<KycDocsFlag> DocsFlag(@Header("Authorization") String token,
@@ -368,6 +374,18 @@ public interface ApiInterface {
                               @Field("grant_type") String grant_type,
                               @Field("username") String username,
                               @Field("password") String password);
+    @POST("token")
+    Call<CollectionTokenModel> LiveTokenCollection(@Header("devid") String devid,
+                                                   @Header("dbname") String dbname,
+                                                   @Header("imeino") String imeino,
+                                                   @Header("access") String access,
+                                                   @Header("content-type") String content,
+                                                   @Header("Accept") String Accept,
+                                                   @Header("srcappver") String srcappver,
+                                                   @Field("grant_type") String grant_type,
+                                                   @Field("username") String username,
+                                                   @Field("password") String password);
+
 
 //
     @FormUrlEncoded
@@ -419,6 +437,8 @@ public interface ApiInterface {
     Call<JsonObject> verifyOTP(@Query("MobileNo") String MobileNo,@Query("Otp") String Otp);
 
     @GET("UserMobile/ValidateFiExists")
-    public Call<AdharExitsModel> getadharexit(@Query("aadharid") String aadharid);
+    Call<AdharExitsModel> getadharexit(@Query("aadharid") String aadharid);
 
+    @POST("LiveTrack/FiForUdhan")
+    Call<JsonObject> saveSchemeForVH(@Body JsonObject jsonObject);
 }
