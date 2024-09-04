@@ -61,6 +61,7 @@ public class GlobalClass extends Application {
     public static String Password = "";
     public static String UserName = "";
     public static String Token = "";
+    public static String CollectionToken = "";
     public static String LiveToken = "";
     public static String Tag = "";
     public static String Imei = "";

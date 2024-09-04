@@ -797,8 +797,8 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                 Build.TAGS.length()%10 + Build.TYPE.length()%10 +
                 Build.USER.length()%10 ; //13 digits
 
-        deviceId = "2234514145687247";//GRST000223
-        deviceId = "0002496575477244";//GRST002000
+       /* deviceId = "2234514145687247";//GRST000223
+        deviceId = "0002496575477244";//GRST002000*/
         Log.d("TAG", "ImeiId6: "+deviceId);
 
         //GlobalClass.setSharedPref(getBaseContext(), deviceId, deviceId);

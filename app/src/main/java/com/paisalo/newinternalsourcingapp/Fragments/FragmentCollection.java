@@ -42,6 +42,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.Activities.ActivityCollection;
+import com.paisalo.newinternalsourcingapp.Activities.LoginActivity;
 import com.paisalo.newinternalsourcingapp.Activities.OnlinePaymentActivity;
 import com.paisalo.newinternalsourcingapp.Activities.Upload_Payslip_page;
 import com.paisalo.newinternalsourcingapp.Adapters.AdapterDueData;
@@ -138,7 +139,7 @@ public class FragmentCollection extends AbsCollectionFragment {
         dialogQrcodePayment = new Dialog(getContext());
         refresh=  view.findViewById(R.id.refresh);
 
-        LiveTokenCollection();
+
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -215,41 +216,6 @@ public class FragmentCollection extends AbsCollectionFragment {
         return view;
     }
 
-    private void LiveTokenCollection() {
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-        httpClient.connectTimeout(1, TimeUnit.MINUTES);
-        httpClient.readTimeout(1,TimeUnit.MINUTES);
-        httpClient.addInterceptor(logging);
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://agra.Paisalo.in:8444/PLServicev82/api/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(httpClient.build())
-                .build();
-        ApiInterface apiInterface=retrofit.create(ApiInterface.class);
-        Call<CollectionTokenModel> call = apiInterface.LiveTokenCollection(GlobalClass.DevId,"SBIPDLCOL",
-                GlobalClass.Imei,"application/json","application/x-www-form-urlencoded","application/json","111","password",GlobalClass.Id,GlobalClass.Password);
-
-        call.enqueue(new Callback<CollectionTokenModel>() {
-            @Override
-            public void onResponse(Call<CollectionTokenModel> call, Response<CollectionTokenModel> response) {
-                if(response.isSuccessful()){
-                    Log.d("TAG", "collectionTokenModel: "+"collectionTokenModel");
-                    CollectionTokenModel collectionTokenModel = response.body();
-                    collectionToken = "Bearer "+collectionTokenModel.getAccessToken().toString();
-
-                }else {
-                    Toast.makeText(getActivity(), response.code()+","+response.message(), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<CollectionTokenModel> call, Throwable t) {
-                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
     public  void DialogForEMINotPaying(Context context,AdapterView<?> parent,int position) {
         AdapterDueData adapterDueData = (AdapterDueData) parent.getAdapter();
@@ -1021,8 +987,8 @@ public class FragmentCollection extends AbsCollectionFragment {
     }
 
     private void saveDeposit(String SchmCode, CustomerListDataModel dueData, int collectedAmount, int latePmtAmount, String depBy) {
-        if(collectionToken ==null || collectionToken.isEmpty()){
-            LiveTokenCollection();
+        if(GlobalClass.CollectionToken ==null || GlobalClass.CollectionToken.isEmpty()){
+            SubmitAlert(getActivity(), "Restart", "RestartActivity");
         }
         PosInstRcv instRcv = new PosInstRcv();
         instRcv.setCaseCode(dueData.getCaseCode());
