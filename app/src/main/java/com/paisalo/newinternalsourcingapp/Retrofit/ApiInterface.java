@@ -374,6 +374,7 @@ public interface ApiInterface {
                               @Field("grant_type") String grant_type,
                               @Field("username") String username,
                               @Field("password") String password);
+    @FormUrlEncoded
     @POST("token")
     Call<CollectionTokenModel> LiveTokenCollection(@Header("devid") String devid,
                                                    @Header("dbname") String dbname,
