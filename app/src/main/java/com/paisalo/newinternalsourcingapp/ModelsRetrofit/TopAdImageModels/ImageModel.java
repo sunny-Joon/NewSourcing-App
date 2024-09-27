@@ -5,6 +5,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class ImageModel {
 
+    @SerializedName("id")
+    @Expose
+    private Integer id;
     @SerializedName("advertisement")
     @Expose
     private String advertisement;
@@ -17,6 +20,14 @@ public class ImageModel {
     @SerializedName("appType")
     @Expose
     private String appType;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getAdvertisement() {
         return advertisement;
@@ -49,5 +60,4 @@ public class ImageModel {
     public void setAppType(String appType) {
         this.appType = appType;
     }
-
 }

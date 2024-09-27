@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.artifex.mupdfdemo.MuPDFFragment;
 import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.Adapters.CustomAdapter;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
@@ -109,8 +110,8 @@ public class SecondEsignActivity extends AppCompatActivity {
           // GlobalClass.showLottieAlertDialog(8,SecondEsignActivity.this);
            customProgressDialog.show();
            JsonObject jsonObject=new JsonObject();
-           jsonObject.addProperty("DocName", "Esign");
-           jsonObject.addProperty("dbName", "SBINEWDOC");
+           jsonObject.addProperty("DocName", "SBINEWDOC");
+         //  jsonObject.addProperty("dbName", "SBINEWDOC");
            // jsonObject.addProperty("FiCode", borrower.getCode());
            jsonObject.addProperty("FiCode", borrower.getCode());
            jsonObject.addProperty("FiCreator", borrower.getCreator());
@@ -124,7 +125,7 @@ public class SecondEsignActivity extends AppCompatActivity {
            httpClient.readTimeout(2,TimeUnit.MINUTES);
            httpClient.addInterceptor(logging);
            Retrofit retrofit2 = new Retrofit.Builder()
-                   .baseUrl("https://agra.Paisalo.in:8444/ESignSBIAV1/api/")
+                   .baseUrl("https://agra.paisalo.in:8444/ESignSBIAV1/api/")
                    .addConverterFactory(GsonConverterFactory.create())
                    .client(httpClient.build())
                    .build();
@@ -134,7 +135,7 @@ public class SecondEsignActivity extends AppCompatActivity {
            Call<ResponseBody> call = apiInterface.DownloadDocSecondEsign(GlobalClass.LiveToken,jsonObject,"gzip,deflate,compress",GlobalClass.DevId,GlobalClass.DATABASE_NAME,GlobalClass.Imei);
            Log.d("TAG", "onClickList:3 ");
 
-           Log.d("TAG", "onResponse1: " + GlobalClass.LiveToken+" "+ GlobalClass.dbname+" "+jsonObject.toString());
+           Log.d("TAG", "onResponse1: " + GlobalClass.LiveToken+" ////"+ GlobalClass.dbname+" //// "+jsonObject.toString());
            call.enqueue(new Callback<ResponseBody>() {
                @Override
                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -165,7 +166,7 @@ public class SecondEsignActivity extends AppCompatActivity {
                            intent.putExtra(GlobalClass.ESIGN_GUARANTOR, borrower);
                            startActivity(intent);
 
-                           /*Fragment frag = MuPDFFragment.newInstance(path, false);
+                          /* Fragment frag = MuPDFFragment.newInstance(path, false);
                            ft.add(R.id.pdfview, frag);
                            ft.commit();*/
                           // GlobalClass.dismissLottieAlertDialog();

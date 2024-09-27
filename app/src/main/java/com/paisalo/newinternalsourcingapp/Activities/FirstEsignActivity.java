@@ -121,8 +121,8 @@ public class FirstEsignActivity extends AppCompatActivity {
                 fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
 
-               /* Fragment frag = MuPDFFragment.newInstance(path, false);
-                ft.add(R.id.pdfview, frag);*/
+                Fragment frag = MuPDFFragment.newInstance(path, false);
+                ft.add(R.id.pdfview, frag);
 
                 ft.commit();
             } else {
@@ -183,6 +183,7 @@ public class FirstEsignActivity extends AppCompatActivity {
 
                                     String path = written.getAbsolutePath();
 
+                                    Log.d("TAG", "onResponse:path "+path);
                                     fm = getSupportFragmentManager();
                                     FragmentTransaction ft = fm.beginTransaction();
 

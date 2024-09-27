@@ -1,21 +1,18 @@
-package com.paisalo.newinternalsourcingapp.ModelsRetrofit.TopAdImageModels;
+package com.paisalo.newinternalsourcingapp.ModelsRetrofit;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ImageDataModel {
-
+public class BranchStatusResponce {
     @SerializedName("statusCode")
     @Expose
     private Integer statusCode;
-
     @SerializedName("message")
     @Expose
     private String message;
-
     @SerializedName("data")
     @Expose
-    private ImageModel data;
+    private BranchStatusDataModel data;
 
     public Integer getStatusCode() {
         return statusCode;
@@ -33,11 +30,11 @@ public class ImageDataModel {
         this.message = message;
     }
 
-    public ImageModel getData() {
+    public BranchStatusDataModel getData() {
         return data;
     }
 
-    public void setData(ImageModel data) {
+    public void setData(BranchStatusDataModel data) {
         this.data = data;
     }
 }

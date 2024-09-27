@@ -9,7 +9,11 @@
     import android.preference.PreferenceManager;
     import android.provider.Settings;
     import android.util.Log;
+    import android.view.LayoutInflater;
     import android.view.View;
+    import android.webkit.WebView;
+    import android.widget.ImageView;
+    import android.widget.TextView;
     import android.widget.Toast;
 
     import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -40,6 +44,9 @@
     import com.paisalo.newinternalsourcingapp.ModelsRetrofit.ManagerListModels.ManagerListModel;
     import com.paisalo.newinternalsourcingapp.ModelsRetrofit.RangeCategoryModels.RangeCategoryDataModel;
     import com.paisalo.newinternalsourcingapp.ModelsRetrofit.RangeCategoryModels.RangeCategoryModel;
+    import com.paisalo.newinternalsourcingapp.ModelsRetrofit.TopAdImageModels.ImageDataModel;
+    import com.paisalo.newinternalsourcingapp.ModelsRetrofit.TopAdImageModels.ImageModel;
+    import com.paisalo.newinternalsourcingapp.ModelsRetrofit.ViewStatusmodel;
     import com.paisalo.newinternalsourcingapp.R;
     import com.paisalo.newinternalsourcingapp.Retrofit.ApiClient;
     import com.paisalo.newinternalsourcingapp.Retrofit.ApiInterface;
@@ -68,7 +75,7 @@
         GpsTracker gpsTracker;
         ActivityMainBinding binding;
         List<LeaderboardEntry> leaderboardEntries = new ArrayList<>();
-        String Id="-1",position="-1",progressEnd;
+        String Id="-1",position="-1",progressEnd,msgID;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -76,13 +83,14 @@
             binding = ActivityMainBinding.inflate(getLayoutInflater());
             setContentView(binding.getRoot());
 
+
             getSupportActionBar().hide();
 
             database = DatabaseClass.getInstance(HomePageActivity.this);
             daoClass=database.dao();
 
             RangeCategoriesApi();
-
+            GetBannerViewStatus();
             gpsTracker=new GpsTracker(getApplicationContext());
             if(gpsTracker.getGPSstatus()==false){
                 showSettingsAlert();
@@ -153,6 +161,242 @@
                 fragmentTransaction.replace(R.id.nav_host_fragment_activity_main, new OnBoardFragment());
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
+            });
+        }
+
+        private void GetBannerViewStatus() {
+
+            ApiInterface apiInterface= ApiClient.getClient6().create(ApiInterface.class);
+            Call<Integer> call = apiInterface.getBannerExit(GlobalClass.Id);
+            call.enqueue(new Callback<Integer>() {
+                @Override
+                public void onResponse(Call<Integer> call, Response<Integer> response) {
+                    if (response.isSuccessful()) {
+                        int status = response.body();
+                        Log.d("TAG", "onResponse:banner2 " + status);
+                        if (status == 0) {
+                            ImageAPIBaneer();
+                        }
+                    } else {
+                        Log.d("TAG", "onResponse:banner1 " + response.code());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Integer> call, Throwable t) {
+                    Log.d("TAG", "onFailure:banner3 "+t.getMessage());
+                }
+            });
+        }
+
+        private void ImageAPIBaneer() {
+            Log.d("TAG", "ImageAPIBaneer:ban1 "+"run");
+            ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+            Call<ImageDataModel> call = apiInterface.getTopImage(GlobalClass.Token, GlobalClass.dbname, "S", "F");
+            Log.d("TAG", "ImageAPIBaneer:ban2 "+call);
+            call.enqueue(new Callback<ImageDataModel>() {
+                @Override
+                public void onResponse(Call<ImageDataModel> call, Response<ImageDataModel> response) {
+                    if (response.isSuccessful()) {
+                        Log.d("TAG", "ImageAPIBaneer:ban3 "+call);
+
+                        ImageDataModel imageDataModel = response.body();
+
+                        if (imageDataModel != null && imageDataModel.getData() != null) {
+
+                            Log.d("TAG", "ImageAPIBaneer:ban4 "+imageDataModel.getData().getId().toString());
+
+                            ImageModel imageModel = imageDataModel.getData();
+
+                            if (imageModel != null) {
+                                msgID = imageModel.getId() != null ? imageModel.getId().toString() : "";
+
+                                Log.d("TAG", "ImageAPIBaneer:ban5" + msgID);
+
+                                String banner = imageModel.getBanner();
+                                String advertisement = imageModel.getAdvertisement();
+                                Log.d("TAG", "ImageAPIBaneer:ban6" + advertisement);
+
+                                String description = imageModel.getDescription();
+                                Log.d("TAG", "ImageAPIBaneer:ban7" + description);
+
+                                if (banner != null && !banner.isEmpty()) {
+                                    String type;
+                                    if (banner.endsWith(".mp4")) {
+                                        type = "video";
+                                    } else if (banner.endsWith(".mp3")) {
+                                        type = "audio";
+                                    } else if (banner.endsWith(".jpeg") || banner.endsWith(".jpg") || banner.endsWith(".png")) {
+                                        type = "image";
+                                    } else {
+                                        Log.d("TAG", "ImageAPIBaneer:ban9" + banner);
+                                        return;
+                                    }
+
+                                    Log.d("TAG", "ImageAPIBaneer:ban10" + "banner");
+                                    openbanner(type, "https://erp.paisalo.in:981/LOSDOC/BannerPost/" + banner, null);
+
+                                } else {
+                                    if (advertisement != null && !advertisement.isEmpty()) {
+                                        String formattedDescription = description != null ? description : "";
+                                        openbanner("text", formattedDescription, advertisement);
+                                    } else {
+                                        Log.d("TextPopup", "No valid advertisement text found.");
+                                    }
+                                }
+                            } else {
+                                Log.d("TAG", "No image data found.");
+                            }
+                        } else {
+                            Log.d("TAG", "ImageDataModel or its data is null.");
+                        }
+                    } else {
+                        Log.d("TAG", "onResponse: API call unsuccessful. Response code: " + response.code());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ImageDataModel> call, Throwable t) {
+                    Log.e("TAG", "onFailure: API call failed.", t);
+                }
+            });
+        }
+
+        private void openbanner(String type, String content, String headText) {
+            Log.d("Popup", "openbanner invoked with type: " + type);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(HomePageActivity.this);
+            LayoutInflater inflater = getLayoutInflater();
+            View view = inflater.inflate(R.layout.custom_popup, null);
+
+            builder.setView(view);
+            AlertDialog dialog = builder.create();
+            dialog.setCancelable(false);
+            dialog.setCanceledOnTouchOutside(false);
+
+            dialog.getWindow().setBackgroundDrawableResource(R.drawable.shape_one);
+
+            dialog.show();
+
+       /* int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.95);
+        int height = (int) (getResources().getDisplayMetrics().heightPixels * 0.55);
+        dialog.getWindow().setLayout(width, height);*/
+
+            TextView addtextheader = view.findViewById(R.id.addtextheader);
+            WebView contentView = view.findViewById(R.id.popup_text);
+            //  VideoView videoView = view.findViewById(R.id.popup_video);
+            // Button playAudioButton = view.findViewById(R.id.play_audio);
+            // ImageView imageView = view.findViewById(R.id.popup_image);
+            ImageView closeButton = view.findViewById(R.id.close_button);
+
+            contentView.setVisibility(View.GONE);
+            // videoView.setVisibility(View.GONE);
+            // playAudioButton.setVisibility(View.GONE);
+            // imageView.setVisibility(View.GONE);
+
+            if (headText != null && !headText.isEmpty()) {
+                addtextheader.setText(headText);
+                addtextheader.setVisibility(View.VISIBLE);
+            } else {
+                addtextheader.setVisibility(View.GONE);
+            }
+
+            switch (type) {
+                case "text":
+                    Log.d("Popup", "Displaying text");
+                    contentView.setVisibility(View.VISIBLE);
+                    if (content != null && !content.isEmpty()) {
+                        contentView.loadDataWithBaseURL(null, content, "text/html", "UTF-8", null);
+                    }
+                    break;
+
+                // Comment out the rest for now
+
+     /*   case "video":
+            Log.d("Popup", "Displaying video");
+            videoView.setVisibility(View.VISIBLE);
+            Uri videoUri = Uri.parse(content);
+            videoView.setVideoURI(videoUri);
+
+            MediaController mediaController = new MediaController(this);
+            mediaController.setAnchorView(videoView);
+            videoView.setMediaController(mediaController);
+
+            videoView.setOnPreparedListener(mp -> videoView.start());
+
+            videoView.setOnErrorListener((mp, what, extra) -> {
+                Log.e("VideoView", "Error occurred while playing video. What: " + what + ", Extra: " + extra);
+                return true;
+            });
+            break;*/
+/*
+        case "audio":
+            Log.d("Popup", "Playing audio");
+            playAudioButton.setVisibility(View.VISIBLE);
+            ImageView audioImageView = view.findViewById(R.id.audio_image);
+            audioImageView.setVisibility(View.VISIBLE);
+            audioImageView.setImageResource(R.drawable.music);
+
+            MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), Uri.parse(content));
+            mediaPlayer.start();
+
+            dialog.setOnDismissListener(dialog1 -> {
+                if (mediaPlayer != null) {
+                    mediaPlayer.stop();
+                    mediaPlayer.release();
+                }
+            });
+            break;
+
+        case "image":
+            Log.d("Popup", "Displaying image");
+            imageView.setVisibility(View.VISIBLE);
+            Glide.with(this).load(content).into(imageView);
+            break;
+        */
+
+                default:
+                    Log.e("Popup", "Unknown type: " + type);
+                    break;
+            }
+
+
+            closeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    BannerViewStatus();
+                    dialog.dismiss();
+                }
+            });
+
+            dialog.show();
+        }
+
+        private void BannerViewStatus() {
+
+            ApiInterface apiInterface = ApiClient.getClient6().create(ApiInterface.class);
+            Call<ViewStatusmodel> call = apiInterface.getBannerView(GlobalClass.Id, msgID);
+
+            call.enqueue(new Callback<ViewStatusmodel>() {
+                @Override
+                public void onResponse(Call<ViewStatusmodel> call, Response<ViewStatusmodel> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        ViewStatusmodel viewStatusmodel = response.body();
+                        if (viewStatusmodel != null && viewStatusmodel.getData() != null) {
+                            String data = viewStatusmodel.getData().toString();
+                            Log.d("TAG", "onResponse:banner11 " + data);
+                        } else {
+                            Log.d("TAG", "onResponse: Data is null");
+                        }
+                    } else {
+                        Log.d("TAG", "onResponse:banner12 " + response.code());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ViewStatusmodel> call, Throwable t) {
+                    Log.d("TAG", "onFailure:banner13 " + t.getMessage());
+                }
             });
         }
 

@@ -20,6 +20,8 @@ public class ApiClient {
     public static final String BASE_URL2 = "https://agra.paisalo.in:8444/ESignSBIAV1/";
     public static final String BASE_URL4 = "https://erpservice.paisalo.in:980/PDL.Mobile.API/api/";
     public static final String BASE_URL5 = "https://erpservice.paisalo.in:980/";
+    public static final String BASE_URL6 = "https://erpservice.paisalo.in:980/PDL.FiService.API/api/";
+
 
 
 
@@ -98,6 +100,24 @@ public class ApiClient {
             httpClient.addInterceptor(logging);
             retrofit5 = new Retrofit.Builder()
                     .baseUrl(BASE_URL5)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(httpClient.build())
+                    .build();
+        }
+        return retrofit5;
+    }
+    public static Retrofit getClient6() {
+        if (retrofit5==null) {
+            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder(
+
+            );
+            httpClient.connectTimeout(1, TimeUnit.MINUTES);
+            httpClient.readTimeout(1,TimeUnit.MINUTES);
+            httpClient.addInterceptor(logging);
+            retrofit5 = new Retrofit.Builder()
+                    .baseUrl(BASE_URL6)
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(httpClient.build())
                     .build();

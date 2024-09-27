@@ -122,6 +122,8 @@ public class SplashScreenPage extends AppCompatActivity {
                         builder.show();
                     }
                 }
+
+
             }
             @Override
             public void onFailure(Call<VersionCheck> call, Throwable t) {

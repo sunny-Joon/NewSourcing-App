@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.TextView;
@@ -24,11 +25,16 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.slider.Slider;
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
 import com.paisalo.newinternalsourcingapp.Activities.ActivityEarnMoreIncentive;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.TargetCountModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.TargetSetModel;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.TopAdImageModels.ImageDataModel;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.TopAdImageModels.ImageModel;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.ViewStatusmodel;
 import com.paisalo.newinternalsourcingapp.R;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiClient;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiInterface;
@@ -37,7 +43,9 @@ import com.paisalo.newinternalsourcingapp.Utils.CustomProgressDialog;
 import com.paisalo.newinternalsourcingapp.databinding.FragmentHomeBinding;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 import pl.droidsonroids.gif.GifImageView;
@@ -52,7 +60,7 @@ public class HomeFragment extends Fragment {
     ImageView imageView;
     VideoView videoView;
     static String month = "",year = "";
-    String image,stTarget_Popup;
+    String image,stTarget_Popup,msgID;
     boolean flag=false;
     AlertDialog dialog;
 
@@ -89,6 +97,8 @@ public class HomeFragment extends Fragment {
         stTarget_Popup = sharedPreferences.getString("stTarget_Popup", "");
 
         set_image(image);
+
+
         if(flag){
             showSliderDialog();
         }
@@ -141,6 +151,8 @@ public class HomeFragment extends Fragment {
 
         return root;
     }
+
+
 
     private void targetCountApi() {
         customProgressDialog.show();

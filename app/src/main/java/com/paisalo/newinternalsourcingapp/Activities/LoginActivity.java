@@ -50,7 +50,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.gson.Gson;
 
 import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.Adapters.BranchCodesAdapter;
@@ -84,7 +83,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
-import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import retrofit2.Call;
@@ -788,16 +786,20 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
         }catch (Exception e)
         {
         }
-        deviceId = lastThreeChars + //we make this look like a valid IMEI
-                Build.BOARD.length()%10+ Build.BRAND.length()%10 +
-                Build.CPU_ABI.length()%10 + Build.DEVICE.length()%10 +
-                Build.DISPLAY.length()%10 + Build.HOST.length()%10 +
-                Build.ID.length()%10 + Build.MANUFACTURER.length()%10 +
-                Build.MODEL.length()%10 + Build.PRODUCT.length()%10 +
-                Build.TAGS.length()%10 + Build.TYPE.length()%10 +
-                Build.USER.length()%10 ; //13 digits
+//        deviceId = lastThreeChars + //we make this look like a valid IMEI
+//                Build.BOARD.length()%10+ Build.BRAND.length()%10 +
+//                Build.CPU_ABI.length()%10 + Build.DEVICE.length()%10 +
+//                Build.DISPLAY.length()%10 + Build.HOST.length()%10 +
+//                Build.ID.length()%10 + Build.MANUFACTURER.length()%10 +
+//                Build.MODEL.length()%10 + Build.PRODUCT.length()%10 +
+//                Build.TAGS.length()%10 + Build.TYPE.length()%10 +
+//                Build.USER.length()%10 ; //13 digits
 
-        deviceId = "2234514145687247";
+       // deviceId="3617698475677244";//GVST000361
+      deviceId = "2234514145687247";//GRST00223
+      //  deviceId="9776498475477244";//grst002977
+
+
         Log.d("TAG", "ImeiId6: "+deviceId);
 
         //GlobalClass.setSharedPref(getBaseContext(), deviceId, deviceId);
@@ -805,7 +807,6 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
 
     private void LoginAPi(String devid, String dbname) {
         Log.d("TAG", "MyApp: "+ "Login Api Run");
-        devid ="2234514145687247";
         customProgressDialog.show();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
 
@@ -902,48 +903,50 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
     private void ImageAPI() {
 
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<ImageDataModel> call = apiInterface.getTopImage(GlobalClass.Token,GlobalClass.dbname,"s");
+        Call<ImageDataModel> call = apiInterface.getTopImage(GlobalClass.Token, GlobalClass.dbname, "S", "B");
+
         call.enqueue(new Callback<ImageDataModel>() {
             @Override
             public void onResponse(Call<ImageDataModel> call, Response<ImageDataModel> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    ImageDataModel imageDataModel = response.body();
 
-                if(response.isSuccessful() && response.body() != null){
-                    if (response.body().getMessage().equals("No Record Found")) {
-
+                    if ("No Record Found".equals(imageDataModel.getMessage())) {
                         getTargetApi();
-                        /*GlobalClass.showToast(LoginActivity.this,2,"Login SuccessFully");
-                        startActivity(new Intent(LoginActivity.this, HomePageActivity.class));
-                        finish();*/
-
                         image = "null";
-                    } else {
+                    } else if (imageDataModel.getData() != null) {
+                        ImageModel imageModel = imageDataModel.getData();
 
-                        ImageDataModel imageDataModel = response.body();
-                       // Gson gson = new Gson();
-                        //     ImageModel[] imageModels = gson.fromJson(imageDataModel.getData(), ImageModel[].class);
-                        ImageModel imageModelList = imageDataModel.getData();
-                        image = "https://erp.paisalo.in:981/LOSDOC/BannerPost/" + imageModelList.getBanner();
-                        Log.d("TAG", "MyApp: " + "Image = " + image);
+                        if (imageModel != null && imageModel.getBanner() != null) {
+                            image = "https://erp.paisalo.in:981/LOSDOC/BannerPost/" + imageModel.getBanner();
+                            Log.d("TAG", "Image URL: " + image);
 
-                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("image", image);
-                        editor.apply();
+                            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString("image", image);
+                            editor.apply();
+                        } else {
+                            Log.d("TAG", "Banner data is null");
+                        }
                         getTargetApi();
-                       // finish();
-
+                    } else {
+                        Log.d("TAG", "Data field is null");
                     }
-                }else {
-                    GlobalClass.showToast(LoginActivity.this,5,response.message());
+                } else {
+                    Log.d("TAG", "Unsuccessful response, code: " + response.code());
+                    GlobalClass.showToast(LoginActivity.this, 5, response.message());
                 }
             }
+
             @Override
             public void onFailure(Call<ImageDataModel> call, Throwable t) {
-                GlobalClass.showToast(LoginActivity.this,5,t.getMessage());
-
+                Log.e("TAG", "API call failed: " + t.getMessage());
+                GlobalClass.showToast(LoginActivity.this, 5, t.getMessage());
             }
         });
     }
+
+
     private void getTargetApi() {
 
         Calendar calendar = Calendar.getInstance();
