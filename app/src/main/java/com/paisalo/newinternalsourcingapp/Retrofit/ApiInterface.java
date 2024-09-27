@@ -101,8 +101,7 @@ public interface ApiInterface {
     public Call<TargetResponseModel> getTarget(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("KO_ID") String KO_ID, @Query("Month") String Month, @Query("Year") String Year);
 
     @GET("Notification/GetBannerPostingMobile")
-    Call<ImageDataModel> getTopImage(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("AppType") String AppType);
-//----
+    Call<ImageDataModel> getTopImage(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("AppType") String AppType,@Query("MessageType")String MessageType);//----
     @GET("LiveTrack/MonthlyTargetCsoIdCount")
      Call<TargetCountModel> getTargetCount(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("CsoId") String CsoId);
 
