@@ -124,6 +124,7 @@ public class FirstEsignActivity extends AppCompatActivity {
                 Fragment frag = MuPDFFragment.newInstance(path, false);
                 ft.add(R.id.pdfview, frag);
 
+
                 ft.commit();
             } else {
                 borrower = (PendingESignFI) intent.getSerializableExtra(GlobalClass.ESIGN_BORROWER);

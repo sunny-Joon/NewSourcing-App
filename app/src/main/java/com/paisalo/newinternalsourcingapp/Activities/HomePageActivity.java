@@ -38,6 +38,7 @@
     import com.paisalo.newinternalsourcingapp.Fragments.leaderboard.LeaderBoardFragment;
     import com.paisalo.newinternalsourcingapp.Fragments.leaderboard.LeaderboardEntry;
     import com.paisalo.newinternalsourcingapp.GlobalClass;
+    import com.paisalo.newinternalsourcingapp.ModelsRetrofit.CollectionTokenModel;
     import com.paisalo.newinternalsourcingapp.ModelsRetrofit.LeaderBoardModels.LeaderboardDataModel;
     import com.paisalo.newinternalsourcingapp.ModelsRetrofit.LeaderBoardModels.LeaderboardModel;
     import com.paisalo.newinternalsourcingapp.ModelsRetrofit.ManagerListModels.ManagerListDataModel;
@@ -62,7 +63,10 @@
     import java.util.ArrayList;
     import java.util.List;
     import java.util.Locale;
+    import java.util.concurrent.TimeUnit;
 
+    import okhttp3.OkHttpClient;
+    import okhttp3.logging.HttpLoggingInterceptor;
     import retrofit2.Call;
     import retrofit2.Callback;
     import retrofit2.Response;
@@ -99,7 +103,7 @@
 
             }
             leaderboardList();
-
+            LiveTokenCollection();
             binding.mainActViewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
             binding.mainActViewPager.setPageTransformer(true, new TiltTransformer());
             binding.mainActViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -163,6 +167,7 @@
                 fragmentTransaction.commit();
             });
         }
+
 
         private void GetBannerViewStatus() {
 
@@ -396,6 +401,48 @@
                 @Override
                 public void onFailure(Call<ViewStatusmodel> call, Throwable t) {
                     Log.d("TAG", "onFailure:banner13 " + t.getMessage());
+
+        private void LiveTokenCollection() {
+            Log.d("TAG", "collectionTokenModel: "+"Start");
+
+            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+            httpClient.connectTimeout(1, TimeUnit.MINUTES);
+            httpClient.readTimeout(1,TimeUnit.MINUTES);
+            httpClient.addInterceptor(logging);
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("https://agra.Paisalo.in:8444/PLServicev82/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(httpClient.build())
+                    .build();
+            ApiInterface apiInterface=retrofit.create(ApiInterface.class);
+            Call<CollectionTokenModel> call = apiInterface.LiveTokenCollection(GlobalClass.DevId,"SBIPDLCOL",
+                    GlobalClass.Imei,"application/json","application/x-www-form-urlencoded","application/json","111","password",GlobalClass.Id,GlobalClass.Password);
+
+            call.enqueue(new Callback<CollectionTokenModel>() {
+                @Override
+                public void onResponse(Call<CollectionTokenModel> call, Response<CollectionTokenModel> response) {
+                    Log.d("TAG", "collectionTokenModel: "+"Run");
+
+                    if(response.isSuccessful()){
+                        Log.d("TAG", "collectionTokenModel: "+"Successful");
+                        CollectionTokenModel collectionTokenModel = response.body();
+                        GlobalClass.CollectionToken = "Bearer "+collectionTokenModel.getAccessToken().toString();
+
+                    }else {
+                        Log.d("TAG", "collectionTokenModel: "+"Unsuccessful");
+
+                        Toast.makeText(HomePageActivity.this, response.code()+","+response.message(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<CollectionTokenModel> call, Throwable t) {
+                    Log.d("TAG", "collectionTokenModel: "+"failure");
+
+                    Toast.makeText(HomePageActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+
                 }
             });
         }

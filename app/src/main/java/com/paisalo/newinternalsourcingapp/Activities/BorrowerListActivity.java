@@ -90,7 +90,6 @@ public class BorrowerListActivity extends AppCompatActivity implements BorrowerL
 
                     } else {
                         customProgressDialog.dismiss();
-
                         Log.d("BorrowerListActivity", "Response Code: " + response.code());
                     }
                 }

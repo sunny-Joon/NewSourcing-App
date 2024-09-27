@@ -1,5 +1,7 @@
 package com.paisalo.newinternalsourcingapp.Activities;
 
+import static com.paisalo.newinternalsourcingapp.GlobalClass.SubmitAlert;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +21,7 @@ import com.paisalo.newinternalsourcingapp.Entities.ScanAadhaar.DateUtils;
 import com.paisalo.newinternalsourcingapp.Fragments.AbsCollectionFragment;
 import com.paisalo.newinternalsourcingapp.Fragments.FragmentCollection;
 import com.paisalo.newinternalsourcingapp.Fragments.FragmentCollectionSettlement;
+import com.paisalo.newinternalsourcingapp.Fragments.OnBoarding.HouseVisitActivity2;
 import com.paisalo.newinternalsourcingapp.GlobalClass;
 import com.paisalo.newinternalsourcingapp.Modelclasses.DueData;
 import com.paisalo.newinternalsourcingapp.Modelclasses.PosInstRcv;
@@ -122,7 +125,7 @@ public class ActivityCollection extends AppCompatActivity {
             return false;
         }
     }
-    public static void refreshData(final AbsCollectionFragment fragmentCollection) {
+    public void refreshData(final AbsCollectionFragment fragmentCollection) {
         String gdate = DateUtils.getFormatedDate(new Date(), "yyyy-MM-dd");
         String cityCode = areaCode;
 
@@ -145,13 +148,18 @@ public class ActivityCollection extends AppCompatActivity {
 
                         List<CustomerListDataModel> dueDataList1 = dueData.getData();
                         Log.d("refreshData4", dueDataList1.size() + "");
+                        if(dueDataList1.isEmpty()){
+                            SubmitAlert(ActivityCollection.this, "Empty List", "No Data For  Collection");
+
+                        }
                         Log.d("TAG","refreshData6" + dueDataList1.toString() );
+                        dueDataList.clear(); // Clear the list before adding new data
                         dueDataList.addAll(getDueDataByDbName(dueDataList1, foCode, creator));
 
 
 
                         populateFragments();
-                        refreshSettlement();
+                      //  refreshSettlement();
                         if (fragmentCollection != null)
                             fragmentCollection.refreshData();
                     }

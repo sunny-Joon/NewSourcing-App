@@ -58,8 +58,10 @@ public class GlobalClass extends Application {
     public static String Creator = "";
     public static String Address = "";
     public static String AreaCode = "";
+    public static String Password = "";
     public static String UserName = "";
     public static String Token = "";
+    public static String CollectionToken = "";
     public static String LiveToken = "";
     public static String Tag = "";
     public static String Imei = "";
@@ -248,10 +250,6 @@ public class GlobalClass extends Application {
     }
 
     public static boolean isValidPan(String pan) {
-        if (pan.isEmpty()) {
-            return false;
-        }
-
         String regex = "[A-Z]{5}[0-9]{4}[A-Z]{1}";
         Pattern pattern = Pattern.compile(regex);
         return pattern.matcher(pan).matches();

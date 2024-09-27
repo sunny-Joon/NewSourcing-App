@@ -85,12 +85,13 @@ public class ManagerListAdapter extends RecyclerView.Adapter<ManagerListAdapter.
 
     private void openActivity(String id,String foCode,String creator,String areaCode) {
         if (id.equals("KYC")) {
-            Log.d("Kyc","kkk"+id);
+            SelectScheme();
+           /* Log.d("Kyc","kkk"+id);
             Intent intent = new Intent(context, KYCActivity.class);
             intent.putExtra("foCode", foCode);
             intent.putExtra("creator", creator);
             intent.putExtra("areaCode", areaCode);
-            context.startActivity(intent);
+            context.startActivity(intent);*/
         }else if (id.equals("Application")) {
             Log.d("Application", "kkk" + id);
             Intent intent = new Intent(context, BorrowerListActivity.class);
@@ -119,10 +120,71 @@ public class ManagerListAdapter extends RecyclerView.Adapter<ManagerListAdapter.
             intent.putExtra("areaCode", areaCode);
             context.startActivity(intent);
         }
-
     }
 
+    private void SelectScheme() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        View customDialogView = LayoutInflater.from(context).inflate(R.layout.choose_scheme_dialog, null);
 
+            TextView umeed = customDialogView.findViewById(R.id.umeed);
+            TextView pragati = customDialogView.findViewById(R.id.pragati);
+            TextView vikas = customDialogView.findViewById(R.id.vikas);
+            TextView udaan = customDialogView.findViewById(R.id.udaan);
+            builder.setView(customDialogView);
+            // Show the AlertDialog
+            AlertDialog alertDialog = builder.create();
+            alertDialog.setCancelable(false);
+
+            alertDialog.show();
+            umeed.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, KYCActivity.class);
+                    intent.putExtra("SCHEME_TAG", "UMEED");
+                    intent.putExtra("foCode", foCode);
+                    intent.putExtra("creator", creator);
+                    intent.putExtra("areaCode", areaCode);
+                    context.startActivity(intent);
+                    alertDialog.dismiss();
+                }
+            });
+            pragati.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, KYCActivity.class);
+                    intent.putExtra("SCHEME_TAG", "PRAGATI");
+                    intent.putExtra("foCode", foCode);
+                    intent.putExtra("creator", creator);
+                    intent.putExtra("areaCode", areaCode);
+                    context.startActivity(intent);
+                    alertDialog.dismiss();
+                }
+            });
+            vikas.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, KYCActivity.class);
+                    intent.putExtra("SCHEME_TAG", "VIKAS");
+                    intent.putExtra("foCode", foCode);
+                    intent.putExtra("creator", creator);
+                    intent.putExtra("areaCode", areaCode);
+                    context.startActivity(intent);
+                    alertDialog.dismiss();
+                }
+            });
+            udaan.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, KYCActivity.class);
+                    intent.putExtra("SCHEME_TAG", "UDAAN");
+                    intent.putExtra("foCode", foCode);
+                    intent.putExtra("creator", creator);
+                    intent.putExtra("areaCode", areaCode);
+                    context.startActivity(intent);
+                    alertDialog.dismiss();
+                }
+            });
+    }
 
 
     public void showPopup() {

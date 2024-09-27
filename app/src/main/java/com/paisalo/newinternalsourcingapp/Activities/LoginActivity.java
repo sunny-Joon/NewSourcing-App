@@ -453,7 +453,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                 });
     }
 
-    private void DeviceMappingRequests(String UserID){
+    private void   DeviceMappingRequests(String UserID){
         Log.d("TAG", "ImeiId10: "+ UserID);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
@@ -786,6 +786,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
         }catch (Exception e)
         {
         }
+
 //        deviceId = lastThreeChars + //we make this look like a valid IMEI
 //                Build.BOARD.length()%10+ Build.BRAND.length()%10 +
 //                Build.CPU_ABI.length()%10 + Build.DEVICE.length()%10 +
@@ -801,6 +802,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
 
 
         Log.d("TAG", "ImeiId6: "+deviceId);
+
 
         //GlobalClass.setSharedPref(getBaseContext(), deviceId, deviceId);
     }
@@ -832,6 +834,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                       //  GlobalClass.Imei = "868368051227918";
                         GlobalClass.DevId = tokenDetailsModel.getDeviceSrNo().toString();
                         GlobalClass.UserName = foModel.get(0).getFoName().toString();
+                        GlobalClass.Password = password.toString();
                         GlobalClass.Creator = foModel.get(0).getCreator().toString();
                         GlobalClass.AreaCode = foModel.get(0).getAreaCd().toString();
                         GlobalClass.Tag = foModel.get(0).getTag().toString();

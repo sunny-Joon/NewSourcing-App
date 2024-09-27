@@ -567,26 +567,21 @@ public class GuarantorsFragment extends Fragment {
                                 perMob1 = etTextMobile.getText().toString();
                             }
 
-//                            if (etTextvoterid.getText().toString().isEmpty()) {
-//                                etTextvoterid.setError("Empty Voter id");
-//                                allConditionsSatisfied = false;
-//                            } else {
+                            if (!etTextvoterid.getText().toString().isEmpty()) {
                                 voterID = etTextvoterid.getText().toString();
-                          //  }
+                            }
 
-                            if (!isValidPan(etTextPAN.getText().toString())) {
-                                etTextPAN.setError("Invalid Pan");
-                                allConditionsSatisfied = false;
-                            } else {
+                            if (!etTextPAN.getText().toString().isEmpty() && isValidPan(etTextPAN.getText().toString())) {
                                 panno = etTextPAN.getText().toString();
                             }
 
-//                            if (etdrivingLicense.getText().toString().isEmpty()) {
-//                                etdrivingLicense.setError("Empty License");
-//                                allConditionsSatisfied = false;
-//                            } else {
+                            if (!etdrivingLicense.getText().toString().isEmpty()) {
                                 drivingLic = etdrivingLicense.getText().toString();
-                          //  }
+                            }
+                            if(etTextvoterid.getText().toString().isEmpty() && etTextPAN.getText().toString().isEmpty() && etdrivingLicense.getText().toString().isEmpty()){
+                                allConditionsSatisfied = false;
+                                Toast.makeText(getContext(), "Enter Atleast One Id", Toast.LENGTH_SHORT).show();
+                            }
 
                             if (spin_relationwithborr.getSelectedItem().toString().contains("-Select-")) {
                                 ((TextView) spin_relationwithborr.getSelectedView()).setError("Please select a relationwithborr");
@@ -1549,7 +1544,6 @@ public class GuarantorsFragment extends Fragment {
         jsonGuarantor.addProperty("name", guarantor.getName());
         jsonGuarantor.addProperty("age", guarantor.getAge());
 
-
             String temp = etTextDob.getText().toString();
             String formattedDate = GlobalClass.formatDateString2(temp,"yyyy-MM-dd");
             if (formattedDate != null) {
@@ -1558,7 +1552,6 @@ public class GuarantorsFragment extends Fragment {
                 Log.d("TAG", "drivinglicenseDOBjson: "+ DOB);
                 Log.d("TAG", "drivinglicenseDOBjson: "+ formattedDate);
             }
-
 
         jsonGuarantor.addProperty("dob",DOB);
         jsonGuarantor.addProperty("gender", guarantor.getGender());
@@ -1570,12 +1563,12 @@ public class GuarantorsFragment extends Fragment {
         jsonGuarantor.addProperty("p_Pin", guarantor.getpPin());
         jsonGuarantor.addProperty("p_StateID", guarantor.getpStateID());
         jsonGuarantor.addProperty("perMob1", guarantor.getPerMob1());
-        jsonGuarantor.addProperty("voterID", guarantor.getVoterID());
-        jsonGuarantor.addProperty("panNo", guarantor.getPanNo());
-        jsonGuarantor.addProperty("drivingLic", guarantor.getDrivingLic());
+        jsonGuarantor.addProperty("voterID", isEmpty(guarantor.getVoterID()) ? "" :guarantor.getVoterID());
+        jsonGuarantor.addProperty("panNo", isEmpty(guarantor.getPanNo()) ? "" :guarantor.getPanNo());
+        jsonGuarantor.addProperty("drivingLic", isEmpty(guarantor.getDrivingLic()) ? "" :guarantor.getDrivingLic());
         jsonGuarantor.addProperty("relation", guarantor.getRelation());
 
-        jsonGuarantor.addProperty("grNo", guarantor.getGrNo());
+        jsonGuarantor.addProperty("grNo", 1);
         jsonGuarantor.addProperty("gurInitials", "");
         jsonGuarantor.addProperty("corrAddr", 0);
         jsonGuarantor.addProperty("firmName", "");

@@ -37,7 +37,7 @@ public class ApiClient {
             OkHttpClient.Builder httpClient = new OkHttpClient.Builder(
 
             );
-            httpClient.connectTimeout(1, TimeUnit.MINUTES);
+            httpClient.connectTimeout(2, TimeUnit.MINUTES);
             httpClient.readTimeout(1,TimeUnit.MINUTES);
             httpClient.addInterceptor(logging);
             retrofit = new Retrofit.Builder()
