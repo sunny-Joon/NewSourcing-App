@@ -109,8 +109,8 @@ public class SecondEsignActivity extends AppCompatActivity {
           // GlobalClass.showLottieAlertDialog(8,SecondEsignActivity.this);
            customProgressDialog.show();
            JsonObject jsonObject=new JsonObject();
-           jsonObject.addProperty("DocName", "Esign");
-           jsonObject.addProperty("dbName", "SBINEWDOC");
+           jsonObject.addProperty("DocName", "SBINEWDOC");
+         //  jsonObject.addProperty("dbName", "SBINEWDOC");
            // jsonObject.addProperty("FiCode", borrower.getCode());
            jsonObject.addProperty("FiCode", borrower.getCode());
            jsonObject.addProperty("FiCreator", borrower.getCreator());

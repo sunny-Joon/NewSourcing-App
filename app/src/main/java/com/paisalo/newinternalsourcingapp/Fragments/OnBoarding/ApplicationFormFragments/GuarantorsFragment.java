@@ -1544,7 +1544,6 @@ public class GuarantorsFragment extends Fragment {
         jsonGuarantor.addProperty("name", guarantor.getName());
         jsonGuarantor.addProperty("age", guarantor.getAge());
 
-
             String temp = etTextDob.getText().toString();
             String formattedDate = GlobalClass.formatDateString2(temp,"yyyy-MM-dd");
             if (formattedDate != null) {
@@ -1553,7 +1552,6 @@ public class GuarantorsFragment extends Fragment {
                 Log.d("TAG", "drivinglicenseDOBjson: "+ DOB);
                 Log.d("TAG", "drivinglicenseDOBjson: "+ formattedDate);
             }
-
 
         jsonGuarantor.addProperty("dob",DOB);
         jsonGuarantor.addProperty("gender", guarantor.getGender());
@@ -1565,8 +1563,7 @@ public class GuarantorsFragment extends Fragment {
         jsonGuarantor.addProperty("p_Pin", guarantor.getpPin());
         jsonGuarantor.addProperty("p_StateID", guarantor.getpStateID());
         jsonGuarantor.addProperty("perMob1", guarantor.getPerMob1());
-        jsonGuarantor.addProperty("voterID", isEmpty(guarantor.getVoterID()) ? "" :guarantor.getVoterID()
-        );
+        jsonGuarantor.addProperty("voterID", isEmpty(guarantor.getVoterID()) ? "" :guarantor.getVoterID());
         jsonGuarantor.addProperty("panNo", isEmpty(guarantor.getPanNo()) ? "" :guarantor.getPanNo());
         jsonGuarantor.addProperty("drivingLic", isEmpty(guarantor.getDrivingLic()) ? "" :guarantor.getDrivingLic());
         jsonGuarantor.addProperty("relation", guarantor.getRelation());

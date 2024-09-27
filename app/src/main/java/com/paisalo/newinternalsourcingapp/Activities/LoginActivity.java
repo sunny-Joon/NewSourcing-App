@@ -455,7 +455,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                 });
     }
 
-    private void DeviceMappingRequests(String UserID){
+    private void   DeviceMappingRequests(String UserID){
         Log.d("TAG", "ImeiId10: "+ UserID);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
@@ -797,9 +797,10 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
                 Build.TAGS.length()%10 + Build.TYPE.length()%10 +
                 Build.USER.length()%10 ; //13 digits
 
-       /* deviceId = "2234514145687247";//GRST000223
-        deviceId = "0002496575477244";//GRST002000*/
-        Log.d("TAG", "ImeiId6: "+deviceId);
+    //  deviceId = "2234514145687247";//GRST000223
+       // deviceId = "0002496575477244";//GRST002000
+        //2239713985785243
+        //2239713985785240
 
         //GlobalClass.setSharedPref(getBaseContext(), deviceId, deviceId);
     }
@@ -903,45 +904,45 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
     private void ImageAPI() {
 
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<ImageDataModel> call = apiInterface.getTopImage(GlobalClass.Token,GlobalClass.dbname,"s");
+        Call<ImageDataModel> call = apiInterface.getTopImage(GlobalClass.Token, GlobalClass.dbname, "S", "B");
+
         call.enqueue(new Callback<ImageDataModel>() {
             @Override
             public void onResponse(Call<ImageDataModel> call, Response<ImageDataModel> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    ImageDataModel imageDataModel = response.body();
 
-                if(response.isSuccessful() && response.body() != null){
-                    if (response.body().getMessage().equals("No Record Found")) {
-
+                    if ("No Record Found".equals(imageDataModel.getMessage())) {
                         getTargetApi();
-                        /*GlobalClass.showToast(LoginActivity.this,2,"Login SuccessFully");
-                        startActivity(new Intent(LoginActivity.this, HomePageActivity.class));
-                        finish();*/
-
                         image = "null";
-                    } else {
+                    } else if (imageDataModel.getData() != null) {
+                        ImageModel imageModel = imageDataModel.getData();
 
-                        ImageDataModel imageDataModel = response.body();
-                       // Gson gson = new Gson();
-                        //     ImageModel[] imageModels = gson.fromJson(imageDataModel.getData(), ImageModel[].class);
-                        ImageModel imageModelList = imageDataModel.getData();
-                        image = "https://erp.paisalo.in:981/LOSDOC/BannerPost/" + imageModelList.getBanner();
-                        Log.d("TAG", "MyApp: " + "Image = " + image);
+                        if (imageModel != null && imageModel.getBanner() != null) {
+                            image = "https://erp.paisalo.in:981/LOSDOC/BannerPost/" + imageModel.getBanner();
+                            Log.d("TAG", "Image URL: " + image);
 
-                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("image", image);
-                        editor.apply();
+                            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString("image", image);
+                            editor.apply();
+                        } else {
+                            Log.d("TAG", "Banner data is null");
+                        }
                         getTargetApi();
-                       // finish();
-
+                    } else {
+                        Log.d("TAG", "Data field is null");
                     }
-                }else {
-                    GlobalClass.showToast(LoginActivity.this,5,response.message());
+                } else {
+                    Log.d("TAG", "Unsuccessful response, code: " + response.code());
+                    GlobalClass.showToast(LoginActivity.this, 5, response.message());
                 }
             }
+
             @Override
             public void onFailure(Call<ImageDataModel> call, Throwable t) {
-                GlobalClass.showToast(LoginActivity.this,5,t.getMessage());
-
+                Log.e("TAG", "API call failed: " + t.getMessage());
+                GlobalClass.showToast(LoginActivity.this, 5, t.getMessage());
             }
         });
     }
