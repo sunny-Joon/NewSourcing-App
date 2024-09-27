@@ -562,7 +562,6 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                                 if (exists) {
                                     showKYCFailedDialog();
                                 } else {
-                                    showImageCaptureDialog();
                                   panVerification("pancard", editTextPAN.getText().toString(), "");
                                 }
                             }
