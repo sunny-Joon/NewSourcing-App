@@ -401,6 +401,11 @@
                 @Override
                 public void onFailure(Call<ViewStatusmodel> call, Throwable t) {
                     Log.d("TAG", "onFailure:banner13 " + t.getMessage());
+                    Toast.makeText(HomePageActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+
+                }
+            });
+        }
 
         private void LiveTokenCollection() {
             Log.d("TAG", "collectionTokenModel: "+"Start");
