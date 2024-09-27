@@ -5,6 +5,7 @@ import static com.paisalo.newinternalsourcingapp.GlobalClass.SubmitAlert;
 import static java.lang.Thread.sleep;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -62,6 +63,8 @@ public class CrifScore extends AppCompatActivity {
     PendingESignFI eSignerborower;
     Spinner spinner;
     int attempts_left=4;
+    int crifScorelimit=0;
+    SharedPreferences sharedPreferences1;
     TextView attempsTextView;
     @SuppressLint("MissingInflatedId")
     @Override
@@ -109,6 +112,11 @@ public class CrifScore extends AppCompatActivity {
 
         btnSrifScoreSave=findViewById(R.id.btnSrifScoreSave);
         btnSrifScoreSave.setVisibility(View.GONE);
+
+        sharedPreferences1 = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        String branchCrifScore = sharedPreferences1.getString("branch_crifScore", "0");
+        crifScorelimit = Integer.parseInt(branchCrifScore);
+
         btnSrifScoreSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -601,7 +609,11 @@ public class CrifScore extends AppCompatActivity {
                             text_srifScore.setText(score);
                             textView5.setText(score);
 
-                            if (Integer.parseInt(score)>650 || Integer.parseInt(score)<300){
+                            if(crifScorelimit==0){
+                                crifScorelimit=650;
+                            }
+
+                            if (Integer.parseInt(score)>crifScorelimit || Integer.parseInt(score)<300){
                                 if (Double.parseDouble(amount)>0 && response.body().getStatusCode()==200){
                                     gifImageView.setImageResource(R.drawable.checksign);
                                     textView8.setText("Congrats!!");

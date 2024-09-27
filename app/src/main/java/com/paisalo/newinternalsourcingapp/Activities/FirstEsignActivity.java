@@ -184,6 +184,7 @@ public class FirstEsignActivity extends AppCompatActivity {
 
                                     String path = written.getAbsolutePath();
 
+                                    Log.d("TAG", "onResponse:path "+path);
                                     fm = getSupportFragmentManager();
                                     FragmentTransaction ft = fm.beginTransaction();
 

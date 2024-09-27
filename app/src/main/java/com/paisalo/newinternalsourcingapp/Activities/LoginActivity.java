@@ -50,7 +50,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.gson.Gson;
 
 import com.google.gson.JsonObject;
 import com.paisalo.newinternalsourcingapp.Adapters.BranchCodesAdapter;
@@ -84,7 +83,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
-import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import retrofit2.Call;
@@ -788,19 +786,23 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
         }catch (Exception e)
         {
         }
-        deviceId = lastThreeChars + //we make this look like a valid IMEI
-                Build.BOARD.length()%10+ Build.BRAND.length()%10 +
-                Build.CPU_ABI.length()%10 + Build.DEVICE.length()%10 +
-                Build.DISPLAY.length()%10 + Build.HOST.length()%10 +
-                Build.ID.length()%10 + Build.MANUFACTURER.length()%10 +
-                Build.MODEL.length()%10 + Build.PRODUCT.length()%10 +
-                Build.TAGS.length()%10 + Build.TYPE.length()%10 +
-                Build.USER.length()%10 ; //13 digits
 
-    //  deviceId = "2234514145687247";//GRST000223
-       // deviceId = "0002496575477244";//GRST002000
-        //2239713985785243
-        //2239713985785240
+//        deviceId = lastThreeChars + //we make this look like a valid IMEI
+//                Build.BOARD.length()%10+ Build.BRAND.length()%10 +
+//                Build.CPU_ABI.length()%10 + Build.DEVICE.length()%10 +
+//                Build.DISPLAY.length()%10 + Build.HOST.length()%10 +
+//                Build.ID.length()%10 + Build.MANUFACTURER.length()%10 +
+//                Build.MODEL.length()%10 + Build.PRODUCT.length()%10 +
+//                Build.TAGS.length()%10 + Build.TYPE.length()%10 +
+//                Build.USER.length()%10 ; //13 digits
+
+       // deviceId="3617698475677244";//GVST000361
+      deviceId = "2234514145687247";//GRST00223
+      //  deviceId="9776498475477244";//grst002977
+
+
+        Log.d("TAG", "ImeiId6: "+deviceId);
+
 
         //GlobalClass.setSharedPref(getBaseContext(), deviceId, deviceId);
     }
@@ -946,6 +948,8 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
             }
         });
     }
+
+
     private void getTargetApi() {
 
         Calendar calendar = Calendar.getInstance();

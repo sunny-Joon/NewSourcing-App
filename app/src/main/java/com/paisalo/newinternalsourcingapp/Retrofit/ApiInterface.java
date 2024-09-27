@@ -10,6 +10,7 @@ import com.paisalo.newinternalsourcingapp.Modelclasses.PosInstRcvNew;
 import com.paisalo.newinternalsourcingapp.Modelclasses.QRCollStatus;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.AccountDetails_Model;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.BorrowerListModels.BorrowerListModel;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.BranchStatusResponce;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.BreResponseModels.BREResponse;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.Collection.CustomerListModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.CollectionTokenModel;
@@ -48,6 +49,7 @@ import com.paisalo.newinternalsourcingapp.ModelsRetrofit.TopAdImageModels.ImageD
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.StateDistDataModels.VillageListModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.UpdateFiModels.KycUpdateModel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.VersionCheck;
+import com.paisalo.newinternalsourcingapp.ModelsRetrofit.ViewStatusmodel;
 import com.paisalo.newinternalsourcingapp.ModelsRetrofit.Visitreportmodel;
 
 import java.util.List;
@@ -71,6 +73,9 @@ public interface ApiInterface {
 
     //page
     //link
+
+    @GET("UserMobile/BranchFunction")
+    Call<BranchStatusResponce> getBranchStatus(@Query("BranchCode") String BranchCode, @Query("Creator") String Creator);
 
     @GET("LiveTrack/GetAppLink")
     Call<VersionCheck> VersionCheck(@Header("dbname") String dbName, @Query("version") String version, @Query("AppName") String AppName, @Query("action") int action);
@@ -101,7 +106,21 @@ public interface ApiInterface {
     public Call<TargetResponseModel> getTarget(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("KO_ID") String KO_ID, @Query("Month") String Month, @Query("Year") String Year);
 
     @GET("Notification/GetBannerPostingMobile")
-    Call<ImageDataModel> getTopImage(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("AppType") String AppType,@Query("MessageType")String MessageType);//----
+
+    Call<ImageDataModel> getTopImage(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("AppType") String AppType,@Query("MessageType")String MessageType);
+
+
+    @GET("Notification/GetBannerViewStatus")
+    Call<Integer> getBannerExit(@Query("Viewer_Id") String Viewer_Id);
+
+    @POST("Notification/InsertBannerViewStatus")
+    Call<ViewStatusmodel> getBannerView(@Query("Viewer_Id") String Viewer_Id, @Query("Message_Id") String Message_Id);
+
+//    @GET("Notification/GetBannerPostingMobile")
+//    Call<ImageDataModel> getTopImage(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("AppType") String AppType,@Query("MessageType") String MessageType);
+
+    //----
+
     @GET("LiveTrack/MonthlyTargetCsoIdCount")
      Call<TargetCountModel> getTargetCount(@Header("Authorization") String token, @Header("dbname") String dbname, @Query("CsoId") String CsoId);
 
