@@ -885,17 +885,28 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
 
 
     private void getMobileOTP(String mobileNumber, CheckBox mobileCheckBox) {
-        customProgressDialog.show();
-        ApiInterface apiInterface = ApiClient.getClient5().create(ApiInterface.class);
+       // customProgressDialog.show();
 
-        Log.d("TAG", "getMobileOTP:1 " + apiInterface);
-        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(KYCActivity.this);
-        View dialogView = getLayoutInflater().inflate(R.layout.otp_dialog_layout, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(KYCActivity.this);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.otp_dialog_layout, null);
         builder.setView(dialogView);
-        Log.d("TAG", "getMobileOTP:2 ");
-        androidx.appcompat.app.AlertDialog dialogs = builder.create();
+
+        AlertDialog dialogs = builder.create();
         dialogs.setCanceledOnTouchOutside(false);
         dialogs.setCancelable(false);
+        dialogs.show();
+
+        /*otpEditText = dialogView.findViewById(R.id.editTextOTP);
+        submitButton = dialogView.findViewById(R.id.buttonSubmit);
+        crossButtonDialog = dialogView.findViewById(R.id.crossButtonDialog);*/
+
+        /*androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(KYCActivity.this);
+        View dialogView = getLayoutInflater().inflate(R.layout.otp_dialog_layout, null);
+        builder.setView(dialogView);
+        androidx.appcompat.app.AlertDialog dialogs = builder.create();
+        dialogs.setCanceledOnTouchOutside(false);
+        dialogs.setCancelable(false);*/
         otpEditText = dialogView.findViewById(R.id.editTextOTP);
         Button submitButton = dialogView.findViewById(R.id.buttonSubmit);
         ImageButton crossButtonDialog = dialogView.findViewById(R.id.crossButtonDialog);
@@ -903,7 +914,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         crossButtonDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                customProgressDialog.dismiss();
+                //customProgressDialog.dismiss();
                 dialogs.dismiss();
             }
         });
@@ -917,6 +928,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                 if (otpEditText.getText().toString().trim().length() != 6) {
                     otpEditText.setError("Wrong OTP");
                 } else {
+                    ApiInterface apiInterface = ApiClient.getClient5().create(ApiInterface.class);
                     Call<JsonObject> call = apiInterface.verifyOTP(mobileNumber, otpEditText.getText().toString().trim());
                     Log.d("TAG", "onClick:call " + call);
                     call.enqueue(new Callback<JsonObject>() {
@@ -964,6 +976,7 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
         jsonObject.addProperty("Language", "English");
         jsonObject.addProperty("ContentId", "1007458689942092806");
         Log.d("TAG", "getMobileOTP:6 ");
+        ApiInterface apiInterface = ApiClient.getClient5().create(ApiInterface.class);
         Call<JsonObject> call = apiInterface.getOtp(jsonObject);
         Log.d("TAG", "getMobileOTP:call " + jsonObject);
         call.enqueue(new Callback<JsonObject>() {
@@ -976,8 +989,10 @@ public class KYCActivity extends AppCompatActivity implements VillageChooseListn
                     if (response.body().get("message").getAsString().contains("Message Send Successfully")) {
                         dialogs.show();
                     } else {
-                        Toast.makeText(KYCActivity.this, "Something went wrong, API Failure", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(KYCActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
                     }
+                }else{
+                    Toast.makeText(KYCActivity.this, "Retry", Toast.LENGTH_SHORT).show();
                 }
                 customProgressDialog.dismiss();
             }
