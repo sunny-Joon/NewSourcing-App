@@ -29,6 +29,7 @@ public class ApiClient {
     private static Retrofit retrofit2 = null;
     private static Retrofit retrofit4 = null;
     private static Retrofit retrofit5 = null;
+    private static Retrofit retrofit6 = null;
 
     public static Retrofit  getClient() {
         if (retrofit==null) {
@@ -107,7 +108,7 @@ public class ApiClient {
         return retrofit5;
     }
     public static Retrofit getClient6() {
-        if (retrofit5==null) {
+        if (retrofit6==null) {
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
             logging.setLevel(HttpLoggingInterceptor.Level.BODY);
             OkHttpClient.Builder httpClient = new OkHttpClient.Builder(
@@ -116,12 +117,12 @@ public class ApiClient {
             httpClient.connectTimeout(1, TimeUnit.MINUTES);
             httpClient.readTimeout(1,TimeUnit.MINUTES);
             httpClient.addInterceptor(logging);
-            retrofit5 = new Retrofit.Builder()
+            retrofit6 = new Retrofit.Builder()
                     .baseUrl(BASE_URL6)
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(httpClient.build())
                     .build();
         }
-        return retrofit5;
+        return retrofit6;
     }
 }
