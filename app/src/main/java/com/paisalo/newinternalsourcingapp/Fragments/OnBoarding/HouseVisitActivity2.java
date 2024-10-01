@@ -386,8 +386,23 @@ public class HouseVisitActivity2 extends AppCompatActivity {
                                 if (response.body().getMessage().contains("Record Insert Successfully")) {
                                     Log.d("TAG", "onResponse:home2 " + response.body().getMessage());
                                     progressDialog.dismiss();
-                                    SubmitAlert(HouseVisitActivity2.this, "Successful", "House Visit Form Submit Successfully");
-                                    finish();
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(HouseVisitActivity2.this)
+                                            .setTitle("Successful")
+                                            .setMessage("House Visit Form Submitted Successfully")
+                                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    finish();
+                                                }
+                                            })
+                                            .setIcon(android.R.drawable.ic_dialog_alert)
+                                            .setCancelable(false);
+
+                                    AlertDialog dialog = builder.create();
+                                    dialog.show();
+
+                                  //  SubmitAlert(HouseVisitActivity2.this, "Successful", "House Visit Form Submit Successfully");
+                                 //   finish();
                                 }
                             } else {
                                 SubmitAlert(HouseVisitActivity2.this, "Error", "House Visit Form Not Submit");
