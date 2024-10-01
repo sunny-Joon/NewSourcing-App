@@ -4,7 +4,14 @@ package com.paisalo.newinternalsourcingapp.Fragments.OnBoarding;
 import static com.paisalo.newinternalsourcingapp.GlobalClass.SubmitAlert;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.app.ProgressDialog;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.location.Address;
+import android.location.Geocoder;
 import android.util.Log;
 import android.view.View;
 import android.Manifest;
@@ -30,7 +37,9 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -48,11 +57,16 @@ import com.paisalo.newinternalsourcingapp.R;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiClient;
 import com.paisalo.newinternalsourcingapp.Retrofit.ApiInterface;
 import com.paisalo.newinternalsourcingapp.RoomDatabase.DatabaseClass;
+import com.paisalo.newinternalsourcingapp.location.GpsTracker;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -61,7 +75,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+
 import android.net.Uri;
+
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
@@ -75,32 +91,32 @@ public class HouseVisitActivity2 extends AppCompatActivity {
     private static final String ALLOW_KEY = "ALLOWED";
     HVGetDataModel hvGetDataModel;
     Uri imageUri;
+    ImageView refresh;
+    TextView longitudeTV,lattitudeTV;
+    CheckBox buildType, approvedLocation, cpfCriteria, cpfAddressVerification, IdVerification, addressVerification, ageVerification, cpfRecentAddressVerification, stampOnPhotocopy, lastLoanVerification, absentReason, repaymentFault, reasonVerification, isAppliedAmountAppropriate, familyAwareness, loanRelatedToBusiness,
+            IsBusinessAppropriate, repayEligibility, surplusVerification, incomeVerification, businessVerification, comissionDemand, supportiveToGroup, groupReadyToVilay, groupHasBloodRelation,
+            understandsInsurance, verifyExternalLoan, understandsFaultPolicy, IsLoanAmountAppropriate, toatlDebtUnderLimit, workingPlaceVerification, IsWorkingPlaceValid, workingPlacedescription,
+            workExperience, seasonDependency, stockVerification, sufficientAmount;
 
-    CheckBox buildType,approvedLocation,cpfCriteria,cpfAddressVerification,IdVerification,addressVerification,ageVerification,cpfRecentAddressVerification
-            ,stampOnPhotocopy,lastLoanVerification,absentReason,repaymentFault,reasonVerification,isAppliedAmountAppropriate,familyAwareness,loanRelatedToBusiness,
-            IsBusinessAppropriate,repayEligibility,surplusVerification,incomeVerification,businessVerification,comissionDemand,supportiveToGroup,groupReadyToVilay,groupHasBloodRelation,
-            understandsInsurance,verifyExternalLoan,understandsFaultPolicy,IsLoanAmountAppropriate,toatlDebtUnderLimit,workingPlaceVerification,IsWorkingPlaceValid,workingPlacedescription,
-            workExperience,seasonDependency,stockVerification,sufficientAmount;
+    EditText branchName, area, centre, group, loanUsagePercentage, interviewee_name, interviewee_age,
+            distance_ApplicantToDealer, time_ApplicantToDealer, approxMonthlySales,
+            approxMonthlyIncome, businessExpenditure, expectedIncome, houseExpenditure, familyNetIncome,
+            reference1, reference_PhoneNo1, reference2, reference_PhoneNo2, address;
 
-    EditText branchName,area,centre,group,loanUsagePercentage,interviewee_name,interviewee_age,
-            distance_ApplicantToDealer,time_ApplicantToDealer,approxMonthlySales,
-            approxMonthlyIncome,businessExpenditure,expectedIncome,houseExpenditure,familyNetIncome,
-            reference1,reference_PhoneNo1,reference2,reference_PhoneNo2,address;
+    Spinner relationWithApplicant, residingWith, residence_type, residental_stability, businessExperience, neighbourhood_verification, intervieweeRelation;
 
-    Spinner relationWithApplicant,residingWith,residence_type,residental_stability,businessExperience,neighbourhood_verification,intervieweeRelation;
-
-    Button submit,click;
+    Button submit, click;
     private ProgressDialog progressDialog;
     ImageView view;
-    String buildType_value="Y",approvedLocation_value="Y",cpfCriteria_value="Y",cpfAddressVerification_value="Y",IdVerification_value="Y",addressVerification_value="Y",ageVerification_value="Y",cpfRecentAddressVerification_value="Y"
-            ,stampOnPhotocopy_value="Y",lastLoanVerification_value="Y",absentReason_value="Y",repaymentFault_value="Y",reasonVerification_value="Y",isAppliedAmountAppropriate_value="Y",familyAwareness_value="Y",loanRelatedToBusiness_value="Y",
-            IsBusinessAppropriate_value="Y",repayEligibility_value="Y",surplusVerification_value="Y",incomeVerification_value="Y",businessVerification_value="Y",comissionDemand_value="Y",supportiveToGroup_value="Y",groupReadyToVilay_value="Y",groupHasBloodRelation_value="Y",
-            understandsInsurance_value="Y",verifyExternalLoan_value="Y",understandsFaultPolicy_value="Y",IsLoanAmountAppropriate_value="Y",toatlDebtUnderLimit_value="Y",workingPlaceVerification_value="Y",IsWorkingPlaceValid_value="Y",workingPlacedescription_value="Y",
-            workExperience_value="Y",seasonDependency_value="Y",stockVerification_value="Y",sufficientAmount_value="Y";
+    String buildType_value = "Y", approvedLocation_value = "Y", cpfCriteria_value = "Y", cpfAddressVerification_value = "Y", IdVerification_value = "Y", addressVerification_value = "Y", ageVerification_value = "Y", cpfRecentAddressVerification_value = "Y", stampOnPhotocopy_value = "Y", lastLoanVerification_value = "Y", absentReason_value = "Y", repaymentFault_value = "Y", reasonVerification_value = "Y", isAppliedAmountAppropriate_value = "Y", familyAwareness_value = "Y", loanRelatedToBusiness_value = "Y",
+            IsBusinessAppropriate_value = "Y", repayEligibility_value = "Y", surplusVerification_value = "Y", incomeVerification_value = "Y", businessVerification_value = "Y", comissionDemand_value = "Y", supportiveToGroup_value = "Y", groupReadyToVilay_value = "Y", groupHasBloodRelation_value = "Y",
+            understandsInsurance_value = "Y", verifyExternalLoan_value = "Y", understandsFaultPolicy_value = "Y", IsLoanAmountAppropriate_value = "Y", toatlDebtUnderLimit_value = "Y", workingPlaceVerification_value = "Y", IsWorkingPlaceValid_value = "Y", workingPlacedescription_value = "Y",
+            workExperience_value = "Y", seasonDependency_value = "Y", stockVerification_value = "Y", sufficientAmount_value = "Y";
 
-    String Sresidence_type = "",SresidingWith = "",Sresidental_stability = "",SbusinessExperience = "",Sneighbourhood_verification = "",SintervieweeRelation = "",SrelationWithApplicant = "";
-    String fiNo,rentOfHouse,groupCode,cityCode,latitude,longitude,creator,empCode;
+    String Sresidence_type = "", SresidingWith = "", Sresidental_stability = "", SbusinessExperience = "", Sneighbourhood_verification = "", SintervieweeRelation = "", SrelationWithApplicant = "";
+    String fiNo, rentOfHouse, groupCode, cityCode, latitude, longitude, creator, empCode;
 
+    GpsTracker gpsTracker;
     static File housePic = null;
 
     @Override
@@ -109,6 +125,7 @@ public class HouseVisitActivity2 extends AppCompatActivity {
         setContentView(R.layout.activity_house_visit2);
 
         getSupportActionBar().hide();
+        gpsTracker=new GpsTracker(getApplicationContext());
 
         Intent intent = getIntent();
         fiNo = intent.getStringExtra("FiCode");
@@ -147,7 +164,7 @@ public class HouseVisitActivity2 extends AppCompatActivity {
         loanUsagePercentage = findViewById(R.id.loanUsagePercentage);
 
         CheckBox
-        buildType = findViewById(R.id.buildType);
+                buildType = findViewById(R.id.buildType);
         approvedLocation = findViewById(R.id.approvedLocation);
         cpfCriteria = findViewById(R.id.cpfCriteria);
         cpfAddressVerification = findViewById(R.id.cpfAddressVerification);
@@ -199,23 +216,37 @@ public class HouseVisitActivity2 extends AppCompatActivity {
         click = findViewById(R.id.click);
         view = findViewById(R.id.view);
 
+
+        refresh = findViewById(R.id.GpsRefresh);
+        longitudeTV=findViewById(R.id.longitudeTV);
+        lattitudeTV = findViewById(R.id.lattitudeTV);
+        longitudeTV.setText(String.valueOf(gpsTracker.getLatitude()));
+        lattitudeTV.setText( String.valueOf(gpsTracker.getLongitude()));
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                longitudeTV.setText(String.valueOf(gpsTracker.getLatitude()));
+                lattitudeTV.setText( String.valueOf(gpsTracker.getLongitude()));
+            }
+        });
+
         DatabaseClass.databaseWriteExecutor.execute(new Runnable() {
             @Override
             public void run() {
                 ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-                Call<HVGetModel> call = apiInterface.GetHouseVisitData(GlobalClass.Token,GlobalClass.dbname,fiNo,creator);
+                Call<HVGetModel> call = apiInterface.GetHouseVisitData(GlobalClass.Token, GlobalClass.dbname, fiNo, creator);
                 call.enqueue(new Callback<HVGetModel>() {
                     @Override
                     public void onResponse(Call<HVGetModel> call, Response<HVGetModel> response) {
                         Log.d("TAG", "onResponseHV: " + response.body());
 
-                        if(response.isSuccessful()){
+                        if (response.isSuccessful()) {
                             Log.d("TAG", "onResponseHV: " + response.body());
                             HVGetModel hvGetModel = response.body();
                             hvGetDataModel = hvGetModel.getData();
 
                             branchName.setText(hvGetDataModel.getBranchName());
-                            Log.d("TAG", "onResponseHV55: "+ branchName.getText().toString());
+                            Log.d("TAG", "onResponseHV55: " + branchName.getText().toString());
                             area.setText(hvGetDataModel.getAreaName());
                             centre.setText(hvGetDataModel.getCenter());
                             group.setText(hvGetDataModel.getGroupName());
@@ -235,8 +266,7 @@ public class HouseVisitActivity2 extends AppCompatActivity {
                             reference2.setText(hvGetDataModel.getNamereferenceperson2());
                             reference_PhoneNo2.setText(hvGetDataModel.getMobilereferenceperson2());
                             address.setText(hvGetDataModel.getAddress());
-                        }
-                        else{
+                        } else {
                             Log.d("TAG", "onResponseHV: " + response.code());
 
                         }
@@ -256,7 +286,7 @@ public class HouseVisitActivity2 extends AppCompatActivity {
             public void onClick(View v) {
 
                 validateFields();
-                if(validateFields()){
+                if (validateFields()) {
 
                     progressDialog = new ProgressDialog(HouseVisitActivity2.this);
                     progressDialog.setMessage("Saving...");
@@ -345,21 +375,21 @@ public class HouseVisitActivity2 extends AppCompatActivity {
 
                     RequestBody requestBody = builder.build();
                     ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-                    Call<HouseVisitSaveModel> call=apiInterface.SaveHouseVisit(GlobalClass.Token, BuildConfig.dbname,requestBody);
+                    Call<HouseVisitSaveModel> call = apiInterface.SaveHouseVisit(GlobalClass.Token, BuildConfig.dbname, requestBody);
                     call.enqueue(new Callback<HouseVisitSaveModel>() {
                         @Override
                         public void onResponse(Call<HouseVisitSaveModel> call, Response<HouseVisitSaveModel> response) {
-                            Log.d("TAG", "onResponse:home0 "+call +" \\// "+response);
-                            if(response.isSuccessful()){
+                            Log.d("TAG", "onResponse:home0 " + call + " \\// " + response);
+                            if (response.isSuccessful()) {
                                 assert response.body() != null;
-                                Log.d("TAG", "onResponse:home "+response.body().getMessage());
-                                if(response.body().getMessage().contains("Record Insert Successfully")) {
-                                    Log.d("TAG", "onResponse:home2 "+response.body().getMessage());
+                                Log.d("TAG", "onResponse:home " + response.body().getMessage());
+                                if (response.body().getMessage().contains("Record Insert Successfully")) {
+                                    Log.d("TAG", "onResponse:home2 " + response.body().getMessage());
                                     progressDialog.dismiss();
                                     SubmitAlert(HouseVisitActivity2.this, "Successful", "House Visit Form Submit Successfully");
                                     finish();
                                 }
-                            }else {
+                            } else {
                                 SubmitAlert(HouseVisitActivity2.this, "Error", "House Visit Form Not Submit");
                             }
                         }
@@ -379,21 +409,29 @@ public class HouseVisitActivity2 extends AppCompatActivity {
         click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                longitude = longitudeTV.getText().toString();
+                latitude = lattitudeTV.getText().toString();
+
+                if (longitude == null || latitude == null || longitude.isEmpty() || latitude.isEmpty() ||
+                        Double.parseDouble(longitude) == 0.0 || Double.parseDouble(latitude) == 0.0) {
+                    new AlertDialog.Builder(HouseVisitActivity2.this)
+                            .setTitle("Alert")
+                            .setMessage("Please click the refresh button first to get valid coordinates.")
+                            .setPositiveButton("OK", null)
+                            .show();
+                    return;
+                }
                 if (ContextCompat.checkSelfPermission(HouseVisitActivity2.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                     if (getFromPref(HouseVisitActivity2.this, ALLOW_KEY)) {
                         showSettingsAlert();
-                    } else if (ContextCompat.checkSelfPermission(HouseVisitActivity2.this, Manifest.permission.CAMERA)
-                            != PackageManager.PERMISSION_GRANTED) {
-                        if (ActivityCompat.shouldShowRequestPermissionRationale(HouseVisitActivity2.this, Manifest.permission.CAMERA)) {
-                            showAlert();
-                        } else {
-                            ActivityCompat.requestPermissions(HouseVisitActivity2.this,
-                                    new String[]{Manifest.permission.CAMERA},
-                                    MY_PERMISSIONS_REQUEST_CAMERA);
-                        }
+                    } else if (ActivityCompat.shouldShowRequestPermissionRationale(HouseVisitActivity2.this, Manifest.permission.CAMERA)) {
+                        showAlert();
+                    } else {
+                        ActivityCompat.requestPermissions(HouseVisitActivity2.this,
+                                new String[]{Manifest.permission.CAMERA},
+                                MY_PERMISSIONS_REQUEST_CAMERA);
                     }
                 } else {
-                    /*openCamera();*/
                     Intent intent = new Intent(HouseVisitActivity2.this, CameraActivity.class);
                     startActivityForResult(intent, REQUEST_HOUSE_CAPTURE);
                 }
@@ -402,7 +440,8 @@ public class HouseVisitActivity2 extends AppCompatActivity {
 
         this.view.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { Intent intent = new Intent(HouseVisitActivity2.this, PreviewActivity.class);
+            public void onClick(View v) {
+                Intent intent = new Intent(HouseVisitActivity2.this, PreviewActivity.class);
                 intent.putExtra("imageUri", imageUri.toString());
                 startActivity(intent);
             }
@@ -583,374 +622,375 @@ public class HouseVisitActivity2 extends AppCompatActivity {
         buildType.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
-                if(check==true){
-                    buildType_value="Y";
-                }else{
-                    buildType_value="N";
+                if (check == true) {
+                    buildType_value = "Y";
+                } else {
+                    buildType_value = "N";
                 }
             }
         });
         approvedLocation.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
-                if(check == true){
-                    approvedLocation_value="Y";
-                }else{
-                    approvedLocation_value="N";
+                if (check == true) {
+                    approvedLocation_value = "Y";
+                } else {
+                    approvedLocation_value = "N";
                 }
             }
         });
         cpfCriteria.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
-                if(check == true){
-                    cpfCriteria_value="Y";
-                }else{
-                    cpfCriteria_value="N";
+                if (check == true) {
+                    cpfCriteria_value = "Y";
+                } else {
+                    cpfCriteria_value = "N";
                 }
             }
         });
         cpfAddressVerification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
-                if(check == true){
-                    cpfAddressVerification_value="Y";
-                }else{
-                    cpfAddressVerification_value="N";
+                if (check == true) {
+                    cpfAddressVerification_value = "Y";
+                } else {
+                    cpfAddressVerification_value = "N";
                 }
             }
         });
         IdVerification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
-                if(check == true){
-                    IdVerification_value="Y";
-                }else{
-                    IdVerification_value="N";
+                if (check == true) {
+                    IdVerification_value = "Y";
+                } else {
+                    IdVerification_value = "N";
                 }
             }
         });
         addressVerification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
-                if(check == true){
-                    addressVerification_value="Y";
-                }else{
-                    addressVerification_value="N";
+                if (check == true) {
+                    addressVerification_value = "Y";
+                } else {
+                    addressVerification_value = "N";
                 }
             }
         });
         ageVerification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
-                if(check == true){
-                    ageVerification_value="Y";
-                }else{
-                    ageVerification_value="N";
+                if (check == true) {
+                    ageVerification_value = "Y";
+                } else {
+                    ageVerification_value = "N";
                 }
             }
         });
         cpfRecentAddressVerification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
-                if(check == true){
-                    cpfRecentAddressVerification_value="Y";
-                }else{
-                    cpfRecentAddressVerification_value="N";
+                if (check == true) {
+                    cpfRecentAddressVerification_value = "Y";
+                } else {
+                    cpfRecentAddressVerification_value = "N";
                 }
             }
         });
         stampOnPhotocopy.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
-                if(check == true){
-                    stampOnPhotocopy_value="Y";
-                }else{
-                    stampOnPhotocopy_value="N";
+                if (check == true) {
+                    stampOnPhotocopy_value = "Y";
+                } else {
+                    stampOnPhotocopy_value = "N";
                 }
             }
         });
         lastLoanVerification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
-                if(check == true){
-                    lastLoanVerification_value="Y";
-                }else{
-                    lastLoanVerification_value="N";
+                if (check == true) {
+                    lastLoanVerification_value = "Y";
+                } else {
+                    lastLoanVerification_value = "N";
                 }
             }
         });
         absentReason.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
-                if(check == true){
-                    absentReason_value="Y";
-                }else{
-                    absentReason_value="N";
+                if (check == true) {
+                    absentReason_value = "Y";
+                } else {
+                    absentReason_value = "N";
                 }
             }
         });
         repaymentFault.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
-                if(check == true){
-                    repaymentFault_value="Y";
-                }else{
-                    repaymentFault_value="N";
+                if (check == true) {
+                    repaymentFault_value = "Y";
+                } else {
+                    repaymentFault_value = "N";
                 }
             }
         });
         reasonVerification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
-                if(check == true){
-                    reasonVerification_value="Y";
-                }else{
-                    reasonVerification_value="N";
+                if (check == true) {
+                    reasonVerification_value = "Y";
+                } else {
+                    reasonVerification_value = "N";
                 }
             }
         });
         isAppliedAmountAppropriate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
-                if(check == true){
-                    isAppliedAmountAppropriate_value="Y";
-                }else{
-                    isAppliedAmountAppropriate_value="N";
+                if (check == true) {
+                    isAppliedAmountAppropriate_value = "Y";
+                } else {
+                    isAppliedAmountAppropriate_value = "N";
                 }
             }
         });
         familyAwareness.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
-                if(check == true){
-                    familyAwareness_value="Y";
-                }else{
-                    familyAwareness_value="N";
+                if (check == true) {
+                    familyAwareness_value = "Y";
+                } else {
+                    familyAwareness_value = "N";
                 }
             }
         });
         loanRelatedToBusiness.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
-                if(check == true){
-                    loanRelatedToBusiness_value="Y";
-                }else{
-                    loanRelatedToBusiness_value="N";
+                if (check == true) {
+                    loanRelatedToBusiness_value = "Y";
+                } else {
+                    loanRelatedToBusiness_value = "N";
                 }
             }
         });
         IsBusinessAppropriate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
-                if(check == true){
-                    IsBusinessAppropriate_value="Y";
-                }else{
-                    IsBusinessAppropriate_value="N";
+                if (check == true) {
+                    IsBusinessAppropriate_value = "Y";
+                } else {
+                    IsBusinessAppropriate_value = "N";
                 }
             }
         });
         repayEligibility.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
-                if(check == true){
-                    repayEligibility_value="Y";
-                }else{
-                    repayEligibility_value="N";
+                if (check == true) {
+                    repayEligibility_value = "Y";
+                } else {
+                    repayEligibility_value = "N";
                 }
             }
         });
         surplusVerification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
-                if(check == true){
-                    surplusVerification_value="Y";
-                }else{
-                    surplusVerification_value="N";
+                if (check == true) {
+                    surplusVerification_value = "Y";
+                } else {
+                    surplusVerification_value = "N";
                 }
             }
         });
         incomeVerification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
-                if(check == true){
-                    incomeVerification_value="Y";
-                }else{
-                    incomeVerification_value="N";
+                if (check == true) {
+                    incomeVerification_value = "Y";
+                } else {
+                    incomeVerification_value = "N";
                 }
             }
         });
         businessVerification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
-                if(check == true){
-                    businessVerification_value="Y";
-                }else{
-                    businessVerification_value="N";
+                if (check == true) {
+                    businessVerification_value = "Y";
+                } else {
+                    businessVerification_value = "N";
                 }
             }
         });
         comissionDemand.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
-                if(check == true){
-                    comissionDemand_value="Y";
-                }else{
-                    comissionDemand_value="N";
+                if (check == true) {
+                    comissionDemand_value = "Y";
+                } else {
+                    comissionDemand_value = "N";
                 }
             }
         });
         supportiveToGroup.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
-                if(check == true){
-                    supportiveToGroup_value="Y";
-                }else{
-                    supportiveToGroup_value="N";
+                if (check == true) {
+                    supportiveToGroup_value = "Y";
+                } else {
+                    supportiveToGroup_value = "N";
                 }
             }
         });
         groupReadyToVilay.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
-                if(check == true){
-                    groupReadyToVilay_value="Y";
-                }else{
-                    groupReadyToVilay_value="N";
+                if (check == true) {
+                    groupReadyToVilay_value = "Y";
+                } else {
+                    groupReadyToVilay_value = "N";
                 }
             }
         });
         groupHasBloodRelation.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
-                if(check == true){
-                    groupHasBloodRelation_value="Y";
-                }else{
-                    groupHasBloodRelation_value="N";
+                if (check == true) {
+                    groupHasBloodRelation_value = "Y";
+                } else {
+                    groupHasBloodRelation_value = "N";
                 }
             }
         });
         understandsInsurance.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
-                if(check == true){
-                    understandsInsurance_value="Y";
-                }else{
-                    understandsInsurance_value="N";
+                if (check == true) {
+                    understandsInsurance_value = "Y";
+                } else {
+                    understandsInsurance_value = "N";
                 }
             }
         });
         verifyExternalLoan.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
-                if(check == true){
-                    verifyExternalLoan_value="Y";
-                }else{
-                    verifyExternalLoan_value="N";
+                if (check == true) {
+                    verifyExternalLoan_value = "Y";
+                } else {
+                    verifyExternalLoan_value = "N";
                 }
             }
         });
         understandsFaultPolicy.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
-                if(check == true){
-                    understandsFaultPolicy_value="Y";
-                }else{
-                    understandsFaultPolicy_value="N";
+                if (check == true) {
+                    understandsFaultPolicy_value = "Y";
+                } else {
+                    understandsFaultPolicy_value = "N";
                 }
             }
         });
         IsLoanAmountAppropriate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
-                if(check == true){
-                    IsLoanAmountAppropriate_value="Y";
-                }else{
-                    IsLoanAmountAppropriate_value="N";
+                if (check == true) {
+                    IsLoanAmountAppropriate_value = "Y";
+                } else {
+                    IsLoanAmountAppropriate_value = "N";
                 }
             }
         });
         toatlDebtUnderLimit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
-                if(check == true){
-                    toatlDebtUnderLimit_value="Y";
-                }else{
-                    toatlDebtUnderLimit_value="N";
+                if (check == true) {
+                    toatlDebtUnderLimit_value = "Y";
+                } else {
+                    toatlDebtUnderLimit_value = "N";
                 }
             }
         });
         workingPlaceVerification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
-                if(check == true){
-                    workingPlaceVerification_value="Y";
-                }else{
-                    workingPlaceVerification_value="N";
+                if (check == true) {
+                    workingPlaceVerification_value = "Y";
+                } else {
+                    workingPlaceVerification_value = "N";
                 }
             }
         });
         IsWorkingPlaceValid.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
-                if(check == true){
-                    IsWorkingPlaceValid_value="Y";
-                }else{
-                    IsWorkingPlaceValid_value="N";
+                if (check == true) {
+                    IsWorkingPlaceValid_value = "Y";
+                } else {
+                    IsWorkingPlaceValid_value = "N";
                 }
             }
         });
         workingPlacedescription.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
-                if(check == true){
-                    workingPlacedescription_value="Y";
-                }else{
-                    workingPlacedescription_value="N";
+                if (check == true) {
+                    workingPlacedescription_value = "Y";
+                } else {
+                    workingPlacedescription_value = "N";
                 }
             }
         });
         workExperience.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
-                if(check == true){
-                    workExperience_value="Y";
-                }else{
-                    workExperience_value="N";
+                if (check == true) {
+                    workExperience_value = "Y";
+                } else {
+                    workExperience_value = "N";
                 }
             }
         });
         seasonDependency.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
-                if(check == true){
-                    seasonDependency_value="Y";
-                }else{
-                    seasonDependency_value="N";
+                if (check == true) {
+                    seasonDependency_value = "Y";
+                } else {
+                    seasonDependency_value = "N";
                 }
             }
         });
         stockVerification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
-                if(check == true){
-                    stockVerification_value="Y";
-                }else{
-                    stockVerification_value="N";
+                if (check == true) {
+                    stockVerification_value = "Y";
+                } else {
+                    stockVerification_value = "N";
                 }
             }
         });
         sufficientAmount.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
-                if(check == true){
-                    sufficientAmount_value="Y";
-                }else{
-                    sufficientAmount_value="N";
+                if (check == true) {
+                    sufficientAmount_value = "Y";
+                } else {
+                    sufficientAmount_value = "N";
                 }
             }
         });
     }
+
 
     private boolean validateFields() {
         String branchNameText = branchName.getText().toString().trim();
@@ -1118,62 +1158,102 @@ public class HouseVisitActivity2 extends AppCompatActivity {
         context.startActivity(i);
     }
 
-   /* private void openCamera() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            try {
-                housePic = createImageFile();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-
-            if (housePic != null) {
-                Uri photoURI = FileProvider.getUriForFile(
-                        this,
-                        getApplicationContext().getPackageName() + ".provider",
-                        housePic
-                );
-
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, MY_PERMISSIONS_REQUEST_CAMERA);
-            }
-        }
-    }
 
 
-
-    String currentPhotoPath;
-
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  *//* prefix *//*
-                ".png",         *//* suffix *//*
-                storageDir      *//* directory *//*
-        );
-
-        // Save a file: path for use with ACTION_VIEW intents
-        currentPhotoPath = image.getAbsolutePath();
-        return image;
-    }
-*/
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == REQUEST_HOUSE_CAPTURE && resultCode == RESULT_OK) {
             if (data != null && data.hasExtra("croppedImagePath")) {
                 String croppedImagePath = data.getStringExtra("croppedImagePath");
                 housePic = new File(croppedImagePath);
-                imageUri = Uri.fromFile(new File(housePic.getAbsolutePath()));
+                imageUri = Uri.fromFile(housePic);
+
+                Bitmap myBitmap = BitmapFactory.decodeFile(croppedImagePath);
+                if (myBitmap == null) {
+                    Log.e("TAG", "Error decoding image file: " + croppedImagePath);
+                    return;
+                }
+
+                String longitude = String.format("%.4f", Double.parseDouble(longitudeTV.getText().toString()));
+                String latitude = String.format("%.4f", Double.parseDouble(lattitudeTV.getText().toString()));
+
+                Bitmap mutableBitmap = myBitmap.copy(Bitmap.Config.ARGB_8888, true);
+                if (mutableBitmap == null) {
+                    Log.e("TAG", "Error creating mutable bitmap");
+                    return;
+                }
+
+                Canvas canvas = new Canvas(mutableBitmap);
+                Paint paint = new Paint();
+                paint.setColor(Color.YELLOW);
+                paint.setTextSize(50);
+                paint.setAntiAlias(true);
+                paint.setFakeBoldText(true);
+
+                String latLongText = "Lat: " + latitude + ", Lon: " + longitude;
+                String address = "Address: " + getAddress1(gpsTracker.getLatitude(), gpsTracker.getLongitude());
+
+                String[] addressWords = address.split(",");
+                StringBuilder firstLine = new StringBuilder();
+                StringBuilder secondLine = new StringBuilder();
+
+                for (int i = 0; i < addressWords.length; i++) {
+                    if (i < 4) {
+                        firstLine.append(addressWords[i]).append(" ");
+                    } else {
+                        secondLine.append(addressWords[i]).append(" ");
+                    }
+                }
+
+                int paddingLeft = 5;
+                int paddingBetweenLines = 4;
+
+                float textHeight = paint.getTextSize();
+                int imageHeight = mutableBitmap.getHeight();
+                int yPosTop = imageHeight - (int) (textHeight * 3 + paddingBetweenLines * 2);
+
+                canvas.drawText(latLongText, paddingLeft, yPosTop, paint);
+                yPosTop += textHeight + paddingBetweenLines;
+
+                canvas.drawText(firstLine.toString().trim(), paddingLeft, yPosTop, paint);
+                yPosTop += textHeight + paddingBetweenLines;
+
+                canvas.drawText(secondLine.toString().trim(), paddingLeft, yPosTop, paint);
+
+                try (FileOutputStream out = new FileOutputStream(croppedImagePath)) {
+                    mutableBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                } catch (IOException e) {
+                    Log.e("TAG", "Error saving the modified bitmap", e);
+                }
+
+                view.setImageBitmap(mutableBitmap);
+            } else {
+                Log.e("TAG", "No croppedImagePath found in the intent data");
             }
         }
-        /*if (requestCode == REQUEST_HOUSE_CAPTURE && resultCode == RESULT_OK) {
-            // Display the captured image in the ImageView
-            imageUri = Uri.fromFile(new File(currentPhotoPath));
-        }*/
+    }
+
+    private String getAddress1(double latitude, double longitude) {
+        String addrerss="";
+        StringBuilder result = new StringBuilder();
+        if(latitude != 0.0){
+            try {
+                Geocoder geocoder = new Geocoder(HouseVisitActivity2.this, Locale.ENGLISH);
+                List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
+                if (addresses.size() > 0) {
+                    Address address = addresses.get(0);
+                    result.append(address.getAddressLine(0));
+                    // result.append(address.getLocality());
+                    // result.append(address.getCountryName());
+                    addrerss=result.toString();
+                    Log.e("tag", addrerss);
+                }
+            } catch (IOException e) {
+                //  Log.e("tag", e.getMessage());
+            }
+        }
+        return addrerss;
     }
 }

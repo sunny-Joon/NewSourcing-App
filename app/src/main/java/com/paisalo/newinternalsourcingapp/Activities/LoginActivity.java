@@ -800,10 +800,7 @@ public class LoginActivity extends AppCompatActivity implements onListCReatorInt
       deviceId = "2234514145687247";//GRST00223
       //  deviceId="9776498475477244";//grst002977
 
-
-        Log.d("TAG", "ImeiId6: "+deviceId);
-
-
+        //Log.d("TAG", "ImeiId6: "+deviceId);
         //GlobalClass.setSharedPref(getBaseContext(), deviceId, deviceId);
     }
 

@@ -164,47 +164,35 @@ public class AadhaarFragment extends Fragment {
         rangeCategoryAdapter = new RangeCategoryAdapter(getActivity(),android.R.layout.simple_spinner_dropdown_item, stateDataList);
         spin_aadhaarState.setAdapter(rangeCategoryAdapter);
 
-        if(allDataAFDataModel!=null) {
-            if (allDataAFDataModel.getpState() != null) {
-                int castePos3 = -1;
-                for (int i = 0; i < rangeCategoryAdapter.getCount(); i++) {
-                    if (rangeCategoryAdapter.getItem(i).code.equals(databaseClass.dao().getStateByCode("state", allDataAFDataModel.getpState()).code)) {
-                        castePos3 = i;
-                        break;
+        if (allDataAFDataModel != null) {
+            String profilePicPath = allDataAFDataModel.getProfilePic();
+            if (profilePicPath != null && !profilePicPath.isEmpty()) {
+                if (profilePicPath.startsWith("http")) {
+                    Glide.with(this)
+                            .load(profilePicPath)
+                            .error(R.drawable.error)
+                            .into(adhaarImage);
+                } else {
+                    File imgFile = new File(profilePicPath);
+                    if (imgFile.exists()) {
+                        Glide.with(this)
+                                .load(imgFile)
+                                .error(R.drawable.error)
+                                .into(adhaarImage);
+                    } else {
+                        adhaarImage.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.error));
                     }
                 }
-
-                Log.d("TAG", "onCreateView: " + castePos3);
-                spin_aadhaarState.setSelection(castePos3);
+            } else {
+                adhaarImage.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.error));
             }
-        }else{
-            Log.d("TAG", "onCreateView: " + "Object Is Null");
-
-        }
-
-        Log.d("TAG", "onCreateViewadhaar: " + "check data");
-        if (allDataAFDataModel != null) {
-            Log.d("TAG", "onCreateViewadhaar: " + "confirm data");
-
-            String profilePicPath = allDataAFDataModel.getProfilePic().toString();
-            Log.d("TAG", "onCreateView:1212121 " + profilePicPath);
-
-//            File imgFile = new File(profilePicPath);
-//            if (imgFile.exists()) {
-//                Glide.with(this)
-//                        .load(imgFile)
-//                        .into(adhaarImage);
-//            } else {
-//                adhaarImage.setImageDrawable(null);
-//            }
 
             aadhaarName.setText(allDataAFDataModel.getFname() + " " + allDataAFDataModel.getLname());
-
             aadhaarid.setText(allDataAFDataModel.getAadharID());
             aadhaarAge.setText(allDataAFDataModel.getAge().toString());
             aadhaarGendre.setText(allDataAFDataModel.getGender());
             aadhaarDOB.setText(allDataAFDataModel.getDob());
-            aadhaarGuardian.setText(allDataAFDataModel.getfFname()+" "+allDataAFDataModel.getfMname()+" "+allDataAFDataModel.getfLname());
+            aadhaarGuardian.setText(allDataAFDataModel.getfFname() + " " + allDataAFDataModel.getfMname() + " " + allDataAFDataModel.getfLname());
             aadhaarmobile.setText(allDataAFDataModel.getpPh3());
             aadhaarPAN.setText(allDataAFDataModel.getPanNO());
             aadhaarDrivingLicense.setText(allDataAFDataModel.getDrivingLic());
@@ -214,6 +202,7 @@ public class AadhaarFragment extends Fragment {
             aadhaarState.setText(allDataAFDataModel.getpState());
             loanAmount.setText(allDataAFDataModel.getLoanAmt().toString());
         }
+
 
 
         submit.setOnClickListener(new View.OnClickListener() {
