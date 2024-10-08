@@ -1202,10 +1202,10 @@ public class HouseVisitActivity2 extends AppCompatActivity {
 
                 Canvas canvas = new Canvas(mutableBitmap);
                 Paint paint = new Paint();
-                paint.setColor(Color.YELLOW);
-                paint.setTextSize(50);
+                paint.setTextSize(40);
                 paint.setAntiAlias(true);
                 paint.setFakeBoldText(true);
+                paint.setColor(Color.WHITE);
 
                 String latLongText = "Lat: " + latitude + ", Lon: " + longitude;
                 String address = "Address: " + getAddress1(gpsTracker.getLatitude(), gpsTracker.getLongitude());
@@ -1222,20 +1222,39 @@ public class HouseVisitActivity2 extends AppCompatActivity {
                     }
                 }
 
-                int paddingLeft = 5;
-                int paddingBetweenLines = 4;
+                int paddingLeft = 50;
+                int paddingBetweenLines = 20;
 
                 float textHeight = paint.getTextSize();
                 int imageHeight = mutableBitmap.getHeight();
                 int yPosTop = imageHeight - (int) (textHeight * 3 + paddingBetweenLines * 2);
 
-                canvas.drawText(latLongText, paddingLeft, yPosTop, paint);
-                yPosTop += textHeight + paddingBetweenLines;
+                int yPosLatLong = yPosTop;
+                int yPosFirstLine = yPosTop + (int) (textHeight + paddingBetweenLines);
+                int yPosSecondLine = yPosFirstLine + (int) (textHeight + paddingBetweenLines);
 
-                canvas.drawText(firstLine.toString().trim(), paddingLeft, yPosTop, paint);
-                yPosTop += textHeight + paddingBetweenLines;
+                float latLongWidth = paint.measureText(latLongText);
+                float firstLineWidth = paint.measureText(firstLine.toString().trim());
+                float secondLineWidth = paint.measureText(secondLine.toString().trim());
 
-                canvas.drawText(secondLine.toString().trim(), paddingLeft, yPosTop, paint);
+                float maxWidth = Math.max(latLongWidth, Math.max(firstLineWidth, secondLineWidth));
+
+                float rectHeight = textHeight * 3 + paddingBetweenLines * 2;
+
+                Paint rectPaint = new Paint();
+                rectPaint.setColor(Color.argb(128, 0, 0, 0));
+                canvas.drawRect(
+                        paddingLeft - 10,
+                        yPosTop - (textHeight + paddingBetweenLines),
+                        paddingLeft + maxWidth + 10,
+                        yPosSecondLine + 10,
+                        rectPaint
+                );
+
+                paint.setColor(Color.WHITE);
+                canvas.drawText(latLongText, paddingLeft, yPosLatLong, paint);
+                canvas.drawText(firstLine.toString().trim(), paddingLeft, yPosFirstLine, paint);
+                canvas.drawText(secondLine.toString().trim(), paddingLeft, yPosSecondLine, paint);
 
                 try (FileOutputStream out = new FileOutputStream(croppedImagePath)) {
                     mutableBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
